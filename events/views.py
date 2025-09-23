@@ -1,8 +1,11 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-def home(request):
-    return render(request, "events/home.html")
+def home_page(request):
+    return render(request, "home_page.html")
+
+def snippets(request):
+    return render(request, "home_page.html")
 
 def base_demo(request):
     """Демонстрация базового шаблона со всеми компонентами"""
@@ -53,7 +56,7 @@ def base_demo(request):
             }
         ]
     }
-    return render(request, 'base_demo.html', demo_data)
+    return render(request, 'home_page.html', demo_data)
 
 def profile_demo(request):
     tickets = [
