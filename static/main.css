@@ -1,6 +1,121 @@
 /*Hero block - Kamilla*/
 
 /*Nav bar - Christoffer*/
+/* === CB Navbar Styling === */
+.navbar-CB {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: 64px;
+  background: rgba(0, 0, 0, 0.95); /* svart bakgrunn */
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid #1f2937;
+}
+
+.navbar-container-CB {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.navbar-logo-CB {
+  display: flex;
+  align-items: center;
+  color: #ffffff; /* hvit tekst */
+}
+
+.navbar-logo-CB img {
+  height: 32px;
+  width: 32px;
+}
+
+.navbar-menu-CB {
+  display: none; /* Mobile først */
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-menu-CB a {
+  text-decoration: none;
+  color: #ffffff; /* hvit tekst */
+  transition: color 0.2s;
+}
+
+.navbar-menu-CB a:hover {
+  color: #60a5fa; /* blå hover */
+}
+
+.navbar-actions-CB {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-btn-CB {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: #ffffff; /* hvit tekst */
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar-btn-CB:hover {
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa; /* blå hover */
+}
+
+.mobile-menu-CB {
+  display: none;
+  padding: 0 1rem 1rem;
+}
+
+.mobile-menu-CB a {
+  display: block;
+  text-decoration: none;
+  color: #ffffff; /* hvit tekst */
+  padding: 0.5rem 0;
+  transition: color 0.2s;
+}
+
+.mobile-menu-CB a:hover {
+  color: #60a5fa; /* blå hover */
+}
+
+/* Responsivitet */
+@media (min-width: 768px) {
+  .navbar-menu-CB {
+    display: flex; /* md:flex */
+  }
+  #menu-toggle-CB {
+    display: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .search-btn-text-CB {
+    display: inline;
+  }
+  .login-btn-text-CB {
+    display: inline;
+  }
+}
+
+@media (max-width: 639px) {
+  .search-btn-text-CB,
+  .login-btn-text-CB {
+    display: none;
+  }
+}
 
 /*Ticket card - Nikita*/
 
