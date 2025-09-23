@@ -22,7 +22,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: var(--th-white);
     text-align: center;
     overflow: hidden;
   }
@@ -54,7 +54,7 @@
   }
   
   .KN-hero-highlight {
-    color: #2563eb; /* blå aksent (blue-600) */
+    color: var(--th-red); /* красный акцент вместо синего */
   }
   
   .KN-hero-subtitle {
@@ -75,8 +75,8 @@
   
   /* Primær CTA-knapp */
   .KN-btn-primary {
-    background-color: #2563eb;
-    color: #fff;
+    background-color: var(--th-red);
+    color: var(--th-white);
     border: none;
     padding: 0.75rem 1.5rem;
     font-size: 1.125rem;
@@ -90,14 +90,14 @@
   }
   
   .KN-btn-primary:hover {
-    background-color: #1d4ed8;
+    background-color: var(--th-red-dark);
   }
   
   /* Sekundær CTA-knapp */
   .KN-btn-secondary {
     background: transparent;
-    border: 2px solid #fff;
-    color: #fff;
+    border: 2px solid var(--th-white);
+    color: var(--th-white);
     padding: 0.75rem 1.5rem;
     font-size: 1.125rem;
     font-weight: 600;
@@ -110,8 +110,8 @@
   }
   
   .KN-btn-secondary:hover {
-    background: #fff;
-    color: #000;
+    background: var(--th-white);
+    color: var(--th-black);
   }
   
   .KN-btn-icon {
@@ -151,7 +151,7 @@
   height: 64px;
   background: rgba(0, 0, 0, 0.95); /* svart bakgrunn */
   backdrop-filter: blur(6px);
-  border-bottom: 1px solid #1f2937;
+  border-bottom: 1px solid var(--th-light-gray);
 }
 
 .navbar-container-CB {
@@ -167,7 +167,7 @@
 .navbar-logo-CB {
   display: flex;
   align-items: center;
-  color: #ffffff; /* hvit tekst */
+  color: var(--th-white); /* hvit tekst */
 }
 
 .navbar-logo-CB img {
@@ -183,12 +183,12 @@
 
 .navbar-menu-CB a {
   text-decoration: none;
-  color: #ffffff; /* hvit tekst */
+  color: var(--th-white); /* hvit tekst */
   transition: color 0.2s;
 }
 
 .navbar-menu-CB a:hover {
-  color: #60a5fa; /* blå hover */
+  color: var(--th-red); /* красный hover вместо синего */
 }
 
 .navbar-actions-CB {
@@ -207,13 +207,13 @@
   border: none;
   cursor: pointer;
   font: inherit;
-  color: #ffffff; /* hvit tekst */
+  color: var(--th-white); /* hvit tekst */
   transition: background 0.2s, color 0.2s;
 }
 
 .navbar-btn-CB:hover {
-  background: rgba(59, 130, 246, 0.1);
-  color: #60a5fa; /* blå hover */
+  background: rgba(220, 38, 38, 0.1);
+  color: var(--th-red); /* красный hover */
 }
 
 .mobile-menu-CB {
@@ -224,13 +224,13 @@
 .mobile-menu-CB a {
   display: block;
   text-decoration: none;
-  color: #ffffff; /* hvit tekst */
+  color: var(--th-white); /* hvit tekst */
   padding: 0.5rem 0;
   transition: color 0.2s;
 }
 
 .mobile-menu-CB a:hover {
-  color: #60a5fa; /* blå hover */
+  color: var(--th-red); /* красный hover */
 }
 
 /* Responsivitet */
@@ -405,7 +405,7 @@
 .ES-SokeskjemaField {
   display: flex;
   border: none;
-  background-color: #000000;
+  background-color: var(--th-black);
   padding: 20px;
   justify-content: center;
 }
@@ -415,7 +415,7 @@
   flex-direction: row;
   justify-content: center;
   padding: 1.5rem;
-  background-color: #111111;
+  background-color: var(--th-dark-gray);
   max-width: 800px;
   width: 100%;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 
@@ -435,9 +435,9 @@ select[name="ES-BySelect"],
 select[name="ES-Tidspunkt"],
 input[name="ES-ArtistSok"] {
   height: 3rem;
-  background-color: #1a1a1a;
-  color: #A9A9A9;
-  border: 1px solid #333333;
+  background-color: var(--th-gray);
+  color: var(--th-muted);
+  border: 1px solid var(--th-light-gray);
   border-radius: 4px;
   margin-bottom: 10px;
   font-size: 14px;
@@ -445,8 +445,8 @@ input[name="ES-ArtistSok"] {
 select[name="ES-BySelect"]:hover,
 select[name="ES-Tidspunkt"]:hover,
 input[name="ES-ArtistSok"]:hover {
-  box-shadow: 0 0 0 1px #dc2626;
-  border-color: #b91c1c;
+  box-shadow: 0 0 0 1px var(--th-red);
+  border-color: var(--th-red-dark);
 }
 
 .ES-input-wrapper {
@@ -463,7 +463,7 @@ input[name="ES-ArtistSok"]:hover {
   pointer-events: none;
   width: 1rem;
   height: 1rem;
-  color: #9CA3AF;
+  color: var(--th-muted);
 }
 
 .ES-input {
@@ -479,40 +479,40 @@ input[name="ES-ArtistSok"]:hover {
 }
 
 input[name="ES-ArtistSok"]::placeholder {
-  color: #A9A9A9;
+  color: var(--th-muted);
   opacity: 1;
 }
 
 
 .ES-KategoriLenker a.ES-Lenke {
   text-decoration: none;
-  color: #A9A9A9;
+  color: var(--th-muted);
   padding-right: 10px;
 }
 .ES-KategoriLenker a.ES-Lenke:hover {
-  color: #b91c1c;
+  color: var(--th-red-dark);
 }
 
 .ES-form-tekst {
-  color: #A9A9A9;
+  color: var(--th-muted);
 }
 
 .ES-Sokeknapp {
-  color: #ffffff;
-  background-color: #dc2626;
+  color: var(--th-white);
+  background-color: var(--th-red);
   border: none;
   border-radius: 4px;
   margin-top: 10px;
   
 }
 .ES-Sokeknapp:hover {
-  background-color: #b91c1c;
+  background-color: var(--th-red-dark);
 }
 
 .ES-input{
   border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: #333333;
+  border: 1px solid var(--th-muted);
+  background-color: var(--th-light-gray);
 }
 
 .ES-input-icon-sok {
@@ -523,44 +523,44 @@ input[name="ES-ArtistSok"]::placeholder {
   pointer-events: none;
   width: 1rem;
   height: 1rem;
-  color: #ffffff;
+  color: var(--th-white);
 }
 
 .ES-input-icon-filter{
-  background-color: #111111;
+  background-color: var(--th-dark-gray);
   position: absolute;
   left: 10px;
   top: 0px;
   padding: 4px;
-  border: 1px solid #333333;
+  border: 1px solid var(--th-light-gray);
   border-radius: 4px;
   transform: translateY(-50%);
   pointer-events: none;
   width: 1rem;
   height: 1rem;
-  color: #9CA3AF;
+  color: var(--th-muted);
 }
 
 /*Footer - Magnus */
 .MB-footer {
-    background-color: #000;
+    background-color: var(--th-black);
     padding: 20px;
-    color: #ccc;
+    color: var(--th-muted);
 }
 
 .MB-nyhetsbrev {
     text-align: center;
     padding: 20px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--th-light-gray);
 }
 
 .MB-nyhetsbrev h3 {
     margin: 0;
-    color: #fff;
+    color: var(--th-white);
 }
 
 .MB-nyhetsbrev p {
-    color: #9ca3af;
+    color: var(--th-muted);
 }
 
 .MB-nyhetsbrev form {
@@ -569,18 +569,18 @@ input[name="ES-ArtistSok"]::placeholder {
 
 .MB-nyhetsbrev input {
     padding: 8px;
-    border: 1px solid #333333;
+    border: 1px solid var(--th-light-gray);
     border-radius: 4px;
     width: 200px;
-    background-color: #1a1a1a;
-    color: #ffffff;
+    background-color: var(--th-gray);
+    color: var(--th-white);
 }
 
 .MB-nyhetsbrev button {
     padding: 8px 12px;
     margin-left: 5px;
-    background-color: #dc2626;
-    color: #ffffff;
+    background-color: var(--th-red);
+    color: var(--th-white);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -592,7 +592,7 @@ input[name="ES-ArtistSok"]::placeholder {
     flex-wrap: wrap;
     margin-top: 20px;
     padding-bottom: 20px;
-    border-bottom: 1px solid #333333;
+    border-bottom: 1px solid var(--th-light-gray);
 }
 
 .MB-footer-section {
@@ -603,11 +603,11 @@ input[name="ES-ArtistSok"]::placeholder {
 
 .MB-footer-section h2, 
 .MB-footer-section h3 {
-    color: #ffffff;
+    color: var(--th-white);
 }
 
 .MB-footer-section p {
-    color: #9ca3af;
+    color: var(--th-muted);
 }
 
 .MB-footer-section ul {
@@ -621,23 +621,23 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .MB-footer-section ul li a {
-    color: #9ca3af;
+    color: var(--th-muted);
     text-decoration: none;
 }
 
 .MB-footer-section ul li a:hover {
-    color: #dc2626;
+    color: var(--th-red);
 }
 
 .MB-socials a {
     margin-right: 15px;
     font-size: 20px;
     text-decoration: none;
-    color:#9ca3af;
+    color: var(--th-muted);
 }
 
 .MB-socials a:hover {
-    color: #dc2626;
+    color: var(--th-red);
 }
 
 .MB-footer-bottom {
@@ -647,7 +647,7 @@ input[name="ES-ArtistSok"]::placeholder {
     text-align: center;
     padding-top: 10px;
     font-size: 14px;
-    color: #9ca3af;
+    color: var(--th-muted);
 }
 
 .MB-bunn-lenker {
@@ -659,21 +659,21 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .MB-footer-bottom a {
-    color:#9ca3af;
+    color: var(--th-muted);
     margin-left: 10px;
     text-decoration: none;
 }
 
 .MB-footer-bottom a:hover {
-    color:#dc2626;
+    color: var(--th-red);
 }
 
 .MB-white-text {
-  color: #ffffff;
+  color: var(--th-white);
 }
 
 .MB-red-text {
-  color: #dc2626;
+  color: var(--th-red);
 }
 
 /*Event card - Jesper*/
@@ -705,7 +705,7 @@ input[name="ES-ArtistSok"]::placeholder {
   width: 100%;
   height: 220px;
   overflow: hidden;
-  background: #222;
+  background: var(--th-light-gray);
 }
 .JF-bilde {
   width: 100%;
@@ -732,7 +732,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .JF-detaljer {
-  background: #181818;
+  background: var(--th-gray);
   padding: 24px 20px 20px 20px;
   display: flex;
   flex-direction: column;
@@ -756,7 +756,7 @@ input[name="ES-ArtistSok"]::placeholder {
   flex-direction: column;
   gap: 0;
   font-size: 1rem;
-  color: #d1d5db;
+  color: var(--th-muted);
   margin-bottom: 2px;
 }
 .JF-dato, .JF-tid {
@@ -794,7 +794,7 @@ input[name="ES-ArtistSok"]::placeholder {
   background-color: var(--th-red-dark, #b91c1c);
 }
 .JF-utsolgt .JF-kjop-knapp {
-  background-color: #222;
+  background-color: var(--th-light-gray);
   color: var(--th-white, #fff);
   cursor: not-allowed;
   font-weight: 700;
@@ -810,5 +810,141 @@ input[name="ES-ArtistSok"]::placeholder {
   .JF-eventkort {
     width: 98%;
     max-width: 420px;
+  }
+}
+
+/* JF Events Section Styles */
+.JF-events-section {
+  background: linear-gradient(135deg, var(--th-black) 0%, var(--th-dark-gray) 100%);
+  padding: 60px 0;
+  position: relative;
+}
+
+.JF-events-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.JF-section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin-bottom: 1rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.JF-section-description {
+  font-size: 1.2rem;
+  color: var(--th-muted);
+  margin-bottom: 3rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.JF-events-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* NP Tickets Section Styles */
+.NP-tickets-section {
+  background: linear-gradient(135deg, var(--th-dark-gray) 0%, var(--th-gray) 100%);
+  padding: 60px 0;
+  position: relative;
+}
+
+.NP-tickets-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 30% 80%, rgba(0, 199, 80, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(220, 38, 38, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.NP-section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin-bottom: 1rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.NP-section-description {
+  font-size: 1.2rem;
+  color: var(--th-muted);
+  margin-bottom: 3rem;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.NP-tickets-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive adjustments for new sections */
+@media (max-width: 768px) {
+  .JF-section-title,
+  .NP-section-title {
+    font-size: 2rem;
+  }
+  
+  .JF-section-description,
+  .NP-section-description {
+    font-size: 1.1rem;
+  }
+  
+  .JF-events-section,
+  .NP-tickets-section {
+    padding: 40px 0;
+  }
+  
+  .JF-events-container,
+  .NP-tickets-container {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .JF-section-title,
+  .NP-section-title {
+    font-size: 1.8rem;
+  }
+  
+  .JF-section-description,
+  .NP-section-description {
+    font-size: 1rem;
+  }
+  
+  .JF-events-container,
+  .NP-tickets-container {
+    gap: 1rem;
   }
 }
