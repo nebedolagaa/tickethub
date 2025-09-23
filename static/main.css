@@ -16,8 +16,248 @@
 }
 
 /*Hero block - Kamilla*/
+.KN-hero {
+    position: relative;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  /* Bakgrunn med mørk overlay */
+  .KN-hero-background {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                url('https://images.unsplash.com/photo-1658046413536-6e5933dfd939')
+                center/cover no-repeat;
+    z-index: 0;
+  }
+  
+  .KN-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    padding: 1rem;
+  }
+  
+  
+  /* === 2. Tekst og Hierarki === */
+  .KN-hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem); /* dynamisk 5xl–7xl */
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  
+  .KN-hero-highlight {
+    color: #2563eb; /* blå aksent (blue-600) */
+  }
+  
+  .KN-hero-subtitle {
+    font-size: clamp(1.25rem, 3vw, 1.75rem); /* dynamisk xl–2xl */
+    opacity: 0.9;
+    margin-bottom: 2rem;
+  }
+  
+  
+  /* === 3. Call-to-Action Knapper === */
+  .KN-hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+  
+  /* Primær CTA-knapp */
+  .KN-btn-primary {
+    background-color: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .KN-btn-primary:hover {
+    background-color: #1d4ed8;
+  }
+  
+  /* Sekundær CTA-knapp */
+  .KN-btn-secondary {
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .KN-btn-secondary:hover {
+    background: #fff;
+    color: #000;
+  }
+  
+  .KN-btn-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+  
+  
+  /* === 4. Statistikkseksjon === */
+  .KN-hero-stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+  
+  .KN-stat {
+    text-align: center;
+  }
+  
+  .KN-stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  
+  .KN-stat-label {
+    font-size: 1rem;
+    opacity: 0.8;
+  }
 
 /*Nav bar - Christoffer*/
+.navbar-CB {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: 64px;
+  background: rgba(0, 0, 0, 0.95); /* svart bakgrunn */
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid #1f2937;
+}
+
+.navbar-container-CB {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.navbar-logo-CB {
+  display: flex;
+  align-items: center;
+  color: #ffffff; /* hvit tekst */
+}
+
+.navbar-logo-CB img {
+  height: 32px;
+  width: 32px;
+}
+
+.navbar-menu-CB {
+  display: none; /* Mobile først */
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-menu-CB a {
+  text-decoration: none;
+  color: #ffffff; /* hvit tekst */
+  transition: color 0.2s;
+}
+
+.navbar-menu-CB a:hover {
+  color: #60a5fa; /* blå hover */
+}
+
+.navbar-actions-CB {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-btn-CB {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: #ffffff; /* hvit tekst */
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar-btn-CB:hover {
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa; /* blå hover */
+}
+
+.mobile-menu-CB {
+  display: none;
+  padding: 0 1rem 1rem;
+}
+
+.mobile-menu-CB a {
+  display: block;
+  text-decoration: none;
+  color: #ffffff; /* hvit tekst */
+  padding: 0.5rem 0;
+  transition: color 0.2s;
+}
+
+.mobile-menu-CB a:hover {
+  color: #60a5fa; /* blå hover */
+}
+
+/* Responsivitet */
+@media (min-width: 768px) {
+  .navbar-menu-CB {
+    display: flex; /* md:flex */
+  }
+  #menu-toggle-CB {
+    display: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .search-btn-text-CB {
+    display: inline;
+  }
+  .login-btn-text-CB {
+    display: inline;
+  }
+}
+
+@media (max-width: 639px) {
+  .search-btn-text-CB,
+  .login-btn-text-CB {
+    display: none;
+  }
+}
 
 /*Ticket card - Nikita*/
 
@@ -162,8 +402,279 @@
 }
 
 /*Søkeskjema - Eskild*/
+.ES-SokeskjemaField {
+  display: flex;
+  border: none;
+  background-color: #000000;
+  padding: 20px;
+  justify-content: center;
+}
+
+.ES-SokeskjemaForm{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: #111111;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 
+              0 4px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+}
+
+input[name="ES-ArtistSok"] {
+  flex: 2 1 0%;
+  min-width: 250px;
+}
+select[name="ES-Tidspunkt"],
+select[name="ES-BySelect"] {
+  flex: 1 1 0%;
+}
+select[name="ES-BySelect"],
+select[name="ES-Tidspunkt"],
+input[name="ES-ArtistSok"] {
+  height: 3rem;
+  background-color: #1a1a1a;
+  color: #A9A9A9;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+select[name="ES-BySelect"]:hover,
+select[name="ES-Tidspunkt"]:hover,
+input[name="ES-ArtistSok"]:hover {
+  box-shadow: 0 0 0 1px #dc2626;
+  border-color: #b91c1c;
+}
+
+.ES-input-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-right: 10px;
+}
+
+.ES-input-icon{
+  position: absolute;
+  left: 10px;
+  top: 25px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 1rem;
+  height: 1rem;
+  color: #9CA3AF;
+}
+
+.ES-input {
+  padding-left: 35px;
+  height: 3rem;
+  box-sizing: border-box;
+}
+
+.ES-button {
+  padding-left: 35px;
+  height: 2.5rem;
+  box-sizing: border-box;
+}
+
+input[name="ES-ArtistSok"]::placeholder {
+  color: #A9A9A9;
+  opacity: 1;
+}
+
+
+.ES-KategoriLenker a.ES-Lenke {
+  text-decoration: none;
+  color: #A9A9A9;
+  padding-right: 10px;
+}
+.ES-KategoriLenker a.ES-Lenke:hover {
+  color: #b91c1c;
+}
+
+.ES-form-tekst {
+  color: #A9A9A9;
+}
+
+.ES-Sokeknapp {
+  color: #ffffff;
+  background-color: #dc2626;
+  border: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  
+}
+.ES-Sokeknapp:hover {
+  background-color: #b91c1c;
+}
+
+.ES-input{
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #333333;
+}
+
+.ES-input-icon-sok {
+  position: absolute;
+  left: 10px;
+  top: 30px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 1rem;
+  height: 1rem;
+  color: #ffffff;
+}
+
+.ES-input-icon-filter{
+  background-color: #111111;
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  padding: 4px;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  width: 1rem;
+  height: 1rem;
+  color: #9CA3AF;
+}
 
 /*Footer - Magnus */
+.MB-footer {
+    background-color: #000;
+    padding: 20px;
+    color: #ccc;
+}
+
+.MB-nyhetsbrev {
+    text-align: center;
+    padding: 20px;
+    border-bottom: 1px solid #333;
+}
+
+.MB-nyhetsbrev h3 {
+    margin: 0;
+    color: #fff;
+}
+
+.MB-nyhetsbrev p {
+    color: #9ca3af;
+}
+
+.MB-nyhetsbrev form {
+    margin-top: 10px;
+}
+
+.MB-nyhetsbrev input {
+    padding: 8px;
+    border: 1px solid #333333;
+    border-radius: 4px;
+    width: 200px;
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.MB-nyhetsbrev button {
+    padding: 8px 12px;
+    margin-left: 5px;
+    background-color: #dc2626;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.MB-footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #333333;
+}
+
+.MB-footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.MB-footer-section h2, 
+.MB-footer-section h3 {
+    color: #ffffff;
+}
+
+.MB-footer-section p {
+    color: #9ca3af;
+}
+
+.MB-footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.MB-footer-section ul li {
+    margin: 20px 0;
+}
+
+.MB-footer-section ul li a {
+    color: #9ca3af;
+    text-decoration: none;
+}
+
+.MB-footer-section ul li a:hover {
+    color: #dc2626;
+}
+
+.MB-socials a {
+    margin-right: 15px;
+    font-size: 20px;
+    text-decoration: none;
+    color:#9ca3af;
+}
+
+.MB-socials a:hover {
+    color: #dc2626;
+}
+
+.MB-footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 14px;
+    color: #9ca3af;
+}
+
+.MB-bunn-lenker {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 5px;
+}
+
+.MB-footer-bottom a {
+    color:#9ca3af;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.MB-footer-bottom a:hover {
+    color:#dc2626;
+}
+
+.MB-white-text {
+    color: #ffffff;
+}
+
+.MB-red-text {
+    color: #dc2626;
+}
 
 /*Event card - Jesper*/
 .JF-side {
