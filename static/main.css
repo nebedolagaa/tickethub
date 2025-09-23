@@ -5,6 +5,145 @@
 /*Ticket card - Nikita*/
 
 /*Søkeskjema - Eskild*/
+.ES-SokeskjemaField {
+  display: flex;
+  border: none;
+  background-color: #000000;
+  padding: 20px;
+  justify-content: center;
+}
+
+.ES-SokeskjemaForm{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: #111111;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 
+              0 4px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+}
+
+/* Oppretter flex til alle input feltene utenom button, styler også disse boksene*/
+input[name="ES-ArtistSok"] {
+  flex: 2 1 0%;
+  min-width: 250px;
+}
+select[name="ES-Tidspunkt"],
+select[name="ES-BySelect"] {
+  flex: 1 1 0%;
+}
+select[name="ES-BySelect"],
+select[name="ES-Tidspunkt"],
+input[name="ES-ArtistSok"] {
+  height: 3rem;
+  background-color: #1a1a1a;
+  color: #A9A9A9;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+select[name="ES-BySelect"]:hover,
+select[name="ES-Tidspunkt"]:hover,
+input[name="ES-ArtistSok"]:hover {
+  box-shadow: 0 0 0 1px #dc2626;
+  border-color: #b91c1c;
+}
+
+.ES-input-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-right: 10px;
+}
+
+.ES-input-icon{
+  position: absolute;
+  left: 10px;
+  top: 25px;
+  transform: translateY(-50%);
+  pointer-events: none; /* gjør at ikonet ikke stjeler klikk */
+  width: 1rem;
+  height: 1rem;
+  color: #9CA3AF;
+}
+
+.ES-input {
+  padding-left: 35px;   /* lager plass til ikonet */
+  height: 3rem;         /* høyde */
+  box-sizing: border-box;
+}
+
+.ES-button {
+  padding-left: 35px;   /* lager plass til ikonet */
+  height: 2.5rem;         /* høyde */
+  box-sizing: border-box;
+}
+
+input[name="ES-ArtistSok"]::placeholder {
+  color: #A9A9A9;   /* endrer fargen på placeholder-teksten */
+  opacity: 1;       /* standard er ofte 0.5 i mange browsere */
+}
+
+
+.ES-KategoriLenker a.ES-Lenke {
+  text-decoration: none;
+  color: #A9A9A9;
+  padding-right: 10px;
+}
+.ES-KategoriLenker a.ES-Lenke:hover {
+  color: #b91c1c; /* kan legge til hover-effekt */
+}
+
+.ES-form-tekst {
+  color: #A9A9A9;
+}
+
+.ES-Sokeknapp {
+  color: #ffffff;
+  background-color: #dc2626;
+  border: none;
+  border-radius: 4px;
+  margin-top: 10px;
+  
+}
+.ES-Sokeknapp:hover {
+  background-color: #b91c1c;
+}
+
+.ES-input{
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #333333;
+}
+
+.ES-input-icon-sok {
+  position: absolute;
+  left: 10px;
+  top: 30px;
+  transform: translateY(-50%);
+  pointer-events: none; /* gjør at ikonet ikke stjeler klikk */
+  width: 1rem;
+  height: 1rem;
+  color: #ffffff;
+}
+
+.ES-input-icon-filter{
+  background-color: #111111;
+  position: absolute;
+  left: 10px;
+  top: 0px;
+  padding: 4px;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  transform: translateY(-50%);
+  pointer-events: none; /* gjør at ikonet ikke stjeler klikk */
+  width: 1rem;
+  height: 1rem;
+  color: #9CA3AF;
+}
 
 /*Footer - Magnus */
 .MB-footer {
