@@ -1,0 +1,247 @@
+{# templates/snippets/ticket_card.html #}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+<style>
+:root {
+--th-black: #000000;
+--th-dark-gray: #111111;
+--th-gray: #1a1a1a;
+--th-light-gray: #333333;
+--th-muted: #9ca3af;
+--th-white: #ffffff;
+--th-red: #dc2626;
+--th-red-dark: #b91c1c;
+--th-red-light: #ef4444;
+--th-green: #00c750;
+}
+
+.NP-ticket-card {
+    --accent: var(--th-red);
+    background: var(--th-dark-gray);
+    color: var(--th-white);
+    border-radius: 12px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    width: 340px;
+    min-width: 300px;
+    flex-shrink: 0;
+    font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+.NP-ticket-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.NP-ticket-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--th-white);
+}
+
+.NP-ticket-sub {
+    color: var(--th-muted);
+    font-weight: 300;
+    font-size: 0.9rem;
+    margin-top: 10px;
+}
+
+.NP-status-badge {
+    font-size: 0.8rem;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--th-muted);
+}
+
+.NP-status-active {
+    border-left: 4px solid var(--accent);
+}
+
+.NP-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 20px 0 30px 0;
+    color: var(--th-muted);
+    font-size: 0.95rem;
+    font-weight: 300;
+}
+
+.NP-meta .NP-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.NP-meta .NP-icon {
+    width: 18px;
+    height: 18px;
+    opacity: 0.8;
+}
+
+.NP-info-box {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 12px;
+    color: var(--th-white);
+}
+
+.NP-qr-placeholder {
+    margin: 16px auto 6px;
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed rgba(255, 255, 255, 0.06);
+    color: var(--th-muted);
+}
+
+.NP-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.NP-btn {
+    padding: 8px 12px;
+    margin: 10px 0 10px 0;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border: 0;
+}
+
+.NP-btn-download {
+  background: transparent;
+  color: var(--th-muted);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.NP-btn-share {
+  background: var(--accent);
+  color: var(--th-white);
+}
+
+.NP-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+  justify-content: center;
+}
+
+.NP-small-note {
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--th-red-light);
+    margin: 15px 10px 10px 10px;
+    padding: 8px;
+    border-radius: 6px;
+    background: rgba(226, 58, 58, 0.07);
+}
+
+@media (max-width: 400px) {
+    .NP-ticket-card {
+        width: 100%;
+        min-width: unset;
+        flex-shrink: 1;
+    }
+}
+</style>
+
+<div class="NP-ticket-card {% if ticket.status == 'active' %}NP-status-active{% endif %}">
+  <div class="NP-ticket-header">
+    <div>
+      <div class="NP-ticket-title">{{ ticket.title|default:"Artist / Event" }}</div>
+      <div class="NP-ticket-sub">{{ ticket.subtitle|default:"Tour / Festival" }}</div>
+    </div>
+
+    <div>
+      {# status: active / used / cancelled #}
+      {% if ticket.status == "active" %}
+        <div class="NP-status-badge" style="background:rgba(255,255,255,0.02); color:var(--th-green)">Aktiv</div>
+      {% elif ticket.status == "used" %}
+        <div class="NP-status-badge" style="background:rgba(255,255,255,0.02); color:var(--th-muted)">Brukt</div>
+      {% elif ticket.status == "cancelled" %}
+        <div class="NP-status-badge" style="background:rgba(255,255,255,0.02); color:var(--th-red-light)">Kansellert</div>
+      {% else %}
+        <div class="NP-status-badge">Status: {{ ticket.status|default:"—" }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="NP-meta" role="list">
+    <div class="NP-row" role="listitem">
+      <i class="bi bi-calendar-event NP-icon" style="color: var(--th-red);" aria-hidden="true"></i>
+      <div>{{ ticket.date|default:"15. oktober 2024" }}</div>
+    </div>
+    <div class="NP-row">
+      <i class="bi bi-clock NP-icon" style="color: var(--th-red);" aria-hidden="true"></i>
+      <div>{{ ticket.time|default:"20:00" }}</div>
+    </div>
+    <div class="NP-row">
+      <i class="bi bi-geo-alt NP-icon" style="color: var(--th-red);" aria-hidden="true"></i>
+      <div>{{ ticket.venue|default:"Oslo Spektrum, Oslo" }}</div>
+    </div>
+  </div>
+
+  <div class="NP-info-box">
+    <div style="display:flex; justify-content:space-between; gap:12px; align-items:flex-start">
+      <div>
+        <div style="font-size:0.8rem; color:var(--th-muted)">Billetttype</div>
+        <div style="font-weight:500">{{ ticket.type|default:"Standard" }}</div>
+      </div>
+      <div>
+        <div style="font-size:0.8rem; color:var(--th-muted)">Plass</div>
+        <div style="font-weight:500">{{ ticket.seat|default:"Seksjon A, Rad 15, Sete 12" }}</div>
+      </div>
+    </div>
+
+    <div style="margin-top:10px; font-size:0.85rem; color:var(--th-muted)">
+      <div>Billettnummer</div>
+      <div style="font-family:monospace; margin-top:6px">{{ ticket.number|default:"TH-2024-AUR-001234" }}</div>
+    </div>
+  </div>
+
+  <div class="NP-qr-placeholder" aria-hidden="true">
+    {# enkel SVG-plassholder QR #}
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect width="24" height="24" rx="2" fill="none" stroke="#6d6d6d" stroke-width="1.2"/>
+      <rect x="4" y="4" width="6" height="6" fill="none" stroke="#6d6d6d" stroke-width="1.2"/>
+      <rect x="14" y="4" width="6" height="6" fill="none" stroke="#6d6d6d" stroke-width="1.2"/>
+      <rect x="4" y="14" width="6" height="6" fill="none" stroke="#6d6d6d" stroke-width="1.2"/>
+    </svg>
+  </div>
+
+  {% if ticket.status == "active" %}
+    <div class="NP-actions">
+        <button class="NP-btn NP-btn-download" type="button" title="Last ned PDF" onclick="alert('Demo: Last ned PDF (ikke implementert)')">
+        ⬇ Last ned PDF
+        </button>
+        <button class="NP-btn NP-btn-share" type="button" title="Del billett" onclick="alert('Demo: Del billett (ikke implementert)')">
+        Del billett
+        </button>
+    </div>
+  {% elif ticket.status == "used" %}
+    <div class="NP-actions">
+        <button class="NP-btn NP-btn-download" type="button" title="Last ned PDF" onclick="alert('Demo: Last ned PDF (ikke implementert)')">
+        ⬇ Last ned PDF
+        </button>
+    </div>
+    <div class="NP-small-note">Denne billetten har allerede blitt brukt.</div>
+  {% elif ticket.status == "cancelled" %}
+    <div class="NP-actions">
+        <button class="NP-btn NP-btn-download" type="button" title="Last ned PDF" onclick="alert('Demo: Last ned PDF (ikke implementert)')">
+        ⬇ Last ned PDF
+        </button>
+    </div>
+    <div class="NP-small-note">Denne billetten har blitt kansellert og er ikke gyldig.</div>
+  {% endif %}
+</div>
