@@ -2,33 +2,49 @@
 
 {%block content%}
     <!-- Hero Section -->
-    <section class="py-5" style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1658046413536-6e5933dfd939') center/cover; min-height: 600px; display: flex; align-items: center;">
-        <div class="container text-center text-white">
-            <h1 class="display-3 fw-bold mb-4">
-                Oppdag Norge's<br>
-                <span class="text-primary">beste konserter</span>
-            </h1>
-            <p class="lead mb-4">Fra intime klubbscener til store arenaer – finn ditt neste musikalske eventyr</p>
-            <div class="d-flex gap-3 justify-content-center flex-wrap">
-                <button class="btn btn-primary btn-lg px-4">Se alle arrangementer</button>
-                <button class="btn btn-outline-light btn-lg px-4">Finn lokale konserter</button>
+    <section class="KN-hero">
+        <!-- Bakgrunn + overlay -->
+        <div class="KN-hero-background"></div>
+      
+        <!-- Innhold -->
+        <div class="KN-hero-content">
+          <h1 class="KN-hero-title">
+            Oppdag Norge's<br>
+            <span class="KN-hero-highlight">beste konserter</span>
+          </h1>
+          <p class="KN-hero-subtitle">
+            Fra intime klubbscener til store arenaer – finn ditt neste musikalske eventyr
+          </p>
+      
+          <!-- CTA-knapper -->
+          <div class="KN-hero-buttons">
+            <button class="KN-btn-primary">
+              <i class="bi bi-calendar-event KN-btn-icon"></i>
+              Se alle arrangementer
+              <i class="bi bi-arrow-right KN-btn-icon"></i>
+            </button>
+      
+            <button class="KN-btn-secondary">
+              <i class="bi bi-geo-alt KN-btn-icon"></i>
+              Finn lokale konserter
+            </button>
+          </div>
+      
+          <!-- Stats -->
+          <div class="KN-hero-stats">
+            <div class="KN-stat">
+              <div class="KN-stat-number">50K+</div>
+              <div class="KN-stat-label">Solgte billetter</div>
             </div>
-            
-            <!-- Stats -->
-            <div class="row mt-5 text-center">
-                <div class="col-md-4">
-                    <div class="display-6 fw-bold">50K+</div>
-                    <div class="th-muted">Solgte billetter</div>
-                </div>
-                <div class="col-md-4">
-                    <div class="display-6 fw-bold">200+</div>
-                    <div class="th-muted">Arrangementer</div>
-                </div>
-                <div class="col-md-4">
-                    <div class="display-6 fw-bold">15+</div>
-                    <div class="th-muted">Byer</div>
-                </div>
+            <div class="KN-stat">
+              <div class="KN-stat-number">200+</div>
+              <div class="KN-stat-label">Arrangementer</div>
             </div>
+            <div class="KN-stat">
+              <div class="KN-stat-number">15+</div>
+              <div class="KN-stat-label">Byer</div>
+            </div>
+          </div>
         </div>
     </section>
 {%endblock%}

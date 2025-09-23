@@ -1,4 +1,130 @@
 /*Hero block - Kamilla*/
+.KN-hero {
+    position: relative;
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+  }
+  
+  /* Bakgrunn med mørk overlay */
+  .KN-hero-background {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                url('https://images.unsplash.com/photo-1658046413536-6e5933dfd939')
+                center/cover no-repeat;
+    z-index: 0;
+  }
+  
+  .KN-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    padding: 1rem;
+  }
+  
+  
+  /* === 2. Tekst og Hierarki === */
+  .KN-hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem); /* dynamisk 5xl–7xl */
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  
+  .KN-hero-highlight {
+    color: #2563eb; /* blå aksent (blue-600) */
+  }
+  
+  .KN-hero-subtitle {
+    font-size: clamp(1.25rem, 3vw, 1.75rem); /* dynamisk xl–2xl */
+    opacity: 0.9;
+    margin-bottom: 2rem;
+  }
+  
+  
+  /* === 3. Call-to-Action Knapper === */
+  .KN-hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+  
+  /* Primær CTA-knapp */
+  .KN-btn-primary {
+    background-color: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .KN-btn-primary:hover {
+    background-color: #1d4ed8;
+  }
+  
+  /* Sekundær CTA-knapp */
+  .KN-btn-secondary {
+    background: transparent;
+    border: 2px solid #fff;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .KN-btn-secondary:hover {
+    background: #fff;
+    color: #000;
+  }
+  
+  .KN-btn-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+  
+  
+  /* === 4. Statistikkseksjon === */
+  .KN-hero-stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+  
+  .KN-stat {
+    text-align: center;
+  }
+  
+  .KN-stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  
+  .KN-stat-label {
+    font-size: 1rem;
+    opacity: 0.8;
+  }
 
 /*Nav bar - Christoffer*/
 /* === CB Navbar Styling === */
