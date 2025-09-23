@@ -14,7 +14,6 @@
       <span>TicketHub</span>
     </a>
 
-    <!-- Desktop-meny -->
     <div class="navbar-menu-CB">
       <a href="{% url 'base_demo' %}">Hjem</a>
       <a href="{% url 'base_demo' %}">Hovedside</a>
@@ -23,7 +22,6 @@
       <a href="#contact">Support</a>
     </div>
 
-    <!-- Actions -->
     <div class="navbar-actions-CB">
       <!-- Søke-knapp -->
       <button class="navbar-btn-CB" id="search-btn-CB">
@@ -31,7 +29,7 @@
       </button>
 
       <!-- Login -->
-      <a href="#login" class="navbar-btn-CB">
+      <a href="{% url 'login' %}" class="navbar-btn-CB">
         👤 <span class="login-btn-text-CB">Logg inn</span>
       </a>
 
@@ -40,7 +38,6 @@
     </div>
   </div>
 
-  <!-- Mobile-meny -->
   <div id="mobile-menu-CB" class="mobile-menu-CB">
     <a href="{% url 'base_demo' %}">Hjem</a>
     <a href="{% url 'base_demo' %}">Hovedside</a>
@@ -50,7 +47,6 @@
   </div>
 </nav>
 
-<!-- Mobilmeny JS -->
 <script>
   const toggle = document.getElementById("menu-toggle-CB");
   const menu = document.getElementById("mobile-menu-CB");
@@ -60,11 +56,11 @@
 </script>
 
 <!-- Main content -->
-{% comment %} <main>
+<main>
   {% block content %}
   <!-- Innholdet for hver side settes her -->
   {% endblock %}
-</main> {% endcomment %}
+</main>
 
 </body>
 </html>
