@@ -154,6 +154,15 @@
   border-bottom: 1px solid var(--th-light-gray);
 }
 
+.search-red-CB {
+  background-color: #dc2626;
+  color: #fff;
+}
+.search-red-CB:hover {
+  background-color: #b91c1c;
+  color: #fff;
+}
+
 .navbar-container-CB {
   max-width: 1280px;
   margin: 0 auto;
