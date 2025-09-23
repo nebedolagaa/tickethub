@@ -677,124 +677,138 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 /*Event card - Jesper*/
+
 .JF-side {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 24px;
   justify-content: flex-start;
 }
 
 .JF-eventkort {
   background-color: var(--th-dark-gray, #111);
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
-  width: 300px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  width: 340px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.7);
   display: flex;
   flex-direction: column;
   transition: box-shadow 0.2s;
+  margin: 8px 0;
 }
 .JF-eventkort:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.8);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.9);
 }
 
 .JF-bilde-wrap {
   position: relative;
   width: 100%;
-  height: 200px;
+  height: 220px;
   overflow: hidden;
+  background: #222;
 }
-
-.JF-bilde-wrap img {
+.JF-bilde {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-
 .JF-kategori {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 16px;
+  left: 16px;
   background-color: var(--th-red, #dc2626);
   color: var(--th-white, #fff);
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 14px;
-  line-height: 16px;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 18px;
   z-index: 2;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
 }
-
 .JF-utsolgt-merke {
   background-color: var(--th-red, #dc2626);
 }
 
 .JF-detaljer {
-  padding: 16px;
+  background: #181818;
+  padding: 24px 20px 20px 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  min-height: 180px;
+  gap: 6px;
+  min-height: 200px;
 }
-
 .JF-tittel {
-  font-size: 20px;
-  margin: 0 0 4px 0;
-  line-height: 22px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 2px 0;
   color: var(--th-white, #fff);
 }
-
-.JF-info {
-  font-size: 14px;
+.JF-undertittel {
+  font-size: 1.05rem;
   color: var(--th-muted, #9ca3af);
-  margin: 0 0 4px 0;
+  font-weight: 400;
+  margin-bottom: 2px;
 }
-
 .JF-meta-rad {
   display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  font-size: 14px;
+  flex-direction: column;
+  gap: 0;
+  font-size: 1rem;
   color: #d1d5db;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
-
-.JF-pris {
-  font-size: 18px;
-  margin: 8px 0 0 0;
+.JF-dato, .JF-tid {
+  font-size: 1rem;
   color: var(--th-white, #fff);
+  font-weight: 400;
 }
-
+.JF-info {
+  font-size: 1rem;
+  color: var(--th-muted, #9ca3af);
+  margin-bottom: 2px;
+}
+.JF-pris {
+  font-size: 1.15rem;
+  color: var(--th-white, #fff);
+  font-weight: 600;
+  margin: 10px 0 0 0;
+}
 .JF-kjop-knapp {
-  margin-top: 8px;
+  margin-top: 16px;
   background-color: var(--th-red, #dc2626);
   color: var(--th-white, #fff);
-  padding: 10px 12px;
+  padding: 12px 0;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1.1rem;
   width: 100%;
-  font-weight: bold;
+  font-weight: 700;
   transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  letter-spacing: 0.5px;
 }
-
 .JF-kjop-knapp:hover:not(:disabled) {
   background-color: var(--th-red-dark, #b91c1c);
 }
-
 .JF-utsolgt .JF-kjop-knapp {
-  background-color: var(--th-dark-gray, #111);
+  background-color: #222;
+  color: var(--th-white, #fff);
   cursor: not-allowed;
-  font-weight: 600;
+  font-weight: 700;
+  border: none;
+  box-shadow: none;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 800px) {
   .JF-side {
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
   .JF-eventkort {
-    width: 92%;
+    width: 98%;
     max-width: 420px;
   }
 }

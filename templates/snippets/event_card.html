@@ -1,27 +1,27 @@
 <article class="JF-eventkort {% if event.sold_out %}JF-utsolgt{% endif %}">
   <div class="JF-bilde-wrap">
-    <img src="{{ event.image_url }}" alt="{{ event.title }}">
     {% if event.sold_out %}
       <span class="JF-kategori JF-utsolgt-merke">Utsolgt</span>
     {% else %}
       <span class="JF-kategori">{{ event.category }}</span>
     {% endif %}
+    <img src="/media/images/{{ event.image_filename }}" alt="{{ event.title }}" class="JF-bilde">
   </div>
-
   <div class="JF-detaljer">
     <h2 class="JF-tittel">{{ event.title }}</h2>
+    {% if event.subtitle %}
+      <div class="JF-undertittel">{{ event.subtitle }}</div>
+    {% endif %}
     <div class="JF-meta-rad">
       <span class="JF-dato">{{ event.date }}</span>
-      <span class="JF-sted">{{ event.venue }}</span>
+      {% if event.time %}<span class="JF-tid">{{ event.time }}</span>{% endif %}
     </div>
-    {% if event.description %}
-      <p class="JF-info">{{ event.description }}</p>
-    {% endif %}
-    <p class="JF-pris">{{ event.price }} kr</p>
+    <div class="JF-info">{{ event.venue }}</div>
+    <p class="JF-pris">Fra {{ event.price }} kr</p>
     {% if event.sold_out %}
-      <button class="JF-kjop-knapp" disabled aria-label="Utsolgt">Utsolgt</button>
+      <button class="JF-kjop-knapp" disabled>Utsolgt</button>
     {% else %}
-      <button class="JF-kjop-knapp" style="font-weight: bold;" aria-label="Kjøp billett til {{ event.title }}">Kjøp billett</button>
+      <button class="JF-kjop-knapp">Kjøp billett</button>
     {% endif %}
   </div>
 </article>
