@@ -1,0 +1,27 @@
+<article class="JF-eventkort {% if utsolgt %}JF-utsolgt{% endif %}">
+  <div class="JF-bilde-wrap">
+    <img src="{% static bilde %}" alt="{{ alt_tekst }}">
+    {% if utsolgt %}
+      <span class="JF-kategori JF-utsolgt-merke">Utsolgt</span>
+    {% else %}
+      <span class="JF-kategori">{{ kategori }}</span>
+    {% endif %}
+  </div>
+
+  <div class="JF-detaljer">
+    <h2 class="JF-tittel">{{ tittel }}</h2>
+    <p class="JF-info">{{ info }}</p>
+
+    <div class="JF-meta-rad">
+      <span class="JF-dato">{{ dato }}</span>
+      <span class="JF-sted">{{ sted }}</span>
+    </div>
+
+    <p class="JF-pris">Fra {{ pris }} kr</p>
+    {% if utsolgt %}
+      <button class="JF-kjop-knapp" disabled>Utsolgt</button>
+    {% else %}
+      <button class="JF-kjop-knapp" style="font-weight: bold;">Kjøp billett</button>
+    {% endif %}
+  </div>
+</article>
