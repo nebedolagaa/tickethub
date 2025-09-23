@@ -127,7 +127,6 @@
   }
 
 /*Nav bar - Christoffer*/
-/* === CB Navbar Styling === */
 .navbar-CB {
   position: sticky;
   top: 0;
@@ -267,7 +266,6 @@
   border-radius: 0.5rem;
 }
 
-/* Oppretter flex til alle input feltene utenom button, styler også disse boksene*/
 input[name="ES-ArtistSok"] {
   flex: 2 1 0%;
   min-width: 250px;
@@ -305,27 +303,27 @@ input[name="ES-ArtistSok"]:hover {
   left: 10px;
   top: 25px;
   transform: translateY(-50%);
-  pointer-events: none; /* gjør at ikonet ikke stjeler klikk */
+  pointer-events: none;
   width: 1rem;
   height: 1rem;
   color: #9CA3AF;
 }
 
 .ES-input {
-  padding-left: 35px;   /* lager plass til ikonet */
-  height: 3rem;         /* høyde */
+  padding-left: 35px;
+  height: 3rem;
   box-sizing: border-box;
 }
 
 .ES-button {
-  padding-left: 35px;   /* lager plass til ikonet */
-  height: 2.5rem;         /* høyde */
+  padding-left: 35px;
+  height: 2.5rem;
   box-sizing: border-box;
 }
 
 input[name="ES-ArtistSok"]::placeholder {
-  color: #A9A9A9;   /* endrer fargen på placeholder-teksten */
-  opacity: 1;       /* standard er ofte 0.5 i mange browsere */
+  color: #A9A9A9;
+  opacity: 1;
 }
 
 
@@ -335,7 +333,7 @@ input[name="ES-ArtistSok"]::placeholder {
   padding-right: 10px;
 }
 .ES-KategoriLenker a.ES-Lenke:hover {
-  color: #b91c1c; /* kan legge til hover-effekt */
+  color: #b91c1c;
 }
 
 .ES-form-tekst {
@@ -365,7 +363,7 @@ input[name="ES-ArtistSok"]::placeholder {
   left: 10px;
   top: 30px;
   transform: translateY(-50%);
-  pointer-events: none; /* gjør at ikonet ikke stjeler klikk */
+  pointer-events: none;
   width: 1rem;
   height: 1rem;
   color: #ffffff;
@@ -380,7 +378,7 @@ input[name="ES-ArtistSok"]::placeholder {
   border: 1px solid #333333;
   border-radius: 4px;
   transform: translateY(-50%);
-  pointer-events: none; /* gjør at ikonet ikke stjeler klikk */
+  pointer-events: none;
   width: 1rem;
   height: 1rem;
   color: #9CA3AF;
