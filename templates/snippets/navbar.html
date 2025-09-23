@@ -1,29 +1,26 @@
-<!DOCTYPE html>
-<html lang="no">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}TicketHub{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'style.css' %}">
-</head>
-<body>
-
 <!-- Navbar -->
 <nav class="navbar-CB">
-  <div class="navbar-container-CB">
+  <di<!-- Mobilmenu JS -->
+<script>
+  const toggle = document.getElementById("menu-toggle-CB");
+  const menu = document.getElementById("mobile-menu-CB");
+  toggle.onclick = () => {
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+  };
+</script>ntainer-CB">
     
     <!-- Logo -->
-    <a href="{% url 'home' %}" class="navbar-logo-CB">
+    <a href="{% url 'base_demo' %}" class="navbar-logo-CB">
       <span>TicketHub</span>
     </a>
 
     <!-- Desktop-meny -->
     <div class="navbar-menu-CB">
-      <a href="{% url 'home' %}">Hjem</a>
-      <a href="{% url 'main' %}">Hovedside</a>
-      <a href="{% url 'events' %}">Alle konserter</a>
-      <a href="{% url 'categories' %}">Musikksjangler</a>
-      <a href="{% url 'contact' %}">Support</a>
+      <a href="{% url 'base_demo' %}">Hjem</a>
+      <a href="{% url 'base_demo' %}">Hovedside</a>
+      <a href="#events">Alle konserter</a>
+      <a href="#categories">Musikksjangler</a>
+      <a href="#contact">Support</a>
     </div>
 
     <!-- Actions -->
@@ -34,7 +31,7 @@
       </button>
 
       <!-- Login -->
-      <a href="{% url 'login' %}" class="navbar-btn-CB">
+      <a href="#login" class="navbar-btn-CB">
         👤 <span class="login-btn-text-CB">Logg inn</span>
       </a>
 
@@ -45,11 +42,11 @@
 
   <!-- Mobile-meny -->
   <div id="mobile-menu-CB" class="mobile-menu-CB">
-    <a href="{% url 'home' %}">Hjem</a>
-    <a href="{% url 'main' %}">Hovedside</a>
-    <a href="{% url 'events' %}">Alle konserter</a>
-    <a href="{% url 'categories' %}">Musikksjangler</a>
-    <a href="{% url 'contact' %}">Support</a>
+    <a href="{% url 'base_demo' %}">Hjem</a>
+    <a href="{% url 'base_demo' %}">Hovedside</a>
+    <a href="#events">Alle konserter</a>
+    <a href="#categories">Musikksjangler</a>
+    <a href="#contact">Support</a>
   </div>
 </nav>
 
@@ -63,11 +60,11 @@
 </script>
 
 <!-- Main content -->
-<main>
+{% comment %} <main>
   {% block content %}
   <!-- Innholdet for hver side settes her -->
   {% endblock %}
-</main>
+</main> {% endcomment %}
 
 </body>
 </html>

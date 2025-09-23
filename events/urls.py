@@ -3,5 +3,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('', views.base_demo, name='base_demo'),  # Главная страница с демонстрацией всех компонентов
     path('demo/profile/', views.profile_demo, name='profile_demo'),
 ]
