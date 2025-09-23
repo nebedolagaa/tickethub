@@ -160,9 +160,8 @@
   padding: 0 1rem;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 100%;
-  gap: 2rem; /* Add spacing between children */
 }
 
 .navbar-logo-CB {
