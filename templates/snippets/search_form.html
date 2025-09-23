@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> <!-- Font Awesome CSS for ikoner -->
+
+<fieldset class="ES-SokeskjemaField">
+  <form action="" method="get" class="ES-SokeskjemaForm">
+  <div class="ES-form">
+    <div class="ES-input-wrapper">
+      <i class="fas fa-search ES-input-icon"></i>
+      <input type="text" class="ES-input" name="ES-ArtistSok" placeholder="Søk etter artist, arrangement eller sjanger...">
+    </div>
+
+    <div class="ES-input-wrapper">
+      <i class="fas fa-map-marker-alt ES-input-icon"></i> <!-- sted-ikon -->
+      <select id="ES-byerdd" class="ES-input" name="ES-BySelect"> <!-- Dropdown-meny for å velge by -->
+        <option value="">Velg by</option>
+        <option value="oslo">Oslo</option>
+        <option value="bergen">Bergen</option>
+        <option value="trondheim">Trondheim</option>
+        <option value="stavanger">Stavanger</option>
+        <option value="tromso">Tromsø</option>
+        <option value="kristiansand">Kristiansand</option>
+        <option value="drammen">Drammen</option>
+        <option value="fredrikstad">Fredrikstad</option>
+        <option value="sandnes">Sandnes</option>
+        <option value="sarpsborg">Sarpsborg</option>
+      </select>
+    </div>
+    
+    <div class="ES-input-wrapper">
+      <i class="fas fa-calendar-alt ES-input-icon"></i> <!-- kalender-ikon -->
+      <select id="tidspunkt" class="ES-input" name="ES-Tidspunkt"> <!-- Dropdown for valg av tidspunkt -->
+        <option value="">Velg tidspunkt</option>
+        <option value="idag">I dag</option>
+        <option value="imorgen">I morgen</option>
+        <option value="denne-uken">Denne uken</option>
+        <option value="denne-maneden">Denne måneden</option>
+        <option value="neste-maned">Neste måned</option>
+      </select>
+    </div>
+    
+
+    
+    <div class="ES-KategoriLenker">
+      <span class="ES-form-tekst">Populære:</span> <!-- Populære musikk-sjangre som lenker -->
+      <a href="rock-musikk.html" class="ES-Lenke">Rock</a>
+      <a href="pop-musikk.html" class="ES-Lenke">Pop</a>
+      <a href="jazz-musikk.html" class="ES-Lenke">Jazz</a>
+      <a href="klassisk-musikk.html" class="ES-Lenke">Klassisk</a>
+      <a href="folk-musikk.html" class="ES-Lenke">Folk</a>
+      <a href="electronic-musikk.html" class="ES-Lenke">Electronic</a>
+     
+      <div class="ES-input-wrapper">
+        <i class="fas fa-search ES-input-icon-sok"></i>
+        <button type="submit" class="ES-Sokeknapp ES-button">Søk arrengementer</button> <!-- Send-knapp for å sende søket -->
+      </div>
+      
+      <div class="ES-input-wrapper ES-FiltrerSok">
+        <i class="fas fa-filter ES-input-icon-filter"></i> <!-- filter-ikon -->
+      </div>
+    </div>
+    </div>
+  </form>
+</fieldset>
