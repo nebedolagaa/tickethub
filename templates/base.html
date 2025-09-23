@@ -9,15 +9,12 @@
 </head>
 <body>
 
-  {% comment %} <!-- Navigasjon (snippet) -->
-  {% include "snippets/navbar.html" %} {% endcomment %}
-
   <main class="container mt-4">
     {% block content %}{% endblock %}
+    <div class="mt-5">
+      {% include "snippets/ticket_card.html" %}
+    </div>
   </main>
-
-  {% comment %} <!-- Footer (snippet) -->
-  {% include "snippets/footer.html" %} {% endcomment %}
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

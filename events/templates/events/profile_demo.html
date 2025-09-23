@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+  <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-around; ">
+    {% for t in tickets %}
+      {% include "snippets/ticket_card.html" with ticket=t %}
+    {% endfor %}
+  </div>
+{% endblock %}
