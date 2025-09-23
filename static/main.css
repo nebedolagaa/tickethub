@@ -685,13 +685,17 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .JF-eventkort {
-  background-color: #111;
+  background-color: var(--th-dark-gray, #111);
   border-radius: 12px;
   overflow: hidden;
   width: 300px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.6);
   display: flex;
   flex-direction: column;
+  transition: box-shadow 0.2s;
+}
+.JF-eventkort:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.8);
 }
 
 .JF-bilde-wrap {
@@ -705,22 +709,24 @@ input[name="ES-ArtistSok"]::placeholder {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .JF-kategori {
   position: absolute;
   top: 12px;
   left: 12px;
-  background-color: #dc2626;
-  color: #fff;
+  background-color: var(--th-red, #dc2626);
+  color: var(--th-white, #fff);
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 14px;
   line-height: 16px;
+  z-index: 2;
 }
 
 .JF-utsolgt-merke {
-  background-color: #dc2626;
+  background-color: var(--th-red, #dc2626);
 }
 
 .JF-detaljer {
@@ -728,19 +734,20 @@ input[name="ES-ArtistSok"]::placeholder {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  min-height: 200px;
+  min-height: 180px;
 }
 
 .JF-tittel {
   font-size: 20px;
-  margin: 0;
+  margin: 0 0 4px 0;
   line-height: 22px;
+  color: var(--th-white, #fff);
 }
 
 .JF-info {
   font-size: 14px;
-  color: #9ca3af;
-  margin: 0;
+  color: var(--th-muted, #9ca3af);
+  margin: 0 0 4px 0;
 }
 
 .JF-meta-rad {
@@ -749,31 +756,35 @@ input[name="ES-ArtistSok"]::placeholder {
   flex-wrap: wrap;
   font-size: 14px;
   color: #d1d5db;
+  margin-bottom: 4px;
 }
 
 .JF-pris {
   font-size: 18px;
   margin: 8px 0 0 0;
+  color: var(--th-white, #fff);
 }
 
 .JF-kjop-knapp {
   margin-top: 8px;
-  background-color: #dc2626;
-  color: #fff;
+  background-color: var(--th-red, #dc2626);
+  color: var(--th-white, #fff);
   padding: 10px 12px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
   width: 100%;
+  font-weight: bold;
+  transition: background 0.2s;
 }
 
 .JF-kjop-knapp:hover:not(:disabled) {
-  background-color: #b91c1c;
+  background-color: var(--th-red-dark, #b91c1c);
 }
 
 .JF-utsolgt .JF-kjop-knapp {
-  background-color: #111;
+  background-color: var(--th-dark-gray, #111);
   cursor: not-allowed;
   font-weight: 600;
 }

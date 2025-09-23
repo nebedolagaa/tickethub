@@ -10,18 +10,18 @@
 
   <div class="JF-detaljer">
     <h2 class="JF-tittel">{{ event.title }}</h2>
-    <p class="JF-info">{{ event.venue }}</p>
-
     <div class="JF-meta-rad">
       <span class="JF-dato">{{ event.date }}</span>
       <span class="JF-sted">{{ event.venue }}</span>
     </div>
-
-    <p class="JF-pris">{{ event.price }}</p>
+    {% if event.description %}
+      <p class="JF-info">{{ event.description }}</p>
+    {% endif %}
+    <p class="JF-pris">{{ event.price }} kr</p>
     {% if event.sold_out %}
-      <button class="JF-kjop-knapp" disabled>Utsolgt</button>
+      <button class="JF-kjop-knapp" disabled aria-label="Utsolgt">Utsolgt</button>
     {% else %}
-      <button class="JF-kjop-knapp" style="font-weight: bold;">Kjøp billett</button>
+      <button class="JF-kjop-knapp" style="font-weight: bold;" aria-label="Kjøp billett til {{ event.title }}">Kjøp billett</button>
     {% endif %}
   </div>
 </article>
