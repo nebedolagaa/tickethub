@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-<html lang="no">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}TicketHub{% endblock %}</title>
-  <link rel="stylesheet" href="{% static 'style.css' %}">
-</head>
-<body>
-
 <!-- Navbar -->
 <nav class="navbar-CB">
   <div class="navbar-container-CB">
-    
-    <!-- Logo -->
     <a href="{% url 'home' %}" class="navbar-logo-CB">
       <span>TicketHub</span>
     </a>
 
-    <!-- Desktop-meny -->
     <div class="navbar-menu-CB">
       <a href="{% url 'home' %}">Hjem</a>
       <a href="{% url 'main' %}">Hovedside</a>
@@ -26,24 +13,13 @@
       <a href="{% url 'contact' %}">Support</a>
     </div>
 
-    <!-- Actions -->
     <div class="navbar-actions-CB">
-      <!-- Søke-knapp -->
-      <button class="navbar-btn-CB" id="search-btn-CB">
-        🔍 <span class="search-btn-text-CB">Søk</span>
-      </button>
-
-      <!-- Login -->
-      <a href="{% url 'login' %}" class="navbar-btn-CB">
-        👤 <span class="login-btn-text-CB">Logg inn</span>
-      </a>
-
-      <!-- Hamburger (mobil) -->
+      <button class="navbar-btn-CB" id="search-btn-CB">🔍 <span class="search-btn-text-CB">Søk</span></button>
+      <a href="{% url 'login' %}" class="navbar-btn-CB">👤 <span class="login-btn-text-CB">Logg inn</span></a>
       <button id="menu-toggle-CB" class="navbar-btn-CB">☰</button>
     </div>
   </div>
 
-  <!-- Mobile-meny -->
   <div id="mobile-menu-CB" class="mobile-menu-CB">
     <a href="{% url 'home' %}">Hjem</a>
     <a href="{% url 'main' %}">Hovedside</a>
@@ -53,7 +29,6 @@
   </div>
 </nav>
 
-<!-- Mobilmeny JS -->
 <script>
   const toggle = document.getElementById("menu-toggle-CB");
   const menu = document.getElementById("mobile-menu-CB");
@@ -61,14 +36,3 @@
     menu.style.display = menu.style.display === "block" ? "none" : "block";
   };
 </script>
-
-<!-- Main content -->
-<main>
-  {% block content %}
-  <!-- Innholdet for hver side settes her -->
-  {% endblock %}
-</main>
-
-</body>
-</html>
-
