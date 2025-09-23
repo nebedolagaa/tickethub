@@ -168,6 +168,7 @@
   display: flex;
   align-items: center;
   color: var(--th-white); /* hvit tekst */
+  text-decoration: none;
 }
 
 .navbar-logo-CB img {
