@@ -1,0 +1,55 @@
+<!-- templates/snippets/navbar.html -->
+<nav class="CB-navbar">
+  <div class="navbar-container-CB">
+
+    <!-- Logo -->
+    <a href="{{ logo_url|default:'/' }}" class="navbar-logo-CB">
+      <span>{{ logo_text|default:"TicketHub" }}</span>
+    </a>
+
+    <!-- Desktop-meny -->
+    <div class="navbar-menu-CB">
+      {% for item in menu_items %}
+        <a href="{{ item.url }}">{{ item.label }}</a>
+      {% endfor %}
+    </div>
+
+    <!-- Actions -->
+    <div class="navbar-actions-CB">
+      <!-- Søke-knapp -->
+      {% if show_search %}
+        <button class="navbar-btn-CB" id="search-btn-CB">
+          🔍 <span class="search-btn-text-CB">Søk</span>
+        </button>
+      {% endif %}
+
+      <!-- Login-knapp -->
+      {% if show_login %}
+        <a href="{{ login_url|default:'/login' }}" class="navbar-btn-CB">
+          👤 <span class="login-btn-text-CB">Logg inn</span>
+        </a>
+      {% endif %}
+
+      <!-- Hamburger (mobil) -->
+      <button id="menu-toggle-CB" class="navbar-btn-CB">☰</button>
+    </div>
+  </div>
+
+  <!-- Mobile-meny -->
+  <div id="mobile-menu-CB" class="mobile-menu-CB">
+    {% for item in menu_items %}
+      <a href="{{ item.url }}">{{ item.label }}</a>
+    {% endfor %}
+  </div>
+</nav>
+
+<!-- JS for toggling mobilmeny -->
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.getElementById("menu-toggle-CB");
+    const menu = document.getElementById("mobile-menu-CB");
+    toggle.addEventListener("click", () => {
+      menu.style.display = menu.style.display === "block" ? "none" : "block";
+    });
+  });
+</script>
