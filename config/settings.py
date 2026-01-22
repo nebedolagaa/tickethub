@@ -17,7 +17,9 @@ INSTALLED_APPS = [
 
     # våre apper
     'events',
-    'accounts',
+    'users',
+    'tickets',
+    'pages',
 ]
 
 MIDDLEWARE = [
@@ -30,7 +32,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'eventhub.urls'
+ROOT_URLCONF = 'config.urls'
 
 TEMPLATES = [
     {
@@ -48,7 +50,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'eventhub.wsgi.application'
+WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
