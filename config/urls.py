@@ -6,6 +6,4 @@ urlpatterns = [
     path('', include('events.urls')),
     path('users/', include('users.urls')),
     path('users/', include('django.contrib.auth.urls')),
-    path('tickets/', include('tickets.urls')),
-    path('pages/', include('pages.urls'))
 ]
