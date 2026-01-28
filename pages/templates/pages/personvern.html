@@ -1,0 +1,123 @@
+{% load static %}
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personvern - TicketHub</title>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+  </head>
+  <body>
+    {% include "snippets/navbar.html" %}
+
+    <div class="NP-page-container">
+      <div class="NP-page-inner">
+        <h1 class="NP-page-title">Personvernerklæring</h1>
+        <p class="NP-page-subtitle">Sist oppdatert: {% now "d. F Y" %}</p>
+
+        <div class="NP-content-section">
+          <h2>1. Innledning</h2>
+          <p>
+            TicketHub Norway AS ("vi", "oss", "vår") er forpliktet til å
+            beskytte ditt personvern. Denne personvernerklæringen forklarer
+            hvordan vi samler inn, bruker og beskytter dine personopplysninger.
+          </p>
+
+          <h2>2. Hvilke opplysninger samler vi inn?</h2>
+          <p>Vi samler inn følgende typer informasjon:</p>
+          <ul>
+            <li>
+              <strong>Kontaktinformasjon:</strong> Navn, e-postadresse,
+              telefonnummer
+            </li>
+            <li>
+              <strong>Betalingsinformasjon:</strong> Kortdetaljer (lagres
+              kryptert)
+            </li>
+            <li>
+              <strong>Brukerinformasjon:</strong> Brukernavn, passord (hashet)
+            </li>
+            <li>
+              <strong>Billettinformasjon:</strong> Kjøpshistorikk,
+              arrangementspreferanser
+            </li>
+            <li>
+              <strong>Teknisk informasjon:</strong> IP-adresse, nettlesertype,
+              cookies
+            </li>
+          </ul>
+
+          <h3 class="mt-4">3. Hvordan bruker vi opplysningene?</h3>
+          <p>Vi bruker dine personopplysninger til å:</p>
+          <ul>
+            <li>Behandle billettbestillinger og betalinger</li>
+            <li>Kommunisere om arrangementer og billetter</li>
+            <li>Forbedre våre tjenester og brukeropplevelse</li>
+            <li>Sende nyhetsbrev (kun med ditt samtykke)</li>
+            <li>Overholde juridiske forpliktelser</li>
+          </ul>
+
+          <h3 class="mt-4">4. Deling av informasjon</h3>
+          <p>
+            Vi deler ikke dine personopplysninger med tredjeparter, bortsett
+            fra:
+          </p>
+          <ul>
+            <li>Arrangører (for arrangementadministrasjon)</li>
+            <li>Betalingsleverandører (for betalingsbehandling)</li>
+            <li>Når det er lovpålagt</li>
+          </ul>
+
+          <h3 class="mt-4">5. Sikkerhet</h3>
+          <p>
+            Vi bruker bransjestandarder for sikkerhet, inkludert kryptering
+            (SSL/TLS), sikre servere og regelmessige sikkerhetsoppdateringer for
+            å beskytte dine data.
+          </p>
+
+          <h3 class="mt-4">6. Dine rettigheter</h3>
+          <p>I henhold til GDPR har du rett til å:</p>
+          <ul>
+            <li>Få innsyn i dine personopplysninger</li>
+            <li>Rette unøyaktige opplysninger</li>
+            <li>Slette dine opplysninger ("retten til å bli glemt")</li>
+            <li>Begrense behandling av dine opplysninger</li>
+            <li>Dataportabilitet</li>
+            <li>Protestere mot behandling</li>
+          </ul>
+
+          <h3 class="mt-4">7. Cookies</h3>
+          <p>
+            Vi bruker cookies for å forbedre din opplevelse på nettstedet. Du
+            kan kontrollere cookies gjennom nettleserinnstillingene dine.
+          </p>
+
+          <h2>8. Kontakt oss</h2>
+          <p>Har du spørsmål om vår personvernerklæring? Kontakt oss på:</p>
+          <p>
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:privacy@tickethub.no">privacy@tickethub.no</a><br />
+            <i class="fas fa-map-marker-alt"></i>
+            TicketHub Norway AS, Bredalsveien 14, 3511 Hønefoss
+          </p>
+
+          <div class="NP-alert NP-alert-info">
+            <i class="fas fa-info-circle NP-alert-icon"></i>
+            Denne personvernerklæringen kan oppdateres. Vi vil informere deg om
+            vesentlige endringer via e-post eller på nettstedet.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include "snippets/footer.html" %}
+  </body>
+</html>

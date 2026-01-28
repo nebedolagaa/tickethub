@@ -1,0 +1,121 @@
+{% load static %}
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ofte stilte spørsmål - TicketHub</title>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+  </head>
+  <body>
+    {% include "snippets/navbar.html" %}
+
+    <div class="NP-page-container">
+      <div class="NP-page-inner">
+        <h1 class="NP-page-title">Ofte stilte spørsmål</h1>
+        <p class="NP-page-subtitle">
+          Finn svar på de vanligste spørsmålene om TicketHub
+        </p>
+
+        <div class="NP-accordion">
+          <div class="NP-accordion-item">
+            <button class="NP-accordion-header" onclick="toggleAccordion(this)">
+              Hvordan kjøper jeg billetter?
+              <i class="fas fa-chevron-down NP-accordion-icon"></i>
+            </button>
+            <div class="NP-accordion-content active">
+              <div class="NP-accordion-body">
+                Du kan kjøpe billetter ved å søke etter arrangementet du ønsker
+                å delta på, velge antall billetter og fullføre betalingen.
+              </div>
+            </div>
+          </div>
+
+          <div class="NP-accordion-item">
+            <button class="NP-accordion-header" onclick="toggleAccordion(this)">
+              Hvordan får jeg billettene mine?
+              <i class="fas fa-chevron-down NP-accordion-icon"></i>
+            </button>
+            <div class="NP-accordion-content">
+              <div class="NP-accordion-body">
+                Billettene sendes til deg på e-post etter kjøpet. Du kan også
+                finne dem i din profil under "Mine billetter".
+              </div>
+            </div>
+          </div>
+
+          <div class="NP-accordion-item">
+            <button class="NP-accordion-header" onclick="toggleAccordion(this)">
+              Kan jeg få refundert billetter?
+              <i class="fas fa-chevron-down NP-accordion-icon"></i>
+            </button>
+            <div class="NP-accordion-content">
+              <div class="NP-accordion-body">
+                Refusjon avhenger av arrangementets vilkår. Les mer på vår
+                <a href="/refusjon/">refusjonside</a>.
+              </div>
+            </div>
+          </div>
+
+          <div class="NP-accordion-item">
+            <button class="NP-accordion-header" onclick="toggleAccordion(this)">
+              Hvilke betalingsmetoder aksepterer dere?
+              <i class="fas fa-chevron-down NP-accordion-icon"></i>
+            </button>
+            <div class="NP-accordion-content">
+              <div class="NP-accordion-body">
+                Vi aksepterer Visa, Mastercard, Vipps og andre vanlige
+                betalingsmåter.
+              </div>
+            </div>
+          </div>
+
+          <div class="NP-accordion-item">
+            <button class="NP-accordion-header" onclick="toggleAccordion(this)">
+              Hva skjer hvis arrangementet avlyses?
+              <i class="fas fa-chevron-down NP-accordion-icon"></i>
+            </button>
+            <div class="NP-accordion-content">
+              <div class="NP-accordion-body">
+                Hvis et arrangement avlyses, vil du automatisk få refundert
+                billettprisen til den registrerte betalingsmetoden.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include "snippets/footer.html" %}
+
+    <script>
+      function toggleAccordion(button) {
+        const content = button.nextElementSibling;
+        const icon = button.querySelector(".NP-accordion-icon");
+        const isActive = content.classList.contains("active");
+
+        // Close all accordions
+        document.querySelectorAll(".NP-accordion-content").forEach(item => {
+          item.classList.remove("active");
+        });
+        document.querySelectorAll(".NP-accordion-icon").forEach(item => {
+          item.classList.remove("active");
+        });
+
+        // Toggle current accordion
+        if (!isActive) {
+          content.classList.add("active");
+          icon.classList.add("active");
+        }
+      }
+    </script>
+  </body>
+</html>

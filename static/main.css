@@ -12,6 +12,9 @@
 }
 
 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family:
     Inter,
     system-ui,
@@ -20,6 +23,12 @@
     Roboto,
     "Helvetica Neue",
     Arial;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--th-black);
 }
 
 /*Hero block - Kamilla*/
@@ -996,5 +1005,398 @@ input[name="ES-ArtistSok"]::placeholder {
   .JF-events-container,
   .NP-tickets-container {
     gap: 1rem;
+  }
+}
+
+/* Static Pages Styles - Nikita */
+
+/* General Page Layout */
+.NP-page-container {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    var(--th-dark-gray) 0%,
+    var(--th-gray) 100%
+  );
+  color: var(--th-white);
+  padding: 60px 0;
+  position: relative;
+}
+
+.NP-page-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(
+      circle at 30% 80%,
+      rgba(0, 199, 80, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(220, 38, 38, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
+.NP-page-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.NP-page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin-bottom: 1rem;
+}
+
+.NP-page-subtitle {
+  font-size: 1.125rem;
+  color: var(--th-muted);
+  margin-bottom: 2rem;
+}
+
+/* Content Sections */
+.NP-content-section {
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.NP-content-section h2,
+.NP-content-section h3 {
+  color: var(--th-white);
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.NP-content-section h2:first-child,
+.NP-content-section h3:first-child {
+  margin-top: 0;
+}
+
+.NP-content-section h2 {
+  font-size: 1.875rem;
+  font-weight: 600;
+}
+
+.NP-content-section h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.NP-content-section p {
+  color: var(--th-muted);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.NP-content-section ul,
+.NP-content-section ol {
+  color: var(--th-muted);
+  margin-left: 1.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.NP-content-section li {
+  margin-bottom: 0.5rem;
+}
+
+.NP-content-section strong {
+  color: var(--th-white);
+  font-weight: 600;
+}
+
+.NP-content-section a {
+  color: var(--th-red);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.NP-content-section a:hover {
+  color: var(--th-red-light);
+}
+
+/* Alert Box */
+.NP-alert {
+  background: rgba(220, 38, 38, 0.1);
+  border-left: 4px solid var(--th-red);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  color: var(--th-white);
+}
+
+.NP-alert-info {
+  background: rgba(59, 130, 246, 0.1);
+  border-left-color: #3b82f6;
+}
+
+.NP-alert-icon {
+  margin-right: 0.5rem;
+  color: var(--th-red);
+}
+
+/* FAQ - Accordion */
+.NP-accordion {
+  background: var(--th-dark-gray);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.NP-accordion-item {
+  border-bottom: 1px solid var(--th-light-gray);
+}
+
+.NP-accordion-item:last-child {
+  border-bottom: none;
+}
+
+.NP-accordion-header {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  color: var(--th-white);
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.NP-accordion-header:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.NP-accordion-icon {
+  transition: transform 0.3s;
+}
+
+.NP-accordion-icon.active {
+  transform: rotate(180deg);
+}
+
+.NP-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.NP-accordion-content.active {
+  max-height: 500px;
+}
+
+.NP-accordion-body {
+  padding: 1rem 1.5rem 1.5rem;
+  color: var(--th-muted);
+  line-height: 1.7;
+}
+
+/* Contact Form */
+.NP-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.NP-form-section {
+  background: var(--th-dark-gray);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid var(--th-light-gray);
+}
+
+.NP-form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin-bottom: 1.5rem;
+}
+
+.NP-form-group {
+  margin-bottom: 1.25rem;
+}
+
+.NP-form-label {
+  display: block;
+  color: var(--th-white);
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.NP-form-input,
+.NP-form-textarea {
+  width: 100%;
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--th-white);
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+
+.NP-form-input:focus,
+.NP-form-textarea:focus {
+  outline: none;
+  border-color: var(--th-red);
+}
+
+.NP-form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.NP-form-button {
+  background: var(--th-red);
+  color: var(--th-white);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.NP-form-button:hover {
+  background: var(--th-red-dark);
+}
+
+/* Contact Info */
+.NP-contact-info {
+  margin-bottom: 2rem;
+}
+
+.NP-contact-item {
+  display: flex;
+  align-items: start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  color: var(--th-muted);
+}
+
+.NP-contact-icon {
+  color: var(--th-red);
+  font-size: 1.25rem;
+  margin-top: 0.125rem;
+}
+
+.NP-contact-text {
+  line-height: 1.6;
+}
+
+/* Sidebar Card */
+.NP-sidebar-card {
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.NP-sidebar-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin-bottom: 0.75rem;
+}
+
+.NP-sidebar-text {
+  color: var(--th-muted);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.NP-sidebar-button {
+  display: block;
+  width: 100%;
+  background: var(--th-red);
+  color: var(--th-white);
+  text-align: center;
+  padding: 0.75rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.NP-sidebar-button:hover {
+  background: var(--th-red-dark);
+  color: var(--th-white);
+}
+
+.NP-sidebar-button-outline {
+  background: transparent;
+  border: 1px solid var(--th-light-gray);
+  color: var(--th-white);
+}
+
+.NP-sidebar-button-outline:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--th-red);
+}
+
+/* Social Icons */
+.NP-social-icons {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.NP-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 8px;
+  color: var(--th-white);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.NP-social-icon:hover {
+  background: var(--th-red);
+  border-color: var(--th-red);
+  color: var(--th-white);
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  .NP-page-container {
+    padding: 40px 0;
+  }
+
+  .NP-page-title {
+    font-size: 2rem;
+  }
+
+  .NP-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .NP-form-section:last-child {
+    margin-top: 0;
   }
 }

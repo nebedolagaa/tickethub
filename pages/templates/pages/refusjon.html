@@ -1,0 +1,115 @@
+{% load static %}
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Refusjon - TicketHub</title>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+  </head>
+  <body>
+    {% include "snippets/navbar.html" %}
+
+    <div class="NP-page-container">
+      <div class="NP-page-inner">
+        <h1 class="NP-page-title">Refusjon</h1>
+        <p class="NP-page-subtitle">
+          Les om våre refusjonsvilkår og hvordan du kan få refundert billetter
+        </p>
+
+        <div class="NP-form-grid">
+          <div class="NP-content-section">
+            <h2>Refusjonsvilkår</h2>
+            <p>
+              Hos TicketHub er vi opptatt av at våre kunder skal ha en trygg
+              kjøpsopplevelse. Refusjon av billetter er avhengig av arrangørens
+              vilkår og tidspunktet for forespørselen.
+            </p>
+
+            <h3>Når kan jeg få refusjon?</h3>
+            <ul>
+              <li>
+                <strong>Avlyst arrangement:</strong> Full refusjon hvis
+                arrangementet avlyses
+              </li>
+              <li>
+                <strong>Utsatt arrangement:</strong> Du kan velge refusjon eller
+                beholde billetten til ny dato
+              </li>
+              <li>
+                <strong>Innen 14 dager:</strong> Angrefrist på 14 dager gjelder
+                for enkelte arrangementer
+              </li>
+              <li>
+                <strong>Medisinsk dokumentasjon:</strong> Ved sykdom med
+                legeerklæring
+              </li>
+            </ul>
+
+            <h3>Hvordan søke om refusjon?</h3>
+            <ol>
+              <li>Logg inn på din profil</li>
+              <li>Gå til "Mine billetter"</li>
+              <li>Velg billetten du ønsker refusjon for</li>
+              <li>Klikk på "Søk om refusjon"</li>
+              <li>Fyll ut skjemaet med årsak</li>
+            </ol>
+
+            <div class="NP-alert NP-alert-info">
+              <i class="fas fa-info-circle NP-alert-icon"></i>
+              <strong>Viktig:</strong> Refusjon behandles innen 5-10 virkedager.
+              Pengene vil bli returnert til samme betalingsmetode som ble brukt
+              ved kjøpet.
+            </div>
+
+            <h3>Gebyrer</h3>
+            <p>
+              Ved refusjon kan det påløpe et administrasjonsgebyr på opptil 10%
+              av billettprisen, avhengig av arrangørens vilkår og tidspunkt for
+              kansellering.
+            </p>
+
+            <h3>Kontakt oss</h3>
+            <p>
+              Har du spørsmål om refusjon? Ta kontakt med kundeservice på
+              <a href="mailto:support@tickethub.no">support@tickethub.no</a>
+              eller ring +47 00 00 00 00.
+            </p>
+          </div>
+
+          <div>
+            <div class="NP-sidebar-card">
+              <h3 class="NP-sidebar-title">Trenger du hjelp?</h3>
+              <p class="NP-sidebar-text">
+                Vårt kundeserviceteam er klare til å hjelpe deg.
+              </p>
+              <a href="/kontakt/" class="NP-sidebar-button">Kontakt oss</a>
+            </div>
+
+            <div class="NP-sidebar-card">
+              <h3 class="NP-sidebar-title">Ofte stilte spørsmål</h3>
+              <p class="NP-sidebar-text">
+                Se svar på de vanligste spørsmålene om refusjon.
+              </p>
+              <a
+                href="/faq/"
+                class="NP-sidebar-button NP-sidebar-button-outline"
+                >Les FAQ</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include "snippets/footer.html" %}
+  </body>
+</html>

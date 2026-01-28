@@ -10,6 +10,6 @@ urlpatterns = [
     #built-in django authentication system 
     path('accounts/', include('django.contrib.auth.urls')),
 
-    #path("tickets/", include("tickets.urls")),
-    #path("pages/", include("pages.urls")),
+    path('', include('pages.urls')),
+    path("billetter/", include("tickets.urls")),
 ]

@@ -1,0 +1,144 @@
+{% load static %}
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vilkår og betingelser - TicketHub</title>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+  </head>
+  <body>
+    {% include "snippets/navbar.html" %}
+
+    <div class="NP-page-container">
+      <div class="NP-page-inner">
+        <h1 class="NP-page-title">Vilkår og betingelser</h1>
+        <p class="NP-page-subtitle">Sist oppdatert: {% now "d. F Y" %}</p>
+
+        <div class="NP-content-section">
+          <h2>1. Aksept av vilkår</h2>
+          <p>
+            Ved å bruke TicketHub.no godtar du disse vilkårene og betingelsene.
+            Hvis du ikke godtar vilkårene, må du ikke bruke tjenesten.
+          </p>
+
+          <h2>2. Tjenestebeskrivelse</h2>
+          <p>
+            TicketHub er en billettplattform som formidler billetter til
+            konserter, arrangementer og andre kulturelle hendelser i Norge. Vi
+            er en mellommann mellom arrangører og publikum.
+          </p>
+
+          <h3 class="mt-4">3. Brukerkonto</h3>
+          <ul>
+            <li>Du må være minst 18 år for å opprette en konto</li>
+            <li>
+              Du er ansvarlig for å holde kontoinformasjonen konfidensiell
+            </li>
+            <li>Du er ansvarlig for all aktivitet under din konto</li>
+            <li>
+              Vi forbeholder oss retten til å suspendere eller slette kontoer
+              ved misbruk
+            </li>
+          </ul>
+
+          <h3 class="mt-4">4. Kjøp av billetter</h3>
+          <h5>4.1 Priser og betaling</h5>
+          <ul>
+            <li>Alle priser er oppgitt i norske kroner (NOK)</li>
+            <li>Priser inkluderer MVA og eventuelle avgifter</li>
+            <li>Serviceavgift kan tilkomme per billett</li>
+            <li>Betaling må fullføres for at kjøpet skal være gyldig</li>
+          </ul>
+
+          <h5>4.2 Billettlevering</h5>
+          <ul>
+            <li>Billetter leveres elektronisk til registrert e-postadresse</li>
+            <li>Du er ansvarlig for å oppbevare billettene trygt</li>
+            <li>Tapte eller stjålne billetter kan ikke erstattes</li>
+          </ul>
+
+          <h3 class="mt-4">5. Kansellering og refusjon</h3>
+          <ul>
+            <li>Refusjonsvilkår er bestemt av arrangøren</li>
+            <li>Angrerett på 14 dager gjelder for utvalgte arrangementer</li>
+            <li>Ved avlyst arrangement gis full refusjon</li>
+            <li>Administrasjonsgebyr kan påløpe ved kansellering</li>
+            <li>
+              Se vår <a href="/refusjon/">refusjonside</a> for mer informasjon
+            </li>
+          </ul>
+
+          <h3 class="mt-4">6. Videresalg av billetter</h3>
+          <p>
+            Videresalg av billetter til høyere pris enn påtrykket verdi er ikke
+            tillatt og kan resultere i at billetten blir ugyldiggjort.
+          </p>
+
+          <h3 class="mt-4">7. Arrangørens rettigheter</h3>
+          <ul>
+            <li>Arrangøren har rett til å endre programmet</li>
+            <li>
+              Arrangøren kan nekte inngang ved brudd på arrangementsregler
+            </li>
+            <li>Ingen refusjon gis ved utestengelse fra arrangement</li>
+          </ul>
+
+          <h3 class="mt-4">8. Ansvarsbegrensning</h3>
+          <p>TicketHub er ikke ansvarlig for:</p>
+          <ul>
+            <li>Endringer i arrangementsprogram eller artister</li>
+            <li>Avlyste arrangementer (refusjon gis iht. regler)</li>
+            <li>Personskader under arrangementer</li>
+            <li>Tapte eller stjålne billetter</li>
+            <li>Tekniske problemer utenfor vår kontroll</li>
+          </ul>
+
+          <h3 class="mt-4">9. Immaterielle rettigheter</h3>
+          <p>
+            Alt innhold på TicketHub.no, inkludert logoer, design og tekst, er
+            beskyttet av opphavsrett og tilhører TicketHub Norway AS.
+          </p>
+
+          <h3 class="mt-4">10. Endringer i vilkår</h3>
+          <p>
+            Vi forbeholder oss retten til å endre disse vilkårene når som helst.
+            Vesentlige endringer vil bli kommunisert til brukerne.
+          </p>
+
+          <h3 class="mt-4">11. Lovvalg og verneting</h3>
+          <p>
+            Disse vilkårene er underlagt norsk lov. Tvister skal søkes løst i
+            minnelighet, ellers gjelder Hønefoss tingrett som verneting.
+          </p>
+
+          <h2>12. Kontakt</h2>
+          <p>Spørsmål om våre vilkår kan rettes til:</p>
+          <p>
+            <strong>TicketHub Norway AS</strong><br />
+            Bredalsveien 14, 3511 Hønefoss<br />
+            E-post:
+            <a href="mailto:support@tickethub.no">support@tickethub.no</a><br />
+            Telefon: +47 00 00 00 00
+          </p>
+
+          <div class="NP-alert">
+            <i class="fas fa-file-alt NP-alert-icon"></i>
+            For informasjon om hvordan vi behandler personopplysninger, se vår
+            <a href="/personvern/">personvernerklæring</a>.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include "snippets/footer.html" %}
+  </body>
+</html>

@@ -1,0 +1,135 @@
+{% load static %}
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kontakt oss - TicketHub</title>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+  </head>
+  <body>
+    {% include "snippets/navbar.html" %}
+
+    <div class="NP-page-container">
+      <div class="NP-page-inner">
+        <h1 class="NP-page-title">Kontakt oss</h1>
+        <p class="NP-page-subtitle">
+          Vi er her for å hjelpe deg. Send oss en melding eller kontakt oss
+          direkte.
+        </p>
+
+        <div class="NP-form-grid">
+          <div class="NP-form-section">
+            <h3 class="NP-form-title">Send oss en melding</h3>
+            <form>
+              <div class="NP-form-group">
+                <label for="name" class="NP-form-label">Navn</label>
+                <input
+                  type="text"
+                  class="NP-form-input"
+                  id="name"
+                  placeholder="Ditt fulle navn"
+                  required
+                />
+              </div>
+              <div class="NP-form-group">
+                <label for="email" class="NP-form-label">E-post</label>
+                <input
+                  type="email"
+                  class="NP-form-input"
+                  id="email"
+                  placeholder="din@epost.no"
+                  required
+                />
+              </div>
+              <div class="NP-form-group">
+                <label for="subject" class="NP-form-label">Emne</label>
+                <input
+                  type="text"
+                  class="NP-form-input"
+                  id="subject"
+                  placeholder="Hva gjelder henvendelsen?"
+                  required
+                />
+              </div>
+              <div class="NP-form-group">
+                <label for="message" class="NP-form-label">Melding</label>
+                <textarea
+                  class="NP-form-textarea"
+                  id="message"
+                  placeholder="Skriv din melding her..."
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="NP-form-button">
+                <i class="fas fa-paper-plane"></i>
+                Send melding
+              </button>
+            </form>
+          </div>
+
+          <div>
+            <div class="NP-form-section">
+              <h3 class="NP-form-title">Kontaktinformasjon</h3>
+              <div class="NP-contact-info">
+                <div class="NP-contact-item">
+                  <i class="fas fa-envelope NP-contact-icon"></i>
+                  <div class="NP-contact-text">
+                    <strong>E-post</strong><br />
+                    support@tickethub.no
+                  </div>
+                </div>
+                <div class="NP-contact-item">
+                  <i class="fas fa-phone NP-contact-icon"></i>
+                  <div class="NP-contact-text">
+                    <strong>Telefon</strong><br />
+                    +47 00 00 00 00
+                  </div>
+                </div>
+                <div class="NP-contact-item">
+                  <i class="fas fa-map-marker-alt NP-contact-icon"></i>
+                  <div class="NP-contact-text">
+                    <strong>Adresse</strong><br />
+                    Bredalsveien 14<br />
+                    3511 Hønefoss, Norge
+                  </div>
+                </div>
+              </div>
+
+              <h3 class="NP-form-title" style="margin-top: 2rem">
+                Åpningstider
+              </h3>
+              <p class="NP-contact-text">
+                <strong>Mandag - Fredag:</strong> 09:00 - 17:00<br />
+                <strong>Lørdag - Søndag:</strong> Stengt
+              </p>
+
+              <h3 class="NP-form-title" style="margin-top: 2rem">Følg oss</h3>
+              <div class="NP-social-icons">
+                <a href="#" class="NP-social-icon">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="NP-social-icon">
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="NP-social-icon">
+                  <i class="fab fa-twitter"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include "snippets/footer.html" %}
+  </body>
+</html>

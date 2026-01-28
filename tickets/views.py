@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.http import HttpResponse
 
-def home(request):
-    return HttpResponse("Tickets app works")
+def my_tickets(request):
+    return render(request, "tickets/my_tickets.html")
