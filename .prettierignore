@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Django
+*.pyc
+__pycache__/
+*.py[cod]
+*$py.class
+*.sqlite3
+db.sqlite3
+media/
+
+# Static files
+staticfiles/
+static/
+
+# IDE
+.vscode/
+.idea/
+
+# Environments
+.env
+.venv
+venv/
+
+# Build
+dist/
+build/

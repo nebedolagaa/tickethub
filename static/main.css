@@ -586,6 +586,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .MB-nyhetsbrev {
   text-align: center;
   padding: 20px;
+  padding-bottom: 40px;
   border-bottom: 1px solid var(--th-light-gray);
 }
 
@@ -676,21 +677,10 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .MB-footer-bottom {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
   text-align: center;
-  padding-top: 10px;
+  padding-top: 35px;
   font-size: 14px;
   color: var(--th-muted);
-}
-
-.MB-bunn-lenker {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 5px;
 }
 
 .MB-footer-bottom a {
