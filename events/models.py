@@ -119,7 +119,7 @@ class EventImage(models.Model):
     is_cover = models.BooleanField(default=False)
 
     def __str__(self):
-    return f"{self.event.title} - image"
+        return f"{self.event.title} - image"
     
 
 #i neste class skal vi lage static rows and seats som er knyttet til VenueArea
@@ -128,14 +128,18 @@ class Row(models.Model):
     name = models.CharField(max_length=20) #feks A, B, C
 
     class Meta:
-        unique_together = ('venue_area', 'name')
+        constraints = [
+        models.UniqueConstraint(fields=["venue_area", "name"], name="unique_row_in_venue_area"),
+    ]
 
 class Seat(models.Model):
     row = models.ForeignKey(Row, on_delete=models.CASCADE, related_name='seats')
     number = models.PositiveIntegerField() # 1, 2, 3...
 
     class Meta:
-        unique_together = ('row', 'number')
+        constraints = [
+        models.UniqueConstraint(fields=["row", "number"], name="unique_seat_in_row"),
+    ]
 
 
 #modellen som reserverer et sete for én event dette er KUN sitteplasser
@@ -146,4 +150,6 @@ class EventSeat(models.Model):
     is_sold = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = ('event', 'seat')
+        constraints = [
+        models.UniqueConstraint(fields=["event", "seat"], name="unique_seat_per_event"),
+    ]
