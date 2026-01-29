@@ -1,5 +1,7 @@
-#Folk som kodet her: Kamilla
-
+''' 
+Bidratt til denne filen:
+    - Kamilla Nizamova
+'''
 from django.db import models
 from django.core.validators import MinValueValidator
 
@@ -46,9 +48,9 @@ class Venue(models.Model):
 class VenueArea(models.Model):
     venue = models.ForeignKey(Venue, on_delete=models.PROTECT, related_name = 'areas')
     name = models.CharField(max_length=100)
-    max_capacity_total = models.IntegerField(validators=[MinValueValidator(1)], blank = False, null = False)
-    max_capacity_seated = models.IntegerField(validators=[MinValueValidator(0)], blank = True, null = True)
-    max_capacity_standing = models.IntegerField(validators=[MinValueValidator(0)], blank = True, null = True)
+    max_capacity_total = models.PositiveIntegerField(validators=[MinValueValidator(1)], blank = False, null = False)
+    max_capacity_seated = models.PositiveIntegerField(validators=[MinValueValidator(0)], blank = True, null = True)
+    max_capacity_standing = models.PositiveIntegerField(validators=[MinValueValidator(0)], blank = True, null = True)
 
     def __str__(self):
         return f"{self.venue.name} - {self.name}" 
@@ -115,4 +117,33 @@ class EventImage(models.Model):
     image = models.ImageField(upload_to='event_images/')
     alt_text = models.CharField(max_length=255, blank=True)
     is_cover = models.BooleanField(default=False)
+
+    def __str__(self):
+    return f"{self.event.title} - image"
     
+
+#i neste class skal vi lage static rows and seats som er knyttet til VenueArea
+class Row(models.Model):
+    venue_area = models.ForeignKey(VenueArea, on_delete=models.CASCADE, related_name='rows')
+    name = models.CharField(max_length=20) #feks A, B, C
+
+    class Meta:
+        unique_together = ('venue_area', 'name')
+
+class Seat(models.Model):
+    row = models.ForeignKey(Row, on_delete=models.CASCADE, related_name='seats')
+    number = models.PositiveIntegerField() # 1, 2, 3...
+
+    class Meta:
+        unique_together = ('row', 'number')
+
+
+#modellen som reserverer et sete for én event dette er KUN sitteplasser
+#ståplasser skal selges som et antall.
+class EventSeat(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='event_seats')
+    seat = models.ForeignKey(Seat, on_delete=models.PROTECT, related_name='event_seats')
+    is_sold = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('event', 'seat')

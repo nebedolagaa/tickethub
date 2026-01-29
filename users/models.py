@@ -1,3 +1,7 @@
+''' 
+Bidratt til denne filen:
+    - Kamilla Nizamova
+'''
 from django.db import models
 from django.conf import settings
 #Model kun for arrangører av events
