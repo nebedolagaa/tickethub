@@ -1,8 +1,12 @@
+#Folk som kodet her: Kamilla
+
 from django.db import models
 from django.core.validators import MinValueValidator
 
 from django.db.models import Q, F
 from django.db.models.functions import Coalesce
+from django.utils.text import slugify
+from django.urls import reverse
 
 
 # Create your models here.  
@@ -28,7 +32,17 @@ class Venue(models.Model):
     def __str__(self):
         return self.name
     
+
 #en lokasjon kan ha flere areas for arrangement 
+# VenueArea representerer en fysisk sone på en arena (f.eks. parkett, balkong,
+# ståplass eller VIP-område).
+
+# Denne modellen statisk og beskriver kun den faste utformingen av lokalet og er uavhengig
+# av arrangementer og billettsalg.
+
+# Pris, billettype og tilgjengelighet håndteres i TicketType-modellen,
+# som er knyttet til et spesifikt arrangement (Event)
+
 class VenueArea(models.Model):
     venue = models.ForeignKey(Venue, on_delete=models.PROTECT, related_name = 'areas')
     name = models.CharField(max_length=100)
@@ -57,3 +71,48 @@ class VenueArea(models.Model):
             ),
             models.UniqueConstraint(fields = ['venue', 'name'], name='unique_venue_area_name'),
         ]
+
+
+
+class Event(models.Model):
+    organizer = models.ForeignKey('users.OrganizerProfile', on_delete=models.CASCADE, related_name='events')
+    venue = models.ForeignKey(Venue, on_delete = models.PROTECT, related_name = 'events')
+
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+
+    start_datetime = models.DateTimeField()
+    end_datetime = models.DateTimeField()
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    # Slug brukes i URL-er (f.eks. /events/oslo-jazz-festival/)
+    #den er ikke unique fordi id brukes i tillegg til slug og garanterer entydighet
+    slug = models.SlugField(max_length=255, blank=True)
+
+    def __str__(self):
+        return self.title
+    
+    def save(self, *args, **kwargs):
+        # Hvis slug ikke er satt, lager vi en automatisk basert på tittel.
+        #Slug trenger ikke være unik fordi primærnøkkel (pk) brukes i URL
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+    
+
+    def get_absolute_url(self):
+        # Returnerer den offisielle URL-en til arrangementet.
+        #Bruker både pk og slug, der pk sikrer entydighet og slug gir lesbarhet.
+        return reverse("event_detail", kwargs={"pk": self.pk, "slug": self.slug})
+    
+    
+
+#For å støtte flere bilder per arrangement og gjøre modellen mer fleksibel og skalerbar
+#lager vi en modell for bilder knyttet til arrangementer
+class EventImage(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='event_images/')
+    alt_text = models.CharField(max_length=255, blank=True)
+    is_cover = models.BooleanField(default=False)
+    
