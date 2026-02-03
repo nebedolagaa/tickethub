@@ -1,0 +1,113 @@
+/* MAIN */
+.CB1-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 20px;
+}
+
+.CB1-login-card {
+    background: #121216;
+    border: 1px solid #22222a;
+    border-radius: 12px;
+    width: 380px;
+    padding: 32px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+}
+
+.CB1-title {
+    margin: 0;
+    text-align: center;
+}
+
+.CB1-subtitle {
+    text-align: center;
+    color: #9a9aa3;
+    margin-bottom: 24px;
+    font-size: 14px;
+}
+
+/* FORM */
+.CB1-form-group {
+    margin-bottom: 16px;
+}
+
+.CB1-form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #bdbdc7;
+}
+
+.CB1-form-group input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #2a2a33;
+    background: #0d0d11;
+    color: #eaeaea;
+    font-size: 14px;
+}
+
+.CB1-form-group input:focus {
+    outline: none;
+    border-color: #ff3b3b;
+}
+
+.CB1-form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 12px 0 18px 0;
+    font-size: 13px;
+}
+
+.CB1-checkbox {
+    color: #bdbdc7;
+}
+
+.CB1-forgot {
+    color: #ff5c5c;
+    text-decoration: none;
+}
+
+.CB1-forgot:hover {
+    text-decoration: underline;
+}
+
+.CB1-btn-submit {
+    width: 100%;
+    background: #ff3b3b;
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.CB1-btn-submit:hover {
+    background: #e22e2e;
+}
+
+.CB1-error {
+    background: #2a1212;
+    border: 1px solid #5a1f1f;
+    color: #ff8080;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+
+.CB1-register-text {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 13px;
+    color: #bdbdc7;
+}
+
+.CB1-register-text a {
+    color: #ff5c5c;
+    text-decoration: none;
+}
