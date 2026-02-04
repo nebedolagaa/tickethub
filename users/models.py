@@ -13,7 +13,7 @@ class OrganizerProfile(models.Model):
      user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='organizer_profile')
      organization_name = models.CharField(max_length=255)
      contact_email = models.EmailField()
-     phone = models.CharField(max_length=20, blank=True)
+     phone_number = models.CharField(max_length=20, blank=True)
      organization_number = models.CharField(max_length=9, blank=True, null=True, help_text="Valgfritt. 9 sifre.")
 
      created_at = models.DateTimeField(auto_now_add=True)
@@ -65,7 +65,7 @@ class Account(AbstractBaseUser):
     last_name = models.CharField(max_length=50)
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField(max_length=255, unique=True)
-    phone_number = models.CharField(max_length=20)
+    phone_number = models.CharField(max_length=20, blank=True, null=True)
 
     #required fields
     date_joined = models.DateTimeField(auto_now_add=True)

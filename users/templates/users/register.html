@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'main.css' %}">
+<link rel="stylesheet" href="{% static 'users/login.css' %}">
+{% endblock %}
+
+{% block title %}Registrering{% endblock %}
+
+{% block content %}
+<section class="CB1-main">
+  <div class="CB1-login-card">
+    <h1 class="CB1-title">Registrer</h1>
+    <p class="CB1-subtitle">Opprett en konto for TicketHub</p>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {# Общие ошибки user_form #}
+      {% if user_form.non_field_errors %}
+        <div class="CB1-error">
+          {{ user_form.non_field_errors }}
+        </div>
+      {% endif %}
+
+      {# --- Bruker --- #}
+      <div class="CB1-form-group">
+        <label for="{{ user_form.first_name.id_for_label }}">Fornavn</label>
+        {{ user_form.first_name }}
+        {% if user_form.first_name.errors %}
+          <div class="CB1-error">{{ user_form.first_name.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="CB1-form-group">
+        <label for="{{ user_form.last_name.id_for_label }}">Etternavn</label>
+        {{ user_form.last_name }}
+        {% if user_form.last_name.errors %}
+          <div class="CB1-error">{{ user_form.last_name.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="CB1-form-group">
+        <label for="{{ user_form.username.id_for_label }}">Brukernavn</label>
+        {{ user_form.username }}
+        {% if user_form.username.errors %}
+          <div class="CB1-error">{{ user_form.username.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="CB1-form-group">
+        <label for="{{ user_form.email.id_for_label }}">E-post</label>
+        {{ user_form.email }}
+        {% if user_form.email.errors %}
+          <div class="CB1-error">{{ user_form.email.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="CB1-form-group">
+        <label for="{{ user_form.phone_number.id_for_label }}">Telefon</label>
+        {{ user_form.phone_number }}
+        {% if user_form.phone_number.errors %}
+          <div class="CB1-error">{{ user_form.phone_number.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="CB1-form-group">
+        <label for="{{ user_form.password1.id_for_label }}">Passord</label>
+        {{ user_form.password1 }}
+        {% if user_form.password1.errors %}
+          <div class="CB1-error">{{ user_form.password1.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="CB1-form-group">
+        <label for="{{ user_form.password2.id_for_label }}">Gjenta passord</label>
+        {{ user_form.password2 }}
+        {% if user_form.password2.errors %}
+          <div class="CB1-error">{{ user_form.password2.errors }}</div>
+        {% endif %}
+      </div>
+
+      {# --- Type (checkbox) --- #}
+      <div class="CB1-form-row">
+        <label class="CB1-checkbox">
+          {{ type_form.is_organizer }} {{ type_form.is_organizer.label }}
+        </label>
+      </div>
+
+      {# --- Arrangørfelter --- #}
+      <div id="organizer-fields">
+        {% if organizer_form.non_field_errors %}
+          <div class="CB1-error">
+            {{ organizer_form.non_field_errors }}
+          </div>
+        {% endif %}
+
+        <div class="CB1-form-group">
+          <label for="{{ organizer_form.organization_name.id_for_label }}">Organisasjonsnavn</label>
+          {{ organizer_form.organization_name }}
+          {% if organizer_form.organization_name.errors %}
+            <div class="CB1-error">{{ organizer_form.organization_name.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="CB1-form-group">
+          <label for="{{ organizer_form.organization_number.id_for_label }}">Organisasjonsnummer (valgfritt)</label>
+          {{ organizer_form.organization_number }}
+          {% if organizer_form.organization_number.errors %}
+            <div class="CB1-error">{{ organizer_form.organization_number.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="CB1-form-group">
+          <label for="{{ organizer_form.contact_email.id_for_label }}">Kontakt e-post</label>
+          {{ organizer_form.contact_email }}
+          {% if organizer_form.contact_email.errors %}
+            <div class="CB1-error">{{ organizer_form.contact_email.errors }}</div>
+          {% endif %}
+        </div>
+
+        <div class="CB1-form-group">
+          <label for="{{ organizer_form.phone.id_for_label }}">Kontakt telefon</label>
+          {{ organizer_form.phone_number }}
+          {% if organizer_form.phone_number.errors %}
+            <div class="CB1-error">{{ organizer_form.phone_number.errors }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <button class="CB1-btn-submit" type="submit">Registrer</button>
+
+      <p class="CB1-register-text">
+        Har du allerede en konto?
+        <a href="{% url 'users:login' %}">Logg inn</a>
+      </p>
+    </form>
+  </div>
+</section>
+
+<!--js to show organizer field if cheked or hide if not-->
+<script>
+  (function () {
+    const cb = document.querySelector('input[name="is_organizer"]');
+    const box = document.getElementById('organizer-fields');
+    if (!cb || !box) return;
+
+    function toggle() {
+      box.style.display = cb.checked ? 'block' : 'none';
+    }
+    cb.addEventListener('change', toggle);
+    toggle();
+  })();
+</script>
+{% endblock %}

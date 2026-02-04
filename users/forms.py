@@ -4,18 +4,31 @@ Bidratt til denne filen:
 '''
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+from .models import OrganizerProfile
 
-# class RegisterForm(UserCreationForm):
-#     email = forms.EmailField(required=True, help_text='Required. Enter a valid email address.')
+#django bestemmer selv hvilken user model som er i bruk
+User = get_user_model()
 
-#     class Meta:
-#         model = User
-#         fields = ('username', 'email', 'password1', 'password2')
+class AccountCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('first_name','last_name','username', 'email','phone_number', 'password1', 'password2')
 
-#     def save(self, commit=True):
-#         user = super().save(commit=False)
-#         user.email = self.cleaned_data['email']
-#         if commit:
-#             user.save()
-#         return user
+    def clean_email(self):
+        email = self.cleaned_data['email'].lower()
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Denne e-posten er allerede i bruk.")
+        return email
+
+
+#sjekk om man er en vanlig bruker eller arrangør ved registrering
+class SignupTypeForm(forms.Form):
+     is_organizer = forms.BooleanField(required=False, label="Jeg er arrangør")
+
+
+# form for å lage en arrangørprofil
+class OrganizerProfileForm(forms.ModelForm):
+    class Meta:
+        model = OrganizerProfile
+        fields = ('organization_name', 'contact_email', 'phone_number', 'organization_number')
