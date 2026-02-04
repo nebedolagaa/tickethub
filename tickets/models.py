@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MinValueValidator
+from django.conf import settings
 
 #denne modelen viser hva som selges for en bestemt event
 #for eksempel: billettype, forksjellig pris, kapasitet kontroll, forksjellige zones med priser som varierer 
@@ -16,7 +17,7 @@ class TicketType(models.Model):
 
 #denne modelen representerer en faktisk billett som er kjøpt av en kunde
 class Ticket(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='tickets')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tickets')
     ticket_type = models.ForeignKey(TicketType, on_delete=models.PROTECT, related_name='tickets')
 
     #kun for sitte plasser
@@ -29,7 +30,7 @@ class Ticket(models.Model):
 
 #neste modell representerer et kjøp av flere billetter i en transaksjon
 class Order(models.Model):
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='purchases')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='purchases')
 
     #det skal være mulig å ha flere biletter, men KUN for EN event per ordre
     event = models.ForeignKey('events.Event', on_delete=models.PROTECT, related_name='orders')

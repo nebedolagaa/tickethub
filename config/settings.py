@@ -52,6 +52,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+AUTH_USER_MODEL = 'users.Account'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
