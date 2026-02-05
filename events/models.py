@@ -39,7 +39,7 @@ class Venue(models.Model):
 # VenueArea representerer en fysisk sone på en arena (f.eks. parkett, balkong,
 # ståplass eller VIP-område).
 
-# Denne modellen statisk og beskriver kun den faste utformingen av lokalet og er uavhengig
+# Denne modellen er statisk og beskriver kun den faste utformingen av lokalet og er uavhengig
 # av arrangementer og billettsalg.
 
 # Pris, billettype og tilgjengelighet håndteres i TicketType-modellen,
@@ -153,3 +153,24 @@ class EventSeat(models.Model):
         constraints = [
         models.UniqueConstraint(fields=["event", "seat"], name="unique_seat_per_event"),
     ]
+        
+
+#for ståplasser trenger vi en modell som holder styr på hvor mange ståplasser som er solgt for hver VenueArea i et arrangement
+class EventStandingAllocation(models.Model):
+    event = models.ForeignKey("events.Event", on_delete=models.CASCADE, related_name="standing_allocations")
+    venue_area = models.ForeignKey("events.VenueArea", on_delete=models.PROTECT, related_name="standing_allocations")
+
+    capacity = models.PositiveIntegerField(validators=[MinValueValidator(1)])
+    sold = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=["event", "venue_area"], name="unique_standing_allocation_per_event_area"),
+        ]
+
+    def __str__(self):
+        return f"{self.event.title} / {self.venue_area.name} standing: {self.sold}/{self.capacity}"
+
+    @property
+    def remaining(self):
+        return self.capacity - self.sold
