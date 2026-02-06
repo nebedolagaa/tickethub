@@ -25,7 +25,7 @@ class Ticket(models.Model):
     purchased_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Ticket for {self.ticket_type.event.title} - {self.ticket_type.name} (User: {self.user.username})"
+        return f"Ticket for {self.ticket_type.event.title} - {self.ticket_type.name} (User: {self.user.first_name} {self.user.last_name})"
     
 
 #neste modell representerer et kjøp av flere billetter i en transaksjon
@@ -37,7 +37,7 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Order #{self.id} by {self.user.username} for {self.event.title}"
+        return f"Order #{self.id} by {self.user.first_name} {self.user.last_name} for {self.event.title}"
     
 
 #denne modellen representerer en linje i en ordre, dvs en billettype og antall billetter av denne typen

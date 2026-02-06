@@ -13,7 +13,7 @@ User = get_user_model()
 class AccountCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('first_name','last_name','username', 'email','phone_number', 'password1', 'password2')
+        fields = ('first_name','last_name', 'email','phone_number', 'password1', 'password2')
 
     def clean_email(self):
         email = self.cleaned_data['email'].lower()

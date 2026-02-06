@@ -42,14 +42,6 @@
       </div>
 
       <div class="CB1-form-group">
-        <label for="{{ user_form.username.id_for_label }}">Brukernavn</label>
-        {{ user_form.username }}
-        {% if user_form.username.errors %}
-          <div class="CB1-error">{{ user_form.username.errors }}</div>
-        {% endif %}
-      </div>
-
-      <div class="CB1-form-group">
         <label for="{{ user_form.email.id_for_label }}">E-post</label>
         {{ user_form.email }}
         {% if user_form.email.errors %}

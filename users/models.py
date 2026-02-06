@@ -24,16 +24,14 @@ class OrganizerProfile(models.Model):
 
 # Custom user manager
 class MyAccountManager(BaseUserManager):
-    def create_user(self, first_name, last_name, username, email, password=None):
+    def create_user(self, first_name, last_name, email, password=None):
         if not email:
             raise ValueError('User must have an email address')
         
-        if not username:
-            raise ValueError('User must have a username')
+        email = self.normalize_email(email)
         
         user = self.model(
             email=self.normalize_email(email), #if you enter a capiotal letter in email it will convert it to lowercase
-            username=username,
             first_name=first_name,
             last_name=last_name,
         )
@@ -43,10 +41,9 @@ class MyAccountManager(BaseUserManager):
         return user
 
     
-    def create_superuser(self, first_name, last_name, username, email, password):
+    def create_superuser(self, first_name, last_name, email, password):
         user = self.create_user(
             email=self.normalize_email(email),
-            username=username,
             password=password,
             first_name=first_name,
             last_name=last_name,
@@ -63,13 +60,14 @@ class MyAccountManager(BaseUserManager):
 class Account(AbstractBaseUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    username = models.CharField(max_length=50, unique=True)
+
     email = models.EmailField(max_length=255, unique=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
 
     #required fields
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
+
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
@@ -79,7 +77,7 @@ class Account(AbstractBaseUser):
     USERNAME_FIELD = 'email'
 
     #these fields will be asked when creating a superuser
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     objects = MyAccountManager()
 
@@ -91,3 +89,4 @@ class Account(AbstractBaseUser):
     
     def has_module_perms(self, app_label):
         return True
+    
