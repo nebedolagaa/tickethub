@@ -14,11 +14,34 @@ class AccountCreationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name','last_name', 'email','phone_number', 'password1', 'password2')
+        labels = {
+            'first_name': 'Fornavn',
+            'last_name': 'Etternavn',
+            'email': 'E-post',
+            'phone_number': 'Telefonnummer',
+            'password1': 'Passord',
+            'password2': 'Bekreft passord'
+        }
+       
+        error_messages = {
+        'first_name': {'required': "Fornavn er påkrevd."},
+        'last_name': {'required': "Etternavn er påkrevd."},
+        'email': {'invalid': "Skriv inn en gyldig e-postadresse."}
+        }
+    
+    error_messages = {
+    'password_mismatch': {"Passordene må være like."}
+    }
 
     def clean_email(self):
-        email = self.cleaned_data['email'].lower()
+        email = (self.cleaned_data.get('email') or '').strip().lower()
+
+        if not email:
+            raise forms.ValidationError("E-post er påkrevd.")
+
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError("Denne e-posten er allerede i bruk.")
+
         return email
 
 
@@ -32,3 +55,9 @@ class OrganizerProfileForm(forms.ModelForm):
     class Meta:
         model = OrganizerProfile
         fields = ('organization_name', 'contact_email', 'phone_number', 'organization_number')
+        labels = {
+            'organization_name': 'Organisasjonsnavn',
+            'contact_email': 'Kontakt e-post',
+            'phone_number': 'Kontakt telefonnummer',
+            'organization_number': 'Organisasjonsnummer'
+        }
