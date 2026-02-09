@@ -1,1 +1,215 @@
-   
+/* Payment Page - CB Prefix */
+
+.CB-payment-main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 60px 20px;
+    background: #000000;
+    min-height: 100vh;
+}
+
+.CB-payment-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1000px;
+    width: 100%;
+}
+
+/* Title */
+.CB-payment-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+/* Form Section */
+.CB-payment-form-section {
+    background: #121216;
+    border: 1px solid #22222a;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+.CB-payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.CB-payment-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.CB-payment-form-group label {
+    font-size: 13px;
+    color: #bdbdc7;
+    font-weight: 600;
+}
+
+.CB-payment-form-group input,
+.CB-payment-form-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #2a2a33;
+    background: #0d0d11;
+    color: #eaeaea;
+    font-size: 14px;
+    font-family: inherit;
+}
+
+.CB-payment-form-group input:focus,
+.CB-payment-form-group select:focus {
+    outline: none;
+    border-color: #ff3b3b;
+}
+
+.CB-payment-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Summary Section */
+.CB-payment-summary-section {
+    background: #121216;
+    border: 1px solid #22222a;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    height: fit-content;
+}
+
+.CB-payment-summary-items {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.CB-payment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #22222a;
+}
+
+.CB-payment-item-info {
+    flex: 1;
+}
+
+.CB-payment-item-name {
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 600;
+    margin: 0;
+}
+
+.CB-payment-item-desc {
+    font-size: 12px;
+    color: #9a9aa3;
+    margin: 4px 0 0 0;
+}
+
+.CB-payment-item-price {
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 700;
+    margin: 0;
+}
+
+.CB-payment-divider {
+    height: 1px;
+    background: #22222a;
+    margin: 16px 0;
+}
+
+.CB-payment-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.CB-payment-total-label {
+    font-size: 14px;
+    color: #bdbdc7;
+    margin: 0;
+    font-weight: 600;
+}
+
+.CB-payment-total-price {
+    font-size: 18px;
+    color: #ffffff;
+    margin: 0;
+    font-weight: 700;
+}
+
+.CB-payment-method {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 24px;
+}
+
+.CB-payment-method label {
+    font-size: 13px;
+    color: #bdbdc7;
+    font-weight: 600;
+}
+
+.CB-payment-method select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #2a2a33;
+    background: #0d0d11;
+    color: #eaeaea;
+    font-size: 14px;
+}
+
+.CB-payment-method select:focus {
+    outline: none;
+    border-color: #ff3b3b;
+}
+
+.CB-payment-btn-submit {
+    width: 100%;
+    background: #ff3b3b;
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.CB-payment-btn-submit:hover {
+    background: #e22e2e;
+}
+
+/* Responsiv */
+@media (max-width: 768px) {
+    .CB-payment-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .CB-payment-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .CB-payment-main {
+        padding: 40px 20px;
+    }
+}   
