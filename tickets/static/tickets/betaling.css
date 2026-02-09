@@ -4,17 +4,17 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 80px 40px; /* mer horisontal padding for å flytte innhold mot sidene */
+    padding: 80px 80px; /* mer horisontal padding for å gi buffer mot kanten */
     background: #000000;
     min-height: 100vh;
 }
 
 .CB-payment-container {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* større venstre kolonne, mindre høyre kolonne */
-    gap: 60px; /* økt mellomrom mellom kolonnene */
-    max-width: 1200px; /* bredere container for mer luft */
-    width: 100%;
+    grid-template-columns: 1.6fr 1fr; /* mildere venstre kolonne */
+    gap: 80px; /* økt mellomrom mellom kolonnene */
+    max-width: none; /* ta i bruk fylle bredde minus buffer */
+    width: calc(100% - 160px); /* 80px buffer på hver side */
     padding: 0 12px;
 }
 
