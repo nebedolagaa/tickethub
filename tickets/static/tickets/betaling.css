@@ -4,17 +4,18 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 60px 20px;
+    padding: 80px 40px; /* mer horisontal padding for å flytte innhold mot sidene */
     background: #000000;
     min-height: 100vh;
 }
 
 .CB-payment-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    max-width: 1000px;
+    grid-template-columns: 2fr 1fr; /* større venstre kolonne, mindre høyre kolonne */
+    gap: 60px; /* økt mellomrom mellom kolonnene */
+    max-width: 1200px; /* bredere container for mer luft */
     width: 100%;
+    padding: 0 12px;
 }
 
 .CB-payment-left {
@@ -26,6 +27,10 @@
 .CB-payment-right {
     display: flex;
     flex-direction: column;
+}
+
+.CB-payment-summary-section {
+    width: 100%;
 }
 
 /* Title */
