@@ -17,6 +17,17 @@
     width: 100%;
 }
 
+.CB-payment-left {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.CB-payment-right {
+    display: flex;
+    flex-direction: column;
+}
+
 /* Title */
 .CB-payment-title {
     font-size: 1.5rem;
@@ -77,6 +88,64 @@
     gap: 16px;
 }
 
+/* Payment Method Section */
+.CB-payment-method-section {
+    background: #121216;
+    border: 1px solid #22222a;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+.CB-payment-method-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.CB-payment-method-option {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    border: 1px solid #2a2a33;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.CB-payment-method-option:hover {
+    border-color: #ff3b3b;
+    background: rgba(255, 59, 59, 0.05);
+}
+
+.CB-payment-method-option input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    cursor: pointer;
+    accent-color: #ff3b3b;
+}
+
+.CB-payment-method-label {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin: 0;
+}
+
+.CB-payment-method-name {
+    font-size: 14px;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.CB-payment-method-icons {
+    font-size: 12px;
+    color: #9a9aa3;
+}
+
 .CB-payment-terms {
     display: flex;
     gap: 12px;
@@ -85,7 +154,7 @@
     background: rgba(255, 59, 59, 0.05);
     border: 1px solid rgba(255, 59, 59, 0.2);
     border-radius: 6px;
-    margin-top: 8px;
+    margin-bottom: 16px;
 }
 
 .CB-payment-terms input[type="checkbox"] {
@@ -103,6 +172,21 @@
     margin: 0;
     cursor: pointer;
     line-height: 1.4;
+}
+
+/* Terms Section */
+.CB-payment-terms-section {
+    background: #121216;
+    border: 1px solid #22222a;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+}
+
+.CB-payment-terms-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 /* Summary Section */

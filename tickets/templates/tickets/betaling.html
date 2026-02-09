@@ -11,8 +11,10 @@
 {% block content %}
 <main class="CB-payment-main">
     <div class="CB-payment-container">
-        <!-- Venstre side: Kontaktinformasjon -->
-        <div class="CB-payment-form-section">
+        <!-- Venstre side: Tre bokser vertikalt -->
+        <div class="CB-payment-left">
+            <!-- Boks 1: Kontaktinformasjon -->
+            <div class="CB-payment-form-section">
             <h2 class="CB-payment-title">Kontaktinformasjon</h2>
             <form method="post" class="CB-payment-form">
                 {% csrf_token %}
@@ -47,26 +49,50 @@
                         <input type="text" id="postal" name="postal" placeholder="0000" required>
                     </div>
                 </div>
+            </div>
 
-                <div class="CB-payment-form-group">
-                    <label for="payment-method">Betalingsmetode</label>
-                    <select id="payment-method" name="payment-method" required>
-                        <option value="">Velg betalingsmåte</option>
-                        <option value="card">Kredittkort</option>
-                        <option value="bank">Bankoverføring</option>
-                        <option value="vipps">Vipps</option>
-                    </select>
-                </div>
+            <!-- Boks 2: Betalingsmetode -->
+            <div class="CB-payment-method-section">
+                <h2 class="CB-payment-title">Betalingsmetode</h2>
+                <form class="CB-payment-method-form">
+                    <div class="CB-payment-method-option">
+                        <input type="radio" id="card" name="payment-method" value="card" checked>
+                        <label for="card" class="CB-payment-method-label">
+                            <span class="CB-payment-method-name">Kort</span>
+                            <span class="CB-payment-method-icons">VISA MC</span>
+                        </label>
+                    </div>
 
-                <div class="CB-payment-terms">
-                    <input type="checkbox" id="terms" name="terms" required>
-                    <label for="terms" class="CB-payment-terms-label">Jeg godtar TicketHub sine vilkår og betingelser og personvernserklæring. Jeg forstår at alle salg er endelige og ikke refunderbare.</label>
-                </div>
-            </form>
+                    <div class="CB-payment-method-option">
+                        <input type="radio" id="vipps" name="payment-method" value="vipps">
+                        <label for="vipps" class="CB-payment-method-label">
+                            <span class="CB-payment-method-name">Vipps</span>
+                        </label>
+                    </div>
+
+                    <div class="CB-payment-method-option">
+                        <input type="radio" id="paypal" name="payment-method" value="paypal">
+                        <label for="paypal" class="CB-payment-method-label">
+                            <span class="CB-payment-method-name">PayPal</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Boks 3: Vilkår godkjenning -->
+            <div class="CB-payment-terms-section">
+                <form class="CB-payment-terms-form">
+                    <div class="CB-payment-terms">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label for="terms" class="CB-payment-terms-label">Jeg godtar TicketHub sine vilkår og betingelser og personvernerklæring. Jeg forstår at alle salg er endelige og ikke refunderbare.</label>
+                    </div>
+                    <button type="submit" class="CB-payment-btn-submit">Fullfør betaling</button>
+                </form>
+            </div>
         </div>
 
         <!-- Høyre side: Sammendrag -->
-        <div class="CB-payment-summary-section">
+        <div class="CB-payment-right">
             <h2 class="CB-payment-title">Sammendrag</h2>
 
             <!-- Billetliste -->
