@@ -77,6 +77,33 @@
                         </label>
                     </div>
                 </form>
+
+                <!-- Card Info Section (Hidden by default) -->
+                <div class="CB-payment-card-info" id="cardInfo" style="display: none;">
+                    <h3 class="CB-payment-card-title">Kortinformasjon</h3>
+                    <form class="CB-payment-card-form">
+                        <div class="CB-payment-form-group">
+                            <label for="card-number">Kortnummer</label>
+                            <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+
+                        <div class="CB-payment-form-group">
+                            <label for="card-name">Navn på kort</label>
+                            <input type="text" id="card-name" name="card-name" placeholder="OLA NORDMANN">
+                        </div>
+
+                        <div class="CB-payment-form-row">
+                            <div class="CB-payment-form-group">
+                                <label for="card-expiry">Utløpsdato</label>
+                                <input type="text" id="card-expiry" name="card-expiry" placeholder="MM/ÅÅ" maxlength="5">
+                            </div>
+                            <div class="CB-payment-form-group">
+                                <label for="card-cvv">CVV</label>
+                                <input type="text" id="card-cvv" name="card-cvv" placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
 
             <!-- Boks 3: Vilkår godkjenning -->
@@ -86,7 +113,6 @@
                         <input type="checkbox" id="terms" name="terms" required>
                         <label for="terms" class="CB-payment-terms-label">Jeg godtar TicketHub sine vilkår og betingelser og personvernerklæring. Jeg forstår at alle salg er endelige og ikke refunderbare.</label>
                     </div>
-                    <button type="submit" class="CB-payment-btn-submit">Fullfør betaling</button>
                 </form>
             </div>
         </div>
@@ -170,3 +196,46 @@
     </div>
 </main>
 {% endblock %}
+
+<script>
+    // Toggle card info visibility based on payment method selection
+    const cardRadio = document.getElementById('card');
+    const vippsRadio = document.getElementById('vipps');
+    const paypalRadio = document.getElementById('paypal');
+    const cardInfo = document.getElementById('cardInfo');
+
+    function toggleCardInfo() {
+        if (cardRadio.checked) {
+            cardInfo.style.display = 'block';
+        } else {
+            cardInfo.style.display = 'none';
+        }
+    }
+
+    // Add event listeners
+    cardRadio.addEventListener('change', toggleCardInfo);
+    vippsRadio.addEventListener('change', toggleCardInfo);
+    paypalRadio.addEventListener('change', toggleCardInfo);
+
+    // Format card number with spaces
+    const cardNumberInput = document.getElementById('card-number');
+    if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formattedValue;
+        });
+    }
+
+    // Format expiry date MM/ÅÅ
+    const expiryInput = document.getElementById('card-expiry');
+    if (expiryInput) {
+        expiryInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.slice(0, 2) + '/' + value.slice(2, 4);
+            }
+            e.target.value = value;
+        });
+    }
+</script>
