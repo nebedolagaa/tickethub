@@ -23,12 +23,27 @@
         <i class="bi bi-search"></i> <span class="search-btn-text-CB">Søk</span>
       </button>
       <!-- Login -->
-      <a href="/users/login/" class="navbar-btn-CB" style="text-decoration: none">
+      {% if user.id is None%}
+        <a href="{% url 'users:login' %}" class="navbar-btn-CB" style="text-decoration: none">
         <i class="bi bi-person"></i>
         <span class="login-btn-text-CB">Logg inn</span>
-      </a>
-      <!-- Registrer deg button (far right) -->
-      <a href="#" class="register-btn-CB">Registrer deg</a>
+        </a>
+        <!-- Registrer deg button (far right) -->
+        <a href="{% url 'users:register' %}" class="register-btn-CB">Registrer deg</a>
+
+      {% else %}
+        <a href="#" class="navbar-btn-CB" style="text-decoration: none">
+        <i class="bi bi-person"></i>
+        <span class="login-btn-text-CB">Min profil</span>
+        </a>
+        <!-- Logg ut button (far right) -->
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="register-btn-CB" style="border:none; cursor:pointer;">
+            Logg ut
+          </button>
+        </form>
+      {% endif %}
       <!-- Hamburger (mobil) -->
       <button id="menu-toggle-CB" class="navbar-btn-CB">☰</button>
     </div>

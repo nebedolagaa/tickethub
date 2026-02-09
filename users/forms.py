@@ -30,7 +30,7 @@ class AccountCreationForm(UserCreationForm):
         }
     
     error_messages = {
-    'password_mismatch': {"Passordene må være like."}
+    'password_mismatch': "Passordene må være like."
     }
 
     def clean_email(self):

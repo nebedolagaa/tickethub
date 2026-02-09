@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 
+from django.contrib.messages import constants as messages
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'random-key'
@@ -78,5 +80,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Login og logout redirections
-LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'home_page'
+LOGOUT_REDIRECT_URL = 'home_page'
+
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}

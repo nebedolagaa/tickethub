@@ -5,6 +5,9 @@ Bidratt til denne filen:
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.db import transaction
+from django.contrib import messages, auth
+
+from django.contrib.auth.decorators import login_required
 
 from .forms import AccountCreationForm, SignupTypeForm, OrganizerProfileForm
 
@@ -50,3 +53,27 @@ def register(request):
                    'type_form': type_form,
                    'organizer_form': organizer_form})
 
+
+def login(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+
+        user = auth.authenticate(email = email, password = password)
+
+        if user is not None:
+            auth.login(request, user)
+            messages.success(request, "Du er nå logget inn")
+            return redirect('home_page')
+        else:
+            messages.error(request,'Ugyldig e-post eller passord')
+            return redirect('users:login')
+        
+    return render(request, 'users/login.html')
+
+
+@login_required(login_url = 'login')
+def logout(request):
+    auth.logout(requst)
+    messages.success(request, "Du er nå logget ut")
+    return redirect('home_page')
