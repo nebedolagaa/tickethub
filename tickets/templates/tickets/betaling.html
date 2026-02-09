@@ -199,43 +199,55 @@
 
 <script>
     // Toggle card info visibility based on payment method selection
-    const cardRadio = document.getElementById('card');
-    const vippsRadio = document.getElementById('vipps');
-    const paypalRadio = document.getElementById('paypal');
-    const cardInfo = document.getElementById('cardInfo');
+    function setupPaymentToggle() {
+        const cardRadio = document.getElementById('card');
+        const vippsRadio = document.getElementById('vipps');
+        const paypalRadio = document.getElementById('paypal');
+        const cardInfo = document.getElementById('cardInfo');
 
-    function toggleCardInfo() {
-        if (cardRadio.checked) {
-            cardInfo.style.display = 'block';
-        } else {
-            cardInfo.style.display = 'none';
+        function toggleCardInfo() {
+            if (cardRadio && cardRadio.checked) {
+                cardInfo.style.display = 'block';
+            } else {
+                cardInfo.style.display = 'none';
+            }
+        }
+
+        // Initial toggle on page load
+        toggleCardInfo();
+
+        // Add event listeners
+        if (cardRadio) cardRadio.addEventListener('change', toggleCardInfo);
+        if (vippsRadio) vippsRadio.addEventListener('change', toggleCardInfo);
+        if (paypalRadio) paypalRadio.addEventListener('change', toggleCardInfo);
+
+        // Format card number with spaces
+        const cardNumberInput = document.getElementById('card-number');
+        if (cardNumberInput) {
+            cardNumberInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\s/g, '');
+                let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+                e.target.value = formattedValue;
+            });
+        }
+
+        // Format expiry date MM/ÅÅ
+        const expiryInput = document.getElementById('card-expiry');
+        if (expiryInput) {
+            expiryInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length >= 2) {
+                    value = value.slice(0, 2) + '/' + value.slice(2, 4);
+                }
+                e.target.value = value;
+            });
         }
     }
 
-    // Add event listeners
-    cardRadio.addEventListener('change', toggleCardInfo);
-    vippsRadio.addEventListener('change', toggleCardInfo);
-    paypalRadio.addEventListener('change', toggleCardInfo);
-
-    // Format card number with spaces
-    const cardNumberInput = document.getElementById('card-number');
-    if (cardNumberInput) {
-        cardNumberInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\s/g, '');
-            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
-            e.target.value = formattedValue;
-        });
-    }
-
-    // Format expiry date MM/ÅÅ
-    const expiryInput = document.getElementById('card-expiry');
-    if (expiryInput) {
-        expiryInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length >= 2) {
-                value = value.slice(0, 2) + '/' + value.slice(2, 4);
-            }
-            e.target.value = value;
-        });
+    // Run when DOM is ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setupPaymentToggle);
+    } else {
+        setupPaymentToggle();
     }
 </script>
