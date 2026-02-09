@@ -48,7 +48,20 @@
                     </div>
                 </div>
 
-                <!-- Høyre side vil ligge ved siden av her -->
+                <div class="CB-payment-form-group">
+                    <label for="payment-method">Betalingsmetode</label>
+                    <select id="payment-method" name="payment-method" required>
+                        <option value="">Velg betalingsmåte</option>
+                        <option value="card">Kredittkort</option>
+                        <option value="bank">Bankoverføring</option>
+                        <option value="vipps">Vipps</option>
+                    </select>
+                </div>
+
+                <div class="CB-payment-terms">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms" class="CB-payment-terms-label">Jeg godtar TicketHub sine vilkår og betingelser og personvernserklæring. Jeg forstår at alle salg er endelige og ikke refunderbare.</label>
+                </div>
             </form>
         </div>
 
@@ -82,20 +95,6 @@
                 <p class="CB-payment-total-label">Totalt:</p>
                 <p class="CB-payment-total-price">798 kr</p>
             </div>
-
-            <!-- Betalingsmåte -->
-            <div class="CB-payment-method">
-                <label for="payment-method">Betalingsmåte</label>
-                <select id="payment-method" name="payment-method" required>
-                    <option value="">Velg betalingsmåte</option>
-                    <option value="card">Kredittkort</option>
-                    <option value="bank">Bankoverføring</option>
-                    <option value="vipps">Vipps</option>
-                </select>
-            </div>
-
-            <!-- Submit knapp -->
-            <button type="submit" class="CB-payment-btn-submit">Fullfør betaling</button>
         </div>
     </div>
 </main>

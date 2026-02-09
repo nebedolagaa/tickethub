@@ -77,6 +77,34 @@
     gap: 16px;
 }
 
+.CB-payment-terms {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 12px;
+    background: rgba(255, 59, 59, 0.05);
+    border: 1px solid rgba(255, 59, 59, 0.2);
+    border-radius: 6px;
+    margin-top: 8px;
+}
+
+.CB-payment-terms input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: #ff3b3b;
+    flex-shrink: 0;
+}
+
+.CB-payment-terms-label {
+    font-size: 12px;
+    color: #bdbdc7;
+    margin: 0;
+    cursor: pointer;
+    line-height: 1.4;
+}
+
 /* Summary Section */
 .CB-payment-summary-section {
     background: #121216;
