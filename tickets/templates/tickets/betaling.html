@@ -93,33 +93,78 @@
 
         <!-- Høyre side: Sammendrag -->
         <div class="CB-payment-right">
-            <h2 class="CB-payment-title">Sammendrag</h2>
+            <div class="CB-payment-summary-section">
+                <h2 class="CB-payment-title">Sammendrag</h2>
 
-            <!-- Billetliste -->
-            <div class="CB-payment-summary-items">
-                <div class="CB-payment-item">
-                    <div class="CB-payment-item-info">
-                        <p class="CB-payment-item-name">Billett 1</p>
-                        <p class="CB-payment-item-desc">Kategori: VIP</p>
+                <!-- Event Info -->
+                <div class="CB-payment-event-info">
+                    <h3 class="CB-payment-event-title">World Tour 2024</h3>
+                    <p class="CB-payment-event-artist">Aurora</p>
+                    <div class="CB-payment-event-details">
+                        <div class="CB-payment-event-detail">
+                            <span class="CB-payment-event-icon">📅</span>
+                            <span>15. november 2024</span>
+                        </div>
+                        <div class="CB-payment-event-detail">
+                            <span class="CB-payment-event-icon">🕐</span>
+                            <span>20:00</span>
+                        </div>
+                        <div class="CB-payment-event-detail">
+                            <span class="CB-payment-event-icon">📍</span>
+                            <span>Oslo Spektrum</span>
+                        </div>
                     </div>
-                    <p class="CB-payment-item-price">499 kr</p>
                 </div>
-                <div class="CB-payment-item">
-                    <div class="CB-payment-item-info">
-                        <p class="CB-payment-item-name">Billett 2</p>
-                        <p class="CB-payment-item-desc">Kategori: Standard</p>
+
+                <!-- Divider -->
+                <div class="CB-payment-divider"></div>
+
+                <!-- Billetter -->
+                <div class="CB-payment-summary-tickets">
+                    <h4 class="CB-payment-section-title">Billetter</h4>
+                    <div class="CB-payment-ticket-item">
+                        <span>Standard × 2</span>
+                        <span>1 198 kr</span>
                     </div>
-                    <p class="CB-payment-item-price">299 kr</p>
+                    <div class="CB-payment-ticket-item">
+                        <span>VIP × 1</span>
+                        <span>1 299 kr</span>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Divider -->
-            <div class="CB-payment-divider"></div>
+                <!-- Divider -->
+                <div class="CB-payment-divider"></div>
 
-            <!-- Totalpris -->
-            <div class="CB-payment-total">
-                <p class="CB-payment-total-label">Totalt:</p>
-                <p class="CB-payment-total-price">798 kr</p>
+                <!-- Kalkulation -->
+                <div class="CB-payment-calculation">
+                    <div class="CB-payment-calc-row">
+                        <span>Subtotal</span>
+                        <span>2 497 kr</span>
+                    </div>
+                    <div class="CB-payment-calc-row">
+                        <span>Gebyr</span>
+                        <span>78 kr</span>
+                    </div>
+                    <div class="CB-payment-calc-row">
+                        <span>MVA (25%)</span>
+                        <span>644 kr</span>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div class="CB-payment-divider"></div>
+
+                <!-- Totalt -->
+                <div class="CB-payment-total">
+                    <p class="CB-payment-total-label">Total</p>
+                    <p class="CB-payment-total-price">3 219 kr</p>
+                </div>
+
+                <!-- Fullfør kjøp knapp -->
+                <button class="CB-payment-btn-complete">
+                    <span>🔒</span> Fullfør kjøp
+                </button>
+                <p class="CB-payment-notice">Du vil motta billettene på e-post umiddelbar etter kjøp</p>
             </div>
         </div>
     </div>
