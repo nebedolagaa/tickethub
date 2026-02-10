@@ -2577,3 +2577,259 @@ input[name="ES-ArtistSok"]::placeholder {
   }
 }
 
+/* ============================================
+   SØKMODAL STILER - Nikita Popov (NP)
+   ============================================ */
+
+/* Modal container - skjult som standard */
+.NP-search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 80px;
+}
+
+/* Vises når aktiv */
+.NP-search-modal-active {
+  display: flex;
+}
+
+/* Mørk overlay bakgrunn */
+.NP-search-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: -1;
+}
+
+/* Modal innhold container */
+.NP-search-modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 700px;
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: NP-slideDown 0.3s ease-out;
+}
+
+@keyframes NP-slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal header */
+.NP-search-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.NP-search-modal-title {
+  color: var(--th-white);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Lukkeknapp */
+.NP-search-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--th-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.NP-search-modal-close:hover {
+  background: var(--th-light-gray);
+  color: var(--th-white);
+}
+
+/* Søkeskjema */
+.NP-search-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+/* Input wrapper med ikon */
+.NP-search-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.NP-search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--th-muted);
+  font-size: 1.25rem;
+  pointer-events: none;
+}
+
+/* Søkeinput felt */
+.NP-search-input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: var(--th-gray);
+  border: 2px solid var(--th-light-gray);
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.NP-search-input::placeholder {
+  color: var(--th-muted);
+}
+
+.NP-search-input:focus {
+  outline: none;
+  border-color: var(--th-red);
+  background: var(--th-black);
+}
+
+/* Søkeknapp */
+.NP-search-submit-btn {
+  padding: 14px 28px;
+  background: var(--th-red);
+  color: var(--th-white);
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.NP-search-submit-btn:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.NP-search-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Forslag seksjon */
+.NP-search-suggestions {
+  padding-top: 24px;
+  border-top: 1px solid var(--th-light-gray);
+}
+
+.NP-suggestions-title {
+  color: var(--th-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+/* Forslag tags */
+.NP-suggestion-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.NP-suggestion-tag {
+  padding: 8px 16px;
+  background: var(--th-light-gray);
+  color: var(--th-white);
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.NP-suggestion-tag:hover {
+  background: var(--th-red);
+  border-color: var(--th-red);
+  transform: translateY(-2px);
+}
+
+/* Responsiv design for søkmodal */
+@media (max-width: 768px) {
+  .NP-search-modal {
+    padding-top: 40px;
+  }
+
+  .NP-search-modal-content {
+    width: 95%;
+    padding: 24px;
+    border-radius: 12px;
+  }
+
+  .NP-search-modal-title {
+    font-size: 1.25rem;
+  }
+
+  .NP-search-form {
+    flex-direction: column;
+  }
+
+  .NP-search-submit-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .NP-search-modal-content {
+    padding: 20px;
+  }
+
+  .NP-search-modal-title {
+    font-size: 1.1rem;
+  }
+
+  .NP-search-input {
+    font-size: 0.9rem;
+    padding: 12px 16px 12px 44px;
+  }
+
+  .NP-search-submit-btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+
+  .NP-suggestion-tag {
+    font-size: 0.8rem;
+    padding: 6px 14px;
+  }
+}
