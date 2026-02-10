@@ -16,7 +16,7 @@
             <!-- Boks 1: Kontaktinformasjon -->
             <div class="CB-payment-form-section">
             <h2 class="CB-payment-title">Kontaktinformasjon</h2>
-            <form method="post" class="CB-payment-form">
+            <form method="post" action="/billetter/after-payment/" class="CB-payment-form">
                 {% csrf_token %}
 
                 <div class="CB-payment-form-group">
