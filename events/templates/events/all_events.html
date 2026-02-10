@@ -1,0 +1,205 @@
+{% load static %}
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alle konserter - TicketHub</title>
+
+    <!-- Favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'favicon/apple-touch-icon.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'favicon/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'favicon/favicon-16x16.png' %}"
+    />
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}" />
+
+    <!-- Bootstrap CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+
+    <!-- Font Awesome  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+  </head>
+  <body>
+    {% include "snippets/navbar.html" %}
+
+    <!-- Главная секция со всеми концертами -->
+    <section class="NP-all-events-section">
+      <div class="NP-container">
+        <!-- Заголовок -->
+        <div class="NP-header">
+          <h1 class="NP-title">Alle konserter</h1>
+          <p class="NP-subtitle">
+            Oppdag spennende konserter og arrangementer i hele Norge
+          </p>
+        </div>
+
+        <!-- Панель поиска и сортировки -->
+        <div class="NP-filter-panel">
+          <form
+            method="get"
+            action="{% url 'all_events' %}"
+            class="NP-search-form"
+          >
+            <!-- Поиск -->
+            <div class="NP-search-container">
+              <i class="bi bi-search NP-search-icon"></i>
+              <input
+                type="text"
+                name="search"
+                class="NP-search-input"
+                placeholder="Søk etter konsert, artist eller sted..."
+                value="{{ search_query }}"
+              />
+            </div>
+
+            <!-- Сортировка -->
+            <div class="NP-sort-container">
+              <i class="bi bi-sort-down NP-sort-icon"></i>
+              <select name="sort" class="NP-sort-select" onchange="this.form.submit()">
+                <option value="date_asc" {% if sort_by == 'date_asc' %}selected{% endif %}>
+                  Dato (nærmest først)
+                </option>
+                <option value="date_desc" {% if sort_by == 'date_desc' %}selected{% endif %}>
+                  Dato (nyeste først)
+                </option>
+                <option value="title_asc" {% if sort_by == 'title_asc' %}selected{% endif %}>
+                  Navn (A-Å)
+                </option>
+                <option value="title_desc" {% if sort_by == 'title_desc' %}selected{% endif %}>
+                  Navn (Å-A)
+                </option>
+                <option value="venue" {% if sort_by == 'venue' %}selected{% endif %}>
+                  Lokasjon
+                </option>
+              </select>
+            </div>
+
+            <!-- Кнопка поиска (для мобильных) -->
+            <button type="submit" class="NP-search-btn">
+              <i class="bi bi-search"></i>
+              Søk
+            </button>
+          </form>
+
+          <!-- Результаты поиска -->
+          <div class="NP-results-info">
+            <p>
+              {% if search_query %}
+                Viser <strong>{{ total_events }}</strong> resultat{% if total_events != 1 %}er{% endif %} for "<strong>{{ search_query }}</strong>"
+              {% else %}
+                Viser <strong>{{ total_events }}</strong> konsert{% if total_events != 1 %}er{% endif %}
+              {% endif %}
+            </p>
+            {% if search_query %}
+              <a href="{% url 'all_events' %}" class="NP-clear-search">
+                <i class="bi bi-x-circle"></i> Nullstill søk
+              </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Сетка с карточками концертов -->
+        {% if events %}
+        <div class="NP-events-grid">
+          {% for event in events %}
+          <article class="NP-event-card">
+            <div class="NP-image-wrap">
+              {% if event.images.all %}
+                {% with event.images.first as first_image %}
+                  <img
+                    src="{{ first_image.image.url }}"
+                    alt="{{ first_image.alt_text|default:event.title }}"
+                    class="NP-image"
+                  />
+                {% endwith %}
+              {% else %}
+                <img
+                  src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&w=600&q=80"
+                  alt="{{ event.title }}"
+                  class="NP-image"
+                />
+              {% endif %}
+              <span class="NP-category">Musikk</span>
+            </div>
+            <div class="NP-details">
+              <h2 class="NP-event-title">{{ event.title }}</h2>
+              <div class="NP-event-meta">
+                <div class="NP-meta-item">
+                  <i class="bi bi-calendar-event"></i>
+                  <span>{{ event.start_datetime|date:"d. F Y" }}</span>
+                </div>
+                <div class="NP-meta-item">
+                  <i class="bi bi-clock"></i>
+                  <span>{{ event.start_datetime|date:"H:i" }}</span>
+                </div>
+                <div class="NP-meta-item">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>{{ event.venue.name }}, {{ event.venue.address.city }}</span>
+                </div>
+              </div>
+              {% if event.description %}
+                <p class="NP-description">
+                  {{ event.description|truncatewords:20 }}
+                </p>
+              {% endif %}
+              <div class="NP-card-footer">
+                <button class="NP-buy-btn">
+                  Se billetter
+                  <i class="bi bi-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+        {% else %}
+          <!-- Сообщение, если ничего не найдено -->
+          <div class="NP-no-results">
+            <i class="bi bi-search"></i>
+            <h3>Ingen konserter funnet</h3>
+            <p>
+              {% if search_query %}
+                Prøv et annet søkeord eller <a href="{% url 'all_events' %}">vis alle konserter</a>
+              {% else %}
+                Det er ingen konserter tilgjengelig for øyeblikket.
+              {% endif %}
+            </p>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+
+    {% include "snippets/footer.html" %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

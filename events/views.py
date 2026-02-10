@@ -1,8 +1,47 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Event
+from django.db.models import Q, Min
 
 def home_page(request):
     return render(request, "home_page.html")
+
+def all_events(request):
+    """Страница со всеми концертами с возможностью поиска и сортировки"""
+    events = Event.objects.all().select_related('venue', 'venue__address', 'organizer')
+    
+    # Поиск
+    search_query = request.GET.get('search', '')
+    if search_query:
+        events = events.filter(
+            Q(title__icontains=search_query) |
+            Q(description__icontains=search_query) |
+            Q(venue__name__icontains=search_query) |
+            Q(venue__address__city__icontains=search_query)
+        )
+    
+    # Сортировка
+    sort_by = request.GET.get('sort', 'date_asc')
+    
+    if sort_by == 'date_asc':
+        events = events.order_by('start_datetime')
+    elif sort_by == 'date_desc':
+        events = events.order_by('-start_datetime')
+    elif sort_by == 'title_asc':
+        events = events.order_by('title')
+    elif sort_by == 'title_desc':
+        events = events.order_by('-title')
+    elif sort_by == 'venue':
+        events = events.order_by('venue__name')
+    
+    context = {
+        'events': events,
+        'search_query': search_query,
+        'sort_by': sort_by,
+        'total_events': events.count()
+    }
+    
+    return render(request, 'events/all_events.html', context)
 
 def snippets(request):
     return render(request, "home_page.html")
