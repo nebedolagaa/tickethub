@@ -7,3 +7,6 @@ def my_tickets(request):
 
 def betaling(request):
     return render(request, "tickets/betaling.html")
+
+def after_payment(request):
+    return render(request, "tickets/after_payment.html")
