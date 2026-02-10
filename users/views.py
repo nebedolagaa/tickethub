@@ -3,13 +3,23 @@ Bidratt til denne filen:
     - Kamilla Nizamova
 '''
 from django.shortcuts import render, redirect
-from django.contrib.auth import login
 from django.db import transaction
 from django.contrib import messages, auth
 
 from django.contrib.auth.decorators import login_required
 
+from .models import Account
+
 from .forms import AccountCreationForm, SignupTypeForm, OrganizerProfileForm
+
+#verifikasjonsverktøy for tilbakestilling av passord
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMessage
+
 
 #funksjon for registrering av bruker
 def register(request):
@@ -38,7 +48,8 @@ def register(request):
                     organizer.user = user #knytt arrangørprofilen til user fordi arrangør er en rolle og ikke en egen user type 
                     organizer.save()
 
-            login(request, user)
+            auth.login(request, user)
+            messages.success(request, "Konto opprettet og du er nå logget inn")
             return redirect('home_page') #omdiriger til hjemsiden etter registrering
         
     else:
@@ -72,8 +83,74 @@ def login(request):
     return render(request, 'users/login.html')
 
 
-@login_required(login_url = 'login')
+@login_required(login_url = 'users:login')
 def logout(request):
-    auth.logout(requst)
+    auth.logout(request)
     messages.success(request, "Du er nå logget ut")
     return redirect('home_page')
+
+
+def forgotPassword(request):
+    if request.method == 'POST':
+        email = request.POST['email']
+        if Account.objects.filter(email = email).exists():
+            #send email with reset link
+            user = Account.objects.get(email__exact = email)
+
+            #reset password email 
+            current_site = get_current_site(request)
+            mail_subject = 'Passord bytte forespørsel'
+            message = render_to_string('users/reset_password_email.html', {
+                'user': user,
+                'domain': current_site,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),#encode user id for å sende i url, safe metode
+                'token': default_token_generator.make_token(user),
+            })
+            to_email = email
+            send_email = EmailMessage(mail_subject, message, to=[to_email])
+            send_email.send()
+
+            messages.success(request, "En e-post har blitt sendt til " + email + " med instruksjoner for å tilbakestille passordet ditt.")
+            return redirect('users:login')
+        else:
+            messages.error(request, "E-postadressen finnes ikke i systemet")
+            return redirect('users:forgotPassword')
+
+    return render(request, 'users/forgotPassword.html')
+
+#funksjon for å validere token og uid fra reset password linken i e-posten, og om de er gyldige, lagre uid i session for å bruke i resetPassword view
+def resetpassword_validate(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode() #dekode uid fra url
+        user = Account._default_manager.get(pk=uid) #hent bruker basert på dekodet uid
+    except (TypeError, ValueError, OverflowError, Account.DoesNotExist):
+        user = None
+
+    if user is not None and default_token_generator.check_token(user, token): #sjekk at token er gyldig for denne brukeren
+        request.session['uid'] = uid #lagre uid i session for å bruke i reset passord view
+        messages.success(request, "Vennligst tilbakestill passordet ditt")
+        return redirect('users:resetPassword')
+    else:
+        messages.error(request, "Linken for tilbakestilling av passord er ugyldig")
+        return redirect('users:forgotPassword')
+    
+
+def resetPassword(request):
+    if request.method =='POST':
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+
+        if password == confirm_password:
+            uid = request.session.get('uid') #hent uid fra session
+            user = Account.objects.get(pk = uid) #hent bruker basert på uid
+            user.set_password(password) #bruk set_password for å hashe passordet før det lagres i databasen, byggt inn metode i Django's User model
+            user.save()
+            messages.success(request, "Passordet ditt har blitt tilbakestilt. Du kan nå logge inn med det nye passordet ditt.")
+            return redirect('users:login')
+        
+        else:
+            messages.error(request, "Passordene matcher ikke")
+            return redirect('users:resetPassword')
+    
+    else: 
+        return render(request, 'users/resetPassword.html')

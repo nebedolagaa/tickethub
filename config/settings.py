@@ -87,3 +87,11 @@ LOGOUT_REDIRECT_URL = 'home_page'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
+
+
+#Smtp innstillinger 
+SMTP_HOST = 'smtp.gmail.com'
+SMTP_PORT = 587
+EMAIL_HOST_USER = 'noreply@tickethub.no'
+EMAIL_HOST_PASSWORD = ''#passord mangler. må opprette en epost konto for dette og generere
+EMAIL_USE_TLS = True
