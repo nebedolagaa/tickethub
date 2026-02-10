@@ -1,0 +1,309 @@
+{% load static %}
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Byer - TicketHub</title>
+
+    <!-- Favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'favicon/apple-touch-icon.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'favicon/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'favicon/favicon-16x16.png' %}"
+    />
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}" />
+
+    <!-- Bootstrap CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+
+    <!-- Font Awesome  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+  </head>
+  <body>
+    {% include "snippets/navbar.html" %}
+
+    <!-- Hovedseksjon med alle byer - NP -->
+    <section class="NP-cities-section">
+      <div class="NP-container">
+        <!-- Tittel -->
+        <div class="NP-header">
+          <h1 class="NP-title">Byer</h1>
+          <p class="NP-subtitle">
+            Utforsk arrangementer i forskjellige byer rundt i Norge
+          </p>
+        </div>
+
+        <!-- Søke- og sorteringspanel -->
+        <div class="NP-filter-panel">
+          <form
+            method="get"
+            action="{% url 'cities' %}"
+            class="NP-search-form"
+          >
+            <!-- Søk -->
+            <div class="NP-search-container">
+              <i class="bi bi-search NP-search-icon"></i>
+              <input
+                type="text"
+                name="search"
+                class="NP-search-input"
+                placeholder="Søk etter by..."
+                value="{{ search_query }}"
+              />
+            </div>
+
+            <!-- Sortering -->
+            <div class="NP-sort-container">
+              <i class="bi bi-sort-down NP-sort-icon"></i>
+              <select name="sort" class="NP-sort-select" onchange="this.form.submit()">
+                <option value="events_desc" {% if sort_by == 'events_desc' %}selected{% endif %}>
+                  Flest arrangementer
+                </option>
+                <option value="events_asc" {% if sort_by == 'events_asc' %}selected{% endif %}>
+                  Færrest arrangementer
+                </option>
+                <option value="name_asc" {% if sort_by == 'name_asc' %}selected{% endif %}>
+                  Bynavn (A-Å)
+                </option>
+                <option value="name_desc" {% if sort_by == 'name_desc' %}selected{% endif %}>
+                  Bynavn (Å-A)
+                </option>
+              </select>
+            </div>
+
+            <!-- Søkeknapp (for mobil) -->
+            <button type="submit" class="NP-search-btn">
+              <i class="bi bi-search"></i>
+              Søk
+            </button>
+          </form>
+
+          <!-- Søkeresultater -->
+          <div class="NP-results-info">
+            <p>
+              {% if search_query %}
+                Viser <strong>{{ total_cities }}</strong> by{% if total_cities != 1 %}er{% endif %} for "<strong>{{ search_query }}</strong>"
+              {% else %}
+                Viser <strong>{{ total_cities }}</strong> by{% if total_cities != 1 %}er{% endif %}
+              {% endif %}
+            </p>
+            {% if search_query %}
+              <a href="{% url 'cities' %}" class="NP-clear-search">
+                <i class="bi bi-x-circle"></i> Nullstill søk
+              </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Grid med bykort -->
+        {% if cities %}
+        <div class="NP-cities-grid">
+          {% for city in cities %}
+          <article class="NP-city-card">
+            <div class="NP-city-image-wrap">
+              <!-- Dynamisk bakgrunnsbilde basert på bynavn - NP -->
+              {% if city.venue__address__city == "Oslo" %}
+                <img
+                  src="https://images.unsplash.com/photo-1598084991519-c90900bc9df0?auto=format&fit=crop&w=800&q=80"
+                  alt="Oslo"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Bergen" %}
+                <img
+                  src="https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=800&q=80"
+                  alt="Bergen"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Trondheim" %}
+                <img
+                  src="https://images.unsplash.com/photo-1509023464722-18d996393ca8?auto=format&fit=crop&w=800&q=80"
+                  alt="Trondheim"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Stavanger" %}
+                <img
+                  src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80"
+                  alt="Stavanger"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Tromsø" or city.venue__address__city == "Tromso" %}
+                <img
+                  src="https://images.unsplash.com/photo-1579802772615-2769c0f4d2a4?auto=format&fit=crop&w=800&q=80"
+                  alt="Tromsø"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Kristiansand" %}
+                <img
+                  src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"
+                  alt="Kristiansand"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Drammen" %}
+                <img
+                  src="https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?auto=format&fit=crop&w=800&q=80"
+                  alt="Drammen"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Fredrikstad" %}
+                <img
+                  src="https://images.unsplash.com/photo-1590255222042-c8a2d45e9999?auto=format&fit=crop&w=800&q=80"
+                  alt="Fredrikstad"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Sandnes" %}
+                <img
+                  src="https://images.unsplash.com/photo-1531572753322-ad063cecc140?auto=format&fit=crop&w=800&q=80"
+                  alt="Sandnes"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Bodø" or city.venue__address__city == "Bodo" %}
+                <img
+                  src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80"
+                  alt="Bodø"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Ålesund" or city.venue__address__city == "Alesund" %}
+                <img
+                  src="https://images.unsplash.com/photo-1478719059408-592965723cbc?auto=format&fit=crop&w=800&q=80"
+                  alt="Ålesund"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Tønsberg" or city.venue__address__city == "Tonsberg" %}
+                <img
+                  src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80"
+                  alt="Tønsberg"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Moss" %}
+                <img
+                  src="https://images.unsplash.com/photo-1542224566-6e85f2e6772f?auto=format&fit=crop&w=800&q=80"
+                  alt="Moss"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Sandefjord" %}
+                <img
+                  src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=800&q=80"
+                  alt="Sandefjord"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Haugesund" %}
+                <img
+                  src="https://images.unsplash.com/photo-1501704431878-f36f3bfb5fd5?auto=format&fit=crop&w=800&q=80"
+                  alt="Haugesund"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Sarpsborg" %}
+                <img
+                  src="https://images.unsplash.com/photo-1563789031959-4c02bcb41319?auto=format&fit=crop&w=800&q=80"
+                  alt="Sarpsborg"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Skien" %}
+                <img
+                  src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80"
+                  alt="Skien"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Arendal" %}
+                <img
+                  src="https://images.unsplash.com/photo-1485739139909-d0d1783a3ea4?auto=format&fit=crop&w=800&q=80"
+                  alt="Arendal"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Hamar" %}
+                <img
+                  src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80"
+                  alt="Hamar"
+                  class="NP-city-image"
+                />
+              {% elif city.venue__address__city == "Lillehammer" %}
+                <img
+                  src="https://images.unsplash.com/photo-1551632811-561732d1e306?auto=format&fit=crop&w=800&q=80"
+                  alt="Lillehammer"
+                  class="NP-city-image"
+                />
+              {% else %}
+                <img
+                  src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80"
+                  alt="{{ city.venue__address__city }}"
+                  class="NP-city-image"
+                />
+              {% endif %}
+              
+              <!-- Overlay med gradient - NP -->
+              <div class="NP-city-overlay"></div>
+              
+              <!-- Event count badge - NP -->
+              <div class="NP-city-badge">
+                <i class="bi bi-calendar-event"></i>
+                <span>{{ city.event_count }}</span>
+              </div>
+            </div>
+            
+            <div class="NP-city-details">
+              <h2 class="NP-city-name">
+                <i class="bi bi-geo-alt-fill"></i>
+                {{ city.venue__address__city }}
+              </h2>
+              <p class="NP-city-info">
+                {{ city.event_count }} arrangement{% if city.event_count != 1 %}er{% endif %} tilgjengelig
+              </p>
+              <a href="{% url 'all_events' %}?search={{ city.venue__address__city }}" class="NP-city-btn">
+                Se alle arrangementer
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+        {% else %}
+          <!-- Melding når ingenting blir funnet - NP -->
+          <div class="NP-no-results">
+            <i class="bi bi-search"></i>
+            <h3>Ingen byer funnet</h3>
+            <p>
+              {% if search_query %}
+                Prøv et annet søkeord eller <a href="{% url 'cities' %}">vis alle byer</a>
+              {% else %}
+                Det er ingen byer tilgjengelig for øyeblikket.
+              {% endif %}
+            </p>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+
+    {% include "snippets/footer.html" %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

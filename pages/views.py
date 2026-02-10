@@ -16,3 +16,6 @@ def personvern_view(request):
 
 def vilkar_view(request):
     return render(request, 'pages/vilkar.html')
+
+def arrangor_view(request):
+    return render(request, 'pages/arrangor.html')

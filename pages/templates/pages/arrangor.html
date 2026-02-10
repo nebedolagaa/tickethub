@@ -1,0 +1,406 @@
+{% load static %}
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Arrangør - TicketHub</title>
+
+    <!-- Favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'favicon/apple-touch-icon.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'favicon/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'favicon/favicon-16x16.png' %}"
+    />
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}" />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+  </head>
+  <body>
+    {% include "snippets/navbar.html" %}
+
+    <!-- Hero seksjon for arrangør -->
+    <section class="NP-arrangor-hero">
+      <div class="NP-arrangor-hero-overlay"></div>
+      <div class="NP-arrangor-hero-content">
+        <h1 class="NP-arrangor-hero-title">
+          Selg billetter til dine arrangementer
+        </h1>
+        <p class="NP-arrangor-hero-subtitle">
+          TicketHub gjør det enkelt å nå ut til tusenvis av potensielle gjester.
+          Opprett, administrer og selg billetter på én plattform.
+        </p>
+        <div class="NP-arrangor-hero-buttons">
+          <a href="#kontakt" class="NP-arrangor-btn-primary">
+            <i class="bi bi-calendar-check"></i>
+            Kom i gang
+          </a>
+          <a href="#fordeler" class="NP-arrangor-btn-secondary">
+            <i class="bi bi-info-circle"></i>
+            Les mer
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fordeler seksjon -->
+    <section class="NP-arrangor-section" id="fordeler">
+      <div class="NP-arrangor-container">
+        <h2 class="NP-arrangor-section-title">Hvorfor velge TicketHub?</h2>
+        <p class="NP-arrangor-section-subtitle">
+          Alt du trenger for å lykkes med ditt arrangement
+        </p>
+
+        <div class="NP-arrangor-benefits">
+          <!-- Fordel 1 -->
+          <div class="NP-arrangor-benefit-card">
+            <div class="NP-arrangor-benefit-icon">
+              <i class="bi bi-people"></i>
+            </div>
+            <h3 class="NP-arrangor-benefit-title">Stort publikum</h3>
+            <p class="NP-arrangor-benefit-text">
+              Få tilgang til tusenvis av aktive brukere som søker etter 
+              arrangementer i hele Norge.
+            </p>
+          </div>
+
+          <!-- Fordel 2 -->
+          <div class="NP-arrangor-benefit-card">
+            <div class="NP-arrangor-benefit-icon">
+              <i class="bi bi-graph-up"></i>
+            </div>
+            <h3 class="NP-arrangor-benefit-title">Enkel administrasjon</h3>
+            <p class="NP-arrangor-benefit-text">
+              Håndter alle aspekter av arrangementet ditt fra ett 
+              brukervennlig dashbord.
+            </p>
+          </div>
+
+          <!-- Fordel 3 -->
+          <div class="NP-arrangor-benefit-card">
+            <div class="NP-arrangor-benefit-icon">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <h3 class="NP-arrangor-benefit-title">Sikker betaling</h3>
+            <p class="NP-arrangor-benefit-text">
+              Få utbetalt umiddelbart med våre sikre og 
+              pålitelige betalingsløsninger.
+            </p>
+          </div>
+
+          <!-- Fordel 4 -->
+          <div class="NP-arrangor-benefit-card">
+            <div class="NP-arrangor-benefit-icon">
+              <i class="bi bi-bar-chart"></i>
+            </div>
+            <h3 class="NP-arrangor-benefit-title">Sanntidsstatistikk</h3>
+            <p class="NP-arrangor-benefit-text">
+              Følg med på billettsalg, inntekter og publikumsatferd 
+              i sanntid.
+            </p>
+          </div>
+
+          <!-- Fordel 5 -->
+          <div class="NP-arrangor-benefit-card">
+            <div class="NP-arrangor-benefit-icon">
+              <i class="bi bi-megaphone"></i>
+            </div>
+            <h3 class="NP-arrangor-benefit-title">Markedsføring</h3>
+            <p class="NP-arrangor-benefit-text">
+              Vi promoterer arrangementet ditt på plattformen og på 
+              sosiale medier.
+            </p>
+          </div>
+
+          <!-- Fordel 6 -->
+          <div class="NP-arrangor-benefit-card">
+            <div class="NP-arrangor-benefit-icon">
+              <i class="bi bi-headset"></i>
+            </div>
+            <h3 class="NP-arrangor-benefit-title">24/7 Support</h3>
+            <p class="NP-arrangor-benefit-text">
+              Vårt dedikerte supportteam er alltid klar til å hjelpe 
+              deg når du trenger det.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hvordan det fungerer -->
+    <section class="NP-arrangor-section NP-arrangor-section-dark">
+      <div class="NP-arrangor-container">
+        <h2 class="NP-arrangor-section-title">Slik kommer du i gang</h2>
+        <p class="NP-arrangor-section-subtitle">
+          Tre enkle steg til ditt første arrangement
+        </p>
+
+        <div class="NP-arrangor-steps">
+          <!-- Steg 1 -->
+          <div class="NP-arrangor-step">
+            <div class="NP-arrangor-step-number">1</div>
+            <div class="NP-arrangor-step-content">
+              <h3 class="NP-arrangor-step-title">Registrer deg</h3>
+              <p class="NP-arrangor-step-text">
+                Opprett en gratis arrangørkonto og fyll ut profilen din.
+              </p>
+            </div>
+          </div>
+
+          <!-- Steg 2 -->
+          <div class="NP-arrangor-step">
+            <div class="NP-arrangor-step-number">2</div>
+            <div class="NP-arrangor-step-content">
+              <h3 class="NP-arrangor-step-title">Opprett arrangement</h3>
+              <p class="NP-arrangor-step-text">
+                Legg til detaljer om arrangementet, bilder, priser og 
+                tilgjengelige billetter.
+              </p>
+            </div>
+          </div>
+
+          <!-- Steg 3 -->
+          <div class="NP-arrangor-step">
+            <div class="NP-arrangor-step-number">3</div>
+            <div class="NP-arrangor-step-content">
+              <h3 class="NP-arrangor-step-title">Start salget</h3>
+              <p class="NP-arrangor-step-text">
+                Publiser arrangementet og begynn å selge billetter 
+                med én gang.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Prising -->
+    <section class="NP-arrangor-section" id="prising">
+      <div class="NP-arrangor-container">
+        <h2 class="NP-arrangor-section-title">Transparent prising</h2>
+        <p class="NP-arrangor-section-subtitle">
+          Ingen skjulte kostnader - betal kun for det du bruker
+        </p>
+
+        <div class="NP-arrangor-pricing-cards">
+          <!-- Gratis pakke -->
+          <div class="NP-arrangor-pricing-card">
+            <div class="NP-arrangor-pricing-header">
+              <h3 class="NP-arrangor-pricing-title">Start</h3>
+              <div class="NP-arrangor-pricing-price">
+                <span class="NP-arrangor-pricing-amount">5%</span>
+                <span class="NP-arrangor-pricing-unit">per billett</span>
+              </div>
+            </div>
+            <ul class="NP-arrangor-pricing-features">
+              <li><i class="bi bi-check-circle"></i> Ubegrenset arrangementer</li>
+              <li><i class="bi bi-check-circle"></i> Grunnleggende statistikk</li>
+              <li><i class="bi bi-check-circle"></i> E-post support</li>
+              <li><i class="bi bi-check-circle"></i> Standardmarkedsføring</li>
+            </ul>
+            <a href="#kontakt" class="NP-arrangor-pricing-btn">Velg plan</a>
+          </div>
+
+          <!-- Pro pakke -->
+          <div class="NP-arrangor-pricing-card NP-arrangor-pricing-card-featured">
+            <div class="NP-arrangor-pricing-badge">Mest populær</div>
+            <div class="NP-arrangor-pricing-header">
+              <h3 class="NP-arrangor-pricing-title">Pro</h3>
+              <div class="NP-arrangor-pricing-price">
+                <span class="NP-arrangor-pricing-amount">3%</span>
+                <span class="NP-arrangor-pricing-unit">per billett</span>
+              </div>
+            </div>
+            <ul class="NP-arrangor-pricing-features">
+              <li><i class="bi bi-check-circle"></i> Alt i Start</li>
+              <li><i class="bi bi-check-circle"></i> Avansert statistikk</li>
+              <li><i class="bi bi-check-circle"></i> Prioritert support</li>
+              <li><i class="bi bi-check-circle"></i> Fremhevet markedsføring</li>
+              <li><i class="bi bi-check-circle"></i> Egendefinerte rabattkoder</li>
+            </ul>
+            <a href="#kontakt" class="NP-arrangor-pricing-btn">Velg plan</a>
+          </div>
+
+          <!-- Enterprise pakke -->
+          <div class="NP-arrangor-pricing-card">
+            <div class="NP-arrangor-pricing-header">
+              <h3 class="NP-arrangor-pricing-title">Enterprise</h3>
+              <div class="NP-arrangor-pricing-price">
+                <span class="NP-arrangor-pricing-amount">Tilpasset</span>
+                <span class="NP-arrangor-pricing-unit">kontakt oss</span>
+              </div>
+            </div>
+            <ul class="NP-arrangor-pricing-features">
+              <li><i class="bi bi-check-circle"></i> Alt i Pro</li>
+              <li><i class="bi bi-check-circle"></i> Dedikert kontoadministrator</li>
+              <li><i class="bi bi-check-circle"></i> 24/7 telefonisk support</li>
+              <li><i class="bi bi-check-circle"></i> API-tilgang</li>
+              <li><i class="bi bi-check-circle"></i> White-label løsning</li>
+            </ul>
+            <a href="#kontakt" class="NP-arrangor-pricing-btn">Kontakt oss</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kontakt seksjon -->
+    <section class="NP-arrangor-section NP-arrangor-section-dark" id="kontakt">
+      <div class="NP-arrangor-container">
+        <h2 class="NP-arrangor-section-title">Klar til å komme i gang?</h2>
+        <p class="NP-arrangor-section-subtitle">
+          Ta kontakt med oss, så hjelper vi deg på veien
+        </p>
+
+        <div class="NP-arrangor-contact-wrapper">
+          <!-- Kontaktskjema -->
+          <div class="NP-arrangor-contact-form">
+            <form>
+              <div class="NP-arrangor-form-row">
+                <div class="NP-arrangor-form-group">
+                  <label for="navn" class="NP-arrangor-form-label">Navn</label>
+                  <input
+                    type="text"
+                    id="navn"
+                    name="navn"
+                    class="NP-arrangor-form-input"
+                    placeholder="Ditt fulle navn"
+                    required
+                  />
+                </div>
+                <div class="NP-arrangor-form-group">
+                  <label for="epost" class="NP-arrangor-form-label">E-post</label>
+                  <input
+                    type="email"
+                    id="epost"
+                    name="epost"
+                    class="NP-arrangor-form-input"
+                    placeholder="din@epost.no"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="NP-arrangor-form-row">
+                <div class="NP-arrangor-form-group">
+                  <label for="telefon" class="NP-arrangor-form-label">Telefon</label>
+                  <input
+                    type="tel"
+                    id="telefon"
+                    name="telefon"
+                    class="NP-arrangor-form-input"
+                    placeholder="+47 123 45 678"
+                  />
+                </div>
+                <div class="NP-arrangor-form-group">
+                  <label for="bedrift" class="NP-arrangor-form-label">Bedrift/Organisasjon</label>
+                  <input
+                    type="text"
+                    id="bedrift"
+                    name="bedrift"
+                    class="NP-arrangor-form-input"
+                    placeholder="Ditt firmanavn"
+                  />
+                </div>
+              </div>
+
+              <div class="NP-arrangor-form-group">
+                <label for="arrangementtype" class="NP-arrangor-form-label">Type arrangement</label>
+                <select
+                  id="arrangementtype"
+                  name="arrangementtype"
+                  class="NP-arrangor-form-input"
+                  required
+                >
+                  <option value="">Velg type</option>
+                  <option value="konsert">Konsert</option>
+                  <option value="festival">Festival</option>
+                  <option value="konferanse">Konferanse</option>
+                  <option value="teater">Teater</option>
+                  <option value="sport">Sport</option>
+                  <option value="annet">Annet</option>
+                </select>
+              </div>
+
+              <div class="NP-arrangor-form-group">
+                <label for="melding" class="NP-arrangor-form-label">Melding</label>
+                <textarea
+                  id="melding"
+                  name="melding"
+                  rows="5"
+                  class="NP-arrangor-form-input"
+                  placeholder="Fortell oss mer om ditt arrangement..."
+                  required
+                ></textarea>
+              </div>
+
+              <button type="submit" class="NP-arrangor-form-submit">
+                <i class="bi bi-send"></i>
+                Send forespørsel
+              </button>
+            </form>
+          </div>
+
+          <!-- Kontaktinformasjon -->
+          <div class="NP-arrangor-contact-info">
+            <div class="NP-arrangor-info-card">
+              <div class="NP-arrangor-info-icon">
+                <i class="bi bi-envelope"></i>
+              </div>
+              <h4 class="NP-arrangor-info-title">E-post</h4>
+              <p class="NP-arrangor-info-text">arrangor@tickethub.no</p>
+            </div>
+
+            <div class="NP-arrangor-info-card">
+              <div class="NP-arrangor-info-icon">
+                <i class="bi bi-telephone"></i>
+              </div>
+              <h4 class="NP-arrangor-info-title">Telefon</h4>
+              <p class="NP-arrangor-info-text">+47 123 45 678</p>
+            </div>
+
+            <div class="NP-arrangor-info-card">
+              <div class="NP-arrangor-info-icon">
+                <i class="bi bi-clock"></i>
+              </div>
+              <h4 class="NP-arrangor-info-title">Åpningstider</h4>
+              <p class="NP-arrangor-info-text">
+                Man-Fre: 09:00 - 17:00<br />
+                Helg: Stengt
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% include "snippets/footer.html" %}
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -77,11 +77,25 @@ class VenueArea(models.Model):
 
 
 class Event(models.Model):
+    # Valgmuligheter for arrangementstype
+    EVENT_TYPE_CHOICES = [
+        ('concert', 'Konsert'),
+        ('festival', 'Festival'),
+    ]
+    
     organizer = models.ForeignKey('users.OrganizerProfile', on_delete=models.CASCADE, related_name='events')
     venue = models.ForeignKey(Venue, on_delete = models.PROTECT, related_name = 'events')
 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+    
+    # Type arrangement - konsert eller festival
+    event_type = models.CharField(
+        max_length=20,
+        choices=EVENT_TYPE_CHOICES,
+        default='concert',
+        help_text='Type arrangement: konsert eller festival'
+    )
 
     start_datetime = models.DateTimeField()
     end_datetime = models.DateTimeField()

@@ -141,8 +141,9 @@
                   />
                 {% endwith %}
               {% else %}
+                {# Varierte festivalbilder - cycle roterer automatisk #}
                 <img
-                  src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=80"
+                  src="{% cycle 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=600&q=80' %}"
                   alt="{{ festival.title }}"
                   class="NP-image"
                 />
@@ -196,6 +197,83 @@
               {% endif %}
             </p>
           </div>
+        {% endif %}
+
+        <!-- Paginering - NP -->
+        {% if festivals.has_other_pages %}
+        <nav class="NP-pagination-wrapper" aria-label="Sidenavigasjon">
+          <ul class="NP-pagination">
+            <!-- Første side -->
+            {% if festivals.has_previous %}
+              <li class="NP-page-item">
+                <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                  <i class="bi bi-chevron-double-left"></i>
+                </a>
+              </li>
+              <!-- Forrige side -->
+              <li class="NP-page-item">
+                <a href="?page={{ festivals.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                  <i class="bi bi-chevron-left"></i>
+                </a>
+              </li>
+            {% else %}
+              <li class="NP-page-item NP-disabled">
+                <span class="NP-page-link">
+                  <i class="bi bi-chevron-double-left"></i>
+                </span>
+              </li>
+              <li class="NP-page-item NP-disabled">
+                <span class="NP-page-link">
+                  <i class="bi bi-chevron-left"></i>
+                </span>
+              </li>
+            {% endif %}
+
+            <!-- Sidenumre -->
+            {% for num in festivals.paginator.page_range %}
+              {% if festivals.number == num %}
+                <li class="NP-page-item NP-active">
+                  <span class="NP-page-link">{{ num }}</span>
+                </li>
+              {% elif num > festivals.number|add:'-3' and num < festivals.number|add:'3' %}
+                <li class="NP-page-item">
+                  <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">{{ num }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+
+            <!-- Neste side -->
+            {% if festivals.has_next %}
+              <li class="NP-page-item">
+                <a href="?page={{ festivals.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                  <i class="bi bi-chevron-right"></i>
+                </a>
+              </li>
+              <!-- Siste side -->
+              <li class="NP-page-item">
+                <a href="?page={{ festivals.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                  <i class="bi bi-chevron-double-right"></i>
+                </a>
+              </li>
+            {% else %}
+              <li class="NP-page-item NP-disabled">
+                <span class="NP-page-link">
+                  <i class="bi bi-chevron-right"></i>
+                </span>
+              </li>
+              <li class="NP-page-item NP-disabled">
+                <span class="NP-page-link">
+                  <i class="bi bi-chevron-double-right"></i>
+                </span>
+              </li>
+            {% endif %}
+          </ul>
+
+          <!-- Side info -->
+          <div class="NP-pagination-info">
+            Side {{ festivals.number }} av {{ festivals.paginator.num_pages }}
+          </div>
+        </nav>
         {% endif %}
       </div>
     </section>

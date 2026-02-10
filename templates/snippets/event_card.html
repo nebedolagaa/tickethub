@@ -1,65 +1,70 @@
-{# Eksempel på to eventkort med bilder fra media/images #}
+{# Dynamiske eventkort fra databasen #}
 <div class="JF-events-container">
+  {% for event in featured_events %}
   <article class="JF-eventkort">
     <div class="JF-bilde-wrap">
-      <span class="JF-kategori">Pop</span>
-      <img
-        src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80"
-        alt="Aurora"
-        class="JF-bilde"
-      />
+      {% if event.event_type == 'festival' %}
+        <span class="JF-kategori">Festival</span>
+      {% else %}
+        <span class="JF-kategori">Konsert</span>
+      {% endif %}
+      
+      {% if event.images.all %}
+        {% with event.images.first as first_image %}
+          <img
+            src="{{ first_image.image.url }}"
+            alt="{{ first_image.alt_text|default:event.title }}"
+            class="JF-bilde"
+          />
+        {% endwith %}
+      {% else %}
+        {# Forskjellige bilder basert på event type og forloop counter #}
+        {% if event.event_type == 'festival' %}
+          {% if forloop.counter == 1 %}
+            <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
+          {% elif forloop.counter == 2 %}
+            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
+          {% elif forloop.counter == 3 %}
+            <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
+          {% else %}
+            <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
+          {% endif %}
+        {% else %}
+          {# Konsert bilder - varierer basert på loop counter #}
+          {% if forloop.counter == 1 %}
+            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
+          {% elif forloop.counter == 2 %}
+            <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
+          {% elif forloop.counter == 3 %}
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
+          {% else %}
+            <img src="https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
+          {% endif %}
+        {% endif %}
+      {% endif %}
     </div>
     <div class="JF-detaljer">
-      <h2 class="JF-tittel">Aurora</h2>
-      <div class="JF-undertittel">World Tour 2026</div>
+      <h2 class="JF-tittel">{{ event.title }}</h2>
+      <div class="JF-undertittel">{{ event.organizer.company_name|default:"Live konsert" }}</div>
       <div class="JF-meta-rad">
-        <span class="JF-dato">15. oktober 2026 - 20:00</span>
+        <span class="JF-dato">{{ event.start_datetime|date:"d. F Y - H:i" }}</span>
       </div>
-      <div class="JF-info">Oslo Spektrum, Oslo</div>
-      <p class="JF-pris">Fra 599 kr</p>
-      <button class="JF-kjop-knapp">Kjøp billett</button>
+      <div class="JF-info">{{ event.venue.name }}, {{ event.venue.address.city }}</div>
+      
+      <div class="JF-bottom-section">
+        {% if event.ticket_types.all %}
+          {% with event.ticket_types.all|first as first_ticket %}
+            <p class="JF-pris">Fra {{ first_ticket.price|floatformat:0 }} kr</p>
+          {% endwith %}
+        {% else %}
+          <p class="JF-pris">Pris kommer</p>
+        {% endif %}
+        
+        <a href="{% url 'purchase_tickets' event.id %}" class="JF-kjop-knapp">Kjøp billett</a>
+      </div>
     </div>
   </article>
-
-  <article class="JF-eventkort JF-utsolgt">
-    <div class="JF-bilde-wrap">
-      <span class="JF-kategori JF-utsolgt-merke">Utsolgt</span>
-      <img
-        src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80"
-        alt="Wardruna"
-        class="JF-bilde"
-      />
-    </div>
-    <div class="JF-detaljer">
-      <h2 class="JF-tittel">Wardruna</h2>
-      <div class="JF-undertittel">Nordic Folk Festival</div>
-      <div class="JF-meta-rad">
-        <span class="JF-dato">5. november 2026 - 21:00</span>
-      </div>
-      <div class="JF-info">Rockefeller, Oslo</div>
-      <p class="JF-pris">Fra 750 kr</p>
-      <button class="JF-kjop-knapp" disabled>Utsolgt</button>
-    </div>
-  </article>
-
-  <article class="JF-eventkort">
-    <div class="JF-bilde-wrap">
-      <span class="JF-kategori">Rock</span>
-      <img
-        src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80"
-        alt="Kaizers Orchestra"
-        class="JF-bilde"
-      />
-    </div>
-    <div class="JF-detaljer">
-      <h2 class="JF-tittel">Kaizers Orchestra</h2>
-      <div class="JF-undertittel">Reunion Tour</div>
-      <div class="JF-meta-rad">
-        <span class="JF-dato">20. desember 2026 - 19:30</span>
-      </div>
-      <div class="JF-info">Telenor Arena, Bærum</div>
-      <p class="JF-pris">Fra 850 kr</p>
-      <button class="JF-kjop-knapp">Kjøp billett</button>
-    </div>
-  </article>
+  {% empty %}
+  <p style="color: var(--th-muted); text-align: center; width: 100%;">Ingen arrangementer tilgjengelig for øyeblikket.</p>
+  {% endfor %}
 </div>

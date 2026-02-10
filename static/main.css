@@ -102,10 +102,13 @@ body {
   align-items: center;
   gap: 0.5rem;
   transition: background-color 0.3s ease;
+  text-decoration: none;
 }
 
 .KN-btn-primary:hover {
   background-color: var(--th-red-dark);
+  color: var(--th-white);
+  text-decoration: none;
 }
 
 /* Sekundær CTA-knapp */
@@ -122,11 +125,13 @@ body {
   align-items: center;
   gap: 0.5rem;
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .KN-btn-secondary:hover {
   background: var(--th-white);
   color: var(--th-black);
+  text-decoration: none;
 }
 
 .KN-btn-icon {
@@ -771,6 +776,7 @@ input[name="ES-ArtistSok"]::placeholder {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  flex: 1;
   min-height: 200px;
 }
 .JF-tittel {
@@ -802,16 +808,23 @@ input[name="ES-ArtistSok"]::placeholder {
 .JF-info {
   font-size: 1rem;
   color: var(--th-muted, #9ca3af);
-  margin-bottom: 2px;
+  margin-bottom: 0;
+}
+.JF-bottom-section {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .JF-pris {
   font-size: 1.15rem;
   color: var(--th-white, #fff);
   font-weight: 600;
-  margin: 10px 0 0 0;
+  margin: 0;
 }
 .JF-kjop-knapp {
-  margin-top: 16px;
+  display: block;
+  margin-top: 0;
   background-color: var(--th-red, #dc2626);
   color: var(--th-white, #fff);
   padding: 12px 0;
@@ -824,9 +837,13 @@ input[name="ES-ArtistSok"]::placeholder {
   transition: background 0.2s;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   letter-spacing: 0.5px;
+  text-decoration: none;
+  text-align: center;
 }
+
 .JF-kjop-knapp:hover:not(:disabled) {
   background-color: var(--th-red-dark, #b91c1c);
+  color: var(--th-white, #fff);
 }
 .JF-utsolgt .JF-kjop-knapp {
   background-color: var(--th-light-gray);
@@ -1796,6 +1813,132 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-no-results a:hover {
   color: var(--th-red-light);
   text-decoration: underline;
+}
+
+/* ============================================
+   PAGINERING STILER - Nikita Popov (NP)
+   ============================================ */
+
+.NP-pagination-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--th-light-gray);
+}
+
+/* Pagination liste - NP */
+.NP-pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Page items - NP */
+.NP-page-item {
+  display: inline-block;
+}
+
+/* Page links - NP */
+.NP-page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 8px 12px;
+  background: var(--th-dark-gray);
+  color: var(--th-white);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.NP-page-link:hover {
+  background: var(--th-red);
+  border-color: var(--th-red);
+  color: var(--th-white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+/* Aktiv side - NP */
+.NP-page-item.NP-active .NP-page-link {
+  background: var(--th-red);
+  border-color: var(--th-red);
+  color: var(--th-white);
+  font-weight: 700;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Deaktivert side - NP */
+.NP-page-item.NP-disabled .NP-page-link {
+  background: transparent;
+  color: var(--th-muted);
+  border-color: var(--th-light-gray);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.NP-page-item.NP-disabled .NP-page-link:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Side info tekst - NP */
+.NP-pagination-info {
+  color: var(--th-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Responsiv paginering - NP */
+@media (max-width: 768px) {
+  .NP-pagination-wrapper {
+    margin-top: 40px;
+    padding-top: 30px;
+  }
+
+  .NP-pagination {
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .NP-page-link {
+    min-width: 36px;
+    height: 36px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .NP-pagination {
+    gap: 4px;
+  }
+
+  .NP-page-link {
+    min-width: 32px;
+    height: 32px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+
+  .NP-pagination-info {
+    font-size: 0.85rem;
+  }
 }
 
 /* Responsive Design */
@@ -2831,5 +2974,812 @@ input[name="ES-ArtistSok"]::placeholder {
   .NP-suggestion-tag {
     font-size: 0.8rem;
     padding: 6px 14px;
+  }
+}
+/* ============================================
+   CITIES/BYER SIDE STILER - Nikita Popov (NP)
+   ============================================ */
+
+/* Hovedseksjon for byer */
+.NP-cities-section {
+  background: linear-gradient(
+    135deg,
+    var(--th-black) 0%,
+    var(--th-dark-gray) 100%
+  );
+  min-height: 100vh;
+  padding: 80px 0 60px;
+  position: relative;
+}
+
+/* Radial gradient overlay - NP */
+.NP-cities-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(220, 38, 38, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(220, 38, 38, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
+/* Grid layout for bykort */
+.NP-cities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
+}
+
+/* Individuelt bykort - NP */
+.NP-city-card {
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.NP-city-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(220, 38, 38, 0.2);
+  border-color: var(--th-red);
+}
+
+/* Bildewrapper med overlay - NP */
+.NP-city-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+}
+
+.NP-city-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.NP-city-card:hover .NP-city-image {
+  transform: scale(1.1);
+}
+
+/* Mørk overlay gradient - NP */
+.NP-city-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.7)
+  );
+  pointer-events: none;
+}
+
+/* Event count badge - NP */
+.NP-city-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--th-red);
+  color: var(--th-white);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+/* Bydetaljer seksjon - NP */
+.NP-city-details {
+  padding: 24px;
+}
+
+.NP-city-name {
+  color: var(--th-white);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.NP-city-name i {
+  color: var(--th-red);
+  font-size: 1.5rem;
+}
+
+.NP-city-info {
+  color: var(--th-muted);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+/* Knapp for å se arrangementer - NP */
+.NP-city-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--th-light-gray);
+  color: var(--th-white);
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.NP-city-btn:hover {
+  background: var(--th-red);
+  border-color: var(--th-red);
+  color: var(--th-white);
+  transform: translateX(4px);
+}
+
+.NP-city-btn i {
+  transition: transform 0.3s ease;
+}
+
+.NP-city-btn:hover i {
+  transform: translateX(4px);
+}
+
+/* Responsiv design for byer-siden - NP */
+@media (max-width: 1024px) {
+  .NP-cities-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .NP-cities-section {
+    padding: 60px 0 40px;
+  }
+
+  .NP-cities-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .NP-city-image-wrap {
+    height: 200px;
+  }
+
+  .NP-city-name {
+    font-size: 1.5rem;
+  }
+
+  .NP-city-badge {
+    top: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .NP-city-details {
+    padding: 20px;
+  }
+
+  .NP-city-name {
+    font-size: 1.3rem;
+  }
+
+  .NP-city-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* === NP: Arrangør Side Styles === */
+
+/* Hero seksjon for arrangør */
+.NP-arrangor-hero {
+  position: relative;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920")
+      center/cover no-repeat;
+  color: var(--th-white);
+  overflow: hidden;
+}
+
+.NP-arrangor-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(220, 38, 38, 0.15) 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  z-index: 0;
+}
+
+.NP-arrangor-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.NP-arrangor-hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  color: var(--th-white);
+}
+
+.NP-arrangor-hero-subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  line-height: 1.6;
+  color: var(--th-muted);
+  margin-bottom: 2.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.NP-arrangor-hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Primær knapp */
+.NP-arrangor-btn-primary {
+  background: var(--th-red);
+  color: var(--th-white);
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.NP-arrangor-btn-primary:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(220, 38, 38, 0.3);
+  color: var(--th-white);
+}
+
+/* Sekundær knapp */
+.NP-arrangor-btn-secondary {
+  background: transparent;
+  border: 2px solid var(--th-white);
+  color: var(--th-white);
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.NP-arrangor-btn-secondary:hover {
+  background: var(--th-white);
+  color: var(--th-black);
+  transform: translateY(-2px);
+}
+
+/* Generell seksjon styling */
+.NP-arrangor-section {
+  padding: 80px 0;
+  background: linear-gradient(
+    135deg,
+    var(--th-black) 0%,
+    var(--th-dark-gray) 50%,
+    var(--th-black) 100%
+  );
+  position: relative;
+}
+
+.NP-arrangor-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(220, 38, 38, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(220, 38, 38, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.NP-arrangor-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.NP-arrangor-section-dark {
+  background: linear-gradient(
+    135deg,
+    var(--th-dark-gray) 0%,
+    var(--th-gray) 50%,
+    var(--th-dark-gray) 100%
+  );
+}
+
+.NP-arrangor-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.NP-arrangor-section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--th-white);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.NP-arrangor-section-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--th-muted);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Fordeler grid */
+.NP-arrangor-benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.NP-arrangor-benefit-card {
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.NP-arrangor-benefit-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--th-red);
+  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.2);
+}
+
+.NP-arrangor-benefit-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--th-red) 0%,
+    var(--th-red-dark) 100%
+  );
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: var(--th-white);
+}
+
+.NP-arrangor-benefit-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin-bottom: 1rem;
+}
+
+.NP-arrangor-benefit-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--th-muted);
+}
+
+/* Steg seksjon */
+.NP-arrangor-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.NP-arrangor-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.NP-arrangor-step-number {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(
+    135deg,
+    var(--th-red) 0%,
+    var(--th-red-dark) 100%
+  );
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin-bottom: 1.5rem;
+}
+
+.NP-arrangor-step-content {
+  flex: 1;
+}
+
+.NP-arrangor-step-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin-bottom: 0.75rem;
+}
+
+.NP-arrangor-step-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--th-muted);
+}
+
+/* Prising */
+.NP-arrangor-pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.NP-arrangor-pricing-card {
+  background: var(--th-gray);
+  border: 2px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 2.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.NP-arrangor-pricing-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--th-red);
+  box-shadow: 0 12px 32px rgba(220, 38, 38, 0.2);
+}
+
+.NP-arrangor-pricing-card-featured {
+  border-color: var(--th-red);
+  background: linear-gradient(
+    135deg,
+    var(--th-gray) 0%,
+    rgba(220, 38, 38, 0.05) 100%
+  );
+}
+
+.NP-arrangor-pricing-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--th-red);
+  color: var(--th-white);
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.NP-arrangor-pricing-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--th-light-gray);
+}
+
+.NP-arrangor-pricing-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin-bottom: 1rem;
+}
+
+.NP-arrangor-pricing-price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.NP-arrangor-pricing-amount {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--th-white);
+  line-height: 1;
+}
+
+.NP-arrangor-pricing-unit {
+  font-size: 1rem;
+  color: var(--th-muted);
+  margin-top: 0.5rem;
+}
+
+.NP-arrangor-pricing-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+.NP-arrangor-pricing-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  color: var(--th-white);
+  font-size: 1rem;
+}
+
+.NP-arrangor-pricing-features li i {
+  color: var(--th-green);
+  font-size: 1.25rem;
+}
+
+.NP-arrangor-pricing-btn {
+  display: block;
+  width: 100%;
+  background: var(--th-red);
+  color: var(--th-white);
+  text-align: center;
+  padding: 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.NP-arrangor-pricing-btn:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  color: var(--th-white);
+}
+
+/* Kontakt seksjon */
+.NP-arrangor-contact-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.NP-arrangor-contact-form {
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 2.5rem;
+}
+
+.NP-arrangor-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.NP-arrangor-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.NP-arrangor-form-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin-bottom: 0.5rem;
+}
+
+.NP-arrangor-form-input {
+  background: var(--th-black);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 8px;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  color: var(--th-white);
+  transition: all 0.2s ease;
+}
+
+.NP-arrangor-form-input:focus {
+  outline: none;
+  border-color: var(--th-red);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.NP-arrangor-form-input::placeholder {
+  color: var(--th-muted);
+}
+
+.NP-arrangor-form-submit {
+  width: 100%;
+  background: var(--th-red);
+  color: var(--th-white);
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.NP-arrangor-form-submit:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(220, 38, 38, 0.3);
+}
+
+/* Kontaktinformasjon */
+.NP-arrangor-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.NP-arrangor-info-card {
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.NP-arrangor-info-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(
+    135deg,
+    var(--th-red) 0%,
+    var(--th-red-dark) 100%
+  );
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--th-white);
+}
+
+.NP-arrangor-info-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin-bottom: 0.5rem;
+}
+
+.NP-arrangor-info-text {
+  font-size: 1rem;
+  color: var(--th-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsiv design */
+@media (max-width: 992px) {
+  .NP-arrangor-contact-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .NP-arrangor-pricing-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .NP-arrangor-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .NP-arrangor-hero {
+    min-height: 500px;
+    padding: 3rem 1rem;
+  }
+
+  .NP-arrangor-hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .NP-arrangor-btn-primary,
+  .NP-arrangor-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .NP-arrangor-section {
+    padding: 60px 0;
+  }
+
+  .NP-arrangor-benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .NP-arrangor-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .NP-arrangor-hero-title {
+    font-size: 2rem;
+  }
+
+  .NP-arrangor-hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .NP-arrangor-section-title {
+    font-size: 1.75rem;
+  }
+
+  .NP-arrangor-benefit-icon,
+  .NP-arrangor-step-number {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+
+  .NP-arrangor-pricing-amount {
+    font-size: 2.5rem;
   }
 }

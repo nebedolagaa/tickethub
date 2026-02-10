@@ -3,10 +3,16 @@ from .models import Address, Venue, VenueArea, Event, EventImage, Row, Seat, Eve
 
 # Register your models here.
 
+class EventAdmin(admin.ModelAdmin):
+    list_display = ['title', 'event_type', 'venue', 'start_datetime', 'organizer']
+    list_filter = ['event_type', 'venue__address__city', 'start_datetime']
+    search_fields = ['title', 'description']
+    ordering = ['start_datetime']
+
 admin.site.register(Address)
 admin.site.register(Venue)
 admin.site.register(VenueArea)
-admin.site.register(Event)
+admin.site.register(Event, EventAdmin)
 admin.site.register(EventImage)
 admin.site.register(Row)
 admin.site.register(Seat)
