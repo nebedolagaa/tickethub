@@ -1744,11 +1744,13 @@ input[name="ES-ArtistSok"]::placeholder {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  text-decoration: none;
 }
 
 .NP-buy-btn:hover {
   background: var(--th-red-dark);
   gap: 12px;
+  color: var(--th-white);
 }
 
 .NP-buy-btn i {
@@ -1875,3 +1877,703 @@ input[name="ES-ArtistSok"]::placeholder {
     height: 200px;
   }
 }
+
+/* === NP: Purchase Tickets Page Styles === */
+
+/* Hovedseksjon for billettkjøp */
+.NP-purchase-section {
+  background: linear-gradient(
+    135deg,
+    var(--th-black) 0%,
+    var(--th-dark-gray) 100%
+  );
+  min-height: 100vh;
+  padding: 80px 0 60px;
+  position: relative;
+}
+
+.NP-purchase-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(220, 38, 38, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(220, 38, 38, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
+/* Container */
+.NP-purchase-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Tilbakeknapp */
+.NP-back-nav {
+  margin-bottom: 24px;
+}
+
+.NP-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--th-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.NP-back-link:hover {
+  color: var(--th-white);
+  gap: 12px;
+}
+
+.NP-back-link i {
+  font-size: 1.2rem;
+  transition: transform 0.2s;
+}
+
+.NP-back-link:hover i {
+  transform: translateX(-4px);
+}
+
+/* Arrangement header med bilde */
+.NP-event-header {
+  margin-bottom: 48px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.NP-event-image-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.NP-event-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.NP-event-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.7) 60%,
+    transparent 100%
+  );
+  padding: 48px 40px 32px;
+}
+
+.NP-event-category {
+  display: inline-block;
+  background: var(--th-red);
+  color: var(--th-white);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.NP-event-hero-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0 0 20px 0;
+  line-height: 1.2;
+}
+
+.NP-event-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.NP-hero-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--th-white);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.NP-hero-meta-item i {
+  color: var(--th-red);
+  font-size: 1.2rem;
+}
+
+/* Grid layout */
+.NP-purchase-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Venstre kolonne - Billettvalg */
+.NP-tickets-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.NP-section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.NP-section-title i {
+  color: var(--th-red);
+  font-size: 1.5rem;
+}
+
+/* Billettalternativer */
+.NP-ticket-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.NP-ticket-option {
+  background: var(--th-dark-gray);
+  border: 2px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s;
+}
+
+.NP-ticket-option:hover {
+  border-color: var(--th-red);
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.2);
+}
+
+.NP-ticket-unavailable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.NP-ticket-option-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.NP-ticket-option-info {
+  flex: 1;
+}
+
+.NP-ticket-option-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0 0 8px 0;
+}
+
+.NP-ticket-option-desc {
+  color: var(--th-muted);
+  font-size: 0.95rem;
+  margin: 0 0 12px 0;
+  line-height: 1.5;
+}
+
+.NP-seats-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--th-green);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.NP-seats-left i {
+  font-size: 1rem;
+}
+
+.NP-seats-sold-out {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--th-red);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.NP-seats-sold-out i {
+  font-size: 1rem;
+}
+
+.NP-ticket-option-price {
+  text-align: right;
+}
+
+.NP-price-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--th-white);
+}
+
+/* Billettvalg handlinger */
+.NP-ticket-option-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.NP-quantity-selector {
+  display: flex;
+  align-items: center;
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.NP-qty-btn {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  color: var(--th-white);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.NP-qty-btn:hover {
+  background: var(--th-light-gray);
+  color: var(--th-red);
+}
+
+.NP-qty-input {
+  width: 60px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  border-left: 1px solid var(--th-light-gray);
+  border-right: 1px solid var(--th-light-gray);
+  color: var(--th-white);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.NP-qty-input::-webkit-outer-spin-button,
+.NP-qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.NP-qty-input:focus {
+  outline: none;
+}
+
+.NP-add-to-cart-btn {
+  flex: 1;
+  padding: 12px 24px;
+  background: var(--th-red);
+  border: none;
+  border-radius: 10px;
+  color: var(--th-white);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.NP-add-to-cart-btn:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+/* Arrangementinformasjon kort */
+.NP-event-details-card {
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 8px;
+}
+
+.NP-details-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.NP-details-title i {
+  color: var(--th-red);
+}
+
+.NP-event-description {
+  color: var(--th-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.NP-event-description p {
+  margin: 0;
+}
+
+.NP-venue-info {
+  padding-top: 20px;
+  border-top: 1px solid var(--th-light-gray);
+}
+
+.NP-venue-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.NP-venue-title i {
+  color: var(--th-red);
+}
+
+.NP-venue-address {
+  color: var(--th-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Høyre kolonne - Handlekurv */
+.NP-order-summary {
+  position: sticky;
+  top: 90px;
+}
+
+.NP-summary-card {
+  background: var(--th-dark-gray);
+  border: 2px solid var(--th-red);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.15);
+}
+
+.NP-summary-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0 0 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.NP-summary-title i {
+  color: var(--th-red);
+}
+
+/* Handlekurv innhold */
+.NP-cart-items {
+  margin-bottom: 24px;
+  min-height: 100px;
+}
+
+.NP-empty-cart {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--th-muted);
+}
+
+.NP-empty-cart i {
+  font-size: 3rem;
+  color: var(--th-light-gray);
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.NP-empty-cart p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.NP-empty-cart span {
+  font-size: 0.9rem;
+}
+
+.NP-cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px;
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.NP-cart-item-info h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin: 0 0 6px 0;
+}
+
+.NP-cart-item-info p {
+  font-size: 0.9rem;
+  color: var(--th-muted);
+  margin: 0;
+}
+
+.NP-cart-item-price {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.NP-cart-item-price span {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--th-white);
+}
+
+.NP-remove-btn {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid var(--th-light-gray);
+  border-radius: 8px;
+  color: var(--th-red);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.NP-remove-btn:hover {
+  background: var(--th-red);
+  color: var(--th-white);
+  border-color: var(--th-red);
+}
+
+/* Handlekurv oppsummering */
+.NP-cart-summary {
+  padding: 20px 0;
+  border-top: 1px solid var(--th-light-gray);
+  border-bottom: 1px solid var(--th-light-gray);
+  margin-bottom: 24px;
+}
+
+.NP-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: var(--th-muted);
+  font-size: 0.95rem;
+}
+
+.NP-summary-row:last-child {
+  margin-bottom: 0;
+}
+
+.NP-summary-divider {
+  height: 1px;
+  background: var(--th-light-gray);
+  margin: 16px 0;
+}
+
+.NP-summary-total {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin-top: 16px;
+}
+
+/* Betalingsknapp */
+.NP-checkout-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--th-red);
+  border: none;
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.NP-checkout-btn:hover:not(:disabled) {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+}
+
+.NP-checkout-btn:disabled {
+  background: var(--th-light-gray);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Tillitssignaler */
+.NP-trust-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--th-light-gray);
+}
+
+.NP-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--th-muted);
+  font-size: 0.875rem;
+}
+
+.NP-trust-item i {
+  color: var(--th-green);
+  font-size: 1.2rem;
+}
+
+/* Responsivt design */
+@media (max-width: 1200px) {
+  .NP-purchase-grid {
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 992px) {
+  .NP-purchase-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .NP-order-summary {
+    position: static;
+  }
+
+  .NP-event-image-container {
+    height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .NP-purchase-section {
+    padding: 60px 0 40px;
+  }
+
+  .NP-purchase-container {
+    padding: 0 16px;
+  }
+
+  .NP-event-header {
+    margin-bottom: 32px;
+  }
+
+  .NP-event-image-container {
+    height: 300px;
+  }
+
+  .NP-event-overlay {
+    padding: 32px 24px 24px;
+  }
+
+  .NP-event-hero-meta {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .NP-ticket-option {
+    padding: 20px;
+  }
+
+  .NP-ticket-option-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .NP-ticket-option-price {
+    text-align: left;
+  }
+
+  .NP-ticket-option-actions {
+    flex-direction: column;
+  }
+
+  .NP-quantity-selector,
+  .NP-add-to-cart-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .NP-event-hero-title {
+    font-size: 1.75rem;
+  }
+
+  .NP-section-title {
+    font-size: 1.5rem;
+  }
+
+  .NP-ticket-option-name {
+    font-size: 1.3rem;
+  }
+
+  .NP-price-amount {
+    font-size: 1.75rem;
+  }
+
+  .NP-event-image-container {
+    height: 250px;
+  }
+}
+
