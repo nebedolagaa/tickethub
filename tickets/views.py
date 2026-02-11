@@ -10,3 +10,9 @@ def betaling(request):
 
 def after_payment(request):
     return render(request, "tickets/after_payment.html")
+
+def user_profile_view(request):
+    return render(request, 'tickets/user_profile.html')
+
+def organizer_profile_view(request):
+    return render(request, 'tickets/organizer_profile.html')

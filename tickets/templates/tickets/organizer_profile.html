@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<link rel="stylesheet" href="{% static 'main.css' %}">
+<link rel="stylesheet" href="{% static 'tickets/organizer_profile.css' %}">
+{% endblock %}
+
+{% block title %}Min profil{% endblock %}
+
+{% block content %}
+
+<!-- Hoved-container for arrangørprofil -->
+<main class="MB-organizer_profile-main">
+    <div class="MB-organizer_profile-container">
+        
+        <!-- Topp-overskrift -->
+        <div class="MB-organizer_profile-header">
+            <h1 class="MB-organizer_profile-title">Arrangørprofil</h1>
+            <p class="MB-organizer_profile-subtitle">Administrer din informasjon og arrangementer</p>
+        </div>
+
+        <!-- Grid: venstre (info + stats) høyre (arrangementsliste) -->
+        <div class="MB-organizer_profile-grid">
+            
+            <!-- Venstre kolonne -->
+            <div class="MB-organizer_profile-left-col">
+                
+                <!-- Skjema for bedrifts/profilinformasjon -->
+                <div class="MB-organizer_profile-card">
+                    <h2 class="MB-organizer_profile-section-title">Profilinformasjon</h2>
+                    <form class="MB-organizer_profile-form">
+                        <div class="MB-organizer_profile-input-group">
+                            <label>Bedriftsnavn</label>
+                            <input type="text" value="Live Events Norway AS">
+                        </div>
+                        <div class="MB-organizer_profile-input-group">
+                            <label>Organisasjonsnummer</label>
+                            <input type="text" value="987 654 321">
+                        </div>
+                        <div class="MB-organizer_profile-input-group">
+                            <label>E-post</label>
+                            <input type="email" value="kontakt@liveevents.no">
+                        </div>
+                        <div class="MB-organizer_profile-input-group">
+                            <label>Telefon</label>
+                            <input type="tel" value="+47 123 45 678">
+                        </div>
+                        <div class="MB-organizer_profile-input-group">
+                            <label>Adresse</label>
+                            <input type="text" value="Storgata 1, 0155 Oslo">
+                        </div>
+                        <div class="MB-organizer_profile-input-group">
+                            <label>Nettside</label>
+                            <input type="text" value="www.liveevents.no">
+                        </div>
+                        <button type="button" class="MB-organizer_profile-btn-red-full">Lagre endringer</button>
+                    </form>
+                </div>
+
+                <!-- Statistikkboks -->
+                <div class="MB-organizer_profile-card MB-organizer_profile-stats-card">
+                    <h3 class="MB-organizer_profile-section-title">Statistikk</h3>
+                    <div class="MB-organizer_profile-stat-line">
+                        <span>Totalt arrangementer</span>
+                        <span class="MB-organizer_profile-val">24</span>
+                    </div>
+                    <div class="MB-organizer_profile-stat-line">
+                        <span>Aktive arrangementer</span>
+                        <span class="MB-organizer_profile-val">8</span>
+                    </div>
+                    <div class="MB-organizer_profile-stat-line">
+                        <span>Solgte billetter</span>
+                        <span class="MB-organizer_profile-val">12 450</span>
+                    </div>
+                    <div class="MB-organizer_profile-stat-line">
+                        <span>Total omsetning</span>
+                        <span class="MB-organizer_profile-val MB-organizer_profile-total-red">6 234 500 kr</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Høyre kolonne, liste over arrangementer -->
+            <div class="MB-organizer_profile-right-col">
+                
+                <!-- Overskrift + knapp for nytt arrangement -->
+                <div class="MB-organizer_profile-list-header">
+                    <h2 class="MB-organizer_profile-section-title">Mine arrangementer</h2>
+                    <button class="MB-organizer_profile-btn-add">
+                        <i class="fa-solid fa-plus"></i> Nytt arrangement
+                    </button>
+                </div>
+
+                <!-- Eksempel ett arrangementskort -->
+                <div class="MB-organizer_profile-card MB-organizer_profile-event-card">
+                    <div class="MB-organizer_profile-event-top">
+                        <div class="MB-organizer_profile-event-info">
+                            <h3>World Tour 2024</h3>
+                            <p>Aurora</p>
+                        </div>
+                        <span class="MB-organizer_profile-status-pill MB-organizer_profile-status-active">Aktiv</span>
+                    </div>
+                    <div class="MB-organizer_profile-event-meta">
+                        <span><i class="fa-regular fa-calendar"></i> 15. november 2024</span>
+                        <span><i class="fa-solid fa-location-dot"></i> Oslo Spektrum</span>
+                    </div>
+                    <div class="MB-organizer_profile-event-stats">
+                        <div class="MB-organizer_profile-stat-box">
+                            <label>Solgte billetter</label>
+                            <p>1245 / 2000</p>
+                        </div>
+                        <div class="MB-organizer_profile-stat-box">
+                            <label>Salg</label>
+                            <p>62%</p>
+                        </div>
+                        <div class="MB-organizer_profile-stat-box">
+                            <label>Inntekt</label>
+                            <p class="MB-organizer_profile-income">746 550 kr</p>
+                        </div>
+                    </div>
+                    <div class="MB-organizer_profile-event-actions">
+                        <button class="MB-organizer_profile-btn-action">
+                            <i class="fa-regular fa-eye"></i> Se detaljer
+                        </button>
+                        <button class="MB-organizer_profile-btn-action">
+                            <i class="fa-regular fa-pen-to-square"></i> Rediger
+                        </button>
+                        <button class="MB-organizer_profile-btn-delete">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Andre konsertkort følger samme struktur -->
+                <div class="MB-organizer_profile-card MB-organizer_profile-event-card">
+                    <div class="MB-organizer_profile-event-top">
+                        <div class="MB-organizer_profile-event-info">
+                            <h3>Summer Jazz Night</h3>
+                            <p>Bugge Wesseltoft Trio</p>
+                        </div>
+                        <span class="MB-organizer_profile-status-pill MB-organizer_profile-status-soldout">Utsolgt</span>
+                    </div>
+                    <div class="MB-organizer_profile-event-meta">
+                        <span><i class="fa-regular fa-calendar"></i> 12. september 2024</span>
+                        <span><i class="fa-solid fa-location-dot"></i> Blå</span>
+                    </div>
+                    <div class="MB-organizer_profile-event-stats">
+                        <div class="MB-organizer_profile-stat-box"><label>Solgte billetter</label><p>180 / 200</p></div>
+                        <div class="MB-organizer_profile-stat-box"><label>Salg</label><p>90%</p></div>
+                        <div class="MB-organizer_profile-stat-box"><label>Inntekt</label><p class="MB-organizer_profile-income">87 300 kr</p></div>
+                    </div>
+                    <div class="MB-organizer_profile-event-actions">
+                        <button class="MB-organizer_profile-btn-action"><i class="fa-regular fa-eye"></i> Se detaljer</button>
+                        <button class="MB-organizer_profile-btn-action"><i class="fa-regular fa-pen-to-square"></i> Rediger</button>
+                        <button class="MB-organizer_profile-btn-delete"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                </div>
+
+                <div class="MB-organizer_profile-card MB-organizer_profile-event-card">
+                    <div class="MB-organizer_profile-event-top">
+                        <div class="MB-organizer_profile-event-info">
+                            <h3>Nordic Folk Festival</h3>
+                            <p>Wardruna</p>
+                        </div>
+                        <span class="MB-organizer_profile-status-pill MB-organizer_profile-status-active">Aktiv</span>
+                    </div>
+                    <div class="MB-organizer_profile-event-meta">
+                        <span><i class="fa-regular fa-calendar"></i> 18. januar 2025</span>
+                        <span><i class="fa-solid fa-location-dot"></i> Rockefeller Music Hall</span>
+                    </div>
+                    <div class="MB-organizer_profile-event-stats">
+                        <div class="MB-organizer_profile-stat-box"><label>Solgte billetter</label><p>450 / 1200</p></div>
+                        <div class="MB-organizer_profile-stat-box"><label>Salg</label><p>38%</p></div>
+                        <div class="MB-organizer_profile-stat-box"><label>Inntekt</label><p class="MB-organizer_profile-income">337 500 kr</p></div>
+                    </div>
+                    <div class="MB-organizer_profile-event-actions">
+                        <button class="MB-organizer_profile-btn-action"><i class="fa-regular fa-eye"></i> Se detaljer</button>
+                        <button class="MB-organizer_profile-btn-action"><i class="fa-regular fa-pen-to-square"></i> Rediger</button>
+                        <button class="MB-organizer_profile-btn-delete"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
