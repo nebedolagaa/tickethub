@@ -3783,3 +3783,2369 @@ input[name="ES-ArtistSok"]::placeholder {
     font-size: 2.5rem;
   }
 }
+/* === NP: All Events Page Styles === */
+
+/* Main Section */
+.NP-all-events-section {
+  background: linear-gradient(
+    135deg,
+    var(--th-black) 0%,
+    var(--th-dark-gray) 100%
+  );
+  min-height: 100vh;
+  padding: 80px 0 60px;
+  position: relative;
+}
+
+.NP-all-events-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(220, 38, 38, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(220, 38, 38, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
+/* Container */
+.NP-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.NP-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.NP-title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--th-white);
+  margin-bottom: 16px;
+}
+
+.NP-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  color: var(--th-muted);
+  margin: 0;
+}
+
+/* Filter Panel */
+.NP-filter-panel {
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 48px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Search Form */
+.NP-search-form {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Search Container */
+.NP-search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.NP-search-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--th-muted);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.NP-search-input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.NP-search-input:focus {
+  outline: none;
+  border-color: var(--th-red);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.NP-search-input::placeholder {
+  color: var(--th-muted);
+}
+
+/* Sort Container */
+.NP-sort-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 250px;
+}
+
+.NP-sort-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--th-muted);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.NP-sort-select {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.NP-sort-select:focus {
+  outline: none;
+  border-color: var(--th-red);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.NP-sort-select option {
+  background: var(--th-dark-gray);
+  color: var(--th-white);
+}
+
+/* Search Button */
+.NP-search-btn {
+  padding: 14px 32px;
+  background: var(--th-red);
+  border: none;
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.NP-search-btn:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+/* Results Info */
+.NP-results-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--th-light-gray);
+  color: var(--th-muted);
+}
+
+.NP-results-info p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.NP-results-info strong {
+  color: var(--th-white);
+}
+
+.NP-clear-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--th-red);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.NP-clear-search:hover {
+  color: var(--th-red-light);
+  gap: 8px;
+}
+
+/* Events Grid */
+.NP-events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
+}
+
+/* Event Card */
+.NP-event-card {
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.NP-event-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  border-color: var(--th-red);
+}
+
+/* Image Wrap */
+.NP-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: var(--th-light-gray);
+}
+
+.NP-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.NP-event-card:hover .NP-image {
+  transform: scale(1.05);
+}
+
+.NP-category {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--th-red);
+  color: var(--th-white);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Details */
+.NP-details {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-grow: 1;
+}
+
+.NP-event-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.NP-event-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.NP-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--th-muted);
+  font-size: 0.95rem;
+}
+
+.NP-meta-item i {
+  color: var(--th-red);
+  font-size: 1rem;
+  width: 18px;
+}
+
+.NP-description {
+  color: var(--th-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  flex-grow: 1;
+}
+
+/* Card Footer */
+.NP-card-footer {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.NP-buy-btn {
+  width: 100%;
+  padding: 14px 24px;
+  background: var(--th-red);
+  border: none;
+  border-radius: 10px;
+  color: var(--th-white);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.NP-buy-btn:hover {
+  background: var(--th-red-dark);
+  gap: 12px;
+  color: var(--th-white);
+}
+
+.NP-buy-btn i {
+  font-size: 1.1rem;
+  transition: transform 0.2s;
+}
+
+.NP-buy-btn:hover i {
+  transform: translateX(4px);
+}
+
+/* No Results */
+.NP-no-results {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--th-muted);
+}
+
+.NP-no-results i {
+  font-size: 4rem;
+  color: var(--th-light-gray);
+  margin-bottom: 24px;
+  opacity: 0.5;
+}
+
+.NP-no-results h3 {
+  font-size: 2rem;
+  color: var(--th-white);
+  margin-bottom: 16px;
+}
+
+.NP-no-results p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.NP-no-results a {
+  color: var(--th-red);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.NP-no-results a:hover {
+  color: var(--th-red-light);
+  text-decoration: underline;
+}
+
+/* ============================================
+   PAGINERING STILER - Nikita Popov (NP)
+   ============================================ */
+
+.NP-pagination-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--th-light-gray);
+}
+
+/* Pagination liste - NP */
+.NP-pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Page items - NP */
+.NP-page-item {
+  display: inline-block;
+}
+
+/* Page links - NP */
+.NP-page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding: 8px 12px;
+  background: var(--th-dark-gray);
+  color: var(--th-white);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.NP-page-link:hover {
+  background: var(--th-red);
+  border-color: var(--th-red);
+  color: var(--th-white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+/* Aktiv side - NP */
+.NP-page-item.NP-active .NP-page-link {
+  background: var(--th-red);
+  border-color: var(--th-red);
+  color: var(--th-white);
+  font-weight: 700;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Deaktivert side - NP */
+.NP-page-item.NP-disabled .NP-page-link {
+  background: transparent;
+  color: var(--th-muted);
+  border-color: var(--th-light-gray);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.NP-page-item.NP-disabled .NP-page-link:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Side info tekst - NP */
+.NP-pagination-info {
+  color: var(--th-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Responsiv paginering - NP */
+@media (max-width: 768px) {
+  .NP-pagination-wrapper {
+    margin-top: 40px;
+    padding-top: 30px;
+  }
+
+  .NP-pagination {
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .NP-page-link {
+    min-width: 36px;
+    height: 36px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .NP-pagination {
+    gap: 4px;
+  }
+
+  .NP-page-link {
+    min-width: 32px;
+    height: 32px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+
+  .NP-pagination-info {
+    font-size: 0.85rem;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .NP-events-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .NP-all-events-section {
+    padding: 60px 0 40px;
+  }
+
+  .NP-container {
+    padding: 0 16px;
+  }
+
+  .NP-header {
+    margin-bottom: 32px;
+  }
+
+  .NP-filter-panel {
+    padding: 24px 20px;
+    margin-bottom: 32px;
+  }
+
+  .NP-search-form {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .NP-sort-container {
+    min-width: 100%;
+  }
+
+  .NP-search-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .NP-results-info {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .NP-events-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+
+  .NP-event-card {
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .NP-title {
+    font-size: 2rem;
+  }
+
+  .NP-subtitle {
+    font-size: 1rem;
+  }
+
+  .NP-filter-panel {
+    padding: 20px 16px;
+  }
+
+  .NP-event-title {
+    font-size: 1.3rem;
+  }
+
+  .NP-image-wrap {
+    height: 200px;
+  }
+}
+
+/* === NP: Purchase Tickets Page Styles === */
+
+/* Hovedseksjon for billettkjøp */
+.NP-purchase-section {
+  background: linear-gradient(
+    135deg,
+    var(--th-black) 0%,
+    var(--th-dark-gray) 100%
+  );
+  min-height: 100vh;
+  padding: 80px 0 60px;
+  position: relative;
+}
+
+.NP-purchase-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(220, 38, 38, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(220, 38, 38, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
+/* Container */
+.NP-purchase-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Tilbakeknapp */
+.NP-back-nav {
+  margin-bottom: 24px;
+}
+
+.NP-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--th-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.NP-back-link:hover {
+  color: var(--th-white);
+  gap: 12px;
+}
+
+.NP-back-link i {
+  font-size: 1.2rem;
+  transition: transform 0.2s;
+}
+
+.NP-back-link:hover i {
+  transform: translateX(-4px);
+}
+
+/* Arrangement header med bilde */
+.NP-event-header {
+  margin-bottom: 48px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.NP-event-image-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.NP-event-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.NP-event-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.95) 0%,
+    rgba(0, 0, 0, 0.7) 60%,
+    transparent 100%
+  );
+  padding: 48px 40px 32px;
+}
+
+.NP-event-category {
+  display: inline-block;
+  background: var(--th-red);
+  color: var(--th-white);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.NP-event-hero-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0 0 20px 0;
+  line-height: 1.2;
+}
+
+.NP-event-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.NP-hero-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--th-white);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.NP-hero-meta-item i {
+  color: var(--th-red);
+  font-size: 1.2rem;
+}
+
+/* Grid layout */
+.NP-purchase-grid {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 32px;
+  align-items: start;
+}
+
+/* Venstre kolonne - Billettvalg */
+.NP-tickets-selection {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.NP-section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.NP-section-title i {
+  color: var(--th-red);
+  font-size: 1.5rem;
+}
+
+/* Billettalternativer */
+.NP-ticket-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.NP-ticket-option {
+  background: var(--th-dark-gray);
+  border: 2px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s;
+}
+
+.NP-ticket-option:hover {
+  border-color: var(--th-red);
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.2);
+}
+
+.NP-ticket-unavailable {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.NP-ticket-option-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.NP-ticket-option-info {
+  flex: 1;
+}
+
+.NP-ticket-option-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0 0 8px 0;
+}
+
+.NP-ticket-option-desc {
+  color: var(--th-muted);
+  font-size: 0.95rem;
+  margin: 0 0 12px 0;
+  line-height: 1.5;
+}
+
+.NP-seats-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--th-green);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.NP-seats-left i {
+  font-size: 1rem;
+}
+
+.NP-seats-sold-out {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--th-red);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.NP-seats-sold-out i {
+  font-size: 1rem;
+}
+
+.NP-ticket-option-price {
+  text-align: right;
+}
+
+.NP-price-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--th-white);
+}
+
+/* Billettvalg handlinger */
+.NP-ticket-option-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.NP-quantity-selector {
+  display: flex;
+  align-items: center;
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.NP-qty-btn {
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  color: var(--th-white);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.NP-qty-btn:hover {
+  background: var(--th-light-gray);
+  color: var(--th-red);
+}
+
+.NP-qty-input {
+  width: 60px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  border-left: 1px solid var(--th-light-gray);
+  border-right: 1px solid var(--th-light-gray);
+  color: var(--th-white);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.NP-qty-input::-webkit-outer-spin-button,
+.NP-qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.NP-qty-input:focus {
+  outline: none;
+}
+
+.NP-add-to-cart-btn {
+  flex: 1;
+  padding: 12px 24px;
+  background: var(--th-red);
+  border: none;
+  border-radius: 10px;
+  color: var(--th-white);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.NP-add-to-cart-btn:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+/* Arrangementinformasjon kort */
+.NP-event-details-card {
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 24px;
+  margin-top: 8px;
+}
+
+.NP-details-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.NP-details-title i {
+  color: var(--th-red);
+}
+
+.NP-event-description {
+  color: var(--th-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.NP-event-description p {
+  margin: 0;
+}
+
+.NP-venue-info {
+  padding-top: 20px;
+  border-top: 1px solid var(--th-light-gray);
+}
+
+.NP-venue-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.NP-venue-title i {
+  color: var(--th-red);
+}
+
+.NP-venue-address {
+  color: var(--th-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Høyre kolonne - Handlekurv */
+.NP-order-summary {
+  position: sticky;
+  top: 90px;
+}
+
+.NP-summary-card {
+  background: var(--th-dark-gray);
+  border: 2px solid var(--th-red);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.15);
+}
+
+.NP-summary-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0 0 24px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.NP-summary-title i {
+  color: var(--th-red);
+}
+
+/* Handlekurv innhold */
+.NP-cart-items {
+  margin-bottom: 24px;
+  min-height: 100px;
+}
+
+.NP-empty-cart {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--th-muted);
+}
+
+.NP-empty-cart i {
+  font-size: 3rem;
+  color: var(--th-light-gray);
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.NP-empty-cart p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.NP-empty-cart span {
+  font-size: 0.9rem;
+}
+
+.NP-cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px;
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.NP-cart-item-info h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin: 0 0 6px 0;
+}
+
+.NP-cart-item-info p {
+  font-size: 0.9rem;
+  color: var(--th-muted);
+  margin: 0;
+}
+
+.NP-cart-item-price {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.NP-cart-item-price span {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--th-white);
+}
+
+.NP-remove-btn {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 1px solid var(--th-light-gray);
+  border-radius: 8px;
+  color: var(--th-red);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.NP-remove-btn:hover {
+  background: var(--th-red);
+  color: var(--th-white);
+  border-color: var(--th-red);
+}
+
+/* Handlekurv oppsummering */
+.NP-cart-summary {
+  padding: 20px 0;
+  border-top: 1px solid var(--th-light-gray);
+  border-bottom: 1px solid var(--th-light-gray);
+  margin-bottom: 24px;
+}
+
+.NP-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  color: var(--th-muted);
+  font-size: 0.95rem;
+}
+
+.NP-summary-row:last-child {
+  margin-bottom: 0;
+}
+
+.NP-summary-divider {
+  height: 1px;
+  background: var(--th-light-gray);
+  margin: 16px 0;
+}
+
+.NP-summary-total {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin-top: 16px;
+}
+
+/* Betalingsknapp */
+.NP-checkout-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--th-red);
+  border: none;
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.NP-checkout-btn:hover:not(:disabled) {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+}
+
+.NP-checkout-btn:disabled {
+  background: var(--th-light-gray);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Tillitssignaler */
+.NP-trust-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--th-light-gray);
+}
+
+.NP-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--th-muted);
+  font-size: 0.875rem;
+}
+
+.NP-trust-item i {
+  color: var(--th-green);
+  font-size: 1.2rem;
+}
+
+/* Responsivt design */
+@media (max-width: 1200px) {
+  .NP-purchase-grid {
+    grid-template-columns: 1fr 380px;
+    gap: 24px;
+  }
+}
+
+@media (max-width: 992px) {
+  .NP-purchase-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .NP-order-summary {
+    position: static;
+  }
+
+  .NP-event-image-container {
+    height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .NP-purchase-section {
+    padding: 60px 0 40px;
+  }
+
+  .NP-purchase-container {
+    padding: 0 16px;
+  }
+
+  .NP-event-header {
+    margin-bottom: 32px;
+  }
+
+  .NP-event-image-container {
+    height: 300px;
+  }
+
+  .NP-event-overlay {
+    padding: 32px 24px 24px;
+  }
+
+  .NP-event-hero-meta {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .NP-ticket-option {
+    padding: 20px;
+  }
+
+  .NP-ticket-option-header {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .NP-ticket-option-price {
+    text-align: left;
+  }
+
+  .NP-ticket-option-actions {
+    flex-direction: column;
+  }
+
+  .NP-quantity-selector,
+  .NP-add-to-cart-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .NP-event-hero-title {
+    font-size: 1.75rem;
+  }
+
+  .NP-section-title {
+    font-size: 1.5rem;
+  }
+
+  .NP-ticket-option-name {
+    font-size: 1.3rem;
+  }
+
+  .NP-price-amount {
+    font-size: 1.75rem;
+  }
+
+  .NP-event-image-container {
+    height: 250px;
+  }
+}
+
+/* ============================================
+   SØKMODAL STILER - Nikita Popov (NP)
+   ============================================ */
+
+/* Modal container - skjult som standard */
+.NP-search-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 80px;
+}
+
+/* Vises når aktiv */
+.NP-search-modal-active {
+  display: flex;
+}
+
+/* Mørk overlay bakgrunn */
+.NP-search-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+  z-index: -1;
+}
+
+/* Modal innhold container */
+.NP-search-modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 700px;
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  animation: NP-slideDown 0.3s ease-out;
+}
+
+@keyframes NP-slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal header */
+.NP-search-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.NP-search-modal-title {
+  color: var(--th-white);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* Lukkeknapp */
+.NP-search-modal-close {
+  background: transparent;
+  border: none;
+  color: var(--th-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.NP-search-modal-close:hover {
+  background: var(--th-light-gray);
+  color: var(--th-white);
+}
+
+/* Søkeskjema */
+.NP-search-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+/* Input wrapper med ikon */
+.NP-search-input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.NP-search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--th-muted);
+  font-size: 1.25rem;
+  pointer-events: none;
+}
+
+/* Søkeinput felt */
+.NP-search-input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: var(--th-gray);
+  border: 2px solid var(--th-light-gray);
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.NP-search-input::placeholder {
+  color: var(--th-muted);
+}
+
+.NP-search-input:focus {
+  outline: none;
+  border-color: var(--th-red);
+  background: var(--th-black);
+}
+
+/* Søkeknapp */
+.NP-search-submit-btn {
+  padding: 14px 28px;
+  background: var(--th-red);
+  color: var(--th-white);
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.NP-search-submit-btn:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.NP-search-submit-btn:active {
+  transform: translateY(0);
+}
+
+/* Forslag seksjon */
+.NP-search-suggestions {
+  padding-top: 24px;
+  border-top: 1px solid var(--th-light-gray);
+}
+
+.NP-suggestions-title {
+  color: var(--th-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+/* Forslag tags */
+.NP-suggestion-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.NP-suggestion-tag {
+  padding: 8px 16px;
+  background: var(--th-light-gray);
+  color: var(--th-white);
+  text-decoration: none;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.NP-suggestion-tag:hover {
+  background: var(--th-red);
+  border-color: var(--th-red);
+  transform: translateY(-2px);
+}
+
+/* Responsiv design for søkmodal */
+@media (max-width: 768px) {
+  .NP-search-modal {
+    padding-top: 40px;
+  }
+
+  .NP-search-modal-content {
+    width: 95%;
+    padding: 24px;
+    border-radius: 12px;
+  }
+
+  .NP-search-modal-title {
+    font-size: 1.25rem;
+  }
+
+  .NP-search-form {
+    flex-direction: column;
+  }
+
+  .NP-search-submit-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .NP-search-modal-content {
+    padding: 20px;
+  }
+
+  .NP-search-modal-title {
+    font-size: 1.1rem;
+  }
+
+  .NP-search-input {
+    font-size: 0.9rem;
+    padding: 12px 16px 12px 44px;
+  }
+
+  .NP-search-submit-btn {
+    padding: 12px 24px;
+    font-size: 0.9rem;
+  }
+
+  .NP-suggestion-tag {
+    font-size: 0.8rem;
+    padding: 6px 14px;
+  }
+}
+/* ============================================
+   CITIES/BYER SIDE STILER - Nikita Popov (NP)
+   ============================================ */
+
+/* Hovedseksjon for byer */
+.NP-cities-section {
+  background: linear-gradient(
+    135deg,
+    var(--th-black) 0%,
+    var(--th-dark-gray) 100%
+  );
+  min-height: 100vh;
+  padding: 80px 0 60px;
+  position: relative;
+}
+
+/* Radial gradient overlay - NP */
+.NP-cities-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(220, 38, 38, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(220, 38, 38, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
+/* Grid layout for bykort */
+.NP-cities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
+}
+
+/* Individuelt bykort - NP */
+.NP-city-card {
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.NP-city-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(220, 38, 38, 0.2);
+  border-color: var(--th-red);
+}
+
+/* Bildewrapper med overlay - NP */
+.NP-city-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+}
+
+.NP-city-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.NP-city-card:hover .NP-city-image {
+  transform: scale(1.1);
+}
+
+/* Mørk overlay gradient - NP */
+.NP-city-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.3),
+    rgba(0, 0, 0, 0.7)
+  );
+  pointer-events: none;
+}
+
+/* Event count badge - NP */
+.NP-city-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--th-red);
+  color: var(--th-white);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+/* Bydetaljer seksjon - NP */
+.NP-city-details {
+  padding: 24px;
+}
+
+.NP-city-name {
+  color: var(--th-white);
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.NP-city-name i {
+  color: var(--th-red);
+  font-size: 1.5rem;
+}
+
+.NP-city-info {
+  color: var(--th-muted);
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+}
+
+/* Knapp for å se arrangementer - NP */
+.NP-city-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--th-light-gray);
+  color: var(--th-white);
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.NP-city-btn:hover {
+  background: var(--th-red);
+  border-color: var(--th-red);
+  color: var(--th-white);
+  transform: translateX(4px);
+}
+
+.NP-city-btn i {
+  transition: transform 0.3s ease;
+}
+
+.NP-city-btn:hover i {
+  transform: translateX(4px);
+}
+
+/* Responsiv design for byer-siden - NP */
+@media (max-width: 1024px) {
+  .NP-cities-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .NP-cities-section {
+    padding: 60px 0 40px;
+  }
+
+  .NP-cities-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .NP-city-image-wrap {
+    height: 200px;
+  }
+
+  .NP-city-name {
+    font-size: 1.5rem;
+  }
+
+  .NP-city-badge {
+    top: 12px;
+    right: 12px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .NP-city-details {
+    padding: 20px;
+  }
+
+  .NP-city-name {
+    font-size: 1.3rem;
+  }
+
+  .NP-city-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* === NP: Arrangør Side Styles === */
+
+/* Hero seksjon for arrangør */
+.NP-arrangor-hero {
+  position: relative;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920")
+      center/cover no-repeat;
+  color: var(--th-white);
+  overflow: hidden;
+}
+
+.NP-arrangor-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(220, 38, 38, 0.15) 0%,
+    rgba(0, 0, 0, 0.3) 100%
+  );
+  z-index: 0;
+}
+
+.NP-arrangor-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.NP-arrangor-hero-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+  color: var(--th-white);
+}
+
+.NP-arrangor-hero-subtitle {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  line-height: 1.6;
+  color: var(--th-muted);
+  margin-bottom: 2.5rem;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.NP-arrangor-hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Primær knapp */
+.NP-arrangor-btn-primary {
+  background: var(--th-red);
+  color: var(--th-white);
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.NP-arrangor-btn-primary:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(220, 38, 38, 0.3);
+  color: var(--th-white);
+}
+
+/* Sekundær knapp */
+.NP-arrangor-btn-secondary {
+  background: transparent;
+  border: 2px solid var(--th-white);
+  color: var(--th-white);
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.NP-arrangor-btn-secondary:hover {
+  background: var(--th-white);
+  color: var(--th-black);
+  transform: translateY(-2px);
+}
+
+/* Generell seksjon styling */
+.NP-arrangor-section {
+  padding: 80px 0;
+  background: linear-gradient(
+    135deg,
+    var(--th-black) 0%,
+    var(--th-dark-gray) 50%,
+    var(--th-black) 100%
+  );
+  position: relative;
+}
+
+.NP-arrangor-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(220, 38, 38, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(220, 38, 38, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.NP-arrangor-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.NP-arrangor-section-dark {
+  background: linear-gradient(
+    135deg,
+    var(--th-dark-gray) 0%,
+    var(--th-gray) 50%,
+    var(--th-dark-gray) 100%
+  );
+}
+
+.NP-arrangor-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.NP-arrangor-section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--th-white);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.NP-arrangor-section-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--th-muted);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Fordeler grid */
+.NP-arrangor-benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.NP-arrangor-benefit-card {
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.NP-arrangor-benefit-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--th-red);
+  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.2);
+}
+
+.NP-arrangor-benefit-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--th-red) 0%,
+    var(--th-red-dark) 100%
+  );
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: var(--th-white);
+}
+
+.NP-arrangor-benefit-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin-bottom: 1rem;
+}
+
+.NP-arrangor-benefit-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--th-muted);
+}
+
+/* Steg seksjon */
+.NP-arrangor-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.NP-arrangor-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.NP-arrangor-step-number {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(
+    135deg,
+    var(--th-red) 0%,
+    var(--th-red-dark) 100%
+  );
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin-bottom: 1.5rem;
+}
+
+.NP-arrangor-step-content {
+  flex: 1;
+}
+
+.NP-arrangor-step-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin-bottom: 0.75rem;
+}
+
+.NP-arrangor-step-text {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--th-muted);
+}
+
+/* Prising */
+.NP-arrangor-pricing-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.NP-arrangor-pricing-card {
+  background: var(--th-gray);
+  border: 2px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 2.5rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.NP-arrangor-pricing-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--th-red);
+  box-shadow: 0 12px 32px rgba(220, 38, 38, 0.2);
+}
+
+.NP-arrangor-pricing-card-featured {
+  border-color: var(--th-red);
+  background: linear-gradient(
+    135deg,
+    var(--th-gray) 0%,
+    rgba(220, 38, 38, 0.05) 100%
+  );
+}
+
+.NP-arrangor-pricing-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--th-red);
+  color: var(--th-white);
+  padding: 0.5rem 1.5rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.NP-arrangor-pricing-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--th-light-gray);
+}
+
+.NP-arrangor-pricing-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin-bottom: 1rem;
+}
+
+.NP-arrangor-pricing-price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.NP-arrangor-pricing-amount {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--th-white);
+  line-height: 1;
+}
+
+.NP-arrangor-pricing-unit {
+  font-size: 1rem;
+  color: var(--th-muted);
+  margin-top: 0.5rem;
+}
+
+.NP-arrangor-pricing-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0;
+}
+
+.NP-arrangor-pricing-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  color: var(--th-white);
+  font-size: 1rem;
+}
+
+.NP-arrangor-pricing-features li i {
+  color: var(--th-green);
+  font-size: 1.25rem;
+}
+
+.NP-arrangor-pricing-btn {
+  display: block;
+  width: 100%;
+  background: var(--th-red);
+  color: var(--th-white);
+  text-align: center;
+  padding: 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.NP-arrangor-pricing-btn:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  color: var(--th-white);
+}
+
+/* Kontakt seksjon */
+.NP-arrangor-contact-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  margin-top: 3rem;
+}
+
+.NP-arrangor-contact-form {
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 2.5rem;
+}
+
+.NP-arrangor-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.NP-arrangor-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.NP-arrangor-form-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin-bottom: 0.5rem;
+}
+
+.NP-arrangor-form-input {
+  background: var(--th-black);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 8px;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  color: var(--th-white);
+  transition: all 0.2s ease;
+}
+
+.NP-arrangor-form-input:focus {
+  outline: none;
+  border-color: var(--th-red);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.NP-arrangor-form-input::placeholder {
+  color: var(--th-muted);
+}
+
+.NP-arrangor-form-submit {
+  width: 100%;
+  background: var(--th-red);
+  color: var(--th-white);
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.NP-arrangor-form-submit:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(220, 38, 38, 0.3);
+}
+
+/* Kontaktinformasjon */
+.NP-arrangor-contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.NP-arrangor-info-card {
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.NP-arrangor-info-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1rem;
+  background: linear-gradient(
+    135deg,
+    var(--th-red) 0%,
+    var(--th-red-dark) 100%
+  );
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--th-white);
+}
+
+.NP-arrangor-info-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--th-white);
+  margin-bottom: 0.5rem;
+}
+
+.NP-arrangor-info-text {
+  font-size: 1rem;
+  color: var(--th-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Responsiv design */
+@media (max-width: 992px) {
+  .NP-arrangor-contact-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .NP-arrangor-pricing-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .NP-arrangor-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .NP-arrangor-hero {
+    min-height: 500px;
+    padding: 3rem 1rem;
+  }
+
+  .NP-arrangor-hero-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .NP-arrangor-btn-primary,
+  .NP-arrangor-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .NP-arrangor-section {
+    padding: 60px 0;
+  }
+
+  .NP-arrangor-benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .NP-arrangor-form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .NP-arrangor-hero-title {
+    font-size: 2rem;
+  }
+
+  .NP-arrangor-hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .NP-arrangor-section-title {
+    font-size: 1.75rem;
+  }
+
+  .NP-arrangor-benefit-icon,
+  .NP-arrangor-step-number {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+
+  .NP-arrangor-pricing-amount {
+    font-size: 2.5rem;
+  }
+}
