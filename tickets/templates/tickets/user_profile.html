@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<link rel="stylesheet" href="{% static 'main.css' %}">
+<link rel="stylesheet" href="{% static 'tickets/user_profile.css' %}">
+{% endblock %}
+
+{% block title %}Min profil{% endblock %}
+
+{% block content %}
+
+<!-- Hoved container for hele brukerprofil siden -->
+<main class="MB-user_profile-main">
+
+    <div class="MB-user_profile-container">
+
+        <!-- Overskrift på siden -->
+        <div class="MB-user_profile-page-header">
+            <h1 class="MB-user_profile-page-title">Min profil</h1>
+            <p class="MB-user_profile-page-subtitle">Administrer din informasjon og billetter</p>
+        </div>
+
+        <!-- Grid med to kolonner: venstre (kort) og høyre (skjema) -->
+        <div class="MB-user_profile-top-grid">
+            
+            <!-- Venstre kolonne: profilbilde + kontakt + statistikk -->
+            <div class="MB-user_profile-left-col">
+
+                <!-- Profilkort med bilde, navn og kontaktinfo -->
+                <div class="MB-user_profile-card MB-user_profile-profile-card">
+                    <div class="MB-user_profile-avatar-circle">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+                    <h2 class="MB-user_profile-name">Ola Nordmann</h2>
+                    <p class="MB-user_profile-subtext">Medlem siden mars 2023</p>
+                    
+                    <div class="MB-user_profile-contact-info">
+                        <p><i class="fa-regular fa-envelope"></i> ola@nordmann.no</p>
+                        <p><i class="fa-solid fa-phone"></i> +47 987 65 432</p>
+                        <p><i class="fa-solid fa-location-dot"></i> Oslo, Norge</p>
+                    </div>
+
+                    <button class="MB-user_profile-btn-dark">Rediger profil</button>
+                    <button class="MB-user_profile-btn-dark"><i class="fa-solid fa-lock"></i> Endre passord</button>
+                </div>
+
+                <!-- Statistikkort, viser informasjon om brukeren -->
+                <div class="MB-user_profile-card MB-user_profile-stats-card">
+                    <h3 class="MB-user_profile-title-sm">Statistikk</h3>
+                    <div class="MB-user_profile-stat-line">
+                        <span>Totalt billetter</span>
+                        <span class="MB-user_profile-val">12</span>
+                    </div>
+                    <div class="MB-user_profile-stat-line">
+                        <span>Kommende arrangementer</span>
+                        <span class="MB-user_profile-val MB-user_profile-red">3</span>
+                    </div>
+                    <div class="MB-user_profile-stat-line">
+                        <span>Totalt brukt</span>
+                        <span class="MB-user_profile-val">6 450 kr</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Høyre kolonne, stort skjema for å endre personinfo -->
+            <div class="MB-user_profile-right-col">
+                <div class="MB-user_profile-card MB-user_profile-info-card-large">
+                    <h2 class="MB-user_profile-title-md">Personlig informasjon</h2>
+                    
+                    <form class="MB-user_profile-form">
+
+                        <!-- Rad med fornavn + etternavn -->
+                        <div class="MB-user_profile-row">
+                            <div class="MB-user_profile-input-group">
+                                <label>Fornavn</label>
+                                <input type="text" value="Ola">
+                            </div>
+                            <div class="MB-user_profile-input-group">
+                                <label>Etternavn</label>
+                                <input type="text" value="Nordmann">
+                            </div>
+                        </div>
+
+                        <div class="MB-user_profile-input-group">
+                            <label>E-post</label>
+                            <input type="email" value="ola@nordmann.no">
+                        </div>
+
+                        <div class="MB-user_profile-input-group">
+                            <label>Telefonnummer</label>
+                            <input type="tel" value="+47 987 65 432">
+                        </div>
+
+                        <div class="MB-user_profile-input-group">
+                            <label>Adresse</label>
+                            <input type="text" value="Karl Johans gate 1">
+                        </div>
+
+                        <!-- Rad med postnummer + by -->
+                        <div class="MB-user_profile-row">
+                            <div class="MB-user_profile-input-group">
+                                <label>Postnummer</label>
+                                <input type="text" value="0154">
+                            </div>
+                            <div class="MB-user_profile-input-group">
+                                <label>By</label>
+                                <input type="text" value="Oslo">
+                            </div>
+                        </div>
+
+                        <button type="button" class="MB-user_profile-btn-red">Lagre endringer</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nederste del, liste over kommende arrangementer -->
+        <div class="MB-user_profile-bottom-section">
+
+            <h2 class="MB-user_profile-heading-events">Mine kommende arrangementer</h2>
+            
+            <!-- Ett eksempel på billettkort -->
+            <div class="MB-user_profile-event-card">
+                <div class="MB-user_profile-event-top">
+                    <div class="MB-user_profile-event">
+                        <h3>Aurora</h3>
+                        <p>World Tour 2024</p>
+                    </div>
+                    <span class="MB-user_profile-badge-active">Aktiv</span>
+                </div>
+
+                <div class="MB-user_profile-event-body">
+                    <div class="MB-user_profile-meta-list">
+                        <p class="MB-user_profile-meta-item"><i class="fa-regular fa-calendar MB-user_profile-red-ico"></i> 15. mars 2025</p>
+                        <p class="MB-user_profile-meta-item"><i class="fa-regular fa-clock MB-user_profile-red-ico"></i> 20:00</p>
+                        <p class="MB-user_profile-meta-item"><i class="fa-solid fa-location-dot MB-user_profile-red-ico"></i> Oslo Spektrum, Oslo</p>
+                    </div>
+
+                    <div class="MB-user_profile-event-details-grid">
+                        <div class="MB-user_profile-det">
+                            <label>Billetttype</label>
+                            <span>Standard</span>
+                        </div>
+                        <div class="MB-user_profile-det">
+                            <label>Plass</label>
+                            <span>Seksjon A, Rad 15, Sete 12</span>
+                        </div>
+                        <div class="MB-user_profile-det">
+                            <label>Billettnummer</label>
+                            <span>TH-2024-AUR-001234</span>
+                        </div>
+                    </div>
+
+                    <div class="MB-user_profile-qr-container">
+                        <div class="MB-user_profile-qr-box">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </div>
+                        <span class="MB-user_profile-qr-label">QR-kode</span>
+                    </div>
+                </div>
+
+                <div class="MB-user_profile-event-footer">
+                    <button class="MB-user_profile-btn-pdf-link">
+                        <i class="fa-solid fa-download"></i> Last ned PDF
+                    </button>
+                    <button class="MB-user_profile-btn-red-sm">Del billett</button>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+
+{% endblock %}
