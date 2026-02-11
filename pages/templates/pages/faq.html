@@ -4,138 +4,157 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ofte stilte spørsmål - TicketHub</title>
-
-    <!-- Favicon -->
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="{% static 'favicon/apple-touch-icon.png' %}"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="{% static 'favicon/favicon-32x32.png' %}"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="{% static 'favicon/favicon-16x16.png' %}"
-    />
-    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}" />
-
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
-
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+    <title>Kundeservice – TicketHub</title>
+    <link rel="stylesheet" href="css greie til app.css">
   </head>
+
   <body>
     {% include "snippets/navbar.html" %}
 
-    <div class="NP-page-container">
-      <div class="NP-page-inner">
-        <h1 class="NP-page-title">Ofte stilte spørsmål</h1>
-        <p class="NP-page-subtitle">
-          Finn svar på de vanligste spørsmålene om TicketHub
-        </p>
+    <div class="ES-main">
+      <div class="ES-Header">
+        <h1>Kundeservice</h1>
+        <p>Vi er her for å hjelpe deg. Finn svar på dine spørsmål eller kontakt oss direkte.</p>
+      </div>
 
-        <div class="NP-accordion">
-          <div class="NP-accordion-item">
-            <button class="NP-accordion-header" onclick="toggleAccordion(this)">
-              Hvordan kjøper jeg billetter?
-              <i class="fas fa-chevron-down NP-accordion-icon"></i>
-            </button>
-            <div class="NP-accordion-content active">
-              <div class="NP-accordion-body">
-                Du kan kjøpe billetter ved å søke etter arrangementet du ønsker
-                å delta på, velge antall billetter og fullføre betalingen.
-              </div>
+      <div class="ES-Top-Container">
+        <div class="ES-Top-Info">
+            <div class="ES-Icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--th-red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-6 h-6 text-primary" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
             </div>
-          </div>
 
-          <div class="NP-accordion-item">
-            <button class="NP-accordion-header" onclick="toggleAccordion(this)">
-              Hvordan får jeg billettene mine?
-              <i class="fas fa-chevron-down NP-accordion-icon"></i>
-            </button>
-            <div class="NP-accordion-content">
-              <div class="NP-accordion-body">
-                Billettene sendes til deg på e-post etter kjøpet. Du kan også
-                finne dem i din profil under "Mine billetter".
-              </div>
-            </div>
-          </div>
+          <h1 class="ES-Epost-Title">E-post</h1>
+          <p class="ES-Top-Text">Send oss en e-post så svarer vi innen 24 timer.</p>
+          <p class="ES-Epost-Epost">support@tickethub.no</p>
+        </div>
 
-          <div class="NP-accordion-item">
-            <button class="NP-accordion-header" onclick="toggleAccordion(this)">
-              Kan jeg få refundert billetter?
-              <i class="fas fa-chevron-down NP-accordion-icon"></i>
-            </button>
-            <div class="NP-accordion-content">
-              <div class="NP-accordion-body">
-                Refusjon avhenger av arrangementets vilkår. Les mer på vår
-                <a href="/refusjon/">refusjonside</a>.
-              </div>
+        <div class="ES-Top-Info">
+            <div class="ES-Icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--th-red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone w-6 h-6 text-primary" aria-hidden="true"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"></path></svg>
             </div>
-          </div>
+          <h1 class="ES-Telefon-Title">Telefon</h1>
+          <p class="ES-Top-Text">Ring oss på hverdager mellom 09:00 – 17:00.</p>
+          <p class="ES-Telefon-Nummer">+47 123 45 678</p>
+        </div>
 
-          <div class="NP-accordion-item">
-            <button class="NP-accordion-header" onclick="toggleAccordion(this)">
-              Hvilke betalingsmetoder aksepterer dere?
-              <i class="fas fa-chevron-down NP-accordion-icon"></i>
-            </button>
-            <div class="NP-accordion-content">
-              <div class="NP-accordion-body">
-                Vi aksepterer Visa, Mastercard, Vipps og andre vanlige
-                betalingsmåter.
-              </div>
+        <div class="ES-Top-Info">
+        <div class="ES-Icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--th-red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle w-6 h-6 text-primary" aria-hidden="true"><path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"></path></svg>
             </div>
-          </div>
 
-          <div class="NP-accordion-item">
-            <button class="NP-accordion-header" onclick="toggleAccordion(this)">
-              Hva skjer hvis arrangementet avlyses?
-              <i class="fas fa-chevron-down NP-accordion-icon"></i>
-            </button>
-            <div class="NP-accordion-content">
-              <div class="NP-accordion-body">
-                Hvis et arrangement avlyses, vil du automatisk få refundert
-                billettprisen til den registrerte betalingsmetoden.
-              </div>
-            </div>
-          </div>
+          <h1 class="ES-Chat-Title">Live chat</h1>
+          <p class="ES-Top-Text">Chat med oss direkte for rask hjelp.</p>
+          <button class="ES-Chat-Knapp">Start chat</button>
         </div>
       </div>
+
+      <div class="ES-Content">
+        <div class="ES-QaA">
+          <h1>Ofte stilte spørsmål (FAQ)</h1>
+
+          <details class="ES-QaA-Item">
+            <summary class="ES-QaA-Item-Summary">Hvordan kjøper jeg billetter?</summary>
+            <p class="ES-QaA-Item-Text">
+              Du kan kjøpe billetter ved å søke etter et arrangement, velge antall billetter
+              og følge betalingsprosessen. Du vil motta billettene på e-post umiddelbart etter kjøp.
+            </p>
+          </details>
+
+          <details class="ES-QaA-Item">
+            <summary class="ES-QaA-Item-Summary">Kan jeg refundere billettene mine?</summary>
+            <p class="ES-QaA-Item-Text">
+              Alle billetter er endelige salg og kan ikke refunderes.
+              Ved avlyst arrangement får du full refusjon automatisk.
+            </p>
+          </details>
+
+          <details class="ES-QaA-Item">
+            <summary class="ES-QaA-Item-Summary">Hvordan mottar jeg billettene?</summary>
+            <p class="ES-QaA-Item-Text">
+              Billettene sendes til e-postadressen du oppga ved kjøp.
+              Du finner dem også under <em>Mine billetter</em> i profilen din.
+            </p>
+          </details>
+
+          <details class="ES-QaA-Item">
+            <summary class="ES-QaA-Item-Summary">Kan jeg overføre billetten til noen andre?</summary>
+            <p class="ES-QaA-Item-Text">
+              Ja, logg inn på profilen din, velg billetten og oppgi mottakerens e-postadresse.
+            </p>
+          </details>
+
+          <details class="ES-QaA-Item">
+            <summary class="ES-QaA-Item-Summary">Hva gjør jeg hvis et arrangement er avlyst?</summary>
+            <p class="ES-QaA-Item-Text">
+              Ved avlysning får du automatisk full refusjon til betalingsmetoden du brukte
+              (vanligvis innen 5–7 virkedager).
+            </p>
+          </details>
+
+          <details class="ES-QaA-Item">
+            <summary class="ES-QaA-Item-Summary">Hvilke betalingsmetoder aksepterer dere?</summary>
+            <p class="ES-QaA-Item-Text">
+              Vi aksepterer Visa, MasterCard, Vipps og PayPal.
+              All betaling sikres med SSL-kryptering.
+            </p>
+          </details>
+
+          <details class="ES-QaA-Item">
+            <summary class="ES-QaA-Item-Summary">Er det aldersgrense på arrangementene?</summary>
+            <p class="ES-QaA-Item-Text">
+              Aldersgrensen varierer per arrangement og står alltid på arrangementssiden.
+            </p>
+          </details>
+
+          <details class="ES-QaA-Item">
+            <summary class="ES-QaA-Item-Summary">Hvordan blir jeg arrangør?</summary>
+            <p class="ES-QaA-Item-Text">
+              Registrer deg som arrangør under opprettelse av konto
+              og oppgi organisasjonsnummer for å kunne lage arrangementer.
+            </p>
+          </details>
+        </div>
+
+        <div class="ES-Kontakt-Side">
+          <h1 class="ES-Kontakt-Form">Kontakt oss</h1>
+
+          <label for="navn">Ditt navn</label>
+          <input type="text" id="navn" name="navn" placeholder="Ditt navn" required>
+
+          <label for="email">E-postadresse</label>
+          <input type="email" id="email" name="email" placeholder="din@epost.no" required>
+
+          <label for="emne">Velg emne</label>
+          <select id="emne" name="emne" required>
+            <option value="">-- Velg emne --</option>
+            <option value="billett">Billettspørsmål</option>
+            <option value="betaling">Betaling</option>
+            <option value="refusjon">Refusjon</option>
+            <option value="teknisk">Teknisk problem</option>
+            <option value="arrangør">Arrangørspørsmål</option>
+            <option value="annet">Annet</option>
+          </select>
+
+          <label for="melding">Melding</label>
+          <textarea id="melding" name="melding" rows="5" placeholder="Skriv meldingen her …" required></textarea>
+
+          <button type="submit" class="ES-Send-Knapp">Send melding</button>
+        <div class="ES-Svartid-Container">
+            <div class="ES-Svartid-Header">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--th-red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-5 h-5 text-primary mr-3 flex-shrink-0 mt-0.5" aria-hidden="true"><path d="M12 6v6l4 2"></path><circle cx="12" cy="12" r="10"></circle></svg>
+          <h2 class="ES-Svartid-Title">Svartid</h2>
+        </div>
+        <p class="ES-Svartid-Text">Vi svarer normalt innen 24 timer på hverdager.</p>
+    </div>
+    </div>
+
+    <div class="ES-Nyttige-Lenker">
+        <button class="ES-Link-Box">Vilkår og betingelser</button>
+        <button class="ES-Link-Box">Personvern</button>
+        <button class="ES-Link-Box">Brukerveiledning</button>
+        <button class="ES-Link-Box">Arrangør-guide</button>
     </div>
 
     {% include "snippets/footer.html" %}
-
-    <script>
-      function toggleAccordion(button) {
-        const content = button.nextElementSibling;
-        const icon = button.querySelector(".NP-accordion-icon");
-        const isActive = content.classList.contains("active");
-
-        // Close all accordions
-        document.querySelectorAll(".NP-accordion-content").forEach(item => {
-          item.classList.remove("active");
-        });
-        document.querySelectorAll(".NP-accordion-icon").forEach(item => {
-          item.classList.remove("active");
-        });
-
-        // Toggle current accordion
-        if (!isActive) {
-          content.classList.add("active");
-          icon.classList.add("active");
-        }
-      }
-    </script>
   </body>
 </html>
