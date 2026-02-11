@@ -1,0 +1,308 @@
+/* Hoved bakgrunn og oppsett for hele siden */
+.MB-user_profile-main {
+    background-color: #000000;
+    min-height: 100vh;
+    padding: 60px 0 100px 0;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+}
+
+.MB-user_profile-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* tittel + undertittel */
+.MB-user_profile-page-header {
+    margin-bottom: 40px;
+    text-align: left;
+}
+
+.MB-user_profile-page-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.MB-user_profile-page-subtitle {
+    color: #888;
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+/* To kolonne grid, venstre smal, høyre bred */
+.MB-user_profile-top-grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 40px;
+    margin-bottom: 80px;
+}
+
+/* Felles stil for alle kortbokser */
+.MB-user_profile-card {
+    background: #121216;
+    border: 1px solid #22222a;
+    border-radius: 12px;
+    padding: 25px;
+}
+
+/* Venstre kolonne stablet vertikalt */
+.MB-user_profile-left-col {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Avstand mellom profilkort og statistikkort */
+.MB-user_profile-stats-card {
+    margin-top: 30px;
+}
+
+/* Avatar øverst i profilkortet */
+.MB-user_profile-avatar-circle {
+    width: 70px;
+    height: 70px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #555;
+}
+
+.MB-user_profile-name { font-size: 1.2rem; font-weight: 600; margin: 0; }
+.MB-user_profile-subtext { color: #666; font-size: 0.8rem; margin: 5px 0 25px; }
+
+/* Kontaktinfo linjer med ikoner */
+.MB-user_profile-contact-info p { 
+    font-size: 0.85rem; 
+    color: #bdbdc7; 
+    margin: 14px 0; 
+    display: flex; 
+    align-items: center; 
+    gap: 12px;
+}
+
+/* Mørke knapper (rediger profil, endre passord) */
+.MB-user_profile-btn-dark {
+    background: #1e1e24;
+    color: #fff;
+    border: 1px solid #333;
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+/* Statistikklinjer */
+.MB-user_profile-stat-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #22222a;
+    font-size: 0.85rem;
+    color: #888;
+}
+.MB-user_profile-val { color: #fff; font-weight: bold; }
+.MB-user_profile-red { color: #ff3b3b; }
+
+/* Høyre kolonne, stort skjema */
+.MB-user_profile-info-card-large {
+    padding: 40px; 
+    min-height: 600px; 
+}
+
+.MB-user_profile-title-md {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+/* Rader med to input felt */
+.MB-user_profile-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    margin-bottom: 0; 
+}
+
+.MB-user_profile-input-group {
+    margin-bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.MB-user_profile-input-group label {
+    font-size: 13px;
+    color: #bdbdc7;
+    font-weight: 600;
+}
+
+.MB-user_profile-input-group input {
+    width: 100%;
+    background: #0d0d11;
+    border: 1px solid #2a2a33;
+    padding: 14px;
+    border-radius: 8px;
+    color: #eaeaea;
+    font-size: 14px;
+}
+
+/* Rød lagre knapp */
+.MB-user_profile-btn-red {
+    background: #ff3b3b;
+    color: #fff;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+/* Seksjon med kommende arrangementer / billetter */
+.MB-user_profile-bottom-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.MB-user_profile-heading-events {
+    width: 100%;
+    max-width: 500px;
+    text-align: left;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* Kort for en billett, arrangement */
+.MB-user_profile-event-card {
+    background: #121216;
+    border: 1px solid #22222a;
+    border-left: 4px solid #ff3b3b;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    overflow: hidden;
+}
+
+.MB-user_profile-event-top {
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.MB-user_profile-badge-active {
+    border: 1px solid #ff3b3b;
+    color: #ff3b3b;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.MB-user_profile-meta-item {
+    padding-left: 30px; 
+    margin: 14px 0;
+    font-size: 0.95rem;
+    color: #bdbdc7;
+    display: flex;
+    align-items: center;
+}
+
+.MB-user_profile-red-ico {
+    color: #ff3b3b !important;
+    margin-right: 15px;
+}
+
+/* Grid med billett /arrangementsdetaljer */
+.MB-user_profile-event-details-grid {
+    background: #1e1e24;
+    margin: 20px 30px;
+    padding: 20px;
+    border-radius: 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.MB-user_profile-det label {
+    display: block;
+    font-size: 11px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.MB-user_profile-det span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* QR kode område */
+.MB-user_profile-qr-container {
+    text-align: center;
+    padding: 30px 0;
+}
+
+.MB-user_profile-qr-box {
+    font-size: 65px;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.MB-user_profile-qr-label {
+    font-size: 11px;
+    color: #444;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Nederste knapp i billettkort */
+.MB-user_profile-event-footer {
+    padding: 20px 30px;
+    border-top: 1px solid #22222a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.MB-user_profile-btn-pdf-link {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.MB-user_profile-btn-red-sm {
+    background: #ff3b3b;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+/* tilpasning, en kolonne under 800px */
+@media (max-width: 800px) {
+    .MB-user_profile-top-grid {
+        grid-template-columns: 1fr;
+    }
+    .MB-user_profile-row {
+        grid-template-columns: 1fr;
+    }
+}
