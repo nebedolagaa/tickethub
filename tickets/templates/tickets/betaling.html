@@ -1,3 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'main.css' %}">
+<link rel="stylesheet" href="{% static 'tickets/betaling.css' %}">
+{% endblock %}
+
+{% block title %}Betaling{% endblock %}
+
+{% block content %}
+<main class="CB-payment-main">
     <div class="CB-payment-container">
         <!-- Venstre side: Tre bokser vertikalt -->
         <div class="CB-payment-left">
@@ -7,19 +19,6 @@
                 <form method="post" action="/billetter/after-payment/" class="CB-payment-form">
                     {% csrf_token %}
                     <div class="CB-payment-form-group">
-                    {% extends "base.html" %}
-                    {% load static %}
-
-                    {% block css %}
-                    <link rel="stylesheet" href="{% static 'main.css' %}">
-                    <link rel="stylesheet" href="{% static 'tickets/betaling.css' %}">
-                    {% endblock %}
-
-                    {% block title %}Betaling{% endblock %}
-
-                    {% block content %}
-                    <main class="CB-payment-main">
-                        <div class="CB-payment-container">
                         <label for="fullname">Fullt navn</label>
                         <input type="text" id="fullname" name="fullname" placeholder="Ditt navn" required>
                     </div>
