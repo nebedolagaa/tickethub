@@ -237,24 +237,17 @@
               <form id="checkout-form" method="post" action="/billetter/betaling/">
                 {% csrf_token %}
                 <input type="hidden" name="cart" id="cart-input">
-                <button id="checkout-btn" class="NP-checkout-btn" disabled type="button" onclick="proceedToCheckout(event)">
+                <button id="checkout-btn" class="NP-checkout-btn" disabled type="submit">
                   <i class="bi bi-credit-card"></i>
                   Gå til betaling
                 </button>
               </form>
       // Send handlekurv til backend og gå til betaling
-      function proceedToCheckout(e) {
-        try {
-          const cartInput = document.getElementById('cart-input');
-          cartInput.value = JSON.stringify(cart);
-          document.getElementById('checkout-form').submit();
-        } catch (err) {
-          // Fallback: prøv å submitte skjemaet uansett
-          if (e && e.target && e.target.form) {
-            e.target.form.submit();
-          }
-        }
-      }
+      // Før skjemaet sendes, legg inn handlekurvdata i skjult felt
+      document.getElementById('checkout-form').addEventListener('submit', function(e) {
+        const cartInput = document.getElementById('cart-input');
+        cartInput.value = JSON.stringify(cart);
+      });
 
               <div class="NP-trust-badges">
                 <div class="NP-trust-item">
