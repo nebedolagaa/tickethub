@@ -9,47 +9,38 @@ from django.shortcuts import render, redirect
 import json
 
 def betaling(request):
-    # Hvis POST inneholder cart, oppdater session
+    # Hvis POST: motta handlekurvdata og lagre i session
     if request.method == "POST" and "cart" in request.POST:
+        import json
         try:
             cart_data = json.loads(request.POST["cart"])
             request.session["cart"] = cart_data
         except Exception:
             request.session["cart"] = {}
-        return redirect("/billetter/betaling/")  # redirect for å unngå repost
+        # Redirect til GET for å unngå repost
+        from django.shortcuts import redirect
+        return redirect("/billetter/betaling/")
 
-    # Hent cart fra session for visning (trygg default tom dict)
+    # Hent cart fra session for visning
     cart = request.session.get("cart", {})
-
-    # Beregn totaler og total per billettype
+    # Beregn totaler og legg til totalpris per billettype
     cart_with_totals = {}
     total = 0
     for key, item in cart.items():
-        try:
-            quantity = int(item.get("quantity", 0))
-            price = float(item.get("price", 0))
-            item_total = quantity * price
-        except Exception:
-            quantity = 0
-            price = 0
-            item_total = 0
+        item_total = item["quantity"] * item["price"]
         total += item_total
         cart_with_totals[key] = {
             **item,
             "item_total": item_total
         }
-
-    # Service fee hvis total > 0
-    service_fee = 70 if total > 0 else 0
+    service_fee = 70 if total else 0
     grand_total = total + service_fee
-
     context = {
         "cart": cart_with_totals,
         "total": total,
         "service_fee": service_fee,
         "grand_total": grand_total,
     }
-
     return render(request, "tickets/betaling.html", context)
 
 
