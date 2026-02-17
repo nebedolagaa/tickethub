@@ -234,10 +234,21 @@
                 </div>
               </div>
 
-              <button id="checkout-btn" class="NP-checkout-btn" disabled onclick="proceedToCheckout()">
-                <i class="bi bi-credit-card"></i>
-                Gå til betaling
-              </button>
+              <form id="checkout-form" method="post" action="/billetter/betaling/">
+                {% csrf_token %}
+                <input type="hidden" name="cart" id="cart-input">
+                <button id="checkout-btn" class="NP-checkout-btn" disabled type="button" onclick="proceedToCheckout()">
+                  <i class="bi bi-credit-card"></i>
+                  Gå til betaling
+                </button>
+              </form>
+      // Send handlekurv til backend og gå til betaling
+      function proceedToCheckout() {
+        const cartInput = document.getElementById('cart-input');
+        cartInput.value = JSON.stringify(cart);
+        // alert(JSON.stringify(cart, null, 2)); // Debugging, fjernet for produksjon
+        document.getElementById('checkout-form').submit();
+      }
 
               <div class="NP-trust-badges">
                 <div class="NP-trust-item">
