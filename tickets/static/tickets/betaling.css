@@ -25,16 +25,18 @@
     gap: 24px;
 }
 
-.CB-payment-right {
-    display: flex;
-    flex-direction: column;
-}
-
 .CB-payment-summary-section {
     flex: 1;
     position: sticky;
     top: 40px;
 }
+
+.CB-payment-right {
+    display: flex;
+    flex-direction: column;
+}
+
+
 
 /* Title */
 .CB-payment-title {
