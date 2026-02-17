@@ -8,7 +8,7 @@ def my_tickets(request):
 from django.shortcuts import render, redirect
 import json
 
-def betaling(request):
+def payment(request):
     # Hvis POST: motta handlekurvdata og lagre i session
     if request.method == "POST" and "cart" in request.POST:
         import json
@@ -19,7 +19,7 @@ def betaling(request):
             request.session["cart"] = {}
         # Redirect til GET for å unngå repost
         from django.shortcuts import redirect
-        return redirect("/billetter/betaling/")
+        return redirect("/tickets/payment/")
 
     # Hent cart fra session for visning
     cart = request.session.get("cart", {})
@@ -41,7 +41,7 @@ def betaling(request):
         "service_fee": service_fee,
         "grand_total": grand_total,
     }
-    return render(request, "tickets/betaling.html", context)
+    return render(request, "tickets/payment.html", context)
 
 
 def after_payment(request):

@@ -18,7 +18,7 @@
             <div class="CB-payment-form-section">
                 <h2 class="CB-payment-title">Kontaktinformasjon</h2>
 
-                <form method="post" action="/billetter/after-payment/" class="CB-payment-form">
+                <form method="post" action="/tickets/after-payment/" class="CB-payment-form" id="payment-form">
                     {% csrf_token %}
 
                     <div class="CB-payment-form-group">
@@ -55,33 +55,11 @@
                 </form>
             </div>
 
-            <!-- Sammendrag -->
-            <div class="CB-payment-summary-section">
-                <h2 class="CB-payment-title">Ordresammendrag</h2>
-
-                {% if cart %}
-                <ul class="CB-payment-cart-list">
-                    {% for key, item in cart.items %}
-                    <li>
-                        {{ item.name }} — {{ item.quantity }} × {{ item.price }} kr = {{ item.item_total }} kr
-                    </li>
-                    {% endfor %}
-                </ul>
-
-                <div class="CB-payment-summary-row">Subtotal: {{ total }} kr</div>
-                <div class="CB-payment-summary-row">Servicegebyr: {{ service_fee }} kr</div>
-                <div class="CB-payment-summary-row"><strong>Total: {{ grand_total }} kr</strong></div>
-
-                {% else %}
-                <p>Handlekurven er tom.</p>
-                {% endif %}
-            </div>
-
             <!-- Betalingsmetode -->
             <div class="CB-payment-method-section">
                 <h2 class="CB-payment-title">Betalingsmetode</h2>
 
-                <form class="CB-payment-method-form">
+                <div class="CB-payment-method-form">
 
                     <div class="CB-payment-method-option">
                         <input type="radio" id="card" name="payment-method" checked>
@@ -109,24 +87,54 @@
 
                         <div class="CB-payment-form-group">
                             <label for="card-number">Kortnummer</label>
-                            <input type="text" id="card-number">
+                            <input type="text" id="card-number" form="payment-form">
                         </div>
 
                         <div class="CB-payment-form-group">
                             <label for="card-name">Navn på kort</label>
-                            <input type="text" id="card-name">
+                            <input type="text" id="card-name" form="payment-form">
                         </div>
 
                         <div class="CB-payment-form-row">
-                            <input type="text" id="card-expiry" placeholder="MM/ÅÅ">
-                            <input type="text" id="card-cvv" placeholder="CVV">
+                            <input type="text" id="card-expiry" placeholder="MM/ÅÅ" form="payment-form">
+                            <input type="text" id="card-cvv" placeholder="CVV" form="payment-form">
                         </div>
                     </div>
 
-                </form>
+                </div>
+
+                <button type="submit" form="payment-form" class="CB-complete-payment-btn">
+                    <i class="bi bi-lock-fill"></i>
+                    Fullfør betaling
+                </button>
             </div>
 
         </div>
+
+        <!-- Høyre kolonne: Ordresammendrag -->
+        <div class="CB-payment-right">
+            <div class="CB-payment-summary-section">
+                <h2 class="CB-payment-title">Ordresammendrag</h2>
+
+                {% if cart %}
+                <ul class="CB-payment-cart-list">
+                    {% for key, item in cart.items %}
+                    <li>
+                        {{ item.name }} — {{ item.quantity }} × {{ item.price }} kr = {{ item.item_total }} kr
+                    </li>
+                    {% endfor %}
+                </ul>
+
+                <div class="CB-payment-summary-row">Subtotal: {{ total }} kr</div>
+                <div class="CB-payment-summary-row">Servicegebyr: {{ service_fee }} kr</div>
+                <div class="CB-payment-summary-row"><strong>Total: {{ grand_total }} kr</strong></div>
+
+                {% else %}
+                <p>Handlekurven er tom.</p>
+                {% endif %}
+            </div>
+        </div>
+
     </div>
 </main>
 {% endblock %}
