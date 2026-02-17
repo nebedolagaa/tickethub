@@ -41,26 +41,7 @@
             </form>
             </div>
 
-            <!-- Boks 2: Sammendrag -->
-            <div class="CB-payment-summary-section">
-                <h2 class="CB-payment-title">Ordresammendrag</h2>
-                {% if cart %}
-                    <ul class="CB-payment-cart-list">
-                        {% for key, item in cart.items %}
-                        <li>
-                            <span>{{ item.name }}</span>:
-                            <span>{{ item.quantity }} x {{ item.price }} kr</span>
-                            <span>= {{ item.item_total }} kr</span>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                    <div class="CB-payment-summary-row">Subtotal: <span>{{ total }} kr</span></div>
-                    <div class="CB-payment-summary-row">Servicegebyr: <span>{{ service_fee }} kr</span></div>
-                    <div class="CB-payment-summary-row"><strong>Total: <span>{{ grand_total }} kr</span></strong></div>
-                {% else %}
-                    <p>Handlekurven er tom.</p>
-                {% endif %}
-            </div>
+            <!-- Sammendrag fjernet for å unngå duplikat. -->
 
                 <div class="CB-payment-form-row">
                     <div class="CB-payment-form-group">
