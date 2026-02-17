@@ -19,6 +19,7 @@
 }
 
 .CB-payment-left {
+    flex: 2;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -30,7 +31,9 @@
 }
 
 .CB-payment-summary-section {
-    width: 100%;
+    flex: 1;
+    position: sticky;
+    top: 40px;
 }
 
 /* Title */
