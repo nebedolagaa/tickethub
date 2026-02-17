@@ -428,6 +428,13 @@
     background: #e22e2e;
 }
 
+/* Force white text for payment method labels */
+.CB-payment-method-option label,
+.CB-payment-method-label {
+    color: #ffffff !important;
+}
+
+
 /* Responsiv */
 @media (max-width: 768px) {
     .CB-payment-container {
