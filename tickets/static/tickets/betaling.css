@@ -428,11 +428,6 @@
     background: #e22e2e;
 }
 
-/* Force white text for payment method labels */
-.CB-payment-method-option label,
-.CB-payment-method-label {
-    color: #ffffff !important;
-}
 
 
 /* Responsiv */
@@ -451,10 +446,4 @@
     }
 }   
 
-/* Hard override — payment method text must be white */
 
-.CB-payment-method-section label,
-.CB-payment-method-section span,
-.CB-payment-method-section div {
-    color: #ffffff !important;
-}
