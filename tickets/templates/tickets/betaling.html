@@ -34,6 +34,16 @@
                         <label for="address">Adresse</label>
                         <input type="text" id="address" name="address" placeholder="Gateadresse" required>
                     </div>
+                    <div class="CB-payment-form-row">
+                        <div class="CB-payment-form-group">
+                            <label for="city">By</label>
+                            <input type="text" id="city" name="city" placeholder="By" required>
+                        </div>
+                        <div class="CB-payment-form-group">
+                            <label for="postal">Postnummer</label>
+                            <input type="text" id="postal" name="postal" placeholder="0000" required>
+                        </div>
+                    </div>
                 </form>
             </div>
 
@@ -58,16 +68,6 @@
                 {% endif %}
             </div>
 
-            <div class="CB-payment-form-row">
-                <div class="CB-payment-form-group">
-                    <label for="city">By</label>
-                    <input type="text" id="city" name="city" placeholder="By" required>
-                </div>
-                <div class="CB-payment-form-group">
-                    <label for="postal">Postnummer</label>
-                    <input type="text" id="postal" name="postal" placeholder="0000" required>
-                </div>
-            </div>
 
             <!-- Boks 2: Betalingsmetode -->
             <div class="CB-payment-method-section">
@@ -92,11 +92,9 @@
                             <span class="CB-payment-method-name">PayPal</span>
                         </label>
                     </div>
-                </form>
-                <!-- Card Info Section (Visible by default since Kort is selected) -->
-                <div class="CB-payment-card-info" id="cardInfo">
-                    <h3 class="CB-payment-card-title">Kortinformasjon</h3>
-                    <form class="CB-payment-card-form">
+                    <!-- Card Info Section (Visible by default since Kort is selected) -->
+                    <div class="CB-payment-card-info" id="cardInfo">
+                        <h3 class="CB-payment-card-title">Kortinformasjon</h3>
                         <div class="CB-payment-form-group">
                             <label for="card-number">Kortnummer</label>
                             <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
@@ -115,8 +113,8 @@
                                 <input type="text" id="card-cvv" name="card-cvv" placeholder="123" maxlength="3">
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
                                         <label for="card-number">Kortnummer</label>
@@ -144,51 +142,7 @@
             </div>
         </div>
 
-        <!-- Høyre side: Sammendrag -->
-        <div class="CB-payment-right">
-            <div class="CB-payment-summary-section">
-                <h2 class="CB-payment-title">Sammendrag</h2>
-                {% if cart %}
-                <!-- Billetter -->
-                <div class="CB-payment-summary-tickets">
-                    <h4 class="CB-payment-section-title">Billetter</h4>
-                    {% for key, item in cart.items %}
-                    <div class="CB-payment-ticket-item">
-                        <span>{{ item.name }} × {{ item.quantity }}</span>
-                        <span>{{ item.item_total }} kr</span>
-                    </div>
-                    {% endfor %}
-                </div>
-                <!-- Divider -->
-                <div class="CB-payment-divider"></div>
-                <!-- Kalkulation -->
-                <div class="CB-payment-calculation">
-                    <div class="CB-payment-calc-row">
-                        <span>Subtotal</span>
-                        <span>{{ total }} kr</span>
-                    </div>
-                    <div class="CB-payment-calc-row">
-                        <span>Gebyr</span>
-                        <span>{{ service_fee }} kr</span>
-                    </div>
-                </div>
-                <!-- Divider -->
-                <div class="CB-payment-divider"></div>
-                <!-- Totalt -->
-                <div class="CB-payment-total">
-                    <p class="CB-payment-total-label">Total</p>
-                    <p class="CB-payment-total-price">{{ grand_total }} kr</p>
-                </div>
-                <!-- Fullfør kjøp knapp -->
-                <button class="CB-payment-btn-complete">
-                    <span>🔒</span> Fullfør kjøp
-                </button>
-                <p class="CB-payment-notice">Du vil motta billettene på e-post umiddelbar etter kjøp</p>
-                {% else %}
-                <p>Handlekurven er tom.</p>
-                {% endif %}
-            </div>
-        </div>
+
     </div>
 </main>
 {% endblock %}
