@@ -50,7 +50,9 @@
                         <li>
                             <span>{{ item.name }}</span>:
                             <span>{{ item.quantity }} x {{ item.price }} kr</span>
-                            <span>= {{ item.quantity|add:0|mul:item.price }} kr</span>
+                            {% with total=item.quantity|add:0 %}
+                                <span>= {{ total|floatformat:0|add:'0'|floatformat:0|add:'0' }} kr</span>
+                            {% endwith %}
                         </li>
                         {% endfor %}
                     </ul>
