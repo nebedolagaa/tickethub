@@ -1,89 +1,135 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block css %}
-<link rel="stylesheet" href="{% static 'main.css' %}">
-<link rel="stylesheet" href="{% static 'tickets/betaling.css' %}">
-{% endblock %}
-
-{% block title %}Betaling{% endblock %}
-
-{% block content %}
-<main class="CB-payment-main">
     <div class="CB-payment-container">
-        <!-- Venstre side: Tre bokser vertikalt -->
         <div class="CB-payment-left">
-            <!-- Boks 1: Kontaktinformasjon -->
+            <!-- Kontaktinformasjon med by og postnummer -->
             <div class="CB-payment-form-section">
-            <h2 class="CB-payment-title">Kontaktinformasjon</h2>
-            <form method="post" action="/billetter/after-payment/" class="CB-payment-form">
-                {% csrf_token %}
-
-                <div class="CB-payment-form-group">
-                    <div class="CB-payment-left">
-                        <!-- Kontaktinformasjon med by og postnummer -->
-                        <div class="CB-payment-form-section">
-                            <h2 class="CB-payment-title">Kontaktinformasjon</h2>
-                            <form method="post" action="/billetter/after-payment/" class="CB-payment-form">
-                                {% csrf_token %}
-                                <div class="CB-payment-form-group">
-                                    <label for="fullname">Fullt navn</label>
-                                    <input type="text" id="fullname" name="fullname" placeholder="Ditt navn" required>
-                                </div>
-                                <div class="CB-payment-form-group">
-                                    <label for="email">E-post</label>
-                                    <input type="email" id="email" name="email" placeholder="din@epost.no" required>
-                                </div>
-                                <div class="CB-payment-form-group">
-                                    <label for="phone">Telefon</label>
-                                    <input type="tel" id="phone" name="phone" placeholder="+47 000 00 000" required>
-                                </div>
-                                <div class="CB-payment-form-group">
-                                    <label for="address">Adresse</label>
-                                    <input type="text" id="address" name="address" placeholder="Gateadresse" required>
-                                </div>
-                                <div class="CB-payment-form-row">
-                                    <div class="CB-payment-form-group">
-                                        <label for="city">By</label>
-                                        <input type="text" id="city" name="city" placeholder="By" required>
-                                    </div>
-                                    <div class="CB-payment-form-group">
-                                        <label for="postal">Postnummer</label>
-                                        <input type="text" id="postal" name="postal" placeholder="0000" required>
-                                    </div>
-                                </div>
-                            </form>
+                <h2 class="CB-payment-title">Kontaktinformasjon</h2>
+                <form method="post" action="/billetter/after-payment/" class="CB-payment-form">
+                    {% csrf_token %}
+                    <div class="CB-payment-form-group">
+                        <label for="fullname">Fullt navn</label>
+                        <input type="text" id="fullname" name="fullname" placeholder="Ditt navn" required>
+                    </div>
+                    <div class="CB-payment-form-group">
+                        <label for="email">E-post</label>
+                        <input type="email" id="email" name="email" placeholder="din@epost.no" required>
+                    </div>
+                    <div class="CB-payment-form-group">
+                        <label for="phone">Telefon</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+47 000 00 000" required>
+                    </div>
+                    <div class="CB-payment-form-group">
+                        <label for="address">Adresse</label>
+                        <input type="text" id="address" name="address" placeholder="Gateadresse" required>
+                    </div>
+                    <div class="CB-payment-form-row">
+                        <div class="CB-payment-form-group">
+                            <label for="city">By</label>
+                            <input type="text" id="city" name="city" placeholder="By" required>
                         </div>
+                        <div class="CB-payment-form-group">
+                            <label for="postal">Postnummer</label>
+                            <input type="text" id="postal" name="postal" placeholder="0000" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
-                        <!-- Betalingsmetode rett under kontaktinfo -->
-                        <div class="CB-payment-method-section">
-                            <h2 class="CB-payment-title">Betalingsmetode</h2>
-                            <form class="CB-payment-method-form">
-                                <div class="CB-payment-method-option">
-                                    <input type="radio" id="card" name="payment-method" value="card" checked>
-                                    <label for="card" class="CB-payment-method-label">
-                                        <span class="CB-payment-method-name">Kort</span>
-                                        <span class="CB-payment-method-icons">VISA MC</span>
-                                    </label>
-                                </div>
-                                <div class="CB-payment-method-option">
-                                    <input type="radio" id="vipps" name="payment-method" value="vipps">
-                                    <label for="vipps" class="CB-payment-method-label">
-                                        <span class="CB-payment-method-name">Vipps</span>
-                                    </label>
-                                </div>
-                                <div class="CB-payment-method-option">
-                                    <input type="radio" id="paypal" name="payment-method" value="paypal">
-                                    <label for="paypal" class="CB-payment-method-label">
-                                        <span class="CB-payment-method-name">PayPal</span>
-                                    </label>
-                                </div>
-                            </form>
-                            <!-- Card Info Section (Visible by default since Kort is selected) -->
-                            <div class="CB-payment-card-info" id="cardInfo">
-                                <h3 class="CB-payment-card-title">Kortinformasjon</h3>
-                                <form class="CB-payment-card-form">
-                                    <div class="CB-payment-form-group">
+            <!-- Betalingsmetode rett under kontaktinfo -->
+            <div class="CB-payment-method-section">
+                <h2 class="CB-payment-title">Betalingsmetode</h2>
+                <form class="CB-payment-method-form">
+                    <div class="CB-payment-method-option">
+                        <input type="radio" id="card" name="payment-method" value="card" checked>
+                        <label for="card" class="CB-payment-method-label">
+                            <span class="CB-payment-method-name">Kort</span>
+                            <span class="CB-payment-method-icons">VISA MC</span>
+                        </label>
+                    </div>
+                    <div class="CB-payment-method-option">
+                        <input type="radio" id="vipps" name="payment-method" value="vipps">
+                        <label for="vipps" class="CB-payment-method-label">
+                            <span class="CB-payment-method-name">Vipps</span>
+                        </label>
+                    </div>
+                    <div class="CB-payment-method-option">
+                        <input type="radio" id="paypal" name="payment-method" value="paypal">
+                        <label for="paypal" class="CB-payment-method-label">
+                            <span class="CB-payment-method-name">PayPal</span>
+                        </label>
+                    </div>
+                </form>
+                <!-- Card Info Section (Visible by default since Kort is selected) -->
+                <div class="CB-payment-card-info" id="cardInfo">
+                    <h3 class="CB-payment-card-title">Kortinformasjon</h3>
+                    <form class="CB-payment-card-form">
+                        <div class="CB-payment-form-group">
+                            <label for="card-number">Kortnummer</label>
+                            <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
+                        </div>
+                        <div class="CB-payment-form-group">
+                            <label for="card-name">Navn på kort</label>
+                            <input type="text" id="card-name" name="card-name" placeholder="OLA NORDMANN">
+                        </div>
+                        <div class="CB-payment-form-row">
+                            <div class="CB-payment-form-group">
+                                <label for="card-expiry">Utløpsdato</label>
+                                <input type="text" id="card-expiry" name="card-expiry" placeholder="MM/ÅÅ" maxlength="5">
+                            </div>
+                            <div class="CB-payment-form-group">
+                                <label for="card-cvv">CVV</label>
+                                <input type="text" id="card-cvv" name="card-cvv" placeholder="123" maxlength="3">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Høyre side: Sammendrag alene -->
+        <div class="CB-payment-right">
+            <div class="CB-payment-summary-section">
+                <h2 class="CB-payment-title">Sammendrag</h2>
+                {% if cart %}
+                <!-- Billetter -->
+                <div class="CB-payment-summary-tickets">
+                    <h4 class="CB-payment-section-title">Billetter</h4>
+                    {% for key, item in cart.items %}
+                    <div class="CB-payment-ticket-item">
+                        <span>{{ item.name }} × {{ item.quantity }}</span>
+                        <span>{{ item.item_total }} kr</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- Divider -->
+                <div class="CB-payment-divider"></div>
+                <!-- Kalkulation -->
+                <div class="CB-payment-calculation">
+                    <div class="CB-payment-calc-row">
+                        <span>Subtotal</span>
+                        <span>{{ total }} kr</span>
+                    </div>
+                    <div class="CB-payment-calc-row">
+                        <span>Gebyr</span>
+                        <span>{{ service_fee }} kr</span>
+                    </div>
+                </div>
+                <!-- Divider -->
+                <div class="CB-payment-divider"></div>
+                <!-- Totalt -->
+                <div class="CB-payment-total">
+                    <p class="CB-payment-total-label">Total</p>
+                    <p class="CB-payment-total-price">{{ grand_total }} kr</p>
+                </div>
+                <!-- Fullfør kjøp knapp -->
+                <button class="CB-payment-btn-complete">
+                    <span>🔒</span> Fullfør kjøp
+                </button>
+                <p class="CB-payment-notice">Du vil motta billettene på e-post umiddelbar etter kjøp</p>
+                {% else %}
+                <p>Handlekurven er tom.</p>
+                {% endif %}
+            </div>
+        </div>
                                         <label for="card-number">Kortnummer</label>
                                         <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" maxlength="19">
                                     </div>
