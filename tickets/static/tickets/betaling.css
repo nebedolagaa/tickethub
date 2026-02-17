@@ -450,3 +450,11 @@
         padding: 40px 20px;
     }
 }   
+
+/* Hard override — payment method text must be white */
+
+.CB-payment-method-section label,
+.CB-payment-method-section span,
+.CB-payment-method-section div {
+    color: #ffffff !important;
+}
