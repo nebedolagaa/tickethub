@@ -19,3 +19,6 @@ def vilkar_view(request):
 
 def arrangor_view(request):
     return render(request, 'pages/arrangor.html')
+
+def populaere_artister_view(request):
+    return render(request, 'pages/popular_artists.html')
