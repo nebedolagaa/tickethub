@@ -144,76 +144,45 @@
         <div class="CB-payment-right">
             <div class="CB-payment-summary-section">
                 <h2 class="CB-payment-title">Sammendrag</h2>
-
-                <!-- Event Info -->
-                <div class="CB-payment-event-info">
-                    <h3 class="CB-payment-event-title">World Tour 2024</h3>
-                    <p class="CB-payment-event-artist">Aurora</p>
-                    <div class="CB-payment-event-details">
-                        <div class="CB-payment-event-detail">
-                            <span class="CB-payment-event-icon">📅</span>
-                            <span>15. november 2024</span>
-                        </div>
-                        <div class="CB-payment-event-detail">
-                            <span class="CB-payment-event-icon">🕐</span>
-                            <span>20:00</span>
-                        </div>
-                        <div class="CB-payment-event-detail">
-                            <span class="CB-payment-event-icon">📍</span>
-                            <span>Oslo Spektrum</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Divider -->
-                <div class="CB-payment-divider"></div>
-
+                {% if cart %}
                 <!-- Billetter -->
                 <div class="CB-payment-summary-tickets">
                     <h4 class="CB-payment-section-title">Billetter</h4>
+                    {% for key, item in cart.items %}
                     <div class="CB-payment-ticket-item">
-                        <span>Standard × 2</span>
-                        <span>1 198 kr</span>
+                        <span>{{ item.name }} × {{ item.quantity }}</span>
+                        <span>{{ item.quantity|add:0|mul:item.price }} kr</span>
                     </div>
-                    <div class="CB-payment-ticket-item">
-                        <span>VIP × 1</span>
-                        <span>1 299 kr</span>
-                    </div>
+                    {% endfor %}
                 </div>
-
                 <!-- Divider -->
                 <div class="CB-payment-divider"></div>
-
                 <!-- Kalkulation -->
                 <div class="CB-payment-calculation">
                     <div class="CB-payment-calc-row">
                         <span>Subtotal</span>
-                        <span>2 497 kr</span>
+                        <span>{{ total }} kr</span>
                     </div>
                     <div class="CB-payment-calc-row">
                         <span>Gebyr</span>
-                        <span>78 kr</span>
-                    </div>
-                    <div class="CB-payment-calc-row">
-                        <span>MVA (25%)</span>
-                        <span>644 kr</span>
+                        <span>{{ service_fee }} kr</span>
                     </div>
                 </div>
-
                 <!-- Divider -->
                 <div class="CB-payment-divider"></div>
-
                 <!-- Totalt -->
                 <div class="CB-payment-total">
                     <p class="CB-payment-total-label">Total</p>
-                    <p class="CB-payment-total-price">3 219 kr</p>
+                    <p class="CB-payment-total-price">{{ grand_total }} kr</p>
                 </div>
-
                 <!-- Fullfør kjøp knapp -->
                 <button class="CB-payment-btn-complete">
                     <span>🔒</span> Fullfør kjøp
                 </button>
                 <p class="CB-payment-notice">Du vil motta billettene på e-post umiddelbar etter kjøp</p>
+                {% else %}
+                <p>Handlekurven er tom.</p>
+                {% endif %}
             </div>
         </div>
     </div>
