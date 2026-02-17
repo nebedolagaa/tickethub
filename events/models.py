@@ -58,7 +58,7 @@ class VenueArea(models.Model):
     class Meta:
         constraints = [
             models.CheckConstraint(
-                check=Q(
+                condition=Q(
                     # max_capacity_total må være større eller lik
                     # (sitteplasser + ståplasser), der NULL behandles som 0
                     max_capacity_total__gte=(

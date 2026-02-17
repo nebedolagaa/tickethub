@@ -11,5 +11,5 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
 
     path('', include('pages.urls')),
-    path("billetter/", include("tickets.urls")),
+    path("tickets/", include("tickets.urls")),
 ]
