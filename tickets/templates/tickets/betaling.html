@@ -151,7 +151,7 @@
                     {% for key, item in cart.items %}
                     <div class="CB-payment-ticket-item">
                         <span>{{ item.name }} × {{ item.quantity }}</span>
-                        <span>{{ item.quantity|add:0|mul:item.price }} kr</span>
+                        <span>{{ item.item_total }} kr</span>
                     </div>
                     {% endfor %}
                 </div>
