@@ -20,12 +20,20 @@ def betaling(request):
 
     # Hent cart fra session for visning
     cart = request.session.get("cart", {})
-    # Beregn totaler
-    total = sum(item["quantity"] * item["price"] for item in cart.values()) if cart else 0
+    # Beregn totaler og legg til totalpris per billettype
+    cart_with_totals = {}
+    total = 0
+    for key, item in cart.items():
+        item_total = item["quantity"] * item["price"]
+        total += item_total
+        cart_with_totals[key] = {
+            **item,
+            "item_total": item_total
+        }
     service_fee = 70 if total else 0
     grand_total = total + service_fee
     context = {
-        "cart": cart,
+        "cart": cart_with_totals,
         "total": total,
         "service_fee": service_fee,
         "grand_total": grand_total,
