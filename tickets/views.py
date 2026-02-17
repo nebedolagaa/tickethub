@@ -52,3 +52,32 @@ def user_profile_view(request):
 
 def organizer_profile_view(request):
     return render(request, 'tickets/organizer_profile.html')
+
+def legg_i_handlekurv(request):
+    if request.method == "POST":
+        ticket_id = request.POST.get("ticket_id")
+        quantity = int(request.POST.get("quantity", 1))
+        price = float(request.POST.get("price"))
+        name = request.POST.get("name", f"Billett {ticket_id}")
+
+        # Hent eksisterende cart fra session
+        cart = request.session.get("cart", {})
+
+        # Oppdater cart
+        if ticket_id in cart:
+            cart[ticket_id]["quantity"] += quantity
+        else:
+            cart[ticket_id] = {
+                "name": name,
+                "quantity": quantity,
+                "price": price
+            }
+
+        # Lagre tilbake i session
+        request.session["cart"] = cart
+
+        # Redirect til betalingsside
+        return redirect("/billetter/betaling/")
+
+    # Hvis GET, redirect tilbake til billettsiden
+    return redirect("/events/purchase_tickets/")
