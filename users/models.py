@@ -90,3 +90,18 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
     
+
+#modell for å lagre ekstra informasjon om brukeren som ikke er i Account modellen, for eksempel telefonnummer, adresse osv.
+class UserProfile(models.Model):
+    user = models.OneToOneField(Account, on_delete=models.CASCADE)
+    address = models.CharField(blank=True, max_length=255)
+    city = models.CharField(blank=True, max_length=100)
+    postal_code = models.CharField(blank=True, max_length=20)
+    country = models.CharField(blank=True, max_length=100)
+
+    def __str__(self):
+        return self.user.first_name + ' ' + self.user.last_name
+    
+
+    def full_address(self):
+        return f"{self.address}, {self.postal_code} {self.city}, {self.country}"

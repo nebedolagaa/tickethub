@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import MinValueValidator
 from django.conf import settings
 
+import uuid
+
 #denne modelen viser hva som selges for en bestemt event
 #for eksempel: billettype, forksjellig pris, kapasitet kontroll, forksjellige zones med priser som varierer 
 class TicketType(models.Model):
@@ -17,6 +19,7 @@ class TicketType(models.Model):
 
 #denne modelen representerer en faktisk billett som er kjøpt av en kunde
 class Ticket(models.Model):
+    ticket_number = models.UUIDField(default=uuid.uuid4, unique=True, editable=False) #unikt nummer for hver billett, kan brukes for verifikasjon ved inngang
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tickets')
     ticket_type = models.ForeignKey(TicketType, on_delete=models.PROTECT, related_name='tickets')
 

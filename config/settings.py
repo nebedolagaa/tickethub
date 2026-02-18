@@ -90,8 +90,11 @@ MESSAGE_TAGS = {
 
 
 #Smtp innstillinger 
-SMTP_HOST = 'smtp.gmail.com'
-SMTP_PORT = 587
-EMAIL_HOST_USER = 'noreply@tickethub.no'
-EMAIL_HOST_PASSWORD = ''#passord mangler. må opprette en epost konto for dette og generere
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = "noreply@tickethub.no"
+EMAIL_HOST_PASSWORD = "***REMOVED***"  # позже
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

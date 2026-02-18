@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.views import LoginView
-from .views import register, login, forgotPassword, resetpassword_validate, resetPassword
+from .views import register, login, forgotPassword, resetpassword_validate, resetPassword, user_profile, organizer_profile
 
 app_name = 'users'
 
@@ -11,4 +11,7 @@ urlpatterns = [
     path('forgotPassword/',  forgotPassword, name = 'forgotPassword'),
     path('resetpassword_validate/<uidb64>/<token>/', resetpassword_validate, name = 'resetpassword_validate'),
     path('resetPassword/', resetPassword, name = 'resetPassword'),
+
+    path('user_profile/', user_profile, name='user_profile'),
+    path('organizer_profile/', organizer_profile, name='organizer_profile'),
 ]

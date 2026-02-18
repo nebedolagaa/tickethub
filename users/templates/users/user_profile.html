@@ -34,12 +34,16 @@
                     <div class="MB-user_profile-avatar-circle">
                         <i class="fa-regular fa-user"></i>
                     </div>
-                    <h2 class="MB-user_profile-name">Ola Nordmann</h2>
+                    <h2 class="MB-user_profile-name">{{user.full_name}}</h2>
                     <p class="MB-user_profile-subtext">Medlem siden mars 2023</p>
                     
                     <div class="MB-user_profile-contact-info">
-                        <p><i class="fa-regular fa-envelope"></i> ola@nordmann.no</p>
-                        <p><i class="fa-solid fa-phone"></i> +47 987 65 432</p>
+                        <p><i class="fa-regular fa-envelope"></i> {{user.email}}</p>
+                        {%if user.phone_number%} 
+                        <p><i class="fa-solid fa-phone"></i>{{user.phone_number}}</p>
+                        {% else %}
+                        <p><i class="fa-solid fa-phone"></i> Ikke oppgitt</p>
+                        {% endif %}
                         <p><i class="fa-solid fa-location-dot"></i> Oslo, Norge</p>
                     </div>
 
@@ -52,7 +56,7 @@
                     <h3 class="MB-user_profile-title-sm">Statistikk</h3>
                     <div class="MB-user_profile-stat-line">
                         <span>Totalt billetter</span>
-                        <span class="MB-user_profile-val">12</span>
+                        <span class="MB-user_profile-val">{{orders_count}}</span>
                     </div>
                     <div class="MB-user_profile-stat-line">
                         <span>Kommende arrangementer</span>
@@ -76,22 +80,26 @@
                         <div class="MB-user_profile-row">
                             <div class="MB-user_profile-input-group">
                                 <label>Fornavn</label>
-                                <input type="text" value="Ola">
+                                <input type="text" value="{{user.first_name}}">
                             </div>
                             <div class="MB-user_profile-input-group">
                                 <label>Etternavn</label>
-                                <input type="text" value="Nordmann">
+                                <input type="text" value="{{user.last_name}}">
                             </div>
                         </div>
 
                         <div class="MB-user_profile-input-group">
                             <label>E-post</label>
-                            <input type="email" value="ola@nordmann.no">
+                            <input type="email" value="{{user.email}}">
                         </div>
-
+                        
                         <div class="MB-user_profile-input-group">
                             <label>Telefonnummer</label>
-                            <input type="tel" value="+47 987 65 432">
+                            {% if user.phone_number %} 
+                                <input type="tel" value="{{user.phone_number}}">
+                            {% else %}
+                                <input type="tel" value="ikke oppgitt">
+                            {% endif %}
                         </div>
 
                         <div class="MB-user_profile-input-group">
@@ -123,52 +131,64 @@
             <h2 class="MB-user_profile-heading-events">Mine kommende arrangementer</h2>
             
             <!-- Ett eksempel på billettkort -->
-            <div class="MB-user_profile-event-card">
-                <div class="MB-user_profile-event-top">
-                    <div class="MB-user_profile-event">
-                        <h3>Aurora</h3>
-                        <p>World Tour 2024</p>
-                    </div>
-                    <span class="MB-user_profile-badge-active">Aktiv</span>
-                </div>
-
-                <div class="MB-user_profile-event-body">
-                    <div class="MB-user_profile-meta-list">
-                        <p class="MB-user_profile-meta-item"><i class="fa-regular fa-calendar MB-user_profile-red-ico"></i> 15. mars 2025</p>
-                        <p class="MB-user_profile-meta-item"><i class="fa-regular fa-clock MB-user_profile-red-ico"></i> 20:00</p>
-                        <p class="MB-user_profile-meta-item"><i class="fa-solid fa-location-dot MB-user_profile-red-ico"></i> Oslo Spektrum, Oslo</p>
-                    </div>
-
-                    <div class="MB-user_profile-event-details-grid">
-                        <div class="MB-user_profile-det">
-                            <label>Billetttype</label>
-                            <span>Standard</span>
+            {%if tickets%}
+                {%for ticket in tickets%}
+                    <div class="MB-user_profile-event-card">
+                        <div class="MB-user_profile-event-top">
+                            <div class="MB-user_profile-event">
+                                <h3>{{ticket.ticket_type.event.title}}</h3>
+                                <p>{{ticket.ticket_type.event.title}}</p>
+                            </div>
+                            <span class="MB-user_profile-badge-active">Aktiv</span>
                         </div>
-                        <div class="MB-user_profile-det">
-                            <label>Plass</label>
-                            <span>Seksjon A, Rad 15, Sete 12</span>
+
+                        <div class="MB-user_profile-event-body">
+                            <div class="MB-user_profile-meta-list">
+                                <p class="MB-user_profile-meta-item"><i class="fa-regular fa-calendar MB-user_profile-red-ico"></i>{{ticket.ticket_type.event.start_datetime}}</p>
+                                <p class="MB-user_profile-meta-item"><i class="fa-regular fa-clock MB-user_profile-red-ico"></i> {{ticket.ticket_type.event.end_time}}</p>
+                                <p class="MB-user_profile-meta-item"><i class="fa-solid fa-location-dot MB-user_profile-red-ico"></i> {{ticket.ticket_type.event.venue.name}}, {{ticket.ticket_type.event.venue.address.street}}, {{ticket.ticket_type.event.venue.address.city}}</p>
+                            </div>
+
+                            <div class="MB-user_profile-event-details-grid">
+                                <div class="MB-user_profile-det">
+                                    <label>Billetttype</label>
+                                    <span>{{ticket.ticket_type.name}}</span>
+                                </div>
+                                {% if ticket.event_seat%}
+                                    <div class="MB-user_profile-det">
+                                        <label>Plass</label>
+                                        <span>Rad {{ticket.event_seat.seat.row}}, Sete {{ticket.event_seat.seat.number}} Seksjon A, Rad 15, Sete 12</span>
+                                    </div>
+                                {% else %}
+                                    <div class="MB-user_profile-det">
+                                        <label>Stå plass</label>
+                                    </div>
+                                {% endif %}
+                                <div class="MB-user_profile-det">
+                                    <label>Billettnummer</label>
+                                    <span>{{ticket.ticket_number}}</span>
+                                </div>
+                            </div>
+
+                            <div class="MB-user_profile-qr-container">
+                                <div class="MB-user_profile-qr-box">
+                                    <i class="fa-solid fa-qrcode"></i>
+                                </div>
+                                <span class="MB-user_profile-qr-label">QR-kode</span>
+                            </div>
                         </div>
-                        <div class="MB-user_profile-det">
-                            <label>Billettnummer</label>
-                            <span>TH-2024-AUR-001234</span>
+
+                        <div class="MB-user_profile-event-footer">
+                            <button class="MB-user_profile-btn-pdf-link">
+                                <i class="fa-solid fa-download"></i> Last ned PDF
+                            </button>
+                            <button class="MB-user_profile-btn-red-sm">Del billett</button>
                         </div>
                     </div>
-
-                    <div class="MB-user_profile-qr-container">
-                        <div class="MB-user_profile-qr-box">
-                            <i class="fa-solid fa-qrcode"></i>
-                        </div>
-                        <span class="MB-user_profile-qr-label">QR-kode</span>
-                    </div>
-                </div>
-
-                <div class="MB-user_profile-event-footer">
-                    <button class="MB-user_profile-btn-pdf-link">
-                        <i class="fa-solid fa-download"></i> Last ned PDF
-                    </button>
-                    <button class="MB-user_profile-btn-red-sm">Del billett</button>
-                </div>
-            </div>
+                {%endfor%}
+            {%else%}
+                <p class="MB-user_profile-no-events">Du har ingen kommende arrangementer.</p>
+            {%endif%}
 
         </div>
 

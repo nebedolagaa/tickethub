@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Account, OrganizerProfile
+from .models import Account, OrganizerProfile, UserProfile
 
 class OrganizerProfileInline(admin.StackedInline):
     model = OrganizerProfile
@@ -19,6 +19,9 @@ class AccountAdmin(UserAdmin):
     list_filter = ()
     fieldsets = ()
     
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'city', 'country')
 
 admin.site.register(Account, AccountAdmin)
 admin.site.register(OrganizerProfile)
+admin.site.register(UserProfile, UserProfileAdmin)

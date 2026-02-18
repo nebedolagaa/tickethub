@@ -8,7 +8,8 @@ from django.contrib import messages, auth
 
 from django.contrib.auth.decorators import login_required
 
-from .models import Account
+from .models import Account, UserProfile
+from tickets.models import Ticket
 
 from .forms import AccountCreationForm, SignupTypeForm, OrganizerProfileForm
 
@@ -42,6 +43,8 @@ def register(request):
                 user = user_form.save(commit=False)
                 user.email = user.email.lower() #sørg for at e-posten alltid lagres i små bokstaver
                 user.save()
+
+                UserProfile.objects.create(user=user) #opprett en tilhørende brukerprofil for denne brukeren, selv om det ikke er arrangør, for å lagre info som er felles for alle brukere
 
                 if is_organizer: 
                     organizer = organizer_form.save(commit=False)
@@ -154,3 +157,19 @@ def resetPassword(request):
     
     else: 
         return render(request, 'users/resetPassword.html')
+
+
+#her kommer det funkjoner for å vise og redigere brukerprofiler, både for vanlige brukere og arrangører
+@login_required(login_url = 'users:login')
+def user_profile(request):
+    tickets = Ticket.objects.order_by('-purchased_at').filter(user = request.user) #hent alle ordre for denne brukeren, sortert etter dato (nyeste først)
+    tickets_count = tickets.count() #hent antall ordre for denne brukeren, for å vise i profilen
+    context = {
+        'tickets_count': tickets_count,
+        'tickets': tickets
+    }
+
+    return render(request, 'users/user_profile.html', context)
+
+def organizer_profile(request):
+    return render(request, 'users/organizer_profile.html')
