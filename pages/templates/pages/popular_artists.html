@@ -1,0 +1,122 @@
+{% load static %}
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Populære artister - TicketHub</title>
+
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}" />
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}?v=7" />
+  </head>
+
+  <body>
+    {% include "snippets/navbar.html" %}
+
+    <!--hero og tittel -->
+    <section class="JF-artist-hero">
+      <div class="JF-artist-hero-overlay"></div>
+      <div class="JF-artist-hero-content">
+        <h1 class="JF-artist-hero-title">Populære artister</h1>
+        <p class="JF-artist-hero-subtitle">Utforsk de mest etterspurte artistene på TicketHub akkurat nå.</p>
+      </div>
+    </section>
+
+    <!--artister-->
+    <div class="JF-artist-section">
+      <h2 class="JF-artist-section-title">Trendende artister</h2>
+      <div class="JF-artist-grid">
+
+        <div class="JF-artist-card">
+          <div class="JF-artist-img-wrap">
+            <span class="JF-artist-genre-badge">Pop</span>
+            <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80" alt="Kygo" class="JF-artist-img" />
+          </div>
+          <div class="JF-artist-info">
+            <p class="JF-artist-name">Kygo</p>
+            <p class="JF-artist-meta">Norsk DJ og produsent</p>
+            <p class="JF-artist-desc">Verdenskjent for sine melankolske melodier og tropiske hus-beats. Har spilt for millioner av fans verden over.</p>
+            <a href="{% url 'all_events' %}?search=Kygo" class="JF-artist-btn">Se arrangementer</a>
+          </div>
+        </div>
+
+        <div class="JF-artist-card">
+          <div class="JF-artist-img-wrap">
+            <span class="JF-artist-genre-badge">Pop</span>
+            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" alt="Tix" class="JF-artist-img" />
+          </div>
+          <div class="JF-artist-info">
+            <p class="JF-artist-name">Tix</p>
+            <p class="JF-artist-meta">Pop</p>
+            <p class="JF-artist-desc">Andreas Haukeland, kjent som Tix, tok Norge med storm med sine catchy pop og russe-låter.</p>
+            <a href="{% url 'all_events' %}?search=Tix" class="JF-artist-btn">Se arrangementer</a>
+          </div>
+        </div>
+
+        <div class="JF-artist-card">
+          <div class="JF-artist-img-wrap">
+            <span class="JF-artist-genre-badge">Elektronisk</span>
+            <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=600&q=80" alt="Alan Walker" class="JF-artist-img" />
+          </div>
+          <div class="JF-artist-info">
+            <p class="JF-artist-name">Alan Walker</p>
+            <p class="JF-artist-meta">Elektronisk / EDM</p>
+            <p class="JF-artist-desc">Norsk-britisk DJ og produsent kjent for verdenshiten "Faded". En av verdens mest strømmede artister.</p>
+            <a href="{% url 'all_events' %}?search=Alan+Walker" class="JF-artist-btn">Se arrangementer</a>
+          </div>
+        </div>
+
+        <div class="JF-artist-card">
+          <div class="JF-artist-img-wrap">
+            <span class="JF-artist-genre-badge">Indie</span>
+            <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=80" alt="Aurora" class="JF-artist-img" />
+          </div>
+          <div class="JF-artist-info">
+            <p class="JF-artist-name">Aurora</p>
+            <p class="JF-artist-meta">Indie pop</p>
+            <p class="JF-artist-desc">Norsk artist med en unik musikkstil som har fanget hjerter over hele verden.</p>
+            <a href="{% url 'all_events' %}?search=Aurora" class="JF-artist-btn">Se arrangementer</a>
+          </div>
+        </div>
+
+        <div class="JF-artist-card">
+          <div class="JF-artist-img-wrap">
+            <span class="JF-artist-genre-badge">Pop</span>
+            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80" alt="Sigrid" class="JF-artist-img" />
+          </div>
+          <div class="JF-artist-info">
+            <p class="JF-artist-name">Sigrid</p>
+            <p class="JF-artist-meta">Pop</p>
+            <p class="JF-artist-desc">Prisvinnende norsk artist kjent for sin kraftfulle stemme og med ærlige låttekster.</p>
+            <a href="{% url 'all_events' %}?search=Sigrid" class="JF-artist-btn">Se arrangementer</a>
+          </div>
+        </div>
+
+        <div class="JF-artist-card">
+          <div class="JF-artist-img-wrap">
+            <span class="JF-artist-genre-badge">Hip-hop</span>
+            <img src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&w=600&q=80" alt="Karpe" class="JF-artist-img" />
+          </div>
+          <div class="JF-artist-info">
+            <p class="JF-artist-name">Karpe</p>
+            <p class="JF-artist-meta">Hip-hop / Rap</p>
+            <p class="JF-artist-desc">Norges største rapgruppe med kraftfulle tekster og spektakulære sceneshower som alltid skaper minneverdige opplevelser.</p>
+            <a href="{% url 'all_events' %}?search=Karpe" class="JF-artist-btn">Se arrangementer</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    {% include "snippets/footer.html" %}
+  </body>
+</html>

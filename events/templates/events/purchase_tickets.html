@@ -234,10 +234,14 @@
                 </div>
               </div>
 
-              <button id="checkout-btn" class="NP-checkout-btn" disabled onclick="proceedToCheckout()">
-                <i class="bi bi-credit-card"></i>
-                Gå til betaling
-              </button>
+              <form id="checkout-form" method="post" action="/tickets/payment/">
+                {% csrf_token %}
+                <input type="hidden" name="cart" id="cart-input">
+                <button id="checkout-btn" class="NP-checkout-btn" disabled type="submit">
+                  <i class="bi bi-credit-card"></i>
+                  Gå til betaling
+                </button>
+              </form>
 
               <div class="NP-trust-badges">
                 <div class="NP-trust-item">
@@ -383,14 +387,21 @@
       // Gå til betaling
       function proceedToCheckout() {
         if (Object.keys(cart).length === 0) {
-          alert('Handlekurven er tom. Vennligst velg billetter først.');
+          // alert('Handlekurven er tom. Vennligst velg billetter først.');
           return;
         }
         
         // Her kan vi implementere videre betalingsprosessering
-        alert('Betalingsfunksjonalitet kommer snart!\n\nDin handlekurv:\n' + 
-              JSON.stringify(cart, null, 2));
+        // alert('Betalingsfunksjonalitet kommer snart!\n\nDin handlekurv:\n' + 
+        //   JSON.stringify(cart, null, 2));
       }
+
+      // Send handlekurv til backend og gå til betaling
+      // Før skjemaet sendes, legg inn handlekurvdata i skjult felt
+      document.getElementById('checkout-form').addEventListener('submit', function(e) {
+        const cartInput = document.getElementById('cart-input');
+        cartInput.value = JSON.stringify(cart);
+      });
     </script>
   </body>
 </html>

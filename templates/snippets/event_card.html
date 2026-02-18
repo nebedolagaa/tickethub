@@ -1,4 +1,4 @@
-{# Dynamiske eventkort fra databasen #}
+{#  eventkort fra databasen #}
 <div class="JF-events-container">
   {% for event in featured_events %}
   <article class="JF-eventkort">
@@ -18,7 +18,7 @@
           />
         {% endwith %}
       {% else %}
-        {# Forskjellige bilder basert på event type og forloop counter #}
+        {# Forskjellige bilder basert på event type og forloop counter for å variere i bildebruk ihht event type #}
         {% if event.event_type == 'festival' %}
           {% if forloop.counter == 1 %}
             <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
@@ -30,7 +30,7 @@
             <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
           {% endif %}
         {% else %}
-          {# Konsert bilder - varierer basert på loop counter #}
+          {# Konsert bilder - varierer basert på loop counter for å variere i bildebruk ihht event type #}
           {% if forloop.counter == 1 %}
             <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
           {% elif forloop.counter == 2 %}

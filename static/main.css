@@ -63,7 +63,7 @@ body {
 
 /* === 2. Tekst og Hierarki === */
 .KN-hero-title {
-  font-size: clamp(2.5rem, 6vw, 4.5rem); /* dynamisk 5xl–7xl */
+  font-size: clamp(2.5rem, 6vw, 4.5rem); /* dynamisk 5xl-7xl */
   font-weight: 700;
   line-height: 1.2;
   margin-bottom: 1rem;
@@ -74,7 +74,7 @@ body {
 }
 
 .KN-hero-subtitle {
-  font-size: clamp(1.25rem, 3vw, 1.75rem); /* dynamisk xl–2xl */
+  font-size: clamp(1.25rem, 3vw, 1.75rem); /* dynamisk xl-2xl */
   opacity: 0.9;
   margin-bottom: 2rem;
 }
@@ -6377,5 +6377,164 @@ input:focus, select:focus, textarea:focus {
 .ES-Link-Box:hover {
   background: var(--th-gray);
   transform: translateY(-3px);
+}
+
+/* Populære artister - Jesper */
+
+.JF-artist-hero {
+  text-align: center;
+  padding: 80px 24px 64px;
+  background: var(--th-black);
+}
+
+.JF-artist-hero-overlay {
+  display: none;
+}
+
+.JF-artist-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.JF-artist-hero-title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--th-white);
+  margin-bottom: 16px;
+}
+
+.JF-artist-hero-title span {
+  color: var(--th-red);
+}
+
+.JF-artist-hero-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  color: var(--th-muted);
+  margin: 0;
+}
+
+.JF-artist-section {
+  padding: 60px 40px 80px;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.JF-artist-section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin-bottom: 32px;
+}
+
+.JF-artist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 32px;
+}
+
+.JF-artist-card {
+  background: var(--th-dark-gray);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.JF-artist-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
+  transform: translateY(-4px);
+}
+
+.JF-artist-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  background: var(--th-light-gray);
+}
+
+.JF-artist-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.JF-artist-genre-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--th-red);
+  color: var(--th-white);
+  padding: 5px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+}
+
+.JF-artist-info {
+  background: var(--th-gray);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.JF-artist-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0 0 2px 0;
+}
+
+.JF-artist-meta {
+  font-size: 0.95rem;
+  color: var(--th-muted);
+  margin: 0;
+}
+
+.JF-artist-desc {
+  font-size: 0.9rem;
+  color: var(--th-muted);
+  line-height: 1.5;
+  margin: 4px 0 0 0;
+  flex: 1;
+}
+
+.JF-artist-btn {
+  display: block;
+  margin-top: 14px;
+  background: var(--th-red);
+  color: var(--th-white);
+  padding: 12px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.2s;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+}
+
+.JF-artist-btn:hover {
+  background: var(--th-red-dark);
+  color: var(--th-white);
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .JF-artist-section {
+    padding: 40px 16px 60px;
+  }
+  .JF-artist-grid {
+    grid-template-columns: 1fr;
+  }
 }
 

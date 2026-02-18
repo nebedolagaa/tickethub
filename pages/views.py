@@ -5,17 +5,20 @@ from django.shortcuts import render
 def faq_view(request):
     return render(request, 'pages/faq.html')
 
-def kontakt_view(request):
-    return render(request, 'pages/kontakt.html')
+def contact_view(request):
+    return render(request, 'pages/contact.html')
 
-def refusjon_view(request):
-    return render(request, 'pages/refusjon.html')
+def refund_view(request):
+    return render(request, 'pages/refund.html')
 
-def personvern_view(request):
-    return render(request, 'pages/personvern.html')
+def privacy_view(request):
+    return render(request, 'pages/privacy.html')
 
-def vilkar_view(request):
-    return render(request, 'pages/vilkar.html')
+def terms_view(request):
+    return render(request, 'pages/terms.html')
 
-def arrangor_view(request):
-    return render(request, 'pages/arrangor.html')
+def organizer_view(request):
+    return render(request, 'pages/organizer.html')
+
+def populaere_artister_view(request):
+    return render(request, 'pages/popular_artists.html')

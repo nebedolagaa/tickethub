@@ -19,6 +19,7 @@
 }
 
 .CB-payment-left {
+    flex: 2;
     display: flex;
     flex-direction: column;
     gap: 24px;
@@ -27,11 +28,16 @@
 .CB-payment-right {
     display: flex;
     flex-direction: column;
+    position: sticky;
+    top: 40px;
+    height: fit-content;
 }
 
 .CB-payment-summary-section {
-    width: 100%;
+    flex: 1;
 }
+
+
 
 /* Title */
 .CB-payment-title {
@@ -236,6 +242,74 @@
     height: fit-content;
 }
 
+/* Cart List */
+.CB-payment-cart-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.CB-payment-cart-list li {
+    font-size: 14px;
+    color: #bdbdc7;
+    padding: 12px 0;
+    border-bottom: 1px solid #22222a;
+}
+
+.CB-payment-summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #bdbdc7;
+    padding: 8px 0;
+}
+
+.CB-payment-summary-row:last-of-type {
+    font-size: 16px;
+    padding-top: 16px;
+    border-top: 2px solid #22222a;
+    margin-top: 8px;
+}
+
+.CB-payment-summary-row strong {
+    color: #ff3b3b;
+    font-size: 18px;
+}
+
+/* Complete Payment Button */
+.CB-complete-payment-btn {
+    width: 100%;
+    background: #ff3b3b;
+    border: none;
+    color: white;
+    padding: 16px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 24px;
+    font-family: inherit;
+}
+
+.CB-complete-payment-btn:hover {
+    background: #e22e2e;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 59, 59, 0.3);
+}
+
+.CB-complete-payment-btn:active {
+    transform: translateY(0);
+}
+
+
 /* Event Info */
 .CB-payment-event-info {
     margin-bottom: 16px;
@@ -428,11 +502,18 @@
     background: #e22e2e;
 }
 
+
+
 /* Responsiv */
 @media (max-width: 768px) {
     .CB-payment-container {
         grid-template-columns: 1fr;
         gap: 24px;
+    }
+
+    .CB-payment-right {
+        position: static;
+        order: -1; /* Vis ordresammendrag først på mobil */
     }
 
     .CB-payment-form-row {
@@ -442,4 +523,6 @@
     .CB-payment-main {
         padding: 40px 20px;
     }
-}   
+
+    .CB-payment-container {
+        width: 100%;

@@ -14,7 +14,7 @@
       <a href="{% url 'all_events' %}">Alle konserter</a>
       <a href="{% url 'festivals' %}">Festivaler</a>
       <a href="{% url 'cities' %}">Byer</a>
-      <a href="{% url 'arrangor' %}">Arrangør?</a>
+      <a href="{% url 'organizer' %}">Arrangør?</a>
     </div>
 
     <div class="navbar-actions-CB">
@@ -38,7 +38,7 @@
       >
 
       {% else %}
-      <a href="#" class="navbar-btn-CB" style="text-decoration: none">
+      <a href="{% url 'tickets:user_profile' %}" class="navbar-btn-CB" style="text-decoration: none">
         <i class="bi bi-person"></i>
         <span class="login-btn-text-CB">Min profil</span>
       </a>
