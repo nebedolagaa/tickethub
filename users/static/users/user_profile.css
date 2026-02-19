@@ -97,6 +97,22 @@
     margin-bottom: 12px;
     cursor: pointer;
     font-size: 0.85rem;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+    line-height: 1;
+
+}
+
+
+.MB-user_profile-btn-dark:hover,
+a.MB-user_profile-btn-dark.active
+{
+    background: #24242b;
+    border-color: #3a3a44;
 }
 
 /* Statistikklinjer */
@@ -156,14 +172,21 @@
 
 /* Rød lagre knapp */
 .MB-user_profile-btn-red {
-    background: #ff3b3b;
+    background: #dc2626;
     color: #fff;
     border: none;
     padding: 14px 40px;
     border-radius: 8px;
-    font-weight: 700;
+    font-weight: 600;
     cursor: pointer;
     margin-top: 15px;
+    font-size: 1rem;
+
+}
+
+.MB-user_profile-btn-red:hover {
+    background-color: #b91c1c;
+    color: #fff;
 }
 
 /* Seksjon med kommende arrangementer / billetter */
@@ -284,17 +307,6 @@
     display: flex;
     align-items: center;
     gap: 8px;
-}
-
-.MB-user_profile-btn-red-sm {
-    background: #ff3b3b;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
 }
 
 /* tilpasning, en kolonne under 800px */

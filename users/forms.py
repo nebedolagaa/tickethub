@@ -5,7 +5,7 @@ Bidratt til denne filen:
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
-from .models import OrganizerProfile
+from .models import OrganizerProfile, UserProfile, Account
 
 #django bestemmer selv hvilken user model som er i bruk
 User = get_user_model()
@@ -61,3 +61,17 @@ class OrganizerProfileForm(forms.ModelForm):
             'phone_number': 'Kontakt telefonnummer',
             'organization_number': 'Organisasjonsnummer'
         }
+
+
+
+#forms for å redigere bruker profil 
+#the first form will save data related to an account model
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = Account 
+        fields = ('first_name', 'last_name', 'phone_number')
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('address', 'city', 'postal_code')

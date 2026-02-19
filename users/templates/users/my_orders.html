@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <link rel="stylesheet" href="{% static 'main.css' %}">
-<link rel="stylesheet" href="{% static 'users/user_profile.css' %}">
+<link rel="stylesheet" href="{% static 'users/my_orders.css' %}">
 {% endblock %}
 
 {% block title %}Min profil{% endblock %}
@@ -42,7 +42,7 @@
                         {%if user.phone_number%} 
                             <p><i class="fa-solid fa-phone"></i>{{user.phone_number}}</p>
                         {% else %}
-                            <p><i class="fa-solid fa-phone"></i> Ikke registrert</p>
+                            <p><i class="fa-solid fa-phone"></i> Ikke oppgitt</p>
                         {% endif %}
                         
                         <p><i class="fa-solid fa-location-dot"></i>
@@ -55,6 +55,7 @@
 
                     <a class="MB-user_profile-btn-dark  {%if request.resolver_match.url_name == 'user_profile' %} active{%endif%}" href="{% url 'users:user_profile' %}">Rediger profil</a>
                     <a class="MB-user_profile-btn-dark  {%if request.resolver_match.url_name == 'my_orders' %} active{%endif%}" href="{% url 'users:my_orders' %}">Mine bestillinger</a>
+                    {#request.resolver_match.url_name is a stable way to check if the link is active or not#}
                 </div>
 
                 <!-- Statistikkort, viser informasjon om brukeren -->
@@ -78,68 +79,35 @@
             <!-- Høyre kolonne, stort skjema for å endre personinfo -->
             <div class="MB-user_profile-right-col">
                 <div class="MB-user_profile-card MB-user_profile-info-card-large">
-                    <h2 class="MB-user_profile-title-md">Personlig informasjon</h2>
-                    
-                    <form class="MB-user_profile-form", method = POST, action = ''>
-                        {%csrf_token%}
-                        <!-- Rad med fornavn + etternavn -->
-                        <div class="MB-user_profile-row">
-                            <div class="MB-user_profile-input-group">
-                                <label>Fornavn</label>
-                                <input type="text" value="{{user.first_name}}">
-                            </div>
-                            <div class="MB-user_profile-input-group">
-                                <label>Etternavn</label>
-                                <input type="text" value="{{user.last_name}}">
-                            </div>
-                        </div>
-
-                        <div class="MB-user_profile-input-group">
-                            <label>E-post</label>
-                            <input type="email" value="{{user.email}}">
-                        </div>
-                        
-                        <div class="MB-user_profile-input-group">
-                            <label>Telefonnummer</label>
-                            {% if user.phone_number %} 
-                                <input type="tel" value="{{user.phone_number}}">
+                    <h2 class="MB-user_profile-title-md">Oversikt over dine bestillinger</h2>
+                    <div class="MB-user_profile-table-wrap">
+                        <table class="table table-hover MB-user_profile-table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Bestilling #</th>
+                                <th scope="col">Kjøper</th>
+                                <th scope="col">Total Beløpet</th>
+                                <th scope="col">Dato kjøpt</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if orders.exists %}
+                                {% for order in orders %}
+                                <tr>
+                                    <th scope="row">{{order.id}}</th>
+                                    <td>{{order.user.first_name}} {{order.user.last_name}}</td>
+                                    <td>{{order.total_amount}} kr</td>
+                                    <td>{{ order.created_at|date:"d.m.Y H:i" }}</td>
+                                </tr>
+                                {% endfor %}
                             {% else %}
-                                <input type="tel" value="Ikke registrert">
+                                <tr>
+                                    <td colspan="4" class="text-center">Du har ingen bestillinger.</td>
+                                </tr>
                             {% endif %}
-                        </div>
-
-                        <div class="MB-user_profile-input-group">
-                            <label>Adresse</label>
-                            {%if extra_info.address%}
-                                <input type="text" value="{{extra_info.address}}">
-                            {%else%}
-                                <input type="text" value="Ikke registrert">
-                            {%endif%}
-                        </div>
-
-                        <!-- Rad med postnummer + by -->
-                        <div class="MB-user_profile-row">
-                            <div class="MB-user_profile-input-group">
-                                <label>Postnummer</label>
-                                {%if extra_info.postal_code%}
-                                    <input type="text" value="{{extra_info.postal_code}}">
-                                {%else%}
-                                    <input type="text" value="Ikke registrert">
-                                {%endif%}
-                            </div>
-                            <div class="MB-user_profile-input-group">
-                                <label>By</label>
-                                {%if extra_info.city%}
-                                    <input type="text" value="{{extra_info.city}}">
-                                {%else%}
-                                    <input type="text" value="Ikke registrert">
-                                {%endif%}
-
-                            </div>
-                        </div>
-
-                        <button type="button" class="MB-user_profile-btn-red">Lagre endringer</button>
-                    </form>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

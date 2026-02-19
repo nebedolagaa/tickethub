@@ -2,16 +2,19 @@
 Bidratt til denne filen:
     - Kamilla Nizamova
 '''
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db import transaction
 from django.contrib import messages, auth
 
 from django.contrib.auth.decorators import login_required
 
 from .models import Account, UserProfile
-from tickets.models import Ticket
+from tickets.models import Ticket, Order
 
-from .forms import AccountCreationForm, SignupTypeForm, OrganizerProfileForm
+from django.db.models import F, Sum, DecimalField
+from django.db.models.functions import Coalesce, Cast
+
+from .forms import AccountCreationForm, SignupTypeForm, OrganizerProfileForm, UserForm, UserProfileForm
 
 #verifikasjonsverktøy for tilbakestilling av passord
 from django.contrib.sites.shortcuts import get_current_site
@@ -164,12 +167,59 @@ def resetPassword(request):
 def user_profile(request):
     tickets = Ticket.objects.order_by('-purchased_at').filter(user = request.user) #hent alle ordre for denne brukeren, sortert etter dato (nyeste først)
     tickets_count = tickets.count() #hent antall ordre for denne brukeren, for å vise i profilen
+    
+    extra_info = UserProfile.objects.get(user = request.user)
+
+    #delen for å redigere profil
+    userprofile = get_object_or_404(UserProfile, user = request.user)
+
+    if request.method == 'POST':
+        user_form = UserForm(request.POST, instance = request.user)
+
+        profile_form = UserProfileForm(request.POST, instance = userprofile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+
+            messages.success(request,'din profil har blitt oppdatert')
+            return redirect('users:user_profile')
+    else:
+        user_form = UserForm(instance=request.user)
+        profile_form = UserProfileForm(instance=userprofile)
+    
     context = {
         'tickets_count': tickets_count,
-        'tickets': tickets
+        'tickets': tickets,
+        'extra_info': extra_info,
+        'user_form':user_form,
+        'profile_form':profile_form
     }
 
     return render(request, 'users/user_profile.html', context)
 
+
+def my_orders(request):
+    orders = Order.objects.filter(user = request.user).order_by('-created_at').annotate(
+            total_amount=Coalesce(
+                Sum(
+                    Cast('items__quantity', DecimalField(max_digits=10, decimal_places=2)) 
+                    * F('items__unit_price')
+                ),
+                0,
+                output_field=DecimalField(max_digits=10, decimal_places=2)
+            ))
+    #have to use coalesce to return 0 instead of None for orders with no items, otherwise it will cause an error and template will not load.
+    #tries several expression to multiply quantity and unit_price for each order item (both are different datatypes)
+    #i ended up using cast because it was the only one that worked..
+    
+    #hent alle ordre for denne brukeren, sortert etter dato (nyeste først)
+
+    extra_info = UserProfile.objects.get(user = request.user)
+
+    return render(request, 'users/my_orders.html', {'orders': orders, 'extra_info': extra_info})
+
+
+@login_required(login_url = 'users:login')
 def organizer_profile(request):
     return render(request, 'users/organizer_profile.html')

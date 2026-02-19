@@ -61,7 +61,7 @@ body {
   padding: 1rem;
 }
 
-/* === 2. Tekst og Hierarki === */
+/* 2. Tekst og Hierarki*/
 .KN-hero-title {
   font-size: clamp(2.5rem, 6vw, 4.5rem); /* dynamisk 5xl-7xl */
   font-weight: 700;
@@ -70,7 +70,7 @@ body {
 }
 
 .KN-hero-highlight {
-  color: var(--th-red); /* красный акцент вместо синего */
+  color: var(--th-red); 
 }
 
 .KN-hero-subtitle {
@@ -79,7 +79,7 @@ body {
   margin-bottom: 2rem;
 }
 
-/* === 3. Call-to-Action Knapper === */
+/* 3. Call-to-Action Knapper */
 .KN-hero-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -139,7 +139,7 @@ body {
   line-height: 1;
 }
 
-/* === 4. Statistikkseksjon === */
+/* 4. Statistikkseksjon */
 .KN-hero-stats {
   display: flex;
   gap: 2rem;
@@ -236,7 +236,7 @@ body {
 }
 
 .navbar-menu-CB a:hover {
-  color: var(--th-red); /* красный hover вместо синего */
+  color: var(--th-red); 
 }
 
 .navbar-actions-CB {
@@ -263,7 +263,7 @@ body {
 
 .navbar-btn-CB:hover {
   background: rgba(220, 38, 38, 0.1);
-  color: var(--th-red); /* красный hover */
+  color: var(--th-red); 
 }
 
 .mobile-menu-CB {
@@ -280,7 +280,7 @@ body {
 }
 
 .mobile-menu-CB a:hover {
-  color: var(--th-red); /* красный hover */
+  color: var(--th-red);
 }
 
 /* Responsivitet */

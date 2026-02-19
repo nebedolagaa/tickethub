@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.views import LoginView
-from .views import register, login, forgotPassword, resetpassword_validate, resetPassword, user_profile, organizer_profile
+from .views import register, login, forgotPassword, resetpassword_validate, resetPassword, user_profile, organizer_profile, my_orders
 
 app_name = 'users'
 
@@ -14,4 +14,6 @@ urlpatterns = [
 
     path('user_profile/', user_profile, name='user_profile'),
     path('organizer_profile/', organizer_profile, name='organizer_profile'),
+
+    path('my_orders/', my_orders, name='my_orders'),
 ]
