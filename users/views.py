@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Account, UserProfile
 from tickets.models import Ticket, Order
 
-from django.db.models import F, Sum, DecimalField
+from django.db.models import F, Sum, DecimalField, Value
 from django.db.models.functions import Coalesce, Cast
 
 from .forms import AccountCreationForm, SignupTypeForm, OrganizerProfileForm, UserForm, UserProfileForm
@@ -23,7 +23,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
-
+from django.utils import timezone
 
 #funksjon for registrering av bruker
 def register(request):
@@ -165,9 +165,6 @@ def resetPassword(request):
 #her kommer det funkjoner for å vise og redigere brukerprofiler, både for vanlige brukere og arrangører
 @login_required(login_url = 'users:login')
 def user_profile(request):
-    tickets = Ticket.objects.order_by('-purchased_at').filter(user = request.user) #hent alle ordre for denne brukeren, sortert etter dato (nyeste først)
-    tickets_count = tickets.count() #hent antall ordre for denne brukeren, for å vise i profilen
-    
     extra_info = UserProfile.objects.get(user = request.user)
 
     #delen for å redigere profil
@@ -189,8 +186,6 @@ def user_profile(request):
         profile_form = UserProfileForm(instance=userprofile)
     
     context = {
-        'tickets_count': tickets_count,
-        'tickets': tickets,
         'extra_info': extra_info,
         'user_form':user_form,
         'profile_form':profile_form
@@ -200,6 +195,10 @@ def user_profile(request):
 
 
 def my_orders(request):
+
+    tickets = Ticket.objects.order_by('-purchased_at').filter(user = request.user) #hent alle ordre for denne brukeren, sortert etter dato (nyeste først)
+    tickets_count = tickets.count() #hent antall ordre for denne brukeren, for å vise i profilen
+
     orders = Order.objects.filter(user = request.user).order_by('-created_at').annotate(
             total_amount=Coalesce(
                 Sum(
@@ -217,7 +216,30 @@ def my_orders(request):
 
     extra_info = UserProfile.objects.get(user = request.user)
 
-    return render(request, 'users/my_orders.html', {'orders': orders, 'extra_info': extra_info})
+    totaly_used = (Order.objects.filter(user=request.user)
+        .aggregate(total=Coalesce(
+                Sum(
+                    Cast('items__quantity', DecimalField(max_digits=10, decimal_places=2))
+                    * F('items__unit_price')
+                ),
+                Value(0),
+                output_field=DecimalField(max_digits=10, decimal_places=2)
+            )
+        )["total"]
+    )
+
+    #henter antall arrangement som kommer i fremtiden, regnes ved hjelp av unike arrangement og ikke biletter 
+    upcoming_events = Ticket.objects.filter(user = request.user, ticket_type__event__start_datetime__gte=timezone.now()).values('ticket_type__event').distinct().count()
+
+    context = {'orders': orders,
+               'extra_info': extra_info,
+               'totaly_used': totaly_used,
+               'tickets_count': tickets_count,
+               'tickets': tickets,
+               'upcoming_events': upcoming_events
+               }
+
+    return render(request, 'users/my_orders.html', context)
 
 
 @login_required(login_url = 'users:login')

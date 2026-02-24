@@ -37,7 +37,6 @@
     display: grid;
     grid-template-columns: 360px 1fr;
     gap: 40px;
-    margin-bottom: 80px;
 }
 
 /* Felles stil for alle kortbokser */
@@ -54,11 +53,6 @@
     flex-direction: column;
 }
 
-/* Avstand mellom profilkort og statistikkort */
-.MB-user_profile-stats-card {
-    margin-top: 30px;
-}
-
 /* Avatar øverst i profilkortet */
 .MB-user_profile-avatar-circle {
     width: 70px;
@@ -73,8 +67,17 @@
     color: #555;
 }
 
-.MB-user_profile-name { font-size: 1.2rem; font-weight: 600; margin: 0; }
-.MB-user_profile-subtext { color: #666; font-size: 0.8rem; margin: 5px 0 25px; }
+.MB-user_profile-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.MB-user_profile-subtext {
+    color: #666;
+    font-size: 0.8rem;
+    margin: 5px 0 25px;
+}
 
 /* Kontaktinfo linjer med ikoner */
 .MB-user_profile-contact-info p { 
@@ -86,7 +89,7 @@
     gap: 12px;
 }
 
-/* Mørke knapper (rediger profil, endre passord) */
+/* Mørke knapper */
 .MB-user_profile-btn-dark {
     background: #1e1e24;
     color: #fff;
@@ -97,35 +100,18 @@
     margin-bottom: 12px;
     cursor: pointer;
     font-size: 0.85rem;
-
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     text-decoration: none;
     line-height: 1;
-
 }
 
-
 .MB-user_profile-btn-dark:hover,
-a.MB-user_profile-btn-dark.active
-{
+a.MB-user_profile-btn-dark.active {
     background: #24242b;
     border-color: #3a3a44;
 }
-
-/* Statistikklinjer */
-.MB-user_profile-stat-line {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #22222a;
-    font-size: 0.85rem;
-    color: #888;
-}
-.MB-user_profile-val { color: #fff; font-weight: bold; }
-.MB-user_profile-red { color: #ff3b3b; }
 
 /* Høyre kolonne, stort skjema */
 .MB-user_profile-info-card-large {
@@ -160,7 +146,10 @@ a.MB-user_profile-btn-dark.active
     font-weight: 600;
 }
 
-.MB-user_profile-input-group input {
+/* inputs (både dine egne input og Django widgets) */
+.MB-user_profile-input-group input,
+.MB-user_profile-input-group select,
+.MB-user_profile-input-group textarea {
     width: 100%;
     background: #0d0d11;
     border: 1px solid #2a2a33;
@@ -181,132 +170,20 @@ a.MB-user_profile-btn-dark.active
     cursor: pointer;
     margin-top: 15px;
     font-size: 1rem;
-
 }
 
 .MB-user_profile-btn-red:hover {
     background-color: #b91c1c;
-    color: #fff;
 }
 
-/* Seksjon med kommende arrangementer / billetter */
-.MB-user_profile-bottom-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.MB-user_profile-heading-events {
-    width: 100%;
-    max-width: 500px;
-    text-align: left;
-    margin-bottom: 25px;
-    font-size: 1.8rem;
-    font-weight: 700;
-}
-
-/* Kort for en billett, arrangement */
-.MB-user_profile-event-card {
-    background: #121216;
-    border: 1px solid #22222a;
-    border-left: 4px solid #ff3b3b;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 500px;
-    overflow: hidden;
-}
-
-.MB-user_profile-event-top {
-    padding: 25px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.MB-user_profile-badge-active {
-    border: 1px solid #ff3b3b;
-    color: #ff3b3b;
-    font-size: 10px;
-    font-weight: 800;
-    padding: 2px 8px;
-    border-radius: 4px;
-    text-transform: uppercase;
-}
-
-.MB-user_profile-meta-item {
-    padding-left: 30px; 
-    margin: 14px 0;
-    font-size: 0.95rem;
-    color: #bdbdc7;
-    display: flex;
-    align-items: center;
-}
-
-.MB-user_profile-red-ico {
-    color: #ff3b3b !important;
-    margin-right: 15px;
-}
-
-/* Grid med billett /arrangementsdetaljer */
-.MB-user_profile-event-details-grid {
-    background: #1e1e24;
-    margin: 20px 30px;
-    padding: 20px;
-    border-radius: 8px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.MB-user_profile-det label {
-    display: block;
-    font-size: 11px;
-    color: #666;
-    margin-bottom: 4px;
-}
-
-.MB-user_profile-det span {
-    font-size: 14px;
-    font-weight: 600;
-}
-
-/* QR kode område */
-.MB-user_profile-qr-container {
-    text-align: center;
-    padding: 30px 0;
-}
-
-.MB-user_profile-qr-box {
-    font-size: 65px;
-    color: #222;
-    margin-bottom: 10px;
-}
-
-.MB-user_profile-qr-label {
-    font-size: 11px;
-    color: #444;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-}
-
-/* Nederste knapp i billettkort */
-.MB-user_profile-event-footer {
-    padding: 20px 30px;
-    border-top: 1px solid #22222a;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.MB-user_profile-btn-pdf-link {
-    background: none;
-    border: none;
-    color: #888;
-    font-size: 0.9rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+/* alerts */
+.MB-success {
+    background-color: rgba(0, 128, 0, 0.498);
+    color: lightgreen;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 13px;
 }
 
 /* tilpasning, en kolonne under 800px */
@@ -317,14 +194,4 @@ a.MB-user_profile-btn-dark.active
     .MB-user_profile-row {
         grid-template-columns: 1fr;
     }
-}
-
-.MB-success {
-    background: #2a1212;
-    background-color: rgba(0, 128, 0, 0.498);
-    color: lightgreen;
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 12px;
-    font-size: 13px;
 }

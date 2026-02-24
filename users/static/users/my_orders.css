@@ -106,14 +106,12 @@
     line-height: 1;
 }
 
-
 .MB-user_profile-btn-dark:hover,
 a.MB-user_profile-btn-dark.active
 {
     background: #24242b;
     border-color: #3a3a44;
 }
-
 
 /* Statistikklinjer */
 .MB-user_profile-stat-line {
@@ -139,37 +137,6 @@ a.MB-user_profile-btn-dark.active
     font-weight: 700;
 }
 
-/* Rader med to input felt */
-.MB-user_profile-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 36px;
-    margin-bottom: 0; 
-}
-
-.MB-user_profile-input-group {
-    margin-bottom: 22px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.MB-user_profile-input-group label {
-    font-size: 13px;
-    color: #bdbdc7;
-    font-weight: 600;
-}
-
-.MB-user_profile-input-group input {
-    width: 100%;
-    background: #0d0d11;
-    border: 1px solid #2a2a33;
-    padding: 14px;
-    border-radius: 8px;
-    color: #eaeaea;
-    font-size: 14px;
-}
-
 /* Seksjon med kommende arrangementer / billetter */
 .MB-user_profile-bottom-section {
     display: flex;
@@ -177,13 +144,23 @@ a.MB-user_profile-btn-dark.active
     align-items: center;
 }
 
-.MB-user_profile-heading-events {
+.MB-user_profile-heading-events{
     width: 100%;
     max-width: 500px;
-    text-align: left;
-    margin-bottom: 25px;
+    text-align: center;
+    margin-bottom: 50px;
     font-size: 1.8rem;
     font-weight: 700;
+    margin: 0 auto 25px auto; 
+}
+
+.MB-user_profile-no-events{
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 1rem;
+    margin: 0 auto 25px auto; 
 }
 
 /* Kort for en billett, arrangement */
@@ -290,18 +267,12 @@ a.MB-user_profile-btn-dark.active
     gap: 8px;
 }
 
-
 /* tilpasning, en kolonne under 800px */
 @media (max-width: 800px) {
     .MB-user_profile-top-grid {
         grid-template-columns: 1fr;
     }
-    .MB-user_profile-row {
-        grid-template-columns: 1fr;
-    }
 }
-
-
 
 /*
    Orders table
@@ -311,10 +282,10 @@ a.MB-user_profile-btn-dark.active
     width: 100%;
     overflow-x: auto;
     border-radius: 12px;          
-  }
+}
   
-  /* main table */
-  .MB-user_profile-table{
+/* main table */
+.MB-user_profile-table{
     width: 100%;
     margin-top: 10px;
     border-collapse: separate;
@@ -324,19 +295,18 @@ a.MB-user_profile-btn-dark.active
     border-radius: 12px;
     overflow: hidden;               
     color: #bdbdc7;                 
-  }
+}
   
- 
-  .MB-user_profile-table.table{
+.MB-user_profile-table.table{
     --bs-table-bg: transparent;
     --bs-table-color: #bdbdc7;
     --bs-table-border-color: #22222a;
     --bs-table-striped-bg: transparent;
     --bs-table-hover-bg: transparent;
-  }
+}
   
-  /* headers */
-  .MB-user_profile-table thead th{
+/* headers */
+.MB-user_profile-table thead th{
     background: #1e1e24;            
     color: #ffffff;
     font-weight: 700;
@@ -344,69 +314,64 @@ a.MB-user_profile-btn-dark.active
     padding: 14px 16px;
     border-bottom: 1px solid #22222a;
     white-space: nowrap;
-  }
+}
   
-  
-  .MB-user_profile-table tbody td,
-  .MB-user_profile-table tbody th{
+.MB-user_profile-table tbody td,
+.MB-user_profile-table tbody th{
     padding: 14px 16px;
     border-top: 1px solid #22222a;
     vertical-align: middle;
     font-size: 0.9rem;
-  }
+}
   
-  /* bestillings nummer column */
-  .MB-user_profile-table tbody th{
+/* bestillings nummer column */
+.MB-user_profile-table tbody th{
     color: #ffffff;
     font-weight: 700;
     width: 140px;
     white-space: nowrap;
-  }
+}
   
-  /* hover */
-  .MB-user_profile-table.table-hover tbody tr{
+/* hover */
+.MB-user_profile-table.table-hover tbody tr{
     transition: background .15s ease;
-  }
+}
   
-  .MB-user_profile-table.table-hover tbody tr:hover{
+.MB-user_profile-table.table-hover tbody tr:hover{
     background: rgba(255,255,255,.04) !important;
-  }
+}
   
-  
-  .MB-user_profile-table > :not(caption) > * > *{
+.MB-user_profile-table > :not(caption) > * > *{
     border-bottom: 0;
-  }
+}
   
-  
-  .MB-user_profile-table thead th:first-child{
+.MB-user_profile-table thead th:first-child{
     border-top-left-radius: 12px;
-  }
-  .MB-user_profile-table thead th:last-child{
+}
+.MB-user_profile-table thead th:last-child{
     border-top-right-radius: 12px;
-  }
+}
   
-  
-  @media (max-width: 800px){
+@media (max-width: 800px){
     .MB-user_profile-table thead th,
     .MB-user_profile-table tbody td,
     .MB-user_profile-table tbody th{
-      white-space: nowrap;
+        white-space: nowrap;
     }
-  }
+}
 
-  .MB-user_profile-table td:nth-child(3),
-  .MB-user_profile-table th:nth-child(3){
+.MB-user_profile-table td:nth-child(3),
+.MB-user_profile-table th:nth-child(3){
     text-align: right;
     white-space: nowrap;
-  }
+}
   
-  .MB-user_profile-table td:nth-child(4){
+.MB-user_profile-table td:nth-child(4){
     color: #bdbdc7;
     font-size: 0.85rem;
-  }
+}
 
-
-  .MB-user_profile-table tbody tr:first-child td,
-  .MB-user_profile-table tbody tr:first-child th{
+.MB-user_profile-table tbody tr:first-child td,
+.MB-user_profile-table tbody tr:first-child th{
     border-top: 0;
-  }
+}

@@ -63,15 +63,15 @@
                     <h3 class="MB-user_profile-title-sm">Statistikk</h3>
                     <div class="MB-user_profile-stat-line">
                         <span>Totalt billetter</span>
-                        <span class="MB-user_profile-val">{{orders_count}}</span>
+                        <span class="MB-user_profile-val">{% if tickets_count %}{{tickets_count}} {%else%} 0 {% endif %}</span>
                     </div>
                     <div class="MB-user_profile-stat-line">
                         <span>Kommende arrangementer</span>
-                        <span class="MB-user_profile-val MB-user_profile-red">3</span>
+                        <span class="MB-user_profile-val MB-user_profile-red">{% if upcoming_events %} {{upcoming_events}} {% else %} 0 {% endif %}</span>
                     </div>
                     <div class="MB-user_profile-stat-line">
                         <span>Totalt brukt</span>
-                        <span class="MB-user_profile-val">6 450 kr</span>
+                        <span class="MB-user_profile-val">{% if totaly_used %} {{totaly_used}} Kr {% else %} 0 Kr {% endif %}</span>
                     </div>
                 </div>
             </div>
@@ -174,7 +174,7 @@
                     </div>
                 {%endfor%}
             {%else%}
-                <p class="MB-user_profile-no-events">Du har ingen kommende arrangementer.</p>
+                <p class="MB-user_profile-no-events">Du har ingen kommende arrangementer</p>
             {%endif%}
 
         </div>
