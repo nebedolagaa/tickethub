@@ -318,3 +318,13 @@ a.MB-user_profile-btn-dark.active
         grid-template-columns: 1fr;
     }
 }
+
+.MB-success {
+    background: #2a1212;
+    background-color: rgba(0, 128, 0, 0.498);
+    color: lightgreen;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 13px;
+}

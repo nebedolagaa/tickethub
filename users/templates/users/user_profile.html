@@ -80,29 +80,29 @@
                 <div class="MB-user_profile-card MB-user_profile-info-card-large">
                     <h2 class="MB-user_profile-title-md">Personlig informasjon</h2>
                     
-                    <form class="MB-user_profile-form", method = POST, action = ''>
+                    <form class="MB-user_profile-form" method = "post" action="{% url 'users:user_profile'%}">
                         {%csrf_token%}
                         <!-- Rad med fornavn + etternavn -->
                         <div class="MB-user_profile-row">
                             <div class="MB-user_profile-input-group">
                                 <label>Fornavn</label>
-                                <input type="text" value="{{user.first_name}}">
+                                {{user_form.first_name}}
                             </div>
                             <div class="MB-user_profile-input-group">
                                 <label>Etternavn</label>
-                                <input type="text" value="{{user.last_name}}">
+                                {{user_form.last_name}}
                             </div>
                         </div>
 
                         <div class="MB-user_profile-input-group">
                             <label>E-post</label>
-                            <input type="email" value="{{user.email}}">
+                            {{user_form.email}}
                         </div>
                         
                         <div class="MB-user_profile-input-group">
                             <label>Telefonnummer</label>
                             {% if user.phone_number %} 
-                                <input type="tel" value="{{user.phone_number}}">
+                                {{user_form.phone_number}}
                             {% else %}
                                 <input type="tel" value="Ikke registrert">
                             {% endif %}
@@ -111,7 +111,7 @@
                         <div class="MB-user_profile-input-group">
                             <label>Adresse</label>
                             {%if extra_info.address%}
-                                <input type="text" value="{{extra_info.address}}">
+                                {{profile_form.address}}
                             {%else%}
                                 <input type="text" value="Ikke registrert">
                             {%endif%}
@@ -122,7 +122,7 @@
                             <div class="MB-user_profile-input-group">
                                 <label>Postnummer</label>
                                 {%if extra_info.postal_code%}
-                                    <input type="text" value="{{extra_info.postal_code}}">
+                                    {{profile_form.postal_code}}
                                 {%else%}
                                     <input type="text" value="Ikke registrert">
                                 {%endif%}
@@ -130,7 +130,7 @@
                             <div class="MB-user_profile-input-group">
                                 <label>By</label>
                                 {%if extra_info.city%}
-                                    <input type="text" value="{{extra_info.city}}">
+                                    {{profile_form.city}}
                                 {%else%}
                                     <input type="text" value="Ikke registrert">
                                 {%endif%}
@@ -138,7 +138,11 @@
                             </div>
                         </div>
 
-                        <button type="button" class="MB-user_profile-btn-red">Lagre endringer</button>
+                        {% if messages %}
+                            <div class="MB-success">{% include 'includes/alerts.html'%}</div>
+                        {% endif %}
+
+                        <button type="submit" class="MB-user_profile-btn-red">Lagre endringer</button>
                     </form>
                 </div>
             </div>

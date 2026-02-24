@@ -182,7 +182,7 @@ def user_profile(request):
             user_form.save()
             profile_form.save()
 
-            messages.success(request,'din profil har blitt oppdatert')
+            messages.success(request,'Din profil har blitt oppdatert')
             return redirect('users:user_profile')
     else:
         user_form = UserForm(instance=request.user)
