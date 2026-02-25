@@ -35,7 +35,7 @@
                         <i class="fa-regular fa-user"></i>
                     </div>
                     <h2 class="MB-user_profile-name">{{user.full_name}}</h2>
-                    <p class="MB-user_profile-subtext">Medlem siden mars 2023</p>
+                    <p class="MB-user_profile-subtext">Medlem siden {{user.date_joined|date:"d.m.Y"}}</p>
                     
                     <div class="MB-user_profile-contact-info">
                         <p><i class="fa-regular fa-envelope"></i> {{user.email}}</p>
@@ -85,39 +85,23 @@
                         
                         <div class="MB-user_profile-input-group">
                             <label>Telefonnummer</label>
-                            {% if user.phone_number %} 
-                                {{user_form.phone_number}}
-                            {% else %}
-                                <input type="tel" value="Ikke registrert">
-                            {% endif %}
+                            {{user_form.phone_number}}
                         </div>
 
                         <div class="MB-user_profile-input-group">
                             <label>Adresse</label>
-                            {%if extra_info.address%}
-                                {{profile_form.address}}
-                            {%else%}
-                                <input type="text" value="Ikke registrert">
-                            {%endif%}
+                            {{profile_form.address}}
                         </div>
 
                         <!-- Rad med postnummer + by -->
                         <div class="MB-user_profile-row">
                             <div class="MB-user_profile-input-group">
                                 <label>Postnummer</label>
-                                {%if extra_info.postal_code%}
-                                    {{profile_form.postal_code}}
-                                {%else%}
-                                    <input type="text" value="Ikke registrert">
-                                {%endif%}
+                                {{profile_form.postal_code}}
                             </div>
                             <div class="MB-user_profile-input-group">
                                 <label>By</label>
-                                {%if extra_info.city%}
-                                    {{profile_form.city}}
-                                {%else%}
-                                    <input type="text" value="Ikke registrert">
-                                {%endif%}
+                                {{profile_form.city}}
 
                             </div>
                         </div>

@@ -71,7 +71,29 @@ class UserForm(forms.ModelForm):
         model = Account 
         fields = ('first_name', 'last_name', 'email', 'phone_number')
 
+        widgets = {
+            'phone_number': forms.TextInput(attrs={
+                'placeholder': 'Ikke registrert',
+                'class': 'form-control'
+            }),
+        }
+
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('address', 'city', 'postal_code')
+
+        widgets = {
+            'address': forms.TextInput(attrs={
+                'placeholder': 'Ikke registrert',
+                'class': 'form-control'
+        }),
+            'city': forms.TextInput(attrs={
+                'placeholder': 'Ikke registrert',
+                'class': 'form-control'
+        }),
+            'postal_code': forms.TextInput(attrs={
+                'placeholder': 'Ikke registrert',
+                'class': 'form-control'
+        }),
+        }

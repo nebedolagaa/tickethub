@@ -195,8 +195,9 @@ def user_profile(request):
 
 
 def my_orders(request):
+    now = timezone.now()
 
-    tickets = Ticket.objects.order_by('-purchased_at').filter(user = request.user) #hent alle ordre for denne brukeren, sortert etter dato (nyeste først)
+    tickets = Ticket.objects.order_by('ticket_type__event__start_datetime').filter(user = request.user, ticket_type__event__end_datetime__gte=now) #hent alle ordre for denne brukeren, sortert etter dato (nyeste først)
     tickets_count = tickets.count() #hent antall ordre for denne brukeren, for å vise i profilen
 
     orders = Order.objects.filter(user = request.user).order_by('-created_at').annotate(
@@ -229,8 +230,7 @@ def my_orders(request):
     )
 
     #henter antall arrangement som kommer i fremtiden, regnes ved hjelp av unike arrangement og ikke biletter 
-    upcoming_events = Ticket.objects.filter(user = request.user, ticket_type__event__start_datetime__gte=timezone.now()).values('ticket_type__event').distinct().count()
-
+    upcoming_events = tickets.values('ticket_type__event').distinct().count()
     context = {'orders': orders,
                'extra_info': extra_info,
                'totaly_used': totaly_used,

@@ -35,7 +35,7 @@
                         <i class="fa-regular fa-user"></i>
                     </div>
                     <h2 class="MB-user_profile-name">{{user.full_name}}</h2>
-                    <p class="MB-user_profile-subtext">Medlem siden mars 2023</p>
+                    <p class="MB-user_profile-subtext">Medlem siden {{user.date_joined|date:"d.m.Y"}}</p>
                     
                     <div class="MB-user_profile-contact-info">
                         <p><i class="fa-regular fa-envelope"></i> {{user.email}}</p>
@@ -113,9 +113,8 @@
         </div>
 
         <!-- Nederste del, liste over kommende arrangementer -->
+        <h2 class="MB-user_profile-heading-events">Mine kommende arrangementer</h2>
         <div class="MB-user_profile-bottom-section">
-
-            <h2 class="MB-user_profile-heading-events">Mine kommende arrangementer</h2>
             
             <!-- Ett eksempel på billettkort -->
             {%if tickets%}
@@ -131,8 +130,10 @@
 
                         <div class="MB-user_profile-event-body">
                             <div class="MB-user_profile-meta-list">
-                                <p class="MB-user_profile-meta-item"><i class="fa-regular fa-calendar MB-user_profile-red-ico"></i>{{ticket.ticket_type.event.start_datetime}}</p>
-                                <p class="MB-user_profile-meta-item"><i class="fa-regular fa-clock MB-user_profile-red-ico"></i> {{ticket.ticket_type.event.end_time}}</p>
+                                <p class="MB-user_profile-meta-item"><i class="fa-regular fa-calendar MB-user_profile-red-ico"></i>{{ticket.ticket_type.event.start_datetime|date:"d.m.Y" }}</p>
+                                <p class="MB-user_profile-meta-item"><i class="fa-regular fa-clock MB-user_profile-red-ico"></i>
+                                    {{ ticket.ticket_type.event.start_datetime|date:"H:i" }} –
+                                    {{ ticket.ticket_type.event.end_datetime|date:"H:i" }}</p>
                                 <p class="MB-user_profile-meta-item"><i class="fa-solid fa-location-dot MB-user_profile-red-ico"></i> {{ticket.ticket_type.event.venue.name}}, {{ticket.ticket_type.event.venue.address.street}}, {{ticket.ticket_type.event.venue.address.city}}</p>
                             </div>
 
@@ -164,13 +165,13 @@
                                 <span class="MB-user_profile-qr-label">QR-kode</span>
                             </div>
                         </div>
-
-                        <div class="MB-user_profile-event-footer">
+                        
+                        <!-- <div class="MB-user_profile-event-footer">
                             <button class="MB-user_profile-btn-pdf-link">
                                 <i class="fa-solid fa-download"></i> Last ned PDF
                             </button>
                             <button class="MB-user_profile-btn-red-sm">Del billett</button>
-                        </div>
+                        </div> -->
                     </div>
                 {%endfor%}
             {%else%}
