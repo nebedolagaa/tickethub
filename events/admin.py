@@ -9,16 +9,21 @@ from .models import (
     Seat,
     EventSeat,
     City,
+    Performer,
 )
 
 # Register your models here.
+
+class PerformerAdmin(admin.ModelAdmin):
+    search_fields = ["name"]
 
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ["title", "event_type", "venue", "start_datetime", "organizer"]
     list_filter = ["event_type", "venue__address__city", "start_datetime"]
-    search_fields = ["title", "description"]
+    search_fields = ["title", "description", "performers"]
     ordering = ["start_datetime"]
+    autocomplete_fields = ["performers"]
 
 
 class CityAdmin(admin.ModelAdmin):
@@ -36,3 +41,4 @@ admin.site.register(EventImage)
 admin.site.register(Row)
 admin.site.register(Seat)
 admin.site.register(EventSeat)
+admin.site.register(Performer, PerformerAdmin)

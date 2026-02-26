@@ -101,6 +101,12 @@ class VenueArea(models.Model):
             ),
         ]
 
+class Performer(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+    
 
 class Event(models.Model):
     # Valgmuligheter for arrangementstype
@@ -116,6 +122,7 @@ class Event(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
+    performers = models.ManyToManyField(Performer, blank=True, related_name="events")
 
     # Type arrangement - konsert eller festival
     event_type = models.CharField(

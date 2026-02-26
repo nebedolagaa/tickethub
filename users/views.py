@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Account, UserProfile, OrganizerProfile
 from tickets.models import Ticket, Order
+from events.models import Event
 
 from django.db.models import F, Sum, DecimalField, Value
 from django.db.models.functions import Coalesce, Cast
@@ -244,6 +245,8 @@ def my_orders(request):
 
 @login_required(login_url = 'users:login')
 def organizer_profile(request):
+
+    #dette er koden for å oppdatere arrangørprofil
     organizer = get_object_or_404(OrganizerProfile, user = request.user)
 
     if request.method == 'POST':
@@ -262,5 +265,20 @@ def organizer_profile(request):
         'organizer_form': organizer_form,
     }
 
+
+    #koden for statistikk
+    events = Event.objects.filter(organizer = organizer)
+    total_events = events.count()
+    aktive_events = events.filter(start_datetime__gte=timezone.now()).count()
+
+    # sold_tickets =
+    # total_turnover = 
+
+    context = {
+        'organizer': organizer,
+        'organizer_form': organizer_form,
+        'total_events': total_events,
+        'aktive_events': aktive_events,
+    }
 
     return render(request, 'users/organizer_profile.html', context)

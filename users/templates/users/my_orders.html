@@ -123,7 +123,13 @@
                         <div class="MB-user_profile-event-top">
                             <div class="MB-user_profile-event">
                                 <h3>{{ticket.ticket_type.event.title}}</h3>
-                                <p>{{ticket.ticket_type.event.title}}</p>
+                                {% if ticket.ticket_type.event.performers.all %}
+                                    <p>
+                                        {% for performer in ticket.ticket_type.event.performers.all %}
+                                            {{ performer.name }}{% if not forloop.last %}, {% endif %}
+                                        {% endfor %}
+                                    </p>
+                                {% endif %}
                             </div>
                             <span class="MB-user_profile-badge-active">Aktiv</span>
                         </div>
