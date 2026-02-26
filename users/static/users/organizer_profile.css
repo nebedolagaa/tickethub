@@ -210,3 +210,13 @@
 @media (max-width: 950px) {
     .MB-organizer_profile-grid { grid-template-columns: 1fr; }
 }
+
+/* alerts */
+.MB-success {
+    background-color: rgba(0, 128, 0, 0.498);
+    color: lightgreen;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    font-size: 13px;
+}

@@ -8,7 +8,7 @@ from django.contrib import messages, auth
 
 from django.contrib.auth.decorators import login_required
 
-from .models import Account, UserProfile
+from .models import Account, UserProfile, OrganizerProfile
 from tickets.models import Ticket, Order
 
 from django.db.models import F, Sum, DecimalField, Value
@@ -244,4 +244,23 @@ def my_orders(request):
 
 @login_required(login_url = 'users:login')
 def organizer_profile(request):
-    return render(request, 'users/organizer_profile.html')
+    organizer = get_object_or_404(OrganizerProfile, user = request.user)
+
+    if request.method == 'POST':
+        organizer_form = OrganizerProfileForm(request.POST, instance = organizer)
+
+        if organizer_form.is_valid():
+            organizer_form.save()
+
+            messages.success(request,'Din profil har blitt oppdatert')
+            return redirect('users:organizer_profile')
+    else:
+        organizer_form = OrganizerProfileForm(instance = organizer)
+    
+    context = {
+        'organizer': organizer,
+        'organizer_form': organizer_form,
+    }
+
+
+    return render(request, 'users/organizer_profile.html', context)

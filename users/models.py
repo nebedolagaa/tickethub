@@ -15,6 +15,12 @@ class OrganizerProfile(models.Model):
      contact_email = models.EmailField()
      phone_number = models.CharField(max_length=20, blank=True)
      organization_number = models.CharField(max_length=9, blank=True, null=True, help_text="Valgfritt. 9 sifre.")
+     
+     # Valgfritt: adresse, postnummer og by for arrangøren.
+     #adresse ligger her for å skille mellom users-hjemmeadresse og organisasjonens adresse 
+     organization_address = models.CharField(max_length=255, blank=True, null=True)
+     organization_postcode = models.CharField(max_length=20, blank=True, null=True)
+     organization_city = models.CharField(max_length=100, blank=True, null=True)
 
      created_at = models.DateTimeField(auto_now_add=True)
 

@@ -97,3 +97,31 @@ class UserProfileForm(forms.ModelForm):
                 'class': 'form-control'
         }),
         }
+
+class OrganizerProfileForm(forms.ModelForm):
+    class Meta:
+        model = OrganizerProfile
+        fields = ('organization_name', 'contact_email', 'phone_number', 'organization_number', 'organization_address', 'organization_city', 'organization_postcode')
+
+        widgets = {
+            'organization_name': forms.TextInput(attrs={
+                'placeholder': 'Ikke registrert',
+                'class': 'form-control',
+            }),
+            'organization_number': forms.TextInput(attrs={
+                'placeholder': 'Ikke registrert',
+                'class': 'form-control',
+            }),
+            'organization_address': forms.TextInput(attrs={
+                'placeholder': 'Ikke registrert',
+                'class': 'form-control',
+            }),
+            'organization_city': forms.TextInput(attrs={
+                'placeholder': 'Ikke registrert',
+                'class': 'form-control',
+            }),
+            'organization_postcode': forms.TextInput(attrs={
+                'placeholder': 'Ikke registrert',
+                'class': 'form-control',
+            }),
+        }

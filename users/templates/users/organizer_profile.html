@@ -31,32 +31,46 @@
                 <!-- Skjema for bedrifts/profilinformasjon -->
                 <div class="MB-organizer_profile-card">
                     <h2 class="MB-organizer_profile-section-title">Profilinformasjon</h2>
-                    <form class="MB-organizer_profile-form">
+                    <form class="MB-organizer_profile-form" method = 'post' action = "{% url 'users:organizer_profile'%}">
+                        {% csrf_token %}
                         <div class="MB-organizer_profile-input-group">
                             <label>Bedriftsnavn</label>
-                            <input type="text" value="Live Events Norway AS">
+                            {{organizer_form.organization_name}}
                         </div>
                         <div class="MB-organizer_profile-input-group">
                             <label>Organisasjonsnummer</label>
-                            <input type="text" value="987 654 321">
+                            {{organizer_form.organization_number}}
                         </div>
+                        
                         <div class="MB-organizer_profile-input-group">
                             <label>E-post</label>
-                            <input type="email" value="kontakt@liveevents.no">
+                            {{organizer_form.contact_email}}
                         </div>
                         <div class="MB-organizer_profile-input-group">
                             <label>Telefon</label>
-                            <input type="tel" value="+47 123 45 678">
+                            {{organizer_form.phone_number}}
                         </div>
                         <div class="MB-organizer_profile-input-group">
                             <label>Adresse</label>
-                            <input type="text" value="Storgata 1, 0155 Oslo">
+                            {{organizer_form.organization_address}}
+                        </div>
+
+                        <!-- Rad med postnummer + by -->
+                        <div class="MB-organizer_profile-input-group">
+                            <label>Postnummer</label>
+                            {{organizer_form.organization_postcode}}
                         </div>
                         <div class="MB-organizer_profile-input-group">
-                            <label>Nettside</label>
-                            <input type="text" value="www.liveevents.no">
+                            <label>By</label>
+                            {{organizer_form.organization_city}}
+
                         </div>
-                        <button type="button" class="MB-organizer_profile-btn-red-full">Lagre endringer</button>
+
+                        {% if messages %}
+                            <div class="MB-success">{% include 'includes/alerts.html'%}</div>
+                        {% endif %}
+
+                        <button type="submit" class="MB-organizer_profile-btn-red-full">Lagre endringer</button>
                     </form>
                 </div>
 
