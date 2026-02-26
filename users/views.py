@@ -81,7 +81,6 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            messages.success(request, "Du er nå logget inn")
             return redirect('home_page')
         else:
             messages.error(request,'Ugyldig e-post eller passord')
@@ -250,12 +249,28 @@ def organizer_profile(request):
     organizer = get_object_or_404(OrganizerProfile, user = request.user)
 
     if request.method == 'POST':
+
+        #check if its a request to delete an event
+        if 'delete_event_id' in request.POST: 
+            event_id = request.POST['delete_event_id']
+            event = get_object_or_404(Event, id = event_id, organizer = organizer) #sjekk at eventet tilhører denne arrangøren for sikkerhet
+            
+            if Ticket.objects.filter(ticket_type__event=event).exists():
+                messages.error(request, "Arrangementet kan ikke slettes fordi det finnes billetter.", extra_tags='event')
+                return redirect('users:organizer_profile')
+            else: 
+                event.delete()
+
+                messages.success(request, "Arrangementet ble slettet", extra_tags='event')
+                return redirect('users:organizer_profile')
+
+
         organizer_form = OrganizerProfileForm(request.POST, instance = organizer)
 
         if organizer_form.is_valid():
             organizer_form.save()
 
-            messages.success(request,'Din profil har blitt oppdatert')
+            messages.success(request,'Din profil har blitt oppdatert', extra_tags='profile')
             return redirect('users:organizer_profile')
     else:
         organizer_form = OrganizerProfileForm(instance = organizer)
@@ -267,9 +282,9 @@ def organizer_profile(request):
 
 
     #koden for statistikk
-    events = Event.objects.filter(organizer = organizer)
+    events = Event.objects.filter(organizer = request.user.organizer_profile).order_by('start_datetime') 
     total_events = events.count()
-    aktive_events = events.filter(start_datetime__gte=timezone.now()).count()
+    active_events = events.filter(start_datetime__gte=timezone.now()).count()
 
     # sold_tickets =
     # total_turnover = 
@@ -278,7 +293,8 @@ def organizer_profile(request):
         'organizer': organizer,
         'organizer_form': organizer_form,
         'total_events': total_events,
-        'aktive_events': aktive_events,
+        'active_events': active_events,
+        'events': events,
     }
 
     return render(request, 'users/organizer_profile.html', context)

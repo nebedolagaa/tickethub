@@ -66,9 +66,13 @@
 
                         </div>
 
-                        {% if messages %}
-                            <div class="MB-success">{% include 'includes/alerts.html'%}</div>
-                        {% endif %}
+                        {% for message in messages %}
+                            {% if 'profile' in message.tags %}
+                                <div class="MB-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
 
                         <button type="submit" class="MB-organizer_profile-btn-red-full">Lagre endringer</button>
                     </form>
@@ -107,47 +111,71 @@
                     </button>
                 </div>
 
-                <!-- Eksempel ett arrangementskort -->
-                <div class="MB-organizer_profile-card MB-organizer_profile-event-card">
-                    <div class="MB-organizer_profile-event-top">
-                        <div class="MB-organizer_profile-event-info">
-                            <h3>World Tour 2024</h3>
-                            <p>Aurora</p>
+                {% for message in messages %}
+                    {% if 'event' in message.tags %}
+                        <div class="MB-{% if 'success' in message.tags %}success{% else %}error{% endif %}">
+                            {{ message }}
                         </div>
-                        <span class="MB-organizer_profile-status-pill MB-organizer_profile-status-active">Aktiv</span>
-                    </div>
-                    <div class="MB-organizer_profile-event-meta">
-                        <span><i class="fa-regular fa-calendar"></i> 15. november 2024</span>
-                        <span><i class="fa-solid fa-location-dot"></i> Oslo Spektrum</span>
-                    </div>
-                    <div class="MB-organizer_profile-event-stats">
-                        <div class="MB-organizer_profile-stat-box">
-                            <label>Solgte billetter</label>
-                            <p>1245 / 2000</p>
-                        </div>
-                        <div class="MB-organizer_profile-stat-box">
-                            <label>Salg</label>
-                            <p>62%</p>
-                        </div>
-                        <div class="MB-organizer_profile-stat-box">
-                            <label>Inntekt</label>
-                            <p class="MB-organizer_profile-income">746 550 kr</p>
-                        </div>
-                    </div>
-                    <div class="MB-organizer_profile-event-actions">
-                        <button class="MB-organizer_profile-btn-action">
-                            <i class="fa-regular fa-eye"></i> Se detaljer
-                        </button>
-                        <button class="MB-organizer_profile-btn-action">
-                            <i class="fa-regular fa-pen-to-square"></i> Rediger
-                        </button>
-                        <button class="MB-organizer_profile-btn-delete">
-                            <i class="fa-regular fa-trash-can"></i>
-                        </button>
-                    </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
 
-                <!-- Andre konsertkort følger samme struktur -->
+                <!-- Eksempel ett arrangementskort -->
+                {% if events %}
+                {% for event in events %}
+                    <div class="MB-organizer_profile-card MB-organizer_profile-event-card">
+                        <div class="MB-organizer_profile-event-top">
+                            <div class="MB-organizer_profile-event-info">
+                                <h3>{{event.title}}</h3>
+                                
+                                <p>
+                                    {% for performer in event.performers.all %}
+                                        {{ performer.name }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                            <span class="MB-organizer_profile-status-pill MB-organizer_profile-status-active">Aktiv</span>
+                        </div>
+                        <div class="MB-organizer_profile-event-meta">
+                            <span><i class="fa-regular fa-calendar"></i>{{event.start_datetime|date:"d.m.Y"}}</span>
+                            <span><i class="fa-solid fa-location-dot"></i>{{event.venue}}</span>
+                        </div>
+                        <div class="MB-organizer_profile-event-stats">
+                            <div class="MB-organizer_profile-stat-box">
+                                <label>Solgte billetter</label>
+                                <p>1245 / 2000</p>
+                            </div>
+                            <div class="MB-organizer_profile-stat-box">
+                                <label>Salg</label>
+                                <p>62%</p>
+                            </div>
+                            <div class="MB-organizer_profile-stat-box">
+                                <label>Inntekt</label>
+                                <p class="MB-organizer_profile-income">746 550 kr</p>
+                            </div>
+                        </div>
+                        <div class="MB-organizer_profile-event-actions">
+                            <button class="MB-organizer_profile-btn-action">
+                                <i class="fa-regular fa-eye"></i> Se detaljer
+                            </button>
+                            <button class="MB-organizer_profile-btn-action">
+                                <i class="fa-regular fa-pen-to-square"></i> Rediger
+                            </button>
+                            <form class = "MB-inline-form" method = 'post' action = "{% url 'users:organizer_profile'%}">
+                                {% csrf_token %}
+                                <input type="hidden" name="delete_event_id" value="{{ event.id }}">
+                                <button type = 'submit' onclick="return confirm('Er du sikker?')" class="MB-organizer_profile-btn-delete">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {% else %}
+                    <p class="MB-organizer_profile-no-events">Du har ingen arrangementer ennå. Klikk "Nytt arrangement" for å komme i gang!</p>
+                {% endif %}
+
+                <!-- Andre konsertkort følger samme struktur 
                 <div class="MB-organizer_profile-card MB-organizer_profile-event-card">
                     <div class="MB-organizer_profile-event-top">
                         <div class="MB-organizer_profile-event-info">
@@ -194,7 +222,7 @@
                         <button class="MB-organizer_profile-btn-action"><i class="fa-regular fa-pen-to-square"></i> Rediger</button>
                         <button class="MB-organizer_profile-btn-delete"><i class="fa-regular fa-trash-can"></i></button>
                     </div>
-                </div>
+                </div> -->
 
             </div>
         </div>
