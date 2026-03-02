@@ -728,7 +728,9 @@ input[name="ES-ArtistSok"]::placeholder {
   background-color: var(--th-dark-gray, #111);
   border-radius: 16px;
   overflow: hidden;
-  width: 340px;
+  /* make card fluid in bootstrap columns while keeping max size */
+  width: 100%;
+  max-width: 340px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
@@ -6935,4 +6937,25 @@ input:focus, select:focus, textarea:focus {
 .ES-no-results a:hover {
   color: var(--th-red-light);
   text-decoration: underline;
+}
+
+/* disable underline on clickable venue/event cards */
+.ES-event-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.ES-event-card-link:hover {
+  text-decoration: none;
+}
+
+/* reinforce removal including visited/active/focus and descendants */
+.ES-event-card-link,
+.ES-event-card-link:visited,
+.ES-event-card-link:hover,
+.ES-event-card-link:active,
+.ES-event-card-link:focus,
+.ES-event-card-link * {
+  text-decoration: none !important;
+  outline: none !important;
 }

@@ -1,0 +1,95 @@
+{% load static %}
+<!doctype html>
+<html lang="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ venue.name }} - TicketHub</title>
+
+    <!-- Favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{% static 'favicon/apple-touch-icon.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{% static 'favicon/favicon-32x32.png' %}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{% static 'favicon/favicon-16x16.png' %}"
+    />
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}" />
+
+    <!-- Bootstrap CDN -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
+    />
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+  </head>
+  <body>
+    {% include "snippets/navbar.html" %}
+
+    <!-- Venue detaljer -->
+    <section class="NP-all-events-section">
+      <div class="NP-container">
+        <!-- Tilbake-lenke -->
+        <a href="{% url 'venues' %}" class="btn btn-outline-secondary mb-4">
+          <i class="bi bi-chevron-left"></i> Tilbake til venues
+        </a>
+
+        <!-- Venue header -->
+        <div class="NP-header">
+          <h1 class="NP-title">{{ venue.name }}</h1>
+          <p class="NP-subtitle">
+            {{ venue.address.street }}, {{ venue.address.postal_code }} {{ venue.address.city }}, {{ venue.address.country }}
+          </p>
+          {% if venue.description %}
+          <p class="NP-subtitle mt-2 text-white-50">
+            {{ venue.description }}
+          </p>
+          {% endif %}
+        </div>
+
+        <!-- Events på denne venueen -->
+        <div class="mt-5">
+          <h2 class="NP-section-title">Arrangementer på {{ venue.name }}</h2>
+          {% if events %}
+            <div class="row mt-4">
+              {% for event in events %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                  {% include "snippets/event_card.html" with event=event %}
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% if not events %}
+            <div class="alert alert-info mt-3">
+              <i class="bi bi-info-circle"></i>
+              Det er ingen arrangementer planlagt på denne venueen for øyeblikket.
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    {% include "snippets/footer.html" %}
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
