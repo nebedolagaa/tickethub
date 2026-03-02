@@ -31,10 +31,11 @@
 
                 <!-- Profilkort med bilde, navn og kontaktinfo -->
                 <div class="MB-user_profile-card MB-user_profile-profile-card">
-                    <div class="MB-user_profile-avatar-circle">
+                    {% comment %} <div class="MB-user_profile-avatar-circle">
                         <i class="fa-regular fa-user"></i>
-                    </div>
-                    <h2 class="MB-user_profile-name">{{user.full_name}}</h2>
+                    </div> {% endcomment %}
+
+                    <h2 class="MB-user_profile-name">{{user.first_name}} {{user.last_name}}</h2>
                     <p class="MB-user_profile-subtext">Medlem siden {{user.date_joined|date:"d.m.Y"}}</p>
                     
                     <div class="MB-user_profile-contact-info">
