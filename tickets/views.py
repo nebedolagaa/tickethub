@@ -42,6 +42,17 @@ def payment(request):
         import json
         try:
             cart_data = json.loads(request.POST["cart"])
+            # Legg til event_id og ticket_type_id hvis de mangler
+            for key, item in cart_data.items():
+                if "event_id" not in item:
+                    # Forsøk å hente event_id fra TicketType
+                    try:
+                        ticket_type = TicketType.objects.get(pk=item["ticket_type_id"])
+                        item["event_id"] = ticket_type.event_id
+                    except Exception:
+                        item["event_id"] = None
+                if "ticket_type_id" not in item:
+                    item["ticket_type_id"] = key  # eller annen logikk hvis key ikke er id
             request.session["cart"] = cart_data
         except Exception:
             request.session["cart"] = {}
