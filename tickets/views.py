@@ -1,12 +1,40 @@
-from django.shortcuts import render
-
-# Create your views here.
+from django.shortcuts import render, redirect
+import json
+from django.contrib.auth.decorators import login_required
+from .models import Order, OrderItem, Ticket, TicketType
 
 def my_tickets(request):
     return render(request, "tickets/my_tickets.html")
 
-from django.shortcuts import render, redirect
-import json
+@login_required
+def confirm_payment(request):
+    # Hent cart fra session
+    cart = request.session.get("cart", {})
+    if not cart:
+        return redirect("tickets:payment")
+
+    # Finn event_id fra cart-data (forutsetter at alle varer er fra samme event)
+    event_id = next(iter(cart.values()))["event_id"]
+    order = Order.objects.create(user=request.user, event_id=event_id)
+
+    for key, item in cart.items():
+        ticket_type = TicketType.objects.get(pk=item["ticket_type_id"])
+        order_item = OrderItem.objects.create(
+            order=order,
+            ticket_type=ticket_type,
+            quantity=item["quantity"],
+            unit_price=item["price"]
+        )
+        # Opprett én Ticket per billett
+        for _ in range(item["quantity"]):
+            Ticket.objects.create(
+                user=request.user,
+                ticket_type=ticket_type
+            )
+
+    # Tøm handlekurven
+    del request.session["cart"]
+    return redirect("tickets:after_payment")
 
 def payment(request):
     # Hvis POST: motta handlekurvdata og lagre i session
