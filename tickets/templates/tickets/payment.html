@@ -18,7 +18,7 @@
             <div class="CB-payment-form-section">
                 <h2 class="CB-payment-title">Kontaktinformasjon</h2>
 
-                <form method="post" action="{% url 'tickets:confirm_payment' %}" class="CB-payment-form" id="payment-form">
+                <form method="post" action="/tickets/after-payment/" class="CB-payment-form" id="payment-form">
                     {% csrf_token %}
 
                     <div class="CB-payment-form-group">
