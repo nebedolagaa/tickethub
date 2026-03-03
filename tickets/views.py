@@ -40,7 +40,14 @@ def payment(request):
         import json
         try:
             cart_data = json.loads(request.POST["cart"])
+            # Legg til event_id og ticket_type_id for hvert item
+            for key, item in cart_data.items():
+                ticket_type = TicketType.objects.filter(name=item['name']).first()
+                if ticket_type:
+                    item['ticket_type_id'] = ticket_type.id
+                    item['event_id'] = ticket_type.event_id
             request.session["cart"] = cart_data
+            print("Cart lagret i session:", cart_data)
         except Exception:
             request.session["cart"] = {}
         # Redirect til GET for å unngå repost
