@@ -147,23 +147,23 @@
                 {% if ticket.available %}
                 <div class="NP-ticket-option-actions">
                   <div class="NP-quantity-selector">
-                    <button class="NP-qty-btn NP-qty-minus" onclick="decreaseQuantity('{{ ticket.name }}')">
+                    <button class="NP-qty-btn NP-qty-minus" onclick="decreaseQuantity('{{ ticket.id }}')">
                       <i class="bi bi-dash"></i>
                     </button>
                     <input 
                       type="number" 
                       class="NP-qty-input" 
-                      id="qty-{{ ticket.name }}" 
+                      id="qty-{{ ticket.id }}" 
                       value="0" 
                       min="0" 
                       max="10"
                       onchange="updateTotal()"
                     />
-                    <button class="NP-qty-btn NP-qty-plus" onclick="increaseQuantity('{{ ticket.name }}')">
+                    <button class="NP-qty-btn NP-qty-plus" onclick="increaseQuantity('{{ ticket.id }}')">
                       <i class="bi bi-plus"></i>
                     </button>
                   </div>
-                  <button class="NP-add-to-cart-btn" onclick="addToCart('{{ ticket.name }}',  {{ ticket.price }})">
+                  <button class="NP-add-to-cart-btn" onclick="addToCart('{{ ticket.id }}', '{{ ticket.name|escapejs }}', {{ ticket.price }})">
                     <i class="bi bi-cart-plus"></i>
                     Legg til
                   </button>
@@ -276,8 +276,8 @@
       const SERVICE_FEE_PERCENTAGE = 0.10; // 10% servicegebyr
 
       // Funksjoner for å øke/minske antall
-      function increaseQuantity(ticketType) {
-        const input = document.getElementById(`qty-${ticketType}`);
+      function increaseQuantity(ticketTypeId) {
+        const input = document.getElementById(`qty-${ticketTypeId}`);
         const currentValue = parseInt(input.value) || 0;
         const maxValue = parseInt(input.max) || 10;
         if (currentValue < maxValue) {
@@ -286,8 +286,8 @@
         }
       }
 
-      function decreaseQuantity(ticketType) {
-        const input = document.getElementById(`qty-${ticketType}`);
+      function decreaseQuantity(ticketTypeId) {
+        const input = document.getElementById(`qty-${ticketTypeId}`);
         const currentValue = parseInt(input.value) || 0;
         if (currentValue > 0) {
           input.value = currentValue - 1;
@@ -296,19 +296,20 @@
       }
 
       // Legge til i handlekurv
-      function addToCart(ticketType, price) {
-        const qtyInput = document.getElementById(`qty-${ticketType}`);
+      function addToCart(ticketTypeId, ticketName, price) {
+        const qtyInput = document.getElementById(`qty-${ticketTypeId}`);
         const quantity = parseInt(qtyInput.value) || 0;
 
         if (quantity > 0) {
-          if (cart[ticketType]) {
-            cart[ticketType].quantity += quantity;
+          if (cart[ticketTypeId]) {
+            cart[ticketTypeId].quantity += quantity;
           } else {
-            cart[ticketType] = {
-              name: ticketType,
+            cart[ticketTypeId] = {
+              name: ticketName,
               price: price,
-              quantity: quantity
-              
+              quantity: quantity,
+              ticket_type_id: parseInt(ticketTypeId),
+              event_id: {{ event.id }}
             };
           }
           qtyInput.value = 0;
@@ -317,8 +318,8 @@
       }
 
       // Fjerne fra handlekurv
-      function removeFromCart(ticketType) {
-        delete cart[ticketType];
+      function removeFromCart(ticketTypeId) {
+        delete cart[ticketTypeId];
         updateCartDisplay();
       }
 
@@ -357,7 +358,7 @@
               </div>
               <div class="NP-cart-item-price">
                 <span>${itemTotal} kr</span>
-                <button class="NP-remove-btn" onclick="removeFromCart('${item.name}')">
+                <button class="NP-remove-btn" onclick="removeFromCart('${item.ticket_type_id}')">
                   <i class="bi bi-trash"></i>
                 </button>
               </div>
