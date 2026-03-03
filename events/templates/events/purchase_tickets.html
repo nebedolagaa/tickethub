@@ -163,7 +163,7 @@
                       <i class="bi bi-plus"></i>
                     </button>
                   </div>
-                  <button class="NP-add-to-cart-btn" onclick="addToCart('{{ ticket.name }}', {{ ticket.price }})">
+                  <button class="NP-add-to-cart-btn" onclick="addToCart('{{ ticket.name }}', '{{ ticket.id }}', '{{ ticket.price }}', '{{ event.id }}')">
                     <i class="bi bi-cart-plus"></i>
                     Legg til
                   </button>
@@ -307,7 +307,9 @@
             cart[ticketType] = {
               name: ticketType,
               price: price,
-              quantity: quantity
+              quantity: quantity,
+              ticket_type_id: ticketTypeId, //la til denne
+              event_id: eventId //og denne
             };
           }
           qtyInput.value = 0;
