@@ -90,8 +90,22 @@ def payment(request):
     return render(request, "tickets/payment.html", context)
 
 
+@login_required
 def after_payment(request):
-    return render(request, "tickets/after_payment.html")
+    # Fetch the most recent order for the user
+    order = Order.objects.filter(user=request.user).order_by('-created_at').first()
+    
+    total_amount = 0
+    if order:
+        # Calculate total from order items
+        for item in order.items.all():
+            total_amount += item.quantity * item.unit_price
+    
+    context = {
+        'order': order,
+        'total_amount': total_amount,
+    }
+    return render(request, "tickets/after_payment.html", context)
 
 
 def user_profile_view(request):

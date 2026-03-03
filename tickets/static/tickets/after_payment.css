@@ -1,38 +1,133 @@
-.jf-thank-you-container {
-  text-align: center;
-  margin: 50px auto 30px;
-  padding: 20px;
-  max-width: 600px;
-  background-color: var(--th-black);
-  color: var(--th-white);
-  border: 1px solid var(--th-light-gray);
-  border-radius: 8px;
-  box-shadow: 0 4px 6px var(--th-black-a10);
+.MB-receipt-main {
+    background-color: #000;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    font-family: 'Inter', sans-serif;
 }
 
-.jf-thank-you-header {
-  font-size: 2rem;
-  color: var(--th-white);
-  margin-bottom: 15px;
+.MB-receipt-container {
+    max-width: 550px;
+    width: 100%;
+    text-align: center;
 }
 
-.jf-thank-you-message {
-  font-size: 1.2rem;
-  color: var(--th-muted);
-  margin-bottom: 20px;
+.MB-success-icon {
+    font-size: 4rem;
+    color: #ff3b3b;
+    margin-bottom: 20px;
 }
 
-.jf-thank-you-link {
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: var(--th-white);
-  background-color: var(--th-light-gray);
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+.MB-thanks-header {
+    font-size: 2.2rem;
+    color: #fff;
+    margin-bottom: 10px;
+    font-weight: 700;
 }
 
-.jf-thank-you-link:hover {
-  background-color: var(--th-muted);
+.MB-thanks-message {
+    font-size: 1.1rem;
+    color: #888;
+    margin-bottom: 40px;
+}
+
+/* Kvitteringskort */
+.MB-receipt-card {
+    background-color: #121216;
+    border: 1px solid #22222a;
+    border-radius: 12px;
+    padding: 30px;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.MB-receipt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #22222a;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.MB-receipt-header h2 {
+    font-size: 1.2rem;
+    color: #fff;
+    margin: 0;
+}
+
+.MB-order-id {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.MB-receipt-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: #888;
+}
+
+.MB-text-white {
+    color: #fff;
+    font-weight: 500;
+}
+
+.MB-divider {
+    border: 0;
+    border-top: 1px solid #22222a;
+    margin: 20px 0;
+}
+
+.MB-total-row {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.MB-total-amount {
+    color: #ff3b3b;
+}
+
+.MB-receipt-footer {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+/* Knapper */
+.MB-action-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.MB-btn-primary {
+    background-color: #ff3b3b;
+    color: #fff;
+    padding: 14px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: background 0.3s ease;
+}
+
+.MB-btn-primary:hover {
+    background-color: #e03232;
+}
+
+.MB-btn-secondary {
+    background-color: transparent;
+    color: #888;
+    padding: 10px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.MB-btn-secondary:hover {
+    color: #fff;
 }
