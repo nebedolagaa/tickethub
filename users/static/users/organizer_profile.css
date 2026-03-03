@@ -1,260 +1,294 @@
 /* Grunnleggende oppsett for hele siden */
 .MB-organizer_profile-main {
-    background-color: var(--th-black);
-    min-height: 100vh;
-    padding: 60px 0;
-    color: var(--th-white);
-    font-family: 'Inter', sans-serif;
+  background-color: var(--th-black);
+  min-height: 100vh;
+  padding: 60px 0 40px;
+  color: var(--th-white);
+  font-family: "Inter", sans-serif;
 }
 
 .MB-organizer_profile-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* tittel og undertittel */
-.MB-organizer_profile-header { margin-bottom: 40px; }
-.MB-organizer_profile-title { font-size: 2.2rem; font-weight: 700; margin: 0; }
-.MB-organizer_profile-subtitle { color: var(--th-muted); margin-top: 5px; }
+.MB-organizer_profile-header {
+  margin-bottom: 40px;
+}
+.MB-organizer_profile-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+.MB-organizer_profile-subtitle {
+  color: var(--th-muted);
+  margin-top: 5px;
+}
 
 /* To kolonne grid */
 .MB-organizer_profile-grid {
-    display: grid;
-    grid-template-columns: 350px 1fr;
-    gap: 30px;
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 30px;
 }
 
 /* Felles kortstil */
 .MB-organizer_profile-card {
-    background: var(--th-dark-gray);
-    border: 1px solid var(--th-light-gray);
-    border-radius: 8px;
-    padding: 25px;
-    margin-bottom: 20px;
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 8px;
+  padding: 25px;
+  margin-bottom: 20px;
 }
 
 /* Titler i seksjoner */
 .MB-organizer_profile-section-title {
-    font-size: 1.3rem;
-    margin-bottom: 20px;
-    font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+  font-weight: 700;
 }
 
 /* Inputfelt i skjema */
 .MB-organizer_profile-input-group {
-    margin-bottom: 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .MB-organizer_profile-input-group label {
-    font-size: 12px;
-    color: var(--th-muted);
-    font-weight: 600;
+  font-size: 12px;
+  color: var(--th-muted);
+  font-weight: 600;
 }
 
 .MB-organizer_profile-input-group input {
-    background: var(--th-dark-gray);
-    border: 1px solid var(--th-light-gray);
-    padding: 12px;
-    border-radius: 6px;
-    color: var(--th-white);
-    font-size: 14px;
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  padding: 12px;
+  border-radius: 6px;
+  color: var(--th-white);
+  font-size: 14px;
 }
 
 /* Rød lagre knapp (full bredde) */
 .MB-organizer_profile-btn-red-full {
-    background: var(--th-red);
-    color: var(--th-white);
-    border: none;
-    width: 100%;
-    padding: 14px;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 10px;
+  background: var(--th-red);
+  color: var(--th-white);
+  border: none;
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
 .MB-organizer_profile-btn-red-full:hover {
-    background-color: var(--th-red-dark);
+  background-color: var(--th-red-dark);
 }
 
 /* Statistikklinjer */
 .MB-organizer_profile-stat-line {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--th-light-gray);
-    font-size: 0.9rem;
-    color: var(--th-muted);
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--th-light-gray);
+  font-size: 0.9rem;
+  color: var(--th-muted);
 }
 
-.MB-organizer_profile-val { color: var(--th-white); font-weight: 700; }
-.MB-organizer_profile-total-red { color: var(--th-red); font-size: 1.1rem; }
+.MB-organizer_profile-val {
+  color: var(--th-white);
+  font-weight: 700;
+}
+.MB-organizer_profile-total-red {
+  color: var(--th-red);
+  font-size: 1.1rem;
+}
 
 /* Header for arrangementsliste + legg til knapp */
 .MB-organizer_profile-list-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
 }
 
 .MB-organizer_profile-btn-add {
-    background: var(--th-red);
-    color: var(--th-white);
-    border: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.85rem;
+  background: var(--th-red);
+  color: var(--th-white);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
 }
 
-.MB-organizer_profile-btn-add:hover{
-    background-color: var(--th-red-dark);
+.MB-organizer_profile-btn-add:hover {
+  background-color: var(--th-red-dark);
 }
 
 /* Status (Aktiv / Utsolgt etc) */
 .MB-organizer_profile-status-pill {
-    font-size: 10px;
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-weight: 700;
-    background: var(--th-dark-gray);
+  font-size: 10px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-weight: 700;
+  background: var(--th-dark-gray);
 }
 
-.MB-organizer_profile-status-active { color: var(--th-muted); }
-.MB-organizer_profile-status-soldout { color: var(--th-red); }
+.MB-organizer_profile-status-active {
+  color: var(--th-muted);
+}
+.MB-organizer_profile-status-soldout {
+  color: var(--th-red);
+}
 
 /* Arrangementskort */
-.MB-organizer_profile-event-card { padding: 25px; }
+.MB-organizer_profile-event-card {
+  padding: 25px;
+}
 
 .MB-organizer_profile-event-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
 }
 
-.MB-organizer_profile-event-info h3 { margin: 0; font-size: 1.3rem; font-weight: 700; }
-.MB-organizer_profile-event-info p { margin: 4px 0 0; color: var(--th-muted); font-size: 0.95rem; }
+.MB-organizer_profile-event-info h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.MB-organizer_profile-event-info p {
+  margin: 4px 0 0;
+  color: var(--th-muted);
+  font-size: 0.95rem;
+}
 
 .MB-organizer_profile-event-meta {
-    display: flex;
-    gap: 40px;
-    color: var(--th-muted);
-    font-size: 0.9rem;
-    margin-bottom: 25px;
+  display: flex;
+  gap: 40px;
+  color: var(--th-muted);
+  font-size: 0.9rem;
+  margin-bottom: 25px;
 }
 
-.MB-organizer_profile-event-meta i { margin-right: 8px; }
+.MB-organizer_profile-event-meta i {
+  margin-right: 8px;
+}
 
 /* Statistikkgrid i hvert kort */
 .MB-organizer_profile-event-stats {
-    background: var(--th-dark-gray);
-    border-radius: 6px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 20px;
+  background: var(--th-dark-gray);
+  border-radius: 6px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .MB-organizer_profile-stat-box label {
-    display: block;
-    font-size: 10px;
-    color: var(--th-muted);
-    text-transform: uppercase;
-    margin-bottom: 8px;
+  display: block;
+  font-size: 10px;
+  color: var(--th-muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
 }
 
 .MB-organizer_profile-stat-box p {
-    margin: 0;
-    font-weight: 700;
-    font-size: 1.1rem;
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
-.MB-organizer_profile-income { color: var(--th-red); }
+.MB-organizer_profile-income {
+  color: var(--th-red);
+}
 
 /* knapper under hvert kort */
 .MB-organizer_profile-event-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr 50px;
-    gap: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 50px;
+  gap: 12px;
 }
 
 .MB-organizer_profile-btn-action {
-    background: transparent;
-    border: 1px solid var(--th-light-gray);
-    color: var(--th-white);
-    padding: 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+  background: transparent;
+  border: 1px solid var(--th-light-gray);
+  color: var(--th-white);
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .MB-organizer_profile-btn-delete {
-    background: transparent;
-    border: 1px solid var(--th-light-gray);
-    color: var(--th-red);
-    border-radius: 6px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  background: transparent;
+  border: 1px solid var(--th-light-gray);
+  color: var(--th-red);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* vertikalt */
 @media (max-width: 950px) {
-    .MB-organizer_profile-grid { grid-template-columns: 1fr; }
+  .MB-organizer_profile-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* alerts */
 .MB-success {
-    background-color: var(--th-green-a08);
-    color: var(--th-green);
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 12px;
-    font-size: 13px;
+  background-color: var(--th-green-a08);
+  color: var(--th-green);
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 13px;
 }
 
-.MB-organizer_profile-no-events{
-    width: 100%;
-    max-width: 500px;
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 1rem;
-    margin: 0 auto 25px auto; 
+.MB-organizer_profile-no-events {
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1rem;
+  margin: 0 auto 25px auto;
 }
 
 .MB-error {
-    background: var(--th-red-a10);
-    border: 1px solid var(--th-red);
-    color: var(--th-red);
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 12px;
-    font-size: 13px;
+  background: var(--th-red-a10);
+  border: 1px solid var(--th-red);
+  color: var(--th-red);
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 13px;
 }
-
 
 .MB-inline-form {
-     display: contents;
+  display: contents;
 }
 
-.MB-inline-form button{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.MB-inline-form button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

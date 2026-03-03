@@ -2,7 +2,7 @@
 .MB-user_profile-main {
   background-color: var(--th-black);
   min-height: 100vh;
-  padding: 60px 0 100px 0;
+  padding: 60px 0 40px 0;
   color: var(--th-white);
   font-family: "Inter", sans-serif;
 }

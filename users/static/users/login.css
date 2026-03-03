@@ -1,114 +1,114 @@
 /* MAIN */
 .CB1-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 80px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px 40px;
 }
 
 .CB1-login-card {
-    background: var(--th-dark-gray);
-    border: 1px solid var(--th-light-gray);
-    border-radius: 12px;
-    width: 380px;
-    padding: 32px;
-    box-shadow: 0 0 30px var(--th-black-a50);
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  width: 380px;
+  padding: 32px;
+  box-shadow: 0 0 30px var(--th-black-a50);
 }
 
 .CB1-title {
-    margin: 0;
-    text-align: center;
-    color: var(--th-white);
+  margin: 0;
+  text-align: center;
+  color: var(--th-white);
 }
 
 .CB1-subtitle {
-    text-align: center;
-    color: var(--th-muted);
-    margin-bottom: 24px;
-    font-size: 14px;
+  text-align: center;
+  color: var(--th-muted);
+  margin-bottom: 24px;
+  font-size: 14px;
 }
 
 /* FORM */
 .CB1-form-group {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 .CB1-form-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 13px;
-    color: var(--th-muted);
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: var(--th-muted);
 }
 
 .CB1-form-group input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid var(--th-light-gray);
-    background: var(--th-dark-gray);
-    color: var(--th-white);
-    font-size: 14px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--th-light-gray);
+  background: var(--th-dark-gray);
+  color: var(--th-white);
+  font-size: 14px;
 }
 
 .CB1-form-group input:focus {
-    outline: none;
-    border-color: var(--th-red);
+  outline: none;
+  border-color: var(--th-red);
 }
 
 .CB1-form-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 12px 0 18px 0;
-    font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 12px 0 18px 0;
+  font-size: 13px;
 }
 
 .CB1-checkbox {
-    color: var(--th-muted);
+  color: var(--th-muted);
 }
 
 .CB1-forgot {
-    color: var(--th-red);
-    text-decoration: none;
+  color: var(--th-red);
+  text-decoration: none;
 }
 
 .CB1-forgot:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .CB1-btn-submit {
-    width: 100%;
-    background: var(--th-red);
-    border: none;
-    color: var(--th-white);
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 15px;
-    cursor: pointer;
+  width: 100%;
+  background: var(--th-red);
+  border: none;
+  color: var(--th-white);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
 }
 
 .CB1-btn-submit:hover {
-    background: var(--th-red-dark);
+  background: var(--th-red-dark);
 }
 
 .CB1-error {
-    background: var(--th-red-a10);
-    border: 1px solid var(--th-red);
-    color: var(--th-red);
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 12px;
-    font-size: 13px;
+  background: var(--th-red-a10);
+  border: 1px solid var(--th-red);
+  color: var(--th-red);
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 13px;
 }
 
 .CB1-register-text {
-    text-align: center;
-    margin-top: 18px;
-    font-size: 13px;
-    color: var(--th-muted);
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--th-muted);
 }
 
 .CB1-register-text a {
-    color: var(--th-red);
-    text-decoration: none;
+  color: var(--th-red);
+  text-decoration: none;
 }
