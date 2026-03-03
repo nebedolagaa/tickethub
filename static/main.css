@@ -728,7 +728,9 @@ input[name="ES-ArtistSok"]::placeholder {
   background-color: var(--th-dark-gray, #111);
   border-radius: 16px;
   overflow: hidden;
-  width: 340px;
+  /* make card fluid in bootstrap columns while keeping max size */
+  width: 100%;
+  max-width: 340px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
   display: flex;
   flex-direction: column;
@@ -6538,3 +6540,422 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
+
+/* === ES: All Venues Page Styles === */
+
+/* Main Section */
+.ES-all-venues-section {
+  background: linear-gradient(
+    135deg,
+    var(--th-black) 0%,
+    var(--th-dark-gray) 100%
+  );
+  min-height: 100vh;
+  padding: 80px 0 60px;
+  position: relative;
+}
+
+.ES-all-venues-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(
+      circle at 20% 30%,
+      rgba(220, 38, 38, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(220, 38, 38, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
+/* Container */
+.ES-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.ES-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.ES-title {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  color: var(--th-white);
+  margin-bottom: 16px;
+}
+
+.ES-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  color: var(--th-muted);
+  margin: 0;
+}
+
+/* Filter Panel */
+.ES-filter-panel {
+  background: var(--th-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 48px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Search Form */
+.ES-search-form {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+/* Search Container */
+.ES-search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ES-search-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--th-muted);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.ES-search-input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.ES-search-input:focus {
+  outline: none;
+  border-color: var(--th-red);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.ES-search-input::placeholder {
+  color: var(--th-muted);
+}
+
+/* Sort Container */
+.ES-sort-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 250px;
+}
+
+.ES-sort-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--th-muted);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.ES-sort-select {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.ES-sort-select:focus {
+  outline: none;
+  border-color: var(--th-red);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+.ES-sort-select option {
+  background: var(--th-dark-gray);
+  color: var(--th-white);
+}
+
+/* Search Button */
+.ES-search-btn {
+  padding: 14px 32px;
+  background: var(--th-red);
+  border: none;
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.ES-search-btn:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+/* Results Info */
+.ES-results-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--th-light-gray);
+  color: var(--th-muted);
+}
+
+.ES-results-info p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.ES-results-info strong {
+  color: var(--th-white);
+}
+
+.ES-clear-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--th-red);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.ES-clear-search:hover {
+  color: var(--th-red-light);
+  gap: 8px;
+}
+
+/* Events Grid */
+.ES-events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
+}
+
+/* Event Card */
+.ES-event-card {
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.ES-event-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  border-color: var(--th-red);
+}
+
+/* Image Wrap */
+.ES-image-wrap {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: var(--th-light-gray);
+}
+
+.ES-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.ES-event-card:hover .ES-image {
+  transform: scale(1.05);
+}
+
+.ES-category {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--th-red);
+  color: var(--th-white);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Details */
+.ES-details {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-grow: 1;
+}
+
+.ES-event-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--th-white);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.ES-event-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ES-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--th-muted);
+  font-size: 0.95rem;
+}
+
+.ES-meta-item i {
+  color: var(--th-red);
+  font-size: 1rem;
+  width: 18px;
+}
+
+.ES-description {
+  color: var(--th-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  flex-grow: 1;
+}
+
+/* Card Footer */
+.ES-card-footer {
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.ES-buy-btn {
+  width: 100%;
+  padding: 14px 24px;
+  background: var(--th-red);
+  border: none;
+  border-radius: 10px;
+  color: var(--th-white);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+}
+
+.ES-buy-btn:hover {
+  background: var(--th-red-dark);
+  gap: 12px;
+  color: var(--th-white);
+}
+
+.ES-buy-btn i {
+  font-size: 1.1rem;
+  transition: transform 0.2s;
+}
+
+.ES-buy-btn:hover i {
+  transform: translateX(4px);
+}
+
+/* No Results */
+.ES-no-results {
+  text-align: center;
+  padding: 80px 24px;
+  color: var(--th-muted);
+}
+
+.ES-no-results i {
+  font-size: 4rem;
+  color: var(--th-light-gray);
+  margin-bottom: 24px;
+  opacity: 0.5;
+}
+
+.ES-no-results h3 {
+  font-size: 2rem;
+  color: var(--th-white);
+  margin-bottom: 16px;
+}
+
+.ES-no-results p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.ES-no-results a {
+  color: var(--th-red);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.ES-no-results a:hover {
+  color: var(--th-red-light);
+  text-decoration: underline;
+}
+
+/* disable underline on clickable venue/event cards */
+.ES-event-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.ES-event-card-link:hover {
+  text-decoration: none;
+}
+
+/* reinforce removal including visited/active/focus and descendants */
+.ES-event-card-link,
+.ES-event-card-link:visited,
+.ES-event-card-link:hover,
+.ES-event-card-link:active,
+.ES-event-card-link:focus,
+.ES-event-card-link * {
+  text-decoration: none !important;
+  outline: none !important;
+}

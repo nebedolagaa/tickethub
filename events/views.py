@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Event
-from django.db.models import Q, Min
+from django.db.models import Q, Count, Min
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
@@ -289,3 +289,83 @@ def profile_demo(request):
         },
     ]
     return render(request, "events/profile_demo.html", {"tickets": tickets})
+
+def venue_guide(request):
+    """Side som viser en guide til de mest populære konsertstedene i Norge"""
+    from .models import Venue
+
+    # Henter venues sortert etter hvor mange events de har, viser topp 10
+    venues = (
+        Venue.objects.annotate(event_count=Count("events"))
+        .order_by("-event_count")[:10]
+        .select_related("address")
+    )
+
+    context = {"venues": venues}
+    return render(request, "events/venue_guide.html", context)
+
+
+def venues(request):
+    """Side som viser alle venues med søke- og sorteringsfunksjonalitet"""
+    from .models import Venue
+    
+    # Henter alle venues
+    venues_list = Venue.objects.select_related("address").all()
+
+    # Søk
+    search_query = request.GET.get("search", "")
+    if search_query:
+        venues_list = venues_list.filter(
+            Q(name__icontains=search_query)
+            | Q(address__city__icontains=search_query)
+            | Q(address__street__icontains=search_query)
+        )
+
+    # Sortering
+    sort_by = request.GET.get("sort", "title_asc")
+
+    if sort_by == "title_asc":
+        venues_list = venues_list.order_by("name")
+    elif sort_by == "title_desc":
+        venues_list = venues_list.order_by("-name")
+    elif sort_by == "venue":
+        venues_list = venues_list.order_by("address__city")
+
+    # Paginering - 12 venues per side
+    paginator = Paginator(venues_list, 12)
+    page = request.GET.get("page")
+
+    try:
+        venues_page = paginator.page(page)
+    except PageNotAnInteger:
+        # Hvis side ikke er et heltall, vis første side
+        venues_page = paginator.page(1)
+    except EmptyPage:
+        # Hvis side er utenfor rekkevidde, vis siste side
+        venues_page = paginator.page(paginator.num_pages)
+
+    context = {
+        "venues": venues_page,
+        "search_query": search_query,
+        "sort_by": sort_by,
+        "total_venues": paginator.count,
+    }
+
+    return render(request, "events/venue_guide.html", context)
+
+
+def venue_detail(request, venue_id):
+    """Side som viser detaljer om en spesifikk venue"""
+    from .models import Venue
+    
+    venue = get_object_or_404(Venue.objects.select_related("address"), pk=venue_id)
+    
+    # Henter events som finner sted på denne venueen
+    events = Event.objects.filter(venue=venue).select_related("organizer").prefetch_related("images")
+    
+    context = {
+        "venue": venue,
+        "events": events,
+    }
+    
+    return render(request, "events/venue_detail.html", context)

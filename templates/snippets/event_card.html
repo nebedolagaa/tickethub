@@ -1,4 +1,5 @@
-{#  eventkort fra databasen #}
+{# Eventkort fra databasen, kan rendres for en liste (featured_events) eller enkeltobjekt (event) #}
+{% if featured_events %}
 <div class="JF-events-container">
   {% for event in featured_events %}
   <article class="JF-eventkort">
@@ -68,3 +69,51 @@
   <p style="color: var(--th-muted); text-align: center; width: 100%;">Ingen arrangementer tilgjengelig for øyeblikket.</p>
   {% endfor %}
 </div>
+{% elif event %}
+<article class="JF-eventkort">
+  <div class="JF-bilde-wrap">
+    {% if event.event_type == 'festival' %}
+      <span class="JF-kategori">Festival</span>
+    {% else %}
+      <span class="JF-kategori">Konsert</span>
+    {% endif %}
+    
+    {% if event.images.all %}
+      {% with event.images.first as first_image %}
+        <img
+          src="{{ first_image.image.url }}"
+          alt="{{ first_image.alt_text|default:event.title }}"
+          class="JF-bilde"
+        />
+      {% endwith %}
+    {% else %}
+      {# Forskjellige bilder basert på event type og forloop counter #}
+      {% if event.event_type == 'festival' %}
+        <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
+      {% else %}
+        <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80" alt="{{ event.title }}" class="JF-bilde" />
+      {% endif %}
+    {% endif %}
+  </div>
+  <div class="JF-detaljer">
+    <h2 class="JF-tittel">{{ event.title }}</h2>
+    <div class="JF-undertittel">{{ event.organizer.company_name|default:"Live konsert" }}</div>
+    <div class="JF-meta-rad">
+      <span class="JF-dato">{{ event.start_datetime|date:"d. F Y - H:i" }}</span>
+    </div>
+    <div class="JF-info">{{ event.venue.name }}, {{ event.venue.address.city }}</div>
+    
+    <div class="JF-bottom-section">
+      {% if event.ticket_types.all %}
+        {% with event.ticket_types.all|first as first_ticket %}
+          <p class="JF-pris">Fra {{ first_ticket.price|floatformat:0 }} kr</p>
+        {% endwith %}
+      {% else %}
+        <p class="JF-pris">Pris kommer</p>
+      {% endif %}
+      
+      <a href="{% url 'purchase_tickets' event.id %}" class="JF-kjop-knapp">Kjøp billett</a>
+    </div>
+  </div>
+</article>
+{% endif %}
