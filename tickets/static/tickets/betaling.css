@@ -5,7 +5,7 @@
     justify-content: center;
     align-items: flex-start;
     padding: 80px 80px; /* mer horisontal padding for å gi buffer mot kanten */
-    background: #000000;
+    background: var(--th-black);
     min-height: 100vh;
 }
 
@@ -43,18 +43,18 @@
 .CB-payment-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--th-white);
     margin-bottom: 24px;
     text-align: left;
 }
 
 /* Form Section */
 .CB-payment-form-section {
-    background: #121216;
-    border: 1px solid #22222a;
+    background: var(--th-dark-gray);
+    border: 1px solid var(--th-light-gray);
     border-radius: 12px;
     padding: 32px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 30px var(--th-black-a50);
 }
 
 .CB-payment-form {
@@ -71,7 +71,7 @@
 
 .CB-payment-form-group label {
     font-size: 13px;
-    color: #bdbdc7;
+    color: var(--th-muted);
     font-weight: 600;
 }
 
@@ -80,9 +80,9 @@
     width: 100%;
     padding: 10px;
     border-radius: 6px;
-    border: 1px solid #2a2a33;
-    background: #0d0d11;
-    color: #eaeaea;
+    border: 1px solid var(--th-light-gray);
+    background: var(--th-dark-gray);
+    color: var(--th-white);
     font-size: 14px;
     font-family: inherit;
 }
@@ -90,7 +90,7 @@
 .CB-payment-form-group input:focus,
 .CB-payment-form-group select:focus {
     outline: none;
-    border-color: #ff3b3b;
+    border-color: var(--th-red);
 }
 
 .CB-payment-form-row {
@@ -101,11 +101,11 @@
 
 /* Payment Method Section */
 .CB-payment-method-section {
-    background: #121216;
-    border: 1px solid #22222a;
+    background: var(--th-dark-gray);
+    border: 1px solid var(--th-light-gray);
     border-radius: 12px;
     padding: 32px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 30px var(--th-black-a50);
 }
 
 .CB-payment-method-form {
@@ -118,15 +118,15 @@
     display: flex;
     align-items: center;
     padding: 16px;
-    border: 1px solid #2a2a33;
+    border: 1px solid var(--th-light-gray);
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s;
 }
 
 .CB-payment-method-option:hover {
-    border-color: #ff3b3b;
-    background: rgba(255, 59, 59, 0.05);
+    border-color: var(--th-red);
+    background: var(--th-red-a10);
 }
 
 .CB-payment-method-option input[type="radio"] {
@@ -134,7 +134,7 @@
     height: 20px;
     margin-right: 12px;
     cursor: pointer;
-    accent-color: #ff3b3b;
+    accent-color: var(--th-red);
 }
 
 .CB-payment-method-label {
@@ -148,20 +148,20 @@
 
 .CB-payment-method-name {
     font-size: 14px;
-    color: #ffffff;
+    color: var(--th-white);
     font-weight: 600;
 }
 
 .CB-payment-method-icons {
     font-size: 12px;
-    color: #9a9aa3;
+    color: var(--th-muted);
 }
 
 /* Card Info Section */
 .CB-payment-card-info {
     margin-top: 24px;
     padding-top: 24px;
-    border-top: 1px solid #22222a;
+    border-top: 1px solid var(--th-light-gray);
     animation: slideDown 0.3s ease;
 }
 
@@ -179,7 +179,7 @@
 .CB-payment-card-title {
     font-size: 14px;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--th-white);
     margin: 0 0 16px 0;
 }
 
@@ -194,8 +194,8 @@
     gap: 12px;
     align-items: flex-start;
     padding: 12px;
-    background: rgba(255, 59, 59, 0.05);
-    border: 1px solid rgba(255, 59, 59, 0.2);
+    background: var(--th-red-a10);
+    border: 1px solid var(--th-red-a10);
     border-radius: 6px;
     margin-bottom: 16px;
 }
@@ -205,13 +205,13 @@
     height: 20px;
     margin-top: 2px;
     cursor: pointer;
-    accent-color: #ff3b3b;
+    accent-color: var(--th-red);
     flex-shrink: 0;
 }
 
 .CB-payment-terms-label {
     font-size: 12px;
-    color: #bdbdc7;
+    color: var(--th-muted);
     margin: 0;
     cursor: pointer;
     line-height: 1.4;
@@ -219,11 +219,11 @@
 
 /* Terms Section */
 .CB-payment-terms-section {
-    background: #121216;
-    border: 1px solid #22222a;
+    background: var(--th-dark-gray);
+    border: 1px solid var(--th-light-gray);
     border-radius: 12px;
     padding: 32px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 30px var(--th-black-a50);
 }
 
 .CB-payment-terms-form {
@@ -234,11 +234,11 @@
 
 /* Summary Section */
 .CB-payment-summary-section {
-    background: #121216;
-    border: 1px solid #22222a;
+    background: var(--th-dark-gray);
+    border: 1px solid var(--th-light-gray);
     border-radius: 12px;
     padding: 32px;
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 30px var(--th-black-a50);
     height: fit-content;
 }
 
@@ -254,37 +254,37 @@
 
 .CB-payment-cart-list li {
     font-size: 14px;
-    color: #bdbdc7;
+    color: var(--th-muted);
     padding: 12px 0;
-    border-bottom: 1px solid #22222a;
+    border-bottom: 1px solid var(--th-light-gray);
 }
 
 .CB-payment-summary-row {
     display: flex;
     justify-content: space-between;
     font-size: 14px;
-    color: #bdbdc7;
+    color: var(--th-muted);
     padding: 8px 0;
 }
 
 .CB-payment-summary-row:last-of-type {
     font-size: 16px;
     padding-top: 16px;
-    border-top: 2px solid #22222a;
+    border-top: 2px solid var(--th-light-gray);
     margin-top: 8px;
 }
 
 .CB-payment-summary-row strong {
-    color: #ff3b3b;
+    color: var(--th-red);
     font-size: 18px;
 }
 
 /* Complete Payment Button */
 .CB-complete-payment-btn {
     width: 100%;
-    background: #ff3b3b;
+    background: var(--th-red);
     border: none;
-    color: white;
+    color: var(--th-white);
     padding: 16px 24px;
     border-radius: 8px;
     font-size: 16px;
@@ -300,9 +300,9 @@
 }
 
 .CB-complete-payment-btn:hover {
-    background: #e22e2e;
+    background: var(--th-red-dark);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(255, 59, 59, 0.3);
+    box-shadow: 0 4px 12px var(--th-red-a10);
 }
 
 .CB-complete-payment-btn:active {
@@ -318,13 +318,13 @@
 .CB-payment-event-title {
     font-size: 16px;
     font-weight: 700;
-    color: #ffffff;
+    color: var(--th-white);
     margin: 0 0 4px 0;
 }
 
 .CB-payment-event-artist {
     font-size: 14px;
-    color: #ff3b3b;
+    color: var(--th-red);
     margin: 0 0 12px 0;
     font-weight: 600;
 }
@@ -334,7 +334,7 @@
     flex-direction: column;
     gap: 8px;
     font-size: 12px;
-    color: #bdbdc7;
+    color: var(--th-muted);
 }
 
 .CB-payment-event-detail {
@@ -355,7 +355,7 @@
 .CB-payment-section-title {
     font-size: 14px;
     font-weight: 600;
-    color: #ffffff;
+    color: var(--th-white);
     margin: 0 0 12px 0;
 }
 
@@ -363,12 +363,12 @@
     display: flex;
     justify-content: space-between;
     font-size: 13px;
-    color: #bdbdc7;
+    color: var(--th-muted);
     padding: 8px 0;
 }
 
 .CB-payment-ticket-item span:last-child {
-    color: #ffffff;
+    color: var(--th-white);
     font-weight: 600;
 }
 
@@ -381,12 +381,12 @@
     display: flex;
     justify-content: space-between;
     font-size: 13px;
-    color: #bdbdc7;
+    color: var(--th-muted);
     padding: 8px 0;
 }
 
 .CB-payment-calc-row span:last-child {
-    color: #ffffff;
+    color: var(--th-white);
 }
 
 .CB-payment-summary-items {
@@ -401,7 +401,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 12px 0;
-    border-bottom: 1px solid #22222a;
+    border-bottom: 1px solid var(--th-light-gray);
 }
 
 .CB-payment-item-info {
@@ -410,27 +410,27 @@
 
 .CB-payment-item-name {
     font-size: 14px;
-    color: #ffffff;
+    color: var(--th-white);
     font-weight: 600;
     margin: 0;
 }
 
 .CB-payment-item-desc {
     font-size: 12px;
-    color: #9a9aa3;
+    color: var(--th-muted);
     margin: 4px 0 0 0;
 }
 
 .CB-payment-item-price {
     font-size: 14px;
-    color: #ffffff;
+    color: var(--th-white);
     font-weight: 700;
     margin: 0;
 }
 
 .CB-payment-divider {
     height: 1px;
-    background: #22222a;
+    background: var(--th-light-gray);
     margin: 16px 0;
 }
 
@@ -443,23 +443,23 @@
 
 .CB-payment-total-label {
     font-size: 14px;
-    color: #bdbdc7;
+    color: var(--th-muted);
     margin: 0;
     font-weight: 600;
 }
 
 .CB-payment-total-price {
     font-size: 24px;
-    color: #ff3b3b;
+    color: var(--th-red);
     margin: 0;
     font-weight: 700;
 }
 
 .CB-payment-btn-complete {
     width: 100%;
-    background: #ff3b3b;
+    background: var(--th-red);
     border: none;
-    color: white;
+    color: var(--th-white);
     padding: 14px;
     border-radius: 8px;
     font-size: 15px;
@@ -474,12 +474,12 @@
 }
 
 .CB-payment-btn-complete:hover {
-    background: #e22e2e;
+    background: var(--th-red-dark);
 }
 
 .CB-payment-notice {
     font-size: 11px;
-    color: #9a9aa3;
+    color: var(--th-muted);
     text-align: center;
     margin-top: 8px;
     margin-bottom: 0;
@@ -487,9 +487,9 @@
 
 .CB-payment-btn-submit {
     width: 100%;
-    background: #ff3b3b;
+    background: var(--th-red);
     border: none;
-    color: white;
+    color: var(--th-white);
     padding: 12px;
     border-radius: 8px;
     font-size: 15px;
@@ -499,7 +499,7 @@
 }
 
 .CB-payment-btn-submit:hover {
-    background: #e22e2e;
+    background: var(--th-red-dark);
 }
 
 

@@ -69,12 +69,8 @@
         <div class="mt-5">
           <h2 class="NP-section-title">Arrangementer på {{ venue.name }}</h2>
           {% if events %}
-            <div class="row mt-4">
-              {% for event in events %}
-                <div class="col-md-6 col-lg-4 mb-4">
-                  {% include "snippets/event_card.html" with event=event %}
-                </div>
-              {% endfor %}
+            <div class="mt-4">
+              {% include "snippets/event_card.html" with featured_events=events %}
             </div>
           {% endif %}
           {% if not events %}

@@ -1,9 +1,9 @@
 /* Grunnleggende oppsett for hele siden */
 .MB-organizer_profile-main {
-    background-color: #000;
+    background-color: var(--th-black);
     min-height: 100vh;
     padding: 60px 0;
-    color: #fff;
+    color: var(--th-white);
     font-family: 'Inter', sans-serif;
 }
 
@@ -16,7 +16,7 @@
 /* tittel og undertittel */
 .MB-organizer_profile-header { margin-bottom: 40px; }
 .MB-organizer_profile-title { font-size: 2.2rem; font-weight: 700; margin: 0; }
-.MB-organizer_profile-subtitle { color: #888; margin-top: 5px; }
+.MB-organizer_profile-subtitle { color: var(--th-muted); margin-top: 5px; }
 
 /* To kolonne grid */
 .MB-organizer_profile-grid {
@@ -27,8 +27,8 @@
 
 /* Felles kortstil */
 .MB-organizer_profile-card {
-    background: #121216;
-    border: 1px solid #22222a;
+    background: var(--th-dark-gray);
+    border: 1px solid var(--th-light-gray);
     border-radius: 8px;
     padding: 25px;
     margin-bottom: 20px;
@@ -51,23 +51,23 @@
 
 .MB-organizer_profile-input-group label {
     font-size: 12px;
-    color: #888;
+    color: var(--th-muted);
     font-weight: 600;
 }
 
 .MB-organizer_profile-input-group input {
-    background: #0d0d11;
-    border: 1px solid #2a2a33;
+    background: var(--th-dark-gray);
+    border: 1px solid var(--th-light-gray);
     padding: 12px;
     border-radius: 6px;
-    color: #fff;
+    color: var(--th-white);
     font-size: 14px;
 }
 
 /* Rød lagre knapp (full bredde) */
 .MB-organizer_profile-btn-red-full {
-    background: #dc2626;
-    color: #fff;
+    background: var(--th-red);
+    color: var(--th-white);
     border: none;
     width: 100%;
     padding: 14px;
@@ -78,7 +78,7 @@
 }
 
 .MB-organizer_profile-btn-red-full:hover {
-    background-color: #b91c1c;
+    background-color: var(--th-red-dark);
 }
 
 /* Statistikklinjer */
@@ -86,13 +86,13 @@
     display: flex;
     justify-content: space-between;
     padding: 12px 0;
-    border-bottom: 1px solid #22222a;
+    border-bottom: 1px solid var(--th-light-gray);
     font-size: 0.9rem;
-    color: #888;
+    color: var(--th-muted);
 }
 
-.MB-organizer_profile-val { color: #fff; font-weight: 700; }
-.MB-organizer_profile-total-red { color: #dc2626; font-size: 1.1rem; }
+.MB-organizer_profile-val { color: var(--th-white); font-weight: 700; }
+.MB-organizer_profile-total-red { color: var(--th-red); font-size: 1.1rem; }
 
 /* Header for arrangementsliste + legg til knapp */
 .MB-organizer_profile-list-header {
@@ -103,8 +103,8 @@
 }
 
 .MB-organizer_profile-btn-add {
-    background: #dc2626;
-    color: #fff;
+    background: var(--th-red);
+    color: var(--th-white);
     border: none;
     padding: 10px 18px;
     border-radius: 8px;
@@ -117,7 +117,7 @@
 }
 
 .MB-organizer_profile-btn-add:hover{
-    background-color: #b91c1c;
+    background-color: var(--th-red-dark);
 }
 
 /* Status (Aktiv / Utsolgt etc) */
@@ -126,11 +126,11 @@
     padding: 4px 10px;
     border-radius: 4px;
     font-weight: 700;
-    background: #1e1e24;
+    background: var(--th-dark-gray);
 }
 
-.MB-organizer_profile-status-active { color: #888; }
-.MB-organizer_profile-status-soldout { color: #dc2626; }
+.MB-organizer_profile-status-active { color: var(--th-muted); }
+.MB-organizer_profile-status-soldout { color: var(--th-red); }
 
 /* Arrangementskort */
 .MB-organizer_profile-event-card { padding: 25px; }
@@ -143,12 +143,12 @@
 }
 
 .MB-organizer_profile-event-info h3 { margin: 0; font-size: 1.3rem; font-weight: 700; }
-.MB-organizer_profile-event-info p { margin: 4px 0 0; color: #888; font-size: 0.95rem; }
+.MB-organizer_profile-event-info p { margin: 4px 0 0; color: var(--th-muted); font-size: 0.95rem; }
 
 .MB-organizer_profile-event-meta {
     display: flex;
     gap: 40px;
-    color: #666;
+    color: var(--th-muted);
     font-size: 0.9rem;
     margin-bottom: 25px;
 }
@@ -157,7 +157,7 @@
 
 /* Statistikkgrid i hvert kort */
 .MB-organizer_profile-event-stats {
-    background: #1a1a1f;
+    background: var(--th-dark-gray);
     border-radius: 6px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -169,7 +169,7 @@
 .MB-organizer_profile-stat-box label {
     display: block;
     font-size: 10px;
-    color: #666;
+    color: var(--th-muted);
     text-transform: uppercase;
     margin-bottom: 8px;
 }
@@ -180,7 +180,7 @@
     font-size: 1.1rem;
 }
 
-.MB-organizer_profile-income { color: #dc2626; }
+.MB-organizer_profile-income { color: var(--th-red); }
 
 /* knapper under hvert kort */
 .MB-organizer_profile-event-actions {
@@ -191,8 +191,8 @@
 
 .MB-organizer_profile-btn-action {
     background: transparent;
-    border: 1px solid #2a2a33;
-    color: #fff;
+    border: 1px solid var(--th-light-gray);
+    color: var(--th-white);
     padding: 12px;
     border-radius: 6px;
     cursor: pointer;
@@ -205,8 +205,8 @@
 
 .MB-organizer_profile-btn-delete {
     background: transparent;
-    border: 1px solid #2a2a33;
-    color: #dc2626;
+    border: 1px solid var(--th-light-gray);
+    color: var(--th-red);
     border-radius: 6px;
     cursor: pointer;
     display: flex;
@@ -221,8 +221,8 @@
 
 /* alerts */
 .MB-success {
-    background-color: rgba(0, 128, 0, 0.498);
-    color: lightgreen;
+    background-color: var(--th-green-a08);
+    color: var(--th-green);
     padding: 10px;
     border-radius: 6px;
     margin-bottom: 12px;
@@ -239,9 +239,9 @@
 }
 
 .MB-error {
-    background: #2a1212;
-    border: 1px solid #5a1f1f;
-    color: #ff8080;
+    background: var(--th-red-a10);
+    border: 1px solid var(--th-red);
+    color: var(--th-red);
     padding: 10px;
     border-radius: 6px;
     margin-bottom: 12px;

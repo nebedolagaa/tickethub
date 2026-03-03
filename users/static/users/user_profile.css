@@ -1,9 +1,9 @@
 /* Hoved bakgrunn og oppsett for hele siden */
 .MB-user_profile-main {
-    background-color: #000000;
+    background-color: var(--th-black);
     min-height: 100vh;
     padding: 60px 0 100px 0;
-    color: #ffffff;
+    color: var(--th-white);
     font-family: 'Inter', sans-serif;
 }
 
@@ -27,7 +27,7 @@
 }
 
 .MB-user_profile-page-subtitle {
-    color: #888;
+    color: var(--th-muted);
     font-size: 1rem;
     margin-top: 8px;
 }
@@ -41,8 +41,8 @@
 
 /* Felles stil for alle kortbokser */
 .MB-user_profile-card {
-    background: #121216;
-    border: 1px solid #22222a;
+    background: var(--th-dark-gray);
+    border: 1px solid var(--th-light-gray);
     border-radius: 12px;
     padding: 25px;
 }
@@ -57,14 +57,14 @@
 /* .MB-user_profile-avatar-circle {
     width: 70px;
     height: 70px;
-    border: 1px solid #333;
+    border: 1px solid var(--th-light-gray);
     border-radius: 50%;
     margin: 0 auto 15px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 24px;
-    color: #555;
+    color: var(--th-muted);
 } */
 
 .MB-user_profile-name {
@@ -74,7 +74,7 @@
 }
 
 .MB-user_profile-subtext {
-    color: #666;
+    color: var(--th-muted);
     font-size: 0.8rem;
     margin: 5px 0 25px;
 }
@@ -82,7 +82,7 @@
 /* Kontaktinfo linjer med ikoner */
 .MB-user_profile-contact-info p { 
     font-size: 0.85rem; 
-    color: #bdbdc7; 
+    color: var(--th-muted); 
     margin: 14px 0; 
     display: flex; 
     align-items: center; 
@@ -91,9 +91,9 @@
 
 /* Mørke knapper */
 .MB-user_profile-btn-dark {
-    background: #1e1e24;
-    color: #fff;
-    border: 1px solid #333;
+    background: var(--th-dark-gray);
+    color: var(--th-white);
+    border: 1px solid var(--th-light-gray);
     width: 100%;
     padding: 12px;
     border-radius: 8px;
@@ -109,8 +109,8 @@
 
 .MB-user_profile-btn-dark:hover,
 a.MB-user_profile-btn-dark.active {
-    background: #24242b;
-    border-color: #3a3a44;
+    background: var(--th-light-gray);
+    border-color: var(--th-light-gray);
 }
 
 /* Høyre kolonne, stort skjema */
@@ -142,7 +142,7 @@ a.MB-user_profile-btn-dark.active {
 
 .MB-user_profile-input-group label {
     font-size: 13px;
-    color: #bdbdc7;
+    color: var(--th-muted);
     font-weight: 600;
 }
 
@@ -151,18 +151,18 @@ a.MB-user_profile-btn-dark.active {
 .MB-user_profile-input-group select,
 .MB-user_profile-input-group textarea {
     width: 100%;
-    background: #0d0d11;
-    border: 1px solid #2a2a33;
+    background: var(--th-dark-gray);
+    border: 1px solid var(--th-light-gray);
     padding: 14px;
     border-radius: 8px;
-    color: #eaeaea;
+    color: var(--th-white);
     font-size: 14px;
 }
 
 /* Rød lagre knapp */
 .MB-user_profile-btn-red {
-    background: #dc2626;
-    color: #fff;
+    background: var(--th-red);
+    color: var(--th-white);
     border: none;
     padding: 14px 40px;
     border-radius: 8px;
@@ -173,13 +173,13 @@ a.MB-user_profile-btn-dark.active {
 }
 
 .MB-user_profile-btn-red:hover {
-    background-color: #b91c1c;
+    background-color: var(--th-red-dark);
 }
 
 /* alerts */
 .MB-success {
-    background-color: rgba(0, 128, 0, 0.498);
-    color: lightgreen;
+    background-color: var(--th-green-a08);
+    color: var(--th-green);
     padding: 10px;
     border-radius: 6px;
     margin-bottom: 12px;

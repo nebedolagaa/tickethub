@@ -290,6 +290,7 @@ def profile_demo(request):
     ]
     return render(request, "events/profile_demo.html", {"tickets": tickets})
 
+
 def venue_guide(request):
     """Side som viser en guide til de mest populære konsertstedene i Norge"""
     from .models import Venue
@@ -308,7 +309,7 @@ def venue_guide(request):
 def venues(request):
     """Side som viser alle venues med søke- og sorteringsfunksjonalitet"""
     from .models import Venue
-    
+
     # Henter alle venues
     venues_list = Venue.objects.select_related("address").all()
 
@@ -357,15 +358,19 @@ def venues(request):
 def venue_detail(request, venue_id):
     """Side som viser detaljer om en spesifikk venue"""
     from .models import Venue
-    
+
     venue = get_object_or_404(Venue.objects.select_related("address"), pk=venue_id)
-    
+
     # Henter events som finner sted på denne venueen
-    events = Event.objects.filter(venue=venue).select_related("organizer").prefetch_related("images")
-    
+    events = (
+        Event.objects.filter(venue=venue)
+        .select_related("organizer", "venue", "venue__address")
+        .prefetch_related("images", "ticket_types")
+    )
+
     context = {
         "venue": venue,
         "events": events,
     }
-    
+
     return render(request, "events/venue_detail.html", context)

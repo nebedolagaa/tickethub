@@ -3,22 +3,22 @@
     margin: 50px auto;
     padding: 20px;
     max-width: 600px;
-    background-color: #000;
-    color: #fff;
-    border: 1px solid #333;
+    background-color: var(--th-black);
+    color: var(--th-white);
+    border: 1px solid var(--th-light-gray);
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--th-black-a10);
 }
 
 .jf-thank-you-header {
     font-size: 2rem;
-    color: #fff;
+    color: var(--th-white);
     margin-bottom: 15px;
 }
 
 .jf-thank-you-message {
     font-size: 1.2rem;
-    color: #ccc;
+    color: var(--th-muted);
     margin-bottom: 20px;
 }
 
@@ -26,13 +26,13 @@
     display: inline-block;
     padding: 10px 20px;
     font-size: 1rem;
-    color: #fff;
-    background-color: #444;
+    color: var(--th-white);
+    background-color: var(--th-light-gray);
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s;
 }
 
 .jf-thank-you-link:hover {
-    background-color: #666;
+    background-color: var(--th-muted);
 }

@@ -1,14 +1,25 @@
 :root {
   --th-black: #000000;
   --th-dark-gray: #111111;
-  --th-gray: #1a1a1a;
   --th-light-gray: #333333;
   --th-muted: #9ca3af;
   --th-white: #ffffff;
   --th-red: #dc2626;
   --th-red-dark: #b91c1c;
-  --th-red-light: #ef4444;
   --th-green: #00c750;
+  --th-info: #3b82f6;
+
+  --th-black-a10: rgba(0, 0, 0, 0.1);
+  --th-black-a30: rgba(0, 0, 0, 0.3);
+  --th-black-a50: rgba(0, 0, 0, 0.5);
+
+  --th-white-a04: rgba(255, 255, 255, 0.04);
+
+  --th-red-a10: rgba(220, 38, 38, 0.1);
+
+  --th-green-a08: rgba(0, 199, 80, 0.08);
+
+  --th-info-a10: rgba(59, 130, 246, 0.1);
 }
 
 * {
@@ -48,7 +59,7 @@ body {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    linear-gradient(var(--th-black-a50), var(--th-black-a50)),
     url("https://images.unsplash.com/photo-1658046413536-6e5933dfd939")
       center/cover no-repeat;
   z-index: 0;
@@ -70,7 +81,7 @@ body {
 }
 
 .KN-hero-highlight {
-  color: var(--th-red); 
+  color: var(--th-red);
 }
 
 .KN-hero-subtitle {
@@ -168,23 +179,23 @@ body {
   top: 0;
   z-index: 50;
   height: 64px;
-  background: rgba(0, 0, 0, 0.95); /* svart bakgrunn */
+  background: var(--th-black-a50); /* svart bakgrunn */
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--th-light-gray);
 }
 
 .search-red-CB {
-  background-color: #dc2626;
-  color: #fff;
+  background-color: var(--th-red);
+  color: var(--th-white);
 }
 .search-red-CB:hover {
-  background-color: #b91c1c;
-  color: #fff;
+  background-color: var(--th-red-dark);
+  color: var(--th-white);
 }
 
 .register-btn-CB {
-  background-color: #dc2626;
-  color: #fff;
+  background-color: var(--th-red);
+  color: var(--th-white);
   padding: 0.4rem 1rem;
   border-radius: 0.5rem;
   font-weight: 600;
@@ -197,8 +208,8 @@ body {
   height: 100%;
 }
 .register-btn-CB:hover {
-  background-color: #b91c1c;
-  color: #fff;
+  background-color: var(--th-red-dark);
+  color: var(--th-white);
 }
 
 .navbar-container-CB {
@@ -236,7 +247,7 @@ body {
 }
 
 .navbar-menu-CB a:hover {
-  color: var(--th-red); 
+  color: var(--th-red);
 }
 
 .navbar-actions-CB {
@@ -262,8 +273,8 @@ body {
 }
 
 .navbar-btn-CB:hover {
-  background: rgba(220, 38, 38, 0.1);
-  color: var(--th-red); 
+  background: var(--th-red-a10);
+  color: var(--th-red);
 }
 
 .mobile-menu-CB {
@@ -309,7 +320,7 @@ body {
   }
 }
 
-/*Ticket card - Nikita*/
+/* Ticket Card Styles - Nikita Pushechnikov */
 
 .NP-ticket-card {
   --accent: var(--th-red);
@@ -317,8 +328,8 @@ body {
   color: var(--th-white);
   border-radius: 12px;
   padding: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--th-white-a04);
+  box-shadow: 0 6px 20px var(--th-black-a50);
   width: 340px;
   min-width: 300px;
   flex-shrink: 0;
@@ -348,7 +359,7 @@ body {
   font-size: 0.8rem;
   padding: 6px 8px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--th-white-a04);
   color: var(--th-muted);
 }
 
@@ -379,7 +390,7 @@ body {
 }
 
 .NP-info-box {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--th-white-a04);
   padding: 12px;
   border-radius: 8px;
   margin-top: 12px;
@@ -394,14 +405,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px dashed rgba(255, 255, 255, 0.06);
+  border: 2px dashed var(--th-white-a04);
   color: var(--th-muted);
-}
-
-.NP-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 14px;
 }
 
 .NP-btn {
@@ -417,7 +422,7 @@ body {
 .NP-btn-download {
   background: transparent;
   color: var(--th-muted);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--th-white-a04);
 }
 
 .NP-btn-share {
@@ -435,11 +440,11 @@ body {
 .NP-small-note {
   font-size: 0.85rem;
   text-align: center;
-  color: var(--th-red-light);
+  color: var(--th-red);
   margin: 15px 10px 10px 10px;
   padding: 8px;
   border-radius: 6px;
-  background: rgba(226, 58, 58, 0.07);
+  background: var(--th-red-a10);
 }
 
 @media (max-width: 400px) {
@@ -468,8 +473,8 @@ body {
   max-width: 800px;
   width: 100%;
   box-shadow:
-    0 10px 15px rgba(0, 0, 0, 0.1),
-    0 4px 6px rgba(0, 0, 0, 0.05);
+    0 10px 15px var(--th-black-a10),
+    0 4px 6px var(--th-black-a10);
   border-radius: 0.5rem;
 }
 
@@ -485,7 +490,7 @@ select[name="ES-BySelect"],
 select[name="ES-Tidspunkt"],
 input[name="ES-ArtistSok"] {
   height: 3rem;
-  background-color: var(--th-gray);
+  background-color: var(--th-dark-gray);
   color: var(--th-muted);
   border: 1px solid var(--th-light-gray);
   border-radius: 4px;
@@ -622,7 +627,7 @@ input[name="ES-ArtistSok"]::placeholder {
   border: 1px solid var(--th-light-gray);
   border-radius: 4px;
   width: 200px;
-  background-color: var(--th-gray);
+  background-color: var(--th-dark-gray);
   color: var(--th-white);
 }
 
@@ -725,20 +730,20 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .JF-eventkort {
-  background-color: var(--th-dark-gray, #111);
+  background-color: var(--th-dark-gray);
   border-radius: 16px;
   overflow: hidden;
   /* make card fluid in bootstrap columns while keeping max size */
   width: 100%;
   max-width: 340px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 4px 16px var(--th-black-a50);
   display: flex;
   flex-direction: column;
   transition: box-shadow 0.2s;
   margin: 8px 0;
 }
 .JF-eventkort:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 8px 32px var(--th-black-a50);
 }
 
 .JF-bilde-wrap {
@@ -758,22 +763,22 @@ input[name="ES-ArtistSok"]::placeholder {
   position: absolute;
   top: 16px;
   left: 16px;
-  background-color: var(--th-red, #dc2626);
-  color: var(--th-white, #fff);
+  background-color: var(--th-red);
+  color: var(--th-white);
   padding: 6px 16px;
   border-radius: 8px;
   font-size: 15px;
   font-weight: 600;
   line-height: 18px;
   z-index: 2;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 2px 8px var(--th-black-a30);
 }
 .JF-utsolgt-merke {
-  background-color: var(--th-red, #dc2626);
+  background-color: var(--th-red);
 }
 
 .JF-detaljer {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   padding: 24px 20px 20px 20px;
   display: flex;
   flex-direction: column;
@@ -785,11 +790,11 @@ input[name="ES-ArtistSok"]::placeholder {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0 0 2px 0;
-  color: var(--th-white, #fff);
+  color: var(--th-white);
 }
 .JF-undertittel {
   font-size: 1.05rem;
-  color: var(--th-muted, #9ca3af);
+  color: var(--th-muted);
   font-weight: 400;
   margin-bottom: 2px;
 }
@@ -804,12 +809,12 @@ input[name="ES-ArtistSok"]::placeholder {
 .JF-dato,
 .JF-tid {
   font-size: 1rem;
-  color: var(--th-white, #fff);
+  color: var(--th-white);
   font-weight: 400;
 }
 .JF-info {
   font-size: 1rem;
-  color: var(--th-muted, #9ca3af);
+  color: var(--th-muted);
   margin-bottom: 0;
 }
 .JF-bottom-section {
@@ -820,15 +825,15 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 .JF-pris {
   font-size: 1.15rem;
-  color: var(--th-white, #fff);
+  color: var(--th-white);
   font-weight: 600;
   margin: 0;
 }
 .JF-kjop-knapp {
   display: block;
   margin-top: 0;
-  background-color: var(--th-red, #dc2626);
-  color: var(--th-white, #fff);
+  background-color: var(--th-red);
+  color: var(--th-white);
   padding: 12px 0;
   border: none;
   border-radius: 8px;
@@ -837,19 +842,19 @@ input[name="ES-ArtistSok"]::placeholder {
   width: 100%;
   font-weight: 700;
   transition: background 0.2s;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px var(--th-black-a10);
   letter-spacing: 0.5px;
   text-decoration: none;
   text-align: center;
 }
 
 .JF-kjop-knapp:hover:not(:disabled) {
-  background-color: var(--th-red-dark, #b91c1c);
-  color: var(--th-white, #fff);
+  background-color: var(--th-red-dark);
+  color: var(--th-white);
 }
 .JF-utsolgt .JF-kjop-knapp {
   background-color: var(--th-light-gray);
-  color: var(--th-white, #fff);
+  color: var(--th-white);
   cursor: not-allowed;
   font-weight: 700;
   border: none;
@@ -886,16 +891,8 @@ input[name="ES-ArtistSok"]::placeholder {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(
-      circle at 20% 50%,
-      rgba(220, 38, 38, 0.1) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(220, 38, 38, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(circle at 20% 50%, var(--th-red-a10) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, var(--th-red-a10) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -927,12 +924,12 @@ input[name="ES-ArtistSok"]::placeholder {
   z-index: 1;
 }
 
-/* NP Tickets Section Styles */
+/* Ticket Showcase Styles - Nikita Pushechnikov */
 .NP-tickets-section {
   background: linear-gradient(
     135deg,
     var(--th-dark-gray) 0%,
-    var(--th-gray) 100%
+    var(--th-dark-gray) 100%
   );
   padding: 60px 0;
   position: relative;
@@ -946,16 +943,8 @@ input[name="ES-ArtistSok"]::placeholder {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(
-      circle at 30% 80%,
-      rgba(0, 199, 80, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 70% 30%,
-      rgba(220, 38, 38, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(circle at 30% 80%, var(--th-green-a08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, var(--th-red-a10) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -1027,7 +1016,7 @@ input[name="ES-ArtistSok"]::placeholder {
   }
 }
 
-/* Static Pages Styles - Nikita */
+/* Static Pages Styles - Nikita Pushechnikov */
 
 /* General Page Layout */
 .NP-page-container {
@@ -1035,7 +1024,7 @@ input[name="ES-ArtistSok"]::placeholder {
   background: linear-gradient(
     135deg,
     var(--th-dark-gray) 0%,
-    var(--th-gray) 100%
+    var(--th-dark-gray) 100%
   );
   color: var(--th-white);
   padding: 60px 0;
@@ -1050,16 +1039,8 @@ input[name="ES-ArtistSok"]::placeholder {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(
-      circle at 30% 80%,
-      rgba(0, 199, 80, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 70% 30%,
-      rgba(220, 38, 38, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(circle at 30% 80%, var(--th-green-a08) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, var(--th-red-a10) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -1091,7 +1072,7 @@ input[name="ES-ArtistSok"]::placeholder {
   border-radius: 12px;
   padding: 2rem;
   margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px var(--th-black-a30);
 }
 
 .NP-content-section h2,
@@ -1146,12 +1127,12 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-content-section a:hover {
-  color: var(--th-red-light);
+  color: var(--th-red);
 }
 
 /* Alert Box */
 .NP-alert {
-  background: rgba(220, 38, 38, 0.1);
+  background: var(--th-red-a10);
   border-left: 4px solid var(--th-red);
   padding: 1rem 1.5rem;
   border-radius: 8px;
@@ -1160,8 +1141,8 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-alert-info {
-  background: rgba(59, 130, 246, 0.1);
-  border-left-color: #3b82f6;
+  background: var(--th-info-a10);
+  border-left-color: var(--th-info);
 }
 
 .NP-alert-icon {
@@ -1201,7 +1182,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-accordion-header:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--th-white-a04);
 }
 
 .NP-accordion-icon {
@@ -1264,7 +1245,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-form-input,
 .NP-form-textarea {
   width: 100%;
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 8px;
   padding: 0.75rem 1rem;
@@ -1370,7 +1351,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-sidebar-button-outline:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--th-white-a04);
   border-color: var(--th-red);
 }
 
@@ -1387,7 +1368,7 @@ input[name="ES-ArtistSok"]::placeholder {
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 8px;
   color: var(--th-white);
@@ -1419,611 +1400,7 @@ input[name="ES-ArtistSok"]::placeholder {
     margin-top: 0;
   }
 }
-/* === NP: All Events Page Styles === */
-
-/* Main Section */
-.NP-all-events-section {
-  background: linear-gradient(
-    135deg,
-    var(--th-black) 0%,
-    var(--th-dark-gray) 100%
-  );
-  min-height: 100vh;
-  padding: 80px 0 60px;
-  position: relative;
-}
-
-.NP-all-events-section::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background:
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(220, 38, 38, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      rgba(220, 38, 38, 0.05) 0%,
-      transparent 50%
-    );
-  pointer-events: none;
-}
-
-/* Container */
-.NP-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 24px;
-  position: relative;
-  z-index: 1;
-}
-
-/* Header */
-.NP-header {
-  text-align: center;
-  margin-bottom: 48px;
-}
-
-.NP-title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 700;
-  color: var(--th-white);
-  margin-bottom: 16px;
-}
-
-.NP-subtitle {
-  font-size: clamp(1.1rem, 2vw, 1.3rem);
-  color: var(--th-muted);
-  margin: 0;
-}
-
-/* Filter Panel */
-.NP-filter-panel {
-  background: var(--th-gray);
-  border: 1px solid var(--th-light-gray);
-  border-radius: 16px;
-  padding: 32px;
-  margin-bottom: 48px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-}
-
-/* Search Form */
-.NP-search-form {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-/* Search Container */
-.NP-search-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.NP-search-icon {
-  position: absolute;
-  left: 16px;
-  color: var(--th-muted);
-  font-size: 1.2rem;
-  pointer-events: none;
-}
-
-.NP-search-input {
-  width: 100%;
-  padding: 14px 16px 14px 48px;
-  background: var(--th-dark-gray);
-  border: 1px solid var(--th-light-gray);
-  border-radius: 12px;
-  color: var(--th-white);
-  font-size: 1rem;
-  transition: all 0.2s;
-}
-
-.NP-search-input:focus {
-  outline: none;
-  border-color: var(--th-red);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-}
-
-.NP-search-input::placeholder {
-  color: var(--th-muted);
-}
-
-/* Sort Container */
-.NP-sort-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-width: 250px;
-}
-
-.NP-sort-icon {
-  position: absolute;
-  left: 16px;
-  color: var(--th-muted);
-  font-size: 1.2rem;
-  pointer-events: none;
-}
-
-.NP-sort-select {
-  width: 100%;
-  padding: 14px 16px 14px 48px;
-  background: var(--th-dark-gray);
-  border: 1px solid var(--th-light-gray);
-  border-radius: 12px;
-  color: var(--th-white);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 16px center;
-  padding-right: 40px;
-}
-
-.NP-sort-select:focus {
-  outline: none;
-  border-color: var(--th-red);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
-}
-
-.NP-sort-select option {
-  background: var(--th-dark-gray);
-  color: var(--th-white);
-}
-
-/* Search Button */
-.NP-search-btn {
-  padding: 14px 32px;
-  background: var(--th-red);
-  border: none;
-  border-radius: 12px;
-  color: var(--th-white);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  white-space: nowrap;
-}
-
-.NP-search-btn:hover {
-  background: var(--th-red-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-}
-
-/* Results Info */
-.NP-results-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 16px;
-  border-top: 1px solid var(--th-light-gray);
-  color: var(--th-muted);
-}
-
-.NP-results-info p {
-  margin: 0;
-  font-size: 1rem;
-}
-
-.NP-results-info strong {
-  color: var(--th-white);
-}
-
-.NP-clear-search {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--th-red);
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: all 0.2s;
-}
-
-.NP-clear-search:hover {
-  color: var(--th-red-light);
-  gap: 8px;
-}
-
-/* Events Grid */
-.NP-events-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 32px;
-  margin-top: 48px;
-}
-
-/* Event Card */
-.NP-event-card {
-  background: var(--th-dark-gray);
-  border: 1px solid var(--th-light-gray);
-  border-radius: 16px;
-  overflow: hidden;
-  transition: all 0.3s;
-  display: flex;
-  flex-direction: column;
-}
-
-.NP-event-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
-  border-color: var(--th-red);
-}
-
-/* Image Wrap */
-.NP-image-wrap {
-  position: relative;
-  width: 100%;
-  height: 220px;
-  overflow: hidden;
-  background: var(--th-light-gray);
-}
-
-.NP-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s;
-}
-
-.NP-event-card:hover .NP-image {
-  transform: scale(1.05);
-}
-
-.NP-category {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  background: var(--th-red);
-  color: var(--th-white);
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 600;
-  z-index: 2;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Details */
-.NP-details {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex-grow: 1;
-}
-
-.NP-event-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--th-white);
-  margin: 0;
-  line-height: 1.3;
-}
-
-.NP-event-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.NP-meta-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--th-muted);
-  font-size: 0.95rem;
-}
-
-.NP-meta-item i {
-  color: var(--th-red);
-  font-size: 1rem;
-  width: 18px;
-}
-
-.NP-description {
-  color: var(--th-muted);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin: 0;
-  flex-grow: 1;
-}
-
-/* Card Footer */
-.NP-card-footer {
-  margin-top: auto;
-  padding-top: 16px;
-}
-
-.NP-buy-btn {
-  width: 100%;
-  padding: 14px 24px;
-  background: var(--th-red);
-  border: none;
-  border-radius: 10px;
-  color: var(--th-white);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  text-decoration: none;
-}
-
-.NP-buy-btn:hover {
-  background: var(--th-red-dark);
-  gap: 12px;
-  color: var(--th-white);
-}
-
-.NP-buy-btn i {
-  font-size: 1.1rem;
-  transition: transform 0.2s;
-}
-
-.NP-buy-btn:hover i {
-  transform: translateX(4px);
-}
-
-/* No Results */
-.NP-no-results {
-  text-align: center;
-  padding: 80px 24px;
-  color: var(--th-muted);
-}
-
-.NP-no-results i {
-  font-size: 4rem;
-  color: var(--th-light-gray);
-  margin-bottom: 24px;
-  opacity: 0.5;
-}
-
-.NP-no-results h3 {
-  font-size: 2rem;
-  color: var(--th-white);
-  margin-bottom: 16px;
-}
-
-.NP-no-results p {
-  font-size: 1.1rem;
-  margin: 0;
-}
-
-.NP-no-results a {
-  color: var(--th-red);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.NP-no-results a:hover {
-  color: var(--th-red-light);
-  text-decoration: underline;
-}
-
-/* ============================================
-   PAGINERING STILER - Nikita Popov (NP)
-   ============================================ */
-
-.NP-pagination-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  margin-top: 60px;
-  padding-top: 40px;
-  border-top: 1px solid var(--th-light-gray);
-}
-
-/* Pagination liste - NP */
-.NP-pagination {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* Page items - NP */
-.NP-page-item {
-  display: inline-block;
-}
-
-/* Page links - NP */
-.NP-page-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 40px;
-  height: 40px;
-  padding: 8px 12px;
-  background: var(--th-dark-gray);
-  color: var(--th-white);
-  border: 1px solid var(--th-light-gray);
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 0.95rem;
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-.NP-page-link:hover {
-  background: var(--th-red);
-  border-color: var(--th-red);
-  color: var(--th-white);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-}
-
-/* Aktiv side - NP */
-.NP-page-item.NP-active .NP-page-link {
-  background: var(--th-red);
-  border-color: var(--th-red);
-  color: var(--th-white);
-  font-weight: 700;
-  cursor: default;
-  pointer-events: none;
-}
-
-/* Deaktivert side - NP */
-.NP-page-item.NP-disabled .NP-page-link {
-  background: transparent;
-  color: var(--th-muted);
-  border-color: var(--th-light-gray);
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.NP-page-item.NP-disabled .NP-page-link:hover {
-  transform: none;
-  box-shadow: none;
-}
-
-/* Side info tekst - NP */
-.NP-pagination-info {
-  color: var(--th-muted);
-  font-size: 0.9rem;
-  font-weight: 500;
-  text-align: center;
-}
-
-/* Responsiv paginering - NP */
-@media (max-width: 768px) {
-  .NP-pagination-wrapper {
-    margin-top: 40px;
-    padding-top: 30px;
-  }
-
-  .NP-pagination {
-    gap: 6px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .NP-page-link {
-    min-width: 36px;
-    height: 36px;
-    padding: 6px 10px;
-    font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .NP-pagination {
-    gap: 4px;
-  }
-
-  .NP-page-link {
-    min-width: 32px;
-    height: 32px;
-    padding: 4px 8px;
-    font-size: 0.8rem;
-  }
-
-  .NP-pagination-info {
-    font-size: 0.85rem;
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-  .NP-events-grid {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .NP-all-events-section {
-    padding: 60px 0 40px;
-  }
-
-  .NP-container {
-    padding: 0 16px;
-  }
-
-  .NP-header {
-    margin-bottom: 32px;
-  }
-
-  .NP-filter-panel {
-    padding: 24px 20px;
-    margin-bottom: 32px;
-  }
-
-  .NP-search-form {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .NP-sort-container {
-    min-width: 100%;
-  }
-
-  .NP-search-btn {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .NP-results-info {
-    flex-direction: column;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
-  .NP-events-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-top: 32px;
-  }
-
-  .NP-event-card {
-    max-width: 500px;
-    margin: 0 auto;
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .NP-title {
-    font-size: 2rem;
-  }
-
-  .NP-subtitle {
-    font-size: 1rem;
-  }
-
-  .NP-filter-panel {
-    padding: 20px 16px;
-  }
-
-  .NP-event-title {
-    font-size: 1.3rem;
-  }
-
-  .NP-image-wrap {
-    height: 200px;
-  }
-}
-
-/* === NP: Purchase Tickets Page Styles === */
+/* Purchase Tickets Styles - Nikita Pushechnikov */
 
 /* Hovedseksjon for billettkjøp */
 .NP-purchase-section {
@@ -2045,16 +1422,8 @@ input[name="ES-ArtistSok"]::placeholder {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(220, 38, 38, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      rgba(220, 38, 38, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(circle at 20% 30%, var(--th-red-a10) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--th-red-a10) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -2102,7 +1471,7 @@ input[name="ES-ArtistSok"]::placeholder {
   margin-bottom: 48px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 32px var(--th-black-a50);
 }
 
 .NP-event-image-container {
@@ -2125,8 +1494,8 @@ input[name="ES-ArtistSok"]::placeholder {
   right: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.95) 0%,
-    rgba(0, 0, 0, 0.7) 60%,
+    var(--th-black-a50) 0%,
+    var(--th-black-a50) 60%,
     transparent 100%
   );
   padding: 48px 40px 32px;
@@ -2218,7 +1587,7 @@ input[name="ES-ArtistSok"]::placeholder {
 
 .NP-ticket-option:hover {
   border-color: var(--th-red);
-  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 4px 16px var(--th-red-a10);
 }
 
 .NP-ticket-unavailable {
@@ -2297,7 +1666,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-quantity-selector {
   display: flex;
   align-items: center;
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 10px;
   overflow: hidden;
@@ -2366,7 +1735,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-add-to-cart-btn:hover {
   background: var(--th-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 4px 12px var(--th-red-a10);
 }
 
 /* Arrangementinformasjon kort */
@@ -2440,7 +1809,7 @@ input[name="ES-ArtistSok"]::placeholder {
   border: 2px solid var(--th-red);
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.15);
+  box-shadow: 0 8px 32px var(--th-red-a10);
 }
 
 .NP-summary-title {
@@ -2491,7 +1860,7 @@ input[name="ES-ArtistSok"]::placeholder {
   justify-content: space-between;
   align-items: flex-start;
   padding: 16px;
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 12px;
   margin-bottom: 12px;
@@ -2598,7 +1967,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-checkout-btn:hover:not(:disabled) {
   background: var(--th-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 6px 20px var(--th-red-a10);
 }
 
 .NP-checkout-btn:disabled {
@@ -2722,265 +2091,7 @@ input[name="ES-ArtistSok"]::placeholder {
   }
 }
 
-/* ============================================
-   SØKMODAL STILER - Nikita Popov (NP)
-   ============================================ */
-
-/* Modal container - skjult som standard */
-.NP-search-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
-  display: none;
-  align-items: flex-start;
-  justify-content: center;
-  padding-top: 80px;
-}
-
-/* Vises når aktiv */
-.NP-search-modal-active {
-  display: flex;
-}
-
-/* Mørk overlay bakgrunn */
-.NP-search-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(4px);
-  z-index: -1;
-}
-
-/* Modal innhold container */
-.NP-search-modal-content {
-  position: relative;
-  width: 90%;
-  max-width: 700px;
-  background: var(--th-dark-gray);
-  border: 1px solid var(--th-light-gray);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-  animation: NP-slideDown 0.3s ease-out;
-}
-
-@keyframes NP-slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Modal header */
-.NP-search-modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.NP-search-modal-title {
-  color: var(--th-white);
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 0;
-}
-
-/* Lukkeknapp */
-.NP-search-modal-close {
-  background: transparent;
-  border: none;
-  color: var(--th-muted);
-  font-size: 1.5rem;
-  cursor: pointer;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-
-.NP-search-modal-close:hover {
-  background: var(--th-light-gray);
-  color: var(--th-white);
-}
-
-/* Søkeskjema */
-.NP-search-form {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 32px;
-}
-
-/* Input wrapper med ikon */
-.NP-search-input-wrapper {
-  position: relative;
-  flex: 1;
-}
-
-.NP-search-icon {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--th-muted);
-  font-size: 1.25rem;
-  pointer-events: none;
-}
-
-/* Søkeinput felt */
-.NP-search-input {
-  width: 100%;
-  padding: 14px 16px 14px 48px;
-  background: var(--th-gray);
-  border: 2px solid var(--th-light-gray);
-  border-radius: 12px;
-  color: var(--th-white);
-  font-size: 1rem;
-  transition: all 0.2s ease;
-}
-
-.NP-search-input::placeholder {
-  color: var(--th-muted);
-}
-
-.NP-search-input:focus {
-  outline: none;
-  border-color: var(--th-red);
-  background: var(--th-black);
-}
-
-/* Søkeknapp */
-.NP-search-submit-btn {
-  padding: 14px 28px;
-  background: var(--th-red);
-  color: var(--th-white);
-  border: none;
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.NP-search-submit-btn:hover {
-  background: var(--th-red-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-}
-
-.NP-search-submit-btn:active {
-  transform: translateY(0);
-}
-
-/* Forslag seksjon */
-.NP-search-suggestions {
-  padding-top: 24px;
-  border-top: 1px solid var(--th-light-gray);
-}
-
-.NP-suggestions-title {
-  color: var(--th-muted);
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 12px;
-}
-
-/* Forslag tags */
-.NP-suggestion-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.NP-suggestion-tag {
-  padding: 8px 16px;
-  background: var(--th-light-gray);
-  color: var(--th-white);
-  text-decoration: none;
-  border-radius: 20px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  border: 1px solid transparent;
-}
-
-.NP-suggestion-tag:hover {
-  background: var(--th-red);
-  border-color: var(--th-red);
-  transform: translateY(-2px);
-}
-
-/* Responsiv design for søkmodal */
-@media (max-width: 768px) {
-  .NP-search-modal {
-    padding-top: 40px;
-  }
-
-  .NP-search-modal-content {
-    width: 95%;
-    padding: 24px;
-    border-radius: 12px;
-  }
-
-  .NP-search-modal-title {
-    font-size: 1.25rem;
-  }
-
-  .NP-search-form {
-    flex-direction: column;
-  }
-
-  .NP-search-submit-btn {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .NP-search-modal-content {
-    padding: 20px;
-  }
-
-  .NP-search-modal-title {
-    font-size: 1.1rem;
-  }
-
-  .NP-search-input {
-    font-size: 0.9rem;
-    padding: 12px 16px 12px 44px;
-  }
-
-  .NP-search-submit-btn {
-    padding: 12px 24px;
-    font-size: 0.9rem;
-  }
-
-  .NP-suggestion-tag {
-    font-size: 0.8rem;
-    padding: 6px 14px;
-  }
-}
-/* ============================================
-   CITIES/BYER SIDE STILER - Nikita Popov (NP)
-   ============================================ */
+/* Cities Styles - Nikita Pushechnikov */
 
 /* Hovedseksjon for byer */
 .NP-cities-section {
@@ -2994,7 +2105,7 @@ input[name="ES-ArtistSok"]::placeholder {
   position: relative;
 }
 
-/* Radial gradient overlay - NP */
+/* Cities Overlay Styles - Nikita Pushechnikov */
 .NP-cities-section::before {
   content: "";
   position: absolute;
@@ -3003,16 +2114,8 @@ input[name="ES-ArtistSok"]::placeholder {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(220, 38, 38, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      rgba(220, 38, 38, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(circle at 20% 30%, var(--th-red-a10) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--th-red-a10) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -3024,7 +2127,7 @@ input[name="ES-ArtistSok"]::placeholder {
   margin-top: 48px;
 }
 
-/* Individuelt bykort - NP */
+/* City Card Styles - Nikita Pushechnikov */
 .NP-city-card {
   background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
@@ -3036,11 +2139,11 @@ input[name="ES-ArtistSok"]::placeholder {
 
 .NP-city-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 12px 40px var(--th-red-a10);
   border-color: var(--th-red);
 }
 
-/* Bildewrapper med overlay - NP */
+/* City Image Wrapper Styles - Nikita Pushechnikov */
 .NP-city-image-wrap {
   position: relative;
   width: 100%;
@@ -3059,7 +2162,7 @@ input[name="ES-ArtistSok"]::placeholder {
   transform: scale(1.1);
 }
 
-/* Mørk overlay gradient - NP */
+/* City Gradient Overlay Styles - Nikita Pushechnikov */
 .NP-city-overlay {
   position: absolute;
   top: 0;
@@ -3068,13 +2171,13 @@ input[name="ES-ArtistSok"]::placeholder {
   height: 100%;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.3),
-    rgba(0, 0, 0, 0.7)
+    var(--th-black-a30),
+    var(--th-black-a50)
   );
   pointer-events: none;
 }
 
-/* Event count badge - NP */
+/* City Event Badge Styles - Nikita Pushechnikov */
 .NP-city-badge {
   position: absolute;
   top: 16px;
@@ -3088,11 +2191,11 @@ input[name="ES-ArtistSok"]::placeholder {
   display: flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px var(--th-black-a30);
   z-index: 10;
 }
 
-/* Bydetaljer seksjon - NP */
+/* City Details Styles - Nikita Pushechnikov */
 .NP-city-details {
   padding: 24px;
 }
@@ -3118,7 +2221,7 @@ input[name="ES-ArtistSok"]::placeholder {
   margin-bottom: 20px;
 }
 
-/* Knapp for å se arrangementer - NP */
+/* City Button Styles - Nikita Pushechnikov */
 .NP-city-btn {
   display: inline-flex;
   align-items: center;
@@ -3149,7 +2252,7 @@ input[name="ES-ArtistSok"]::placeholder {
   transform: translateX(4px);
 }
 
-/* Responsiv design for byer-siden - NP */
+/* Cities Responsive Styles - Nikita Pushechnikov */
 @media (max-width: 1024px) {
   .NP-cities-grid {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -3198,7 +2301,7 @@ input[name="ES-ArtistSok"]::placeholder {
   }
 }
 
-/* === NP: Arrangør Side Styles === */
+/* Organizer Page Styles - Nikita Pushechnikov */
 
 /* Hero seksjon for arrangør */
 .NP-arrangor-hero {
@@ -3208,7 +2311,7 @@ input[name="ES-ArtistSok"]::placeholder {
   align-items: center;
   justify-content: center;
   background:
-    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    linear-gradient(var(--th-black-a50), var(--th-black-a50)),
     url("https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920")
       center/cover no-repeat;
   color: var(--th-white);
@@ -3220,8 +2323,8 @@ input[name="ES-ArtistSok"]::placeholder {
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(220, 38, 38, 0.15) 0%,
-    rgba(0, 0, 0, 0.3) 100%
+    var(--th-red-a10) 0%,
+    var(--th-black-a30) 100%
   );
   z-index: 0;
 }
@@ -3279,7 +2382,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-arrangor-btn-primary:hover {
   background: var(--th-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 8px 16px var(--th-red-a10);
   color: var(--th-white);
 }
 
@@ -3323,16 +2426,8 @@ input[name="ES-ArtistSok"]::placeholder {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(220, 38, 38, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      rgba(220, 38, 38, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(circle at 20% 30%, var(--th-red-a10) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--th-red-a10) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
@@ -3346,7 +2441,7 @@ input[name="ES-ArtistSok"]::placeholder {
   background: linear-gradient(
     135deg,
     var(--th-dark-gray) 0%,
-    var(--th-gray) 50%,
+    var(--th-dark-gray) 50%,
     var(--th-dark-gray) 100%
   );
 }
@@ -3381,7 +2476,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-arrangor-benefit-card {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 12px;
   padding: 2rem;
@@ -3392,7 +2487,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-arrangor-benefit-card:hover {
   transform: translateY(-5px);
   border-color: var(--th-red);
-  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 8px 24px var(--th-red-a10);
 }
 
 .NP-arrangor-benefit-icon {
@@ -3484,7 +2579,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-arrangor-pricing-card {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 2px solid var(--th-light-gray);
   border-radius: 16px;
   padding: 2.5rem;
@@ -3495,15 +2590,15 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-arrangor-pricing-card:hover {
   transform: translateY(-5px);
   border-color: var(--th-red);
-  box-shadow: 0 12px 32px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 12px 32px var(--th-red-a10);
 }
 
 .NP-arrangor-pricing-card-featured {
   border-color: var(--th-red);
   background: linear-gradient(
     135deg,
-    var(--th-gray) 0%,
-    rgba(220, 38, 38, 0.05) 100%
+    var(--th-dark-gray) 0%,
+    var(--th-red-a10) 100%
   );
 }
 
@@ -3601,7 +2696,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-arrangor-contact-form {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 16px;
   padding: 2.5rem;
@@ -3639,7 +2734,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-arrangor-form-input:focus {
   outline: none;
   border-color: var(--th-red);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 0 3px var(--th-red-a10);
 }
 
 .NP-arrangor-form-input::placeholder {
@@ -3667,7 +2762,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-arrangor-form-submit:hover {
   background: var(--th-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 8px 16px var(--th-red-a10);
 }
 
 /* Kontaktinformasjon */
@@ -3678,7 +2773,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-arrangor-info-card {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 12px;
   padding: 1.5rem;
@@ -3785,7 +2880,7 @@ input[name="ES-ArtistSok"]::placeholder {
     font-size: 2.5rem;
   }
 }
-/* === NP: All Events Page Styles === */
+/* All Events Styles - Nikita Pushechnikov */
 
 /* Main Section */
 .NP-all-events-section {
@@ -3807,16 +2902,8 @@ input[name="ES-ArtistSok"]::placeholder {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(220, 38, 38, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      rgba(220, 38, 38, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(circle at 20% 30%, var(--th-red-a10) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--th-red-a10) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -3850,12 +2937,12 @@ input[name="ES-ArtistSok"]::placeholder {
 
 /* Filter Panel */
 .NP-filter-panel {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 16px;
   padding: 32px;
   margin-bottom: 48px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px var(--th-black-a30);
 }
 
 /* Search Form */
@@ -3895,7 +2982,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-search-input:focus {
   outline: none;
   border-color: var(--th-red);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 0 3px var(--th-red-a10);
 }
 
 .NP-search-input::placeholder {
@@ -3938,7 +3025,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-sort-select:focus {
   outline: none;
   border-color: var(--th-red);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 0 3px var(--th-red-a10);
 }
 
 .NP-sort-select option {
@@ -3966,7 +3053,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-search-btn:hover {
   background: var(--th-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 4px 12px var(--th-red-a10);
 }
 
 /* Results Info */
@@ -4000,7 +3087,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-clear-search:hover {
-  color: var(--th-red-light);
+  color: var(--th-red);
   gap: 8px;
 }
 
@@ -4025,7 +3112,7 @@ input[name="ES-ArtistSok"]::placeholder {
 
 .NP-event-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 32px var(--th-black-a50);
   border-color: var(--th-red);
 }
 
@@ -4060,7 +3147,7 @@ input[name="ES-ArtistSok"]::placeholder {
   font-size: 0.875rem;
   font-weight: 600;
   z-index: 2;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px var(--th-black-a30);
 }
 
 /* Details */
@@ -4179,13 +3266,11 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-no-results a:hover {
-  color: var(--th-red-light);
+  color: var(--th-red);
   text-decoration: underline;
 }
 
-/* ============================================
-   PAGINERING STILER - Nikita Popov (NP)
-   ============================================ */
+/* Pagination Styles - Nikita Pushechnikov */
 
 .NP-pagination-wrapper {
   display: flex;
@@ -4197,7 +3282,7 @@ input[name="ES-ArtistSok"]::placeholder {
   border-top: 1px solid var(--th-light-gray);
 }
 
-/* Pagination liste - NP */
+/* Pagination List Styles - Nikita Pushechnikov */
 .NP-pagination {
   display: flex;
   align-items: center;
@@ -4207,12 +3292,12 @@ input[name="ES-ArtistSok"]::placeholder {
   padding: 0;
 }
 
-/* Page items - NP */
+/* Pagination Item Styles - Nikita Pushechnikov */
 .NP-page-item {
   display: inline-block;
 }
 
-/* Page links - NP */
+/* Pagination Link Styles - Nikita Pushechnikov */
 .NP-page-link {
   display: flex;
   align-items: center;
@@ -4236,10 +3321,10 @@ input[name="ES-ArtistSok"]::placeholder {
   border-color: var(--th-red);
   color: var(--th-white);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 4px 12px var(--th-red-a10);
 }
 
-/* Aktiv side - NP */
+/* Pagination Active State Styles - Nikita Pushechnikov */
 .NP-page-item.NP-active .NP-page-link {
   background: var(--th-red);
   border-color: var(--th-red);
@@ -4249,7 +3334,7 @@ input[name="ES-ArtistSok"]::placeholder {
   pointer-events: none;
 }
 
-/* Deaktivert side - NP */
+/* Pagination Disabled State Styles - Nikita Pushechnikov */
 .NP-page-item.NP-disabled .NP-page-link {
   background: transparent;
   color: var(--th-muted);
@@ -4263,7 +3348,7 @@ input[name="ES-ArtistSok"]::placeholder {
   box-shadow: none;
 }
 
-/* Side info tekst - NP */
+/* Pagination Info Styles - Nikita Pushechnikov */
 .NP-pagination-info {
   color: var(--th-muted);
   font-size: 0.9rem;
@@ -4271,7 +3356,7 @@ input[name="ES-ArtistSok"]::placeholder {
   text-align: center;
 }
 
-/* Responsiv paginering - NP */
+/* Pagination Responsive Styles - Nikita Pushechnikov */
 @media (max-width: 768px) {
   .NP-pagination-wrapper {
     margin-top: 40px;
@@ -4389,7 +3474,7 @@ input[name="ES-ArtistSok"]::placeholder {
   }
 }
 
-/* === NP: Purchase Tickets Page Styles === */
+/* Purchase Tickets Styles - Nikita Pushechnikov */
 
 /* Hovedseksjon for billettkjøp */
 .NP-purchase-section {
@@ -4411,16 +3496,8 @@ input[name="ES-ArtistSok"]::placeholder {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(220, 38, 38, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      rgba(220, 38, 38, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(circle at 20% 30%, var(--th-red-a10) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--th-red-a10) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -4468,7 +3545,7 @@ input[name="ES-ArtistSok"]::placeholder {
   margin-bottom: 48px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 32px var(--th-black-a50);
 }
 
 .NP-event-image-container {
@@ -4491,8 +3568,8 @@ input[name="ES-ArtistSok"]::placeholder {
   right: 0;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.95) 0%,
-    rgba(0, 0, 0, 0.7) 60%,
+    var(--th-black-a50) 0%,
+    var(--th-black-a50) 60%,
     transparent 100%
   );
   padding: 48px 40px 32px;
@@ -4584,7 +3661,7 @@ input[name="ES-ArtistSok"]::placeholder {
 
 .NP-ticket-option:hover {
   border-color: var(--th-red);
-  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 4px 16px var(--th-red-a10);
 }
 
 .NP-ticket-unavailable {
@@ -4663,7 +3740,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-quantity-selector {
   display: flex;
   align-items: center;
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 10px;
   overflow: hidden;
@@ -4732,7 +3809,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-add-to-cart-btn:hover {
   background: var(--th-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 4px 12px var(--th-red-a10);
 }
 
 /* Arrangementinformasjon kort */
@@ -4806,7 +3883,7 @@ input[name="ES-ArtistSok"]::placeholder {
   border: 2px solid var(--th-red);
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 8px 32px rgba(220, 38, 38, 0.15);
+  box-shadow: 0 8px 32px var(--th-red-a10);
 }
 
 .NP-summary-title {
@@ -4857,7 +3934,7 @@ input[name="ES-ArtistSok"]::placeholder {
   justify-content: space-between;
   align-items: flex-start;
   padding: 16px;
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 12px;
   margin-bottom: 12px;
@@ -4964,7 +4041,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-checkout-btn:hover:not(:disabled) {
   background: var(--th-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
+  box-shadow: 0 6px 20px var(--th-red-a10);
 }
 
 .NP-checkout-btn:disabled {
@@ -5088,9 +4165,7 @@ input[name="ES-ArtistSok"]::placeholder {
   }
 }
 
-/* ============================================
-   SØKMODAL STILER - Nikita Popov (NP)
-   ============================================ */
+/* Search Modal Styles - Nikita Pushechnikov */
 
 /* Modal container - skjult som standard */
 .NP-search-modal {
@@ -5118,7 +4193,7 @@ input[name="ES-ArtistSok"]::placeholder {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
+  background: var(--th-black-a50);
   backdrop-filter: blur(4px);
   z-index: -1;
 }
@@ -5132,7 +4207,7 @@ input[name="ES-ArtistSok"]::placeholder {
   border: 1px solid var(--th-light-gray);
   border-radius: 16px;
   padding: 32px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 20px 60px var(--th-black-a50);
   animation: NP-slideDown 0.3s ease-out;
 }
 
@@ -5183,19 +4258,19 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 /* Søkeskjema */
-.NP-search-form {
+.NP-search-modal .NP-search-form {
   display: flex;
   gap: 12px;
   margin-bottom: 32px;
 }
 
 /* Input wrapper med ikon */
-.NP-search-input-wrapper {
+.NP-search-modal .NP-search-input-wrapper {
   position: relative;
   flex: 1;
 }
 
-.NP-search-icon {
+.NP-search-modal .NP-search-icon {
   position: absolute;
   left: 16px;
   top: 50%;
@@ -5206,10 +4281,10 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 /* Søkeinput felt */
-.NP-search-input {
+.NP-search-modal .NP-search-input {
   width: 100%;
   padding: 14px 16px 14px 48px;
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 2px solid var(--th-light-gray);
   border-radius: 12px;
   color: var(--th-white);
@@ -5217,11 +4292,11 @@ input[name="ES-ArtistSok"]::placeholder {
   transition: all 0.2s ease;
 }
 
-.NP-search-input::placeholder {
+.NP-search-modal .NP-search-input::placeholder {
   color: var(--th-muted);
 }
 
-.NP-search-input:focus {
+.NP-search-modal .NP-search-input:focus {
   outline: none;
   border-color: var(--th-red);
   background: var(--th-black);
@@ -5247,7 +4322,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-search-submit-btn:hover {
   background: var(--th-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 4px 12px var(--th-red-a10);
 }
 
 .NP-search-submit-btn:active {
@@ -5310,7 +4385,7 @@ input[name="ES-ArtistSok"]::placeholder {
     font-size: 1.25rem;
   }
 
-  .NP-search-form {
+  .NP-search-modal .NP-search-form {
     flex-direction: column;
   }
 
@@ -5329,7 +4404,7 @@ input[name="ES-ArtistSok"]::placeholder {
     font-size: 1.1rem;
   }
 
-  .NP-search-input {
+  .NP-search-modal .NP-search-input {
     font-size: 0.9rem;
     padding: 12px 16px 12px 44px;
   }
@@ -5344,9 +4419,7 @@ input[name="ES-ArtistSok"]::placeholder {
     padding: 6px 14px;
   }
 }
-/* ============================================
-   CITIES/BYER SIDE STILER - Nikita Popov (NP)
-   ============================================ */
+/* Cities Styles - Nikita Pushechnikov */
 
 /* Hovedseksjon for byer */
 .NP-cities-section {
@@ -5360,7 +4433,7 @@ input[name="ES-ArtistSok"]::placeholder {
   position: relative;
 }
 
-/* Radial gradient overlay - NP */
+/* Cities Overlay Styles - Nikita Pushechnikov */
 .NP-cities-section::before {
   content: "";
   position: absolute;
@@ -5369,16 +4442,8 @@ input[name="ES-ArtistSok"]::placeholder {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(220, 38, 38, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      rgba(220, 38, 38, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(circle at 20% 30%, var(--th-red-a10) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--th-red-a10) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -5390,7 +4455,7 @@ input[name="ES-ArtistSok"]::placeholder {
   margin-top: 48px;
 }
 
-/* Individuelt bykort - NP */
+/* City Card Styles - Nikita Pushechnikov */
 .NP-city-card {
   background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
@@ -5402,11 +4467,11 @@ input[name="ES-ArtistSok"]::placeholder {
 
 .NP-city-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 40px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 12px 40px var(--th-red-a10);
   border-color: var(--th-red);
 }
 
-/* Bildewrapper med overlay - NP */
+/* City Image Wrapper Styles - Nikita Pushechnikov */
 .NP-city-image-wrap {
   position: relative;
   width: 100%;
@@ -5425,7 +4490,7 @@ input[name="ES-ArtistSok"]::placeholder {
   transform: scale(1.1);
 }
 
-/* Mørk overlay gradient - NP */
+/* City Gradient Overlay Styles - Nikita Pushechnikov */
 .NP-city-overlay {
   position: absolute;
   top: 0;
@@ -5434,13 +4499,13 @@ input[name="ES-ArtistSok"]::placeholder {
   height: 100%;
   background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0.3),
-    rgba(0, 0, 0, 0.7)
+    var(--th-black-a30),
+    var(--th-black-a50)
   );
   pointer-events: none;
 }
 
-/* Event count badge - NP */
+/* City Event Badge Styles - Nikita Pushechnikov */
 .NP-city-badge {
   position: absolute;
   top: 16px;
@@ -5454,11 +4519,11 @@ input[name="ES-ArtistSok"]::placeholder {
   display: flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px var(--th-black-a30);
   z-index: 10;
 }
 
-/* Bydetaljer seksjon - NP */
+/* City Details Styles - Nikita Pushechnikov */
 .NP-city-details {
   padding: 24px;
 }
@@ -5484,7 +4549,7 @@ input[name="ES-ArtistSok"]::placeholder {
   margin-bottom: 20px;
 }
 
-/* Knapp for å se arrangementer - NP */
+/* City Button Styles - Nikita Pushechnikov */
 .NP-city-btn {
   display: inline-flex;
   align-items: center;
@@ -5515,7 +4580,7 @@ input[name="ES-ArtistSok"]::placeholder {
   transform: translateX(4px);
 }
 
-/* Responsiv design for byer-siden - NP */
+/* Cities Responsive Styles - Nikita Pushechnikov */
 @media (max-width: 1024px) {
   .NP-cities-grid {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -5564,7 +4629,7 @@ input[name="ES-ArtistSok"]::placeholder {
   }
 }
 
-/* === NP: Arrangør Side Styles === */
+/* Organizer Page Styles - Nikita Pushechnikov */
 
 /* Hero seksjon for arrangør */
 .NP-arrangor-hero {
@@ -5574,7 +4639,7 @@ input[name="ES-ArtistSok"]::placeholder {
   align-items: center;
   justify-content: center;
   background:
-    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    linear-gradient(var(--th-black-a50), var(--th-black-a50)),
     url("https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=1920")
       center/cover no-repeat;
   color: var(--th-white);
@@ -5586,8 +4651,8 @@ input[name="ES-ArtistSok"]::placeholder {
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(220, 38, 38, 0.15) 0%,
-    rgba(0, 0, 0, 0.3) 100%
+    var(--th-red-a10) 0%,
+    var(--th-black-a30) 100%
   );
   z-index: 0;
 }
@@ -5645,7 +4710,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-arrangor-btn-primary:hover {
   background: var(--th-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 8px 16px var(--th-red-a10);
   color: var(--th-white);
 }
 
@@ -5689,16 +4754,8 @@ input[name="ES-ArtistSok"]::placeholder {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(220, 38, 38, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      rgba(220, 38, 38, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(circle at 20% 30%, var(--th-red-a10) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--th-red-a10) 0%, transparent 50%);
   pointer-events: none;
   z-index: 0;
 }
@@ -5712,7 +4769,7 @@ input[name="ES-ArtistSok"]::placeholder {
   background: linear-gradient(
     135deg,
     var(--th-dark-gray) 0%,
-    var(--th-gray) 50%,
+    var(--th-dark-gray) 50%,
     var(--th-dark-gray) 100%
   );
 }
@@ -5747,7 +4804,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-arrangor-benefit-card {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 12px;
   padding: 2rem;
@@ -5758,7 +4815,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-arrangor-benefit-card:hover {
   transform: translateY(-5px);
   border-color: var(--th-red);
-  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 8px 24px var(--th-red-a10);
 }
 
 .NP-arrangor-benefit-icon {
@@ -5850,7 +4907,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-arrangor-pricing-card {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 2px solid var(--th-light-gray);
   border-radius: 16px;
   padding: 2.5rem;
@@ -5861,15 +4918,15 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-arrangor-pricing-card:hover {
   transform: translateY(-5px);
   border-color: var(--th-red);
-  box-shadow: 0 12px 32px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 12px 32px var(--th-red-a10);
 }
 
 .NP-arrangor-pricing-card-featured {
   border-color: var(--th-red);
   background: linear-gradient(
     135deg,
-    var(--th-gray) 0%,
-    rgba(220, 38, 38, 0.05) 100%
+    var(--th-dark-gray) 0%,
+    var(--th-red-a10) 100%
   );
 }
 
@@ -5967,7 +5024,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-arrangor-contact-form {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 16px;
   padding: 2.5rem;
@@ -6005,7 +5062,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-arrangor-form-input:focus {
   outline: none;
   border-color: var(--th-red);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 0 3px var(--th-red-a10);
 }
 
 .NP-arrangor-form-input::placeholder {
@@ -6033,7 +5090,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .NP-arrangor-form-submit:hover {
   background: var(--th-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 8px 16px var(--th-red-a10);
 }
 
 /* Kontaktinformasjon */
@@ -6044,7 +5101,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .NP-arrangor-info-card {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 12px;
   padding: 1.5rem;
@@ -6151,7 +5208,6 @@ input[name="ES-ArtistSok"]::placeholder {
     font-size: 2.5rem;
   }
 }
-
 
 .ES-main {
   max-width: 1500px;
@@ -6159,7 +5215,7 @@ input[name="ES-ArtistSok"]::placeholder {
   background: var(--th-black);
   padding: 40px;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px var(--th-black-a10);
 }
 
 .ES-Header {
@@ -6181,12 +5237,13 @@ input[name="ES-ArtistSok"]::placeholder {
   border-radius: 50%;
 }
 
-.ES-Epost-Epost, .ES-Telefon-Nummer {
+.ES-Epost-Epost,
+.ES-Telefon-Nummer {
   color: var(--th-red);
   font-size: 0.9em;
   margin-top: 5px;
 }
-    
+
 .ES-Top-Container {
   display: flex;
   justify-content: space-between;
@@ -6202,7 +5259,9 @@ input[name="ES-ArtistSok"]::placeholder {
   padding: 25px;
   border-radius: 10px;
   text-align: center;
-  transition: transform .2s, box-shadow .3s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.3s;
 }
 
 .ES-Top-Info h1 {
@@ -6218,7 +5277,9 @@ input[name="ES-ArtistSok"]::placeholder {
   padding: 10px 16px;
   border-radius: 6px;
   cursor: pointer;
-  transition: background .3s, transform .1s;
+  transition:
+    background 0.3s,
+    transform 0.1s;
 }
 .ES-Chat-Knapp:hover {
   background: var(--th-red);
@@ -6269,10 +5330,10 @@ input[name="ES-ArtistSok"]::placeholder {
   font-weight: 600;
   padding: 15px 20px;
   background: var(--th-dark-gray);
-  transition: background .3s;
+  transition: background 0.3s;
 }
 .ES-QaA-Item-Summary:hover {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
 }
 .ES-QaA-Item-Text {
   padding: 15px 20px;
@@ -6285,7 +5346,7 @@ input[name="ES-ArtistSok"]::placeholder {
   border: 1px solid var(--th-light-gray);
   border-radius: 10px;
   padding: 25px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px var(--th-black-a10);
   color: var(--th-white);
 }
 .ES-Kontakt-Form {
@@ -6296,7 +5357,9 @@ label {
   display: block;
   margin-top: 10px;
 }
-input, select, textarea {
+input,
+select,
+textarea {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
@@ -6307,9 +5370,11 @@ input, select, textarea {
   background-color: var(--th-dark-gray);
   resize: none;
 }
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   border-color: var(--th-light-gray);
-  box-shadow: 0 0 4px rgba(26,115,232,0.3);
+  box-shadow: 0 0 4px var(--th-info-a10);
   outline: none;
 }
 .ES-Send-Knapp {
@@ -6321,7 +5386,9 @@ input:focus, select:focus, textarea:focus {
   border-radius: 6px;
   margin-top: 15px;
   cursor: pointer;
-  transition: background .3s, transform .1s;
+  transition:
+    background 0.3s,
+    transform 0.1s;
 }
 .ES-Send-Knapp:hover {
   background: var(--th-white);
@@ -6329,7 +5396,7 @@ input:focus, select:focus, textarea:focus {
 }
 .ES-Svartid-Container {
   margin-top: 30px;
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   padding: 20px;
   border-radius: 8px;
   display: block;
@@ -6373,11 +5440,13 @@ input:focus, select:focus, textarea:focus {
   font-size: 1.1em;
   cursor: pointer;
   text-align: center;
-  transition: transform 0.2s, background 0.2s;
+  transition:
+    transform 0.2s,
+    background 0.2s;
 }
 
 .ES-Link-Box:hover {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   transform: translateY(-3px);
 }
 
@@ -6438,14 +5507,16 @@ input:focus, select:focus, textarea:focus {
   background: var(--th-dark-gray);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 4px 16px var(--th-black-a50);
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.2s, transform 0.2s;
+  transition:
+    box-shadow 0.2s,
+    transform 0.2s;
 }
 
 .JF-artist-card:hover {
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.9);
+  box-shadow: 0 8px 32px var(--th-black-a50);
   transform: translateY(-4px);
 }
 
@@ -6475,11 +5546,11 @@ input:focus, select:focus, textarea:focus {
   font-size: 0.85rem;
   font-weight: 600;
   z-index: 2;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 2px 8px var(--th-black-a30);
 }
 
 .JF-artist-info {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -6540,7 +5611,6 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
-
 /* === ES: All Venues Page Styles === */
 
 /* Main Section */
@@ -6563,16 +5633,8 @@ input:focus, select:focus, textarea:focus {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(220, 38, 38, 0.08) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 70%,
-      rgba(220, 38, 38, 0.05) 0%,
-      transparent 50%
-    );
+    radial-gradient(circle at 20% 30%, var(--th-red-a10) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, var(--th-red-a10) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -6606,12 +5668,12 @@ input:focus, select:focus, textarea:focus {
 
 /* Filter Panel */
 .ES-filter-panel {
-  background: var(--th-gray);
+  background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 16px;
   padding: 32px;
   margin-bottom: 48px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px var(--th-black-a30);
 }
 
 /* Search Form */
@@ -6651,7 +5713,7 @@ input:focus, select:focus, textarea:focus {
 .ES-search-input:focus {
   outline: none;
   border-color: var(--th-red);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 0 3px var(--th-red-a10);
 }
 
 .ES-search-input::placeholder {
@@ -6694,7 +5756,7 @@ input:focus, select:focus, textarea:focus {
 .ES-sort-select:focus {
   outline: none;
   border-color: var(--th-red);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  box-shadow: 0 0 0 3px var(--th-red-a10);
 }
 
 .ES-sort-select option {
@@ -6722,7 +5784,7 @@ input:focus, select:focus, textarea:focus {
 .ES-search-btn:hover {
   background: var(--th-red-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+  box-shadow: 0 4px 12px var(--th-red-a10);
 }
 
 /* Results Info */
@@ -6756,7 +5818,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .ES-clear-search:hover {
-  color: var(--th-red-light);
+  color: var(--th-red);
   gap: 8px;
 }
 
@@ -6781,7 +5843,7 @@ input:focus, select:focus, textarea:focus {
 
 .ES-event-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 32px var(--th-black-a50);
   border-color: var(--th-red);
 }
 
@@ -6816,7 +5878,7 @@ input:focus, select:focus, textarea:focus {
   font-size: 0.875rem;
   font-weight: 600;
   z-index: 2;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 8px var(--th-black-a30);
 }
 
 /* Details */
@@ -6935,7 +5997,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .ES-no-results a:hover {
-  color: var(--th-red-light);
+  color: var(--th-red);
   text-decoration: underline;
 }
 

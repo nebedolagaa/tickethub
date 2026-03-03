@@ -7,23 +7,23 @@
 }
 
 .CB1-login-card {
-    background: #121216;
-    border: 1px solid #22222a;
+    background: var(--th-dark-gray);
+    border: 1px solid var(--th-light-gray);
     border-radius: 12px;
     width: 380px;
     padding: 32px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    box-shadow: 0 0 30px var(--th-black-a50);
 }
 
 .CB1-title {
     margin: 0;
     text-align: center;
-    color: #ffffff;
+    color: var(--th-white);
 }
 
 .CB1-subtitle {
     text-align: center;
-    color: #9a9aa3;
+    color: var(--th-muted);
     margin-bottom: 24px;
     font-size: 14px;
 }
@@ -37,22 +37,22 @@
     display: block;
     margin-bottom: 6px;
     font-size: 13px;
-    color: #bdbdc7;
+    color: var(--th-muted);
 }
 
 .CB1-form-group input {
     width: 100%;
     padding: 10px;
     border-radius: 6px;
-    border: 1px solid #2a2a33;
-    background: #0d0d11;
-    color: #eaeaea;
+    border: 1px solid var(--th-light-gray);
+    background: var(--th-dark-gray);
+    color: var(--th-white);
     font-size: 14px;
 }
 
 .CB1-form-group input:focus {
     outline: none;
-    border-color: #ff3b3b;
+    border-color: var(--th-red);
 }
 
 .CB1-form-row {
@@ -64,11 +64,11 @@
 }
 
 .CB1-checkbox {
-    color: #bdbdc7;
+    color: var(--th-muted);
 }
 
 .CB1-forgot {
-    color: #ff5c5c;
+    color: var(--th-red);
     text-decoration: none;
 }
 
@@ -78,9 +78,9 @@
 
 .CB1-btn-submit {
     width: 100%;
-    background: #ff3b3b;
+    background: var(--th-red);
     border: none;
-    color: white;
+    color: var(--th-white);
     padding: 12px;
     border-radius: 8px;
     font-size: 15px;
@@ -88,13 +88,13 @@
 }
 
 .CB1-btn-submit:hover {
-    background: #e22e2e;
+    background: var(--th-red-dark);
 }
 
 .CB1-error {
-    background: #2a1212;
-    border: 1px solid #5a1f1f;
-    color: #ff8080;
+    background: var(--th-red-a10);
+    border: 1px solid var(--th-red);
+    color: var(--th-red);
     padding: 10px;
     border-radius: 6px;
     margin-bottom: 12px;
@@ -105,10 +105,10 @@
     text-align: center;
     margin-top: 18px;
     font-size: 13px;
-    color: #bdbdc7;
+    color: var(--th-muted);
 }
 
 .CB1-register-text a {
-    color: #ff5c5c;
+    color: var(--th-red);
     text-decoration: none;
 }
