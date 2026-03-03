@@ -40,12 +40,14 @@ def payment(request):
         import json
         try:
             cart_data = json.loads(request.POST["cart"])
-            # Legg til event_id og ticket_type_id for hvert item
+            # Legg til event_id for hvert item basert på ticket_type_id
             for key, item in cart_data.items():
-                ticket_type = TicketType.objects.filter(name=item['name']).first()
-                if ticket_type:
-                    item['ticket_type_id'] = ticket_type.id
-                    item['event_id'] = ticket_type.event_id
+                if "ticket_type_id" in item:
+                    try:
+                        ticket_type = TicketType.objects.get(pk=item['ticket_type_id'])
+                        item['event_id'] = ticket_type.event_id
+                    except TicketType.DoesNotExist:
+                        item['event_id'] = None
             request.session["cart"] = cart_data
             print("Cart lagret i session:", cart_data)
         except Exception:
