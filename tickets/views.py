@@ -72,7 +72,7 @@ def payment(request):
 
     # Hent cart fra session for visning
     cart = request.session.get("cart", {})
-    # Beregn totaler og legg til totalpris per billettype
+    # Heregn totaler og legg til totalpris per billettype
     cart_with_totals = {}
     total = 0
     for key, item in cart.items():
@@ -92,12 +92,12 @@ def payment(request):
 
 @login_required
 def after_payment(request):
-    # Fetch the most recent order for the user
+    # hent den nyeste ordren til brukeren
     order = Order.objects.filter(user=request.user).order_by('-created_at').first()
     
     total_amount = 0
     if order:
-        # Calculate total from order items
+        # Finn summen av alle ordrelinjene
         for item in order.items.all():
             total_amount += item.quantity * item.unit_price
     
