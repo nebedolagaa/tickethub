@@ -8,32 +8,30 @@ def my_tickets(request):
 
 @login_required
 def confirm_payment(request):
-    # Hent cart fra session
+    print("Cart in session:", request.session.get("cart"))
     cart = request.session.get("cart", {})
     if not cart:
         return redirect("tickets:payment")
-
-    # Finn event_id fra cart-data (forutsetter at alle varer er fra samme event)
-    event_id = next(iter(cart.values()))["event_id"]
-    order = Order.objects.create(user=request.user, event_id=event_id)
-
-    for key, item in cart.items():
-        ticket_type = TicketType.objects.get(pk=item["ticket_type_id"])
-        order_item = OrderItem.objects.create(
-            order=order,
-            ticket_type=ticket_type,
-            quantity=item["quantity"],
-            unit_price=item["price"]
-        )
-        # Opprett én Ticket per billett
-        for _ in range(item["quantity"]):
-            Ticket.objects.create(
-                user=request.user,
-                ticket_type=ticket_type
+    try:
+        event_id = next(iter(cart.values()))["event_id"]
+        order = Order.objects.create(user=request.user, event_id=event_id)
+        for key, item in cart.items():
+            ticket_type = TicketType.objects.get(pk=item["ticket_type_id"])
+            order_item = OrderItem.objects.create(
+                order=order,
+                ticket_type=ticket_type,
+                quantity=item["quantity"],
+                unit_price=item["price"]
             )
-
-    # Tøm handlekurven
-    del request.session["cart"]
+            for _ in range(item["quantity"]):
+                Ticket.objects.create(
+                    user=request.user,
+                    ticket_type=ticket_type
+                )
+        del request.session["cart"]
+    except Exception as e:
+        print("Feil under lagring av ordre:", e)
+        return redirect("tickets:payment")
     return redirect("tickets:after_payment")
 
 def payment(request):
