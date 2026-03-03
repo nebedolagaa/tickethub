@@ -42,7 +42,7 @@ def payment(request):
             cart_data = json.loads(request.POST["cart"])
             # Legg til event_id for hvert item basert på ticket_type
             for key, item in cart_data.items():
-                ticket_type = TicketType.objects.filter(name=item['name'], price=item['price'], event_id=item.get('event_id')).first()
+                ticket_type = TicketType.objects.filter(name=item['name'], price=item['price']).first()
                 if ticket_type:
                     item['ticket_type_id'] = ticket_type.id
                     item['event_id'] = ticket_type.event_id  # Legg til event_id her
