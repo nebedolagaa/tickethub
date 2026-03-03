@@ -32,6 +32,13 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
 from django.utils import timezone
+import base64
+import io
+
+try:
+    import qrcode
+except ImportError:
+    qrcode = None
 
 
 # funksjon for registrering av bruker
@@ -243,10 +250,41 @@ def user_profile(request):
 
 @login_required(login_url="users:login")
 def my_orders(request):
+    def build_qr_data_uri(payload: str) -> str:
+        if qrcode is None:
+            return ""
+
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_M,
+            box_size=6,
+            border=1,
+        )
+        qr.add_data(payload)
+        qr.make(fit=True)
+
+        image = qr.make_image(fill_color="#ffffff", back_color="#111111")
+        buffer = io.BytesIO()
+        image.save(buffer, format="PNG")
+        encoded = base64.b64encode(buffer.getvalue()).decode("utf-8")
+        return f"data:image/png;base64,{encoded}"
+
     now = timezone.now()
 
-    tickets = Ticket.objects.order_by("ticket_type__event__start_datetime").filter(
-        user=request.user, ticket_type__event__end_datetime__gte=now
+    tickets = (
+        Ticket.objects.filter(
+            user=request.user,
+            ticket_type__event__end_datetime__gte=now,
+        )
+        .select_related(
+            "ticket_type",
+            "ticket_type__event",
+            "ticket_type__event__venue",
+            "ticket_type__event__venue__address",
+            "event_seat__seat",
+        )
+        .prefetch_related("ticket_type__event__performers")
+        .order_by("ticket_type__event__start_datetime")
     )  # hent alle ordre for denne brukeren, sortert etter dato (nyeste først)
     tickets_count = (
         tickets.count()
@@ -289,6 +327,10 @@ def my_orders(request):
 
     # henter antall arrangement som kommer i fremtiden, regnes ved hjelp av unike arrangement og ikke biletter
     upcoming_events = tickets.values("ticket_type__event").distinct().count()
+
+    for ticket in tickets:
+        ticket.qr_data_uri = build_qr_data_uri(str(ticket.ticket_number))
+
     context = {
         "orders": orders,
         "extra_info": extra_info,
