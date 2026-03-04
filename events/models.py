@@ -1,6 +1,7 @@
 """
 Bidratt til denne filen:
     - Kamilla Nizamova
+    - Jesper Finsand - Performer modellering
 """
 
 from django.db import models
@@ -115,14 +116,13 @@ class Event(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    performers = models.ManyToManyField(Performer, blank=True, related_name="events")
+    performers = models.ManyToManyField('Performer', blank=True, related_name="events")
 
     # Type arrangement - konsert eller festival
     event_type = models.CharField(
         max_length=20,
         choices=EVENT_TYPE_CHOICES,
         default="concert",
-        artists = models.ManyToManyField('Artist', blank=True, related_name='events') #JF- knytte spesifikk artist til arrangement 
         help_text="Type arrangement: konsert eller festival",
     )
 
@@ -245,25 +245,25 @@ class Performer(models.Model):
     website= models.URLField(blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
 
-    def save(self, *args,**kwargs):
+    def save(self, *args, **kwargs):
         if not self.slug:
-            base=slugify(self.name)[:240]
-            slug= base
-            i=1
-            while performer.objects.filter(slug=slug).exists():
-                slug=f"{base}-{i}"
-                i=i+1
-            self.slug=slug
-        super().save(*args,**kwargs)
+            base = slugify(self.name)[:240]
+            slug = base
+            i = 1
+            while Performer.objects.filter(slug=slug).exists():
+                slug = f"{base}-{i}"
+                i += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
 
     def display_name(self):
         return self.name
 
     def get_absolute_url(self):
         try:
-            return reverse("performer_detail", args={"slug": self.slug})
+            return reverse("performer_detail", kwargs={"slug": self.slug})
         except:
-            return'#' #faller tilbake til tom lenke hvis feil.
+            return '#'
 
     def __str__(self):
         return self.name
