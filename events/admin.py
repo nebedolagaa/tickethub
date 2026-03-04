@@ -43,4 +43,4 @@ admin.site.register(EventSeat)
 class PerformerAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
     search_fields = ["name"]
-    list_display = ("name", "created_at")
+    list_display = ("name",)

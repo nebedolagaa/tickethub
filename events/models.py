@@ -238,12 +238,11 @@ class EventStandingAllocation(models.Model):
 
 class Performer(models.Model):
     name=models.CharField(max_length=255, unique=True)
-    slug=models.SlugField(max_length=255, unique=True)
+    slug=models.SlugField(max_length=255, unique=True, blank=True)
     bio=models.TextField(blank=True)
     genre=models.CharField(max_length=20, blank=True)
     image=models.ImageField(upload_to='performers/', blank=True, null=True)
     website= models.URLField(blank=True)
-    created_at=models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
