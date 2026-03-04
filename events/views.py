@@ -1,6 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Event
+from .models import Performer #JF - importere Artist/Performer-modellen for å kunne bruke den i views
+from django.shortcuts import redirect 
+from django.utils.text import slugify
+from django.views.generic import ListView, DetailView #JF - til performermodellen, linke opp performer med arrangement
 from django.db.models import Q, Count, Min
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -374,3 +378,18 @@ def venue_detail(request, venue_id):
     }
 
     return render(request, "events/venue_detail.html", context)
+
+class PerformerListView(ListView): #JF - View for å vise alle artister
+    model = Performer
+    template_name ='performer/performer_list.html'
+    context_object_name = 'performers'
+    paginate_by =10
+
+
+class PerformerDetailView(DetailView): #JF - View for å vise detaljer om en spesifikk artist
+    model =Performer
+    template_name= 'events/performer_detail.html'
+    slug_field = 'slug'
+    context_object_name= 'performer'
+
+

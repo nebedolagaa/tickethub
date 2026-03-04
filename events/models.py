@@ -101,13 +101,6 @@ class VenueArea(models.Model):
             ),
         ]
 
-class Performer(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-
-    def __str__(self):
-        return self.name
-    
-
 class Event(models.Model):
     # Valgmuligheter for arrangementstype
     EVENT_TYPE_CHOICES = [
@@ -129,6 +122,7 @@ class Event(models.Model):
         max_length=20,
         choices=EVENT_TYPE_CHOICES,
         default="concert",
+        artists = models.ManyToManyField('Artist', blank=True, related_name='events') #JF- knytte spesifikk artist til arrangement 
         help_text="Type arrangement: konsert eller festival",
     )
 
@@ -241,3 +235,36 @@ class EventStandingAllocation(models.Model):
     @property
     def remaining(self):
         return self.capacity - self.sold
+
+class Performer(models.Model):
+    name=models.CharField(max_length=255, unique=True)
+    slug=models.SlugField(max_length=255, unique=True)
+    bio=models.TextField(blank=True)
+    genre=models.CharField(max_length=20, blank=True)
+    image=models.ImageField(upload_to='performers/', blank=True, null=True)
+    website= models.URLField(blank=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args,**kwargs):
+        if not self.slug:
+            base=slugify(self.name)[:240]
+            slug= base
+            i=1
+            while performer.objects.filter(slug=slug).exists():
+                slug=f"{base}-{i}"
+                i=i+1
+            self.slug=slug
+        super().save(*args,**kwargs)
+
+    def display_name(self):
+        return self.name
+
+    def get_absolute_url(self):
+        try:
+            return reverse("performer_detail", args={"slug": self.slug})
+        except:
+            return'#' #faller tilbake til tom lenke hvis feil.
+
+    def __str__(self):
+        return self.name
+

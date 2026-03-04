@@ -41,4 +41,10 @@ admin.site.register(EventImage)
 admin.site.register(Row)
 admin.site.register(Seat)
 admin.site.register(EventSeat)
+
 admin.site.register(Performer, PerformerAdmin)
+@admin.register(Performer) #JF - Performer admin
+class PerformerAdmin(admin.ModelAdmin):
+    prepopulated_fields={"slug":("name",)}
+    search_fields=("name")
+    list_display = ("name","created_at")
