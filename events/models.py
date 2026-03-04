@@ -243,16 +243,12 @@ class Performer(models.Model):
     genre=models.CharField(max_length=20, blank=True)
     image=models.ImageField(upload_to='performers/', blank=True, null=True)
     website= models.URLField(blank=True)
-
+    
     def save(self, *args, **kwargs):
+        # Hvis slug ikke er satt, lager vi en automatisk basert på tittel.
+        # Slug trenger ikke være unik fordi primærnøkkel (pk) brukes i URL
         if not self.slug:
-            base = slugify(self.name)[:240]
-            slug = base
-            i = 1
-            while Performer.objects.filter(slug=slug).exists():
-                slug = f"{base}-{i}"
-                i += 1
-            self.slug = slug
+            self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
     def display_name(self):
