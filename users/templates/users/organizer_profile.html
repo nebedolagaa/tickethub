@@ -111,6 +111,98 @@
                     </button>
                 </div>
 
+                <!-- Søke- og sorteringspanel -->
+                <div class="NP-filter-panel">
+                    <form
+                    method="get"
+                    action="{% url 'users:organizer_profile' %}"
+                    class="NP-search-form"
+                    >
+                
+                    <!-- TOP: Søk + knapp -->
+                    <div class="NP-filter-row NP-filter-row--top"> 
+                        <div class="NP-search-container">
+                            <i class="bi bi-search NP-search-icon"></i>
+                            <input
+                            type="text"
+                            name="search"
+                            class="NP-search-input"
+                            placeholder="Søk etter konsert, artist eller sted..."
+                            value="{{ search_query }}"
+                            />
+                        </div>
+                
+                        <!-- Søkeknapp -->
+                        <button type="submit" class="NP-search-btn">
+                            <i class="bi bi-search"></i>
+                            Søk
+                        </button>
+                    </div>
+                
+                    <!-- BOTTOM: sortering + status -->
+                    <div class="NP-filter-row NP-filter-row--bottom">
+                
+                        <!-- Sortering -->
+                        <div class="NP-sort-container">
+                            <i class="bi bi-sort-down NP-sort-icon"></i>
+                            <select name="sort" class="NP-sort-select" onchange="this.form.submit()">
+                            <option value="date_asc" {% if sort_by == 'date_asc' %}selected{% endif %}>
+                                Dato (nærmest først)
+                            </option>
+                            <option value="date_desc" {% if sort_by == 'date_desc' %}selected{% endif %}>
+                                Dato (nyeste først)
+                            </option>
+                            <option value="title_asc" {% if sort_by == 'title_asc' %}selected{% endif %}>
+                                Navn (A-Å)
+                            </option>
+                            <option value="title_desc" {% if sort_by == 'title_desc' %}selected{% endif %}>
+                                Navn (Å-A)
+                            </option>
+                            <option value="venue" {% if sort_by == 'venue' %}selected{% endif %}>
+                                Lokasjon
+                            </option>
+                            </select>
+                        </div>
+                
+                        <!-- Status -->
+                        <div class="NP-sort-container">
+                            <select name="status" class="NP-sort-select" onchange="this.form.submit()">
+                                <option value="active" {% if status == "active" %}selected{% endif %}>
+                                    Bare aktive
+                                </option>
+                                <option value="all" {% if status == "all" %}selected{% endif %}>
+                                    Alle arrangementer
+                                </option>
+                                <option value="past" {% if status == "past" %}selected{% endif %}>
+                                    Tidligere arrangementer
+                                </option>
+                            </select>
+                        </div>
+                
+                    </div>
+                    </form>
+
+                    <!-- Søkeresultater -->
+                    <div class="NP-results-info">
+                        <p>
+                            {% if search_query %}
+                            Viser <strong>{{ filtered_count }}</strong> resultat{% if filtered_count != 1 %}er{% endif %} for "<strong>{{ search_query }}</strong>"
+                            {% else %}
+                            Viser <strong>{{ filtered_count }}</strong> konsert{% if filtered_count != 1 %}er{% endif %}
+                            {% endif %}
+                        </p>
+                        {% if search_query %}
+                            <a href="{% url 'users:organizer_profile' %}" class="NP-clear-search">
+                            <i class="bi bi-x-circle"></i> Nullstill søk
+                            </a>
+                        {% endif %}
+                    </div>
+                    
+                </div>
+        
+                    
+        
+
                 {% for message in messages %}
                     {% if 'event' in message.tags %}
                         <div class="MB-{% if 'success' in message.tags %}success{% else %}error{% endif %}">
@@ -170,6 +262,77 @@
                         </div>
                     </div>
                 {% endfor %}
+                    <!-- Paginering - NP -->
+                    {% if events.has_other_pages %}
+                    <nav class="NP-pagination-wrapper" aria-label="Sidenavigasjon">
+                    <ul class="NP-pagination">
+                        <!-- Første side -->
+                        {% if events.has_previous %}
+                        <li class="NP-page-item">
+                            <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                            <i class="bi bi-chevron-double-left"></i>
+                            </a>
+                        </li>
+                        <!-- Forrige side -->
+                        <li class="NP-page-item">
+                            <a href="?page={{ events.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                            <i class="bi bi-chevron-left"></i>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="NP-page-item NP-disabled">
+                            <span class="NP-page-link">
+                            <i class="bi bi-chevron-double-left"></i>
+                            </span>
+                        </li>
+                        <li class="NP-page-item NP-disabled">
+                            <span class="NP-page-link">
+                            <i class="bi bi-chevron-left"></i>
+                            </span>
+                        </li>
+                        {% endif %}
+
+                        <!-- Sidenumre -->
+                        {% for num in events.paginator.page_range %}
+                        {% if events.number == num %}
+                            <li class="NP-page-item NP-active">
+                            <span class="NP-page-link">{{ num }}</span>
+                            </li>
+                        {% elif num > events.number|add:'-3' and num < events.number|add:'3' %}
+                            <li class="NP-page-item">
+                            <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                        {% endfor %}
+
+                        <!-- Neste side -->
+                        {% if events.has_next %}
+                        <li class="NP-page-item">
+                            <a href="?page={{ events.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                            <i class="bi bi-chevron-right"></i>
+                            </a>
+                        </li>
+                        <!-- Siste side -->
+                        <li class="NP-page-item">
+                            <a href="?page={{ events.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                            <i class="bi bi-chevron-double-right"></i>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="NP-page-item NP-disabled">
+                            <span class="NP-page-link">
+                            <i class="bi bi-chevron-right"></i>
+                            </span>
+                        </li>
+                        <li class="NP-page-item NP-disabled">
+                            <span class="NP-page-link">
+                            <i class="bi bi-chevron-double-right"></i>
+                            </span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                    </nav>
+                    {% endif %}
 
                 {% else %}
                     <p class="MB-organizer_profile-no-events">Du har ingen arrangementer ennå. Klikk "Nytt arrangement" for å komme i gang!</p>

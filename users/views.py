@@ -24,6 +24,9 @@ from .forms import (
     UserProfileForm,
 )
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q, Count, Min
+
 # verifikasjonsverktøy for tilbakestilling av passord
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
@@ -385,10 +388,6 @@ def organizer_profile(request):
     else:
         organizer_form = OrganizerProfileForm(instance=organizer)
 
-    context = {
-        "organizer": organizer,
-        "organizer_form": organizer_form,
-    }
 
     # koden for statistikk
     events = Event.objects.filter(organizer=request.user.organizer_profile).order_by(
@@ -400,12 +399,66 @@ def organizer_profile(request):
     # sold_tickets =
     # total_turnover =
 
+    #man skal kunne søke gjennom sine egne arrangementer
+    # Søk
+    search_query = request.GET.get("search", "")
+    if search_query:
+        events = events.filter(
+            Q(title__icontains=search_query)
+            | Q(description__icontains=search_query)
+            | Q(venue__name__icontains=search_query)
+            | Q(venue__address__city__icontains=search_query)
+        )
+
+    # Sortering
+    sort_by = request.GET.get("sort", "date_asc")
+
+    if sort_by == "date_asc":
+        events = events.order_by("start_datetime")
+    elif sort_by == "date_desc":
+        events = events.order_by("-start_datetime")
+    elif sort_by == "title_asc":
+        events = events.order_by("title")
+    elif sort_by == "title_desc":
+        events = events.order_by("-title")
+    elif sort_by == "venue":
+        events = events.order_by("venue__name")
+
+    status = request.GET.get("status", "active")
+
+    now = timezone.now()
+
+    if status == "active":
+        events = events.filter(end_datetime__gte=now)
+    elif status == "past":
+        events = events.filter(end_datetime__lt=now)
+
+    # Paginering - 12 arrangementer per side
+    paginator = Paginator(events, 4)
+    page = request.GET.get("page")
+
+    try:
+        events_page = paginator.page(page)
+    except PageNotAnInteger:
+        # Hvis side ikke er et heltall, vis første side
+        events_page = paginator.page(1)
+    except EmptyPage:
+        # Hvis side er utenfor rekkevidde, vis siste side
+        events_page = paginator.page(paginator.num_pages)
+
+
     context = {
         "organizer": organizer,
         "organizer_form": organizer_form,
+
+        #stats
         "total_events": total_events,
         "active_events": active_events,
-        "events": events,
+
+        "events": events_page,
+        "search_query": search_query,
+        "sort_by": sort_by,
+        "filtered_count": paginator.count, #antall etter filter
     }
 
     return render(request, "users/organizer_profile.html", context)

@@ -292,3 +292,35 @@
   align-items: center;
   justify-content: center;
 }
+
+
+/* Верхний ряд: строго 2 колонки (поиск + кнопка) */
+.NP-search-form .NP-filter-row--top{
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+/* Поиск занимает всю ширину */
+.NP-search-form .NP-filter-row--top .NP-search-container{
+  width: 100% !important;
+}
+
+/* Нижний ряд: строго 2 колонки (sort + status) */
+.NP-search-form .NP-filter-row--bottom{
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+/* Если экран узкий — нижний ряд в одну колонку */
+@media (max-width: 700px){
+  .NP-search-form .NP-filter-row--bottom{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+
