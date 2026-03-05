@@ -129,8 +129,6 @@
   align-items: center;
   gap: 8px;
   font-size: 0.85rem;
-  text-decoration: none;
-  transition: background-color 0.3s ease;
 }
 
 .MB-organizer_profile-btn-add:hover {
@@ -296,33 +294,184 @@
 }
 
 
-/* Верхний ряд: строго 2 колонки (поиск + кнопка) */
-.NP-search-form .NP-filter-row--top{
-  display: grid !important;
-  grid-template-columns: 1fr auto !important;
-  gap: 12px !important;
-  align-items: center !important;
+/* Filter Panel */
+.KN-filter-panel {
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 48px;
+  box-shadow: 0 4px 16px var(--th-black-a30);
 }
 
-/* Поиск занимает всю ширину */
-.NP-search-form .NP-filter-row--top .NP-search-container{
-  width: 100% !important;
+/* Search Container */
+.KN-search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-/* Нижний ряд: строго 2 колонки (sort + status) */
-.NP-search-form .NP-filter-row--bottom{
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 12px !important;
-  align-items: center !important;
-  width: 100% !important;
+.KN-search-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--th-muted);
+  font-size: 1.2rem;
+  pointer-events: none;
 }
 
-/* Если экран узкий — нижний ряд в одну колонку */
-@media (max-width: 700px){
-  .NP-search-form .NP-filter-row--bottom{
-    grid-template-columns: 1fr !important;
-  }
+.KN-search-input {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.KN-search-input:focus {
+  outline: none;
+  border-color: var(--th-red);
+  box-shadow: 0 0 0 3px var(--th-red-a10);
+}
+
+.KN-search-input::placeholder {
+  color: var(--th-muted);
+}
+
+/* Sort Container */
+.KN-sort-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 250px;
+}
+
+.KN-sort-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--th-muted);
+  font-size: 1.2rem;
+  pointer-events: none;
+}
+
+.KN-sort-select {
+  width: 100%;
+  padding: 14px 16px 14px 48px;
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 40px;
+}
+
+.KN-sort-select:focus {
+  outline: none;
+  border-color: var(--th-red);
+  box-shadow: 0 0 0 3px var(--th-red-a10);
+}
+
+.KN-sort-select option {
+  background: var(--th-dark-gray);
+  color: var(--th-white);
+}
+
+/* Search Button */
+.KN-search-btn {
+  padding: 14px 32px;
+  background: var(--th-red);
+  border: none;
+  border-radius: 12px;
+  color: var(--th-white);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.KN-search-btn:hover {
+  background: var(--th-red-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px var(--th-red-a10);
+}
+
+/* Results Info */
+.KN-results-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid var(--th-light-gray);
+  color: var(--th-muted);
+}
+
+.KN-results-info p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.KN-results-info strong {
+  color: var(--th-white);
+}
+
+.KN-clear-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--th-red);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.KN-clear-search:hover {
+  color: var(--th-red);
+  gap: 8px;
 }
 
 
+/* two rows (top - search and bottom - filter ) */
+.KN-search-form{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.KN-filter-row{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.KN-filter-row--bottom{
+  flex-wrap: wrap;
+}
+
+.KN-filter-row--top .KN-search-container{
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.KN-filter-row--top .KN-search-btn{
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.KN-filter-row--bottom .KN-sort-container{
+  flex: 1 1 250px;
+  min-width: 250px;
+}

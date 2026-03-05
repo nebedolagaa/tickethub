@@ -450,6 +450,8 @@ def organizer_profile(request):
         events = events.filter(end_datetime__gte=now)
     elif status == "past":
         events = events.filter(end_datetime__lt=now)
+    elif status == "all":
+        events = events
 
     # Paginering - 12 arrangementer per side
     paginator = Paginator(events, 4)
@@ -477,8 +479,8 @@ def organizer_profile(request):
         "search_query": search_query,
         "sort_by": sort_by,
         "filtered_count": paginator.count, #antall etter filter
+        "status": status,
         
-        "events": events,
         "sold_tickets": sold_tickets,
         "total_turnover": total_turnover,
     }

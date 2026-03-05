@@ -112,40 +112,39 @@
                 </div>
 
                 <!-- Søke- og sorteringspanel -->
-                <div class="NP-filter-panel">
+                <div class="KN-filter-panel">
                     <form
                     method="get"
                     action="{% url 'users:organizer_profile' %}"
-                    class="NP-search-form"
+                    class="KN-search-form"
                     >
                 
                     <!-- TOP: Søk + knapp -->
-                    <div class="NP-filter-row NP-filter-row--top"> 
-                        <div class="NP-search-container">
-                            <i class="bi bi-search NP-search-icon"></i>
+                    <div class="KN-filter-row KN-filter-row--top">
+                        <div class="KN-search-container">
+                            <i class="bi bi-search KN-search-icon"></i>
                             <input
                             type="text"
                             name="search"
-                            class="NP-search-input"
+                            class="KN-search-input"
                             placeholder="Søk etter konsert, artist eller sted..."
                             value="{{ search_query }}"
                             />
                         </div>
                 
                         <!-- Søkeknapp -->
-                        <button type="submit" class="NP-search-btn">
+                        <button type="submit" class="KN-search-btn">
                             <i class="bi bi-search"></i>
                             Søk
                         </button>
                     </div>
                 
                     <!-- BOTTOM: sortering + status -->
-                    <div class="NP-filter-row NP-filter-row--bottom">
-                
-                        <!-- Sortering -->
-                        <div class="NP-sort-container">
-                            <i class="bi bi-sort-down NP-sort-icon"></i>
-                            <select name="sort" class="NP-sort-select" onchange="this.form.submit()">
+                    <!-- Sortering -->
+                    <div class="KN-filter-row KN-filter-row--bottom">
+                        <div class="KN-sort-container">
+                            <i class="bi bi-sort-down KN-sort-icon"></i>
+                            <select name="sort" class="KN-sort-select" onchange="this.form.submit()">
                             <option value="date_asc" {% if sort_by == 'date_asc' %}selected{% endif %}>
                                 Dato (nærmest først)
                             </option>
@@ -163,10 +162,11 @@
                             </option>
                             </select>
                         </div>
-                
+                    
+            
                         <!-- Status -->
-                        <div class="NP-sort-container">
-                            <select name="status" class="NP-sort-select" onchange="this.form.submit()">
+                        <div class="KN-sort-container">
+                            <select name="status" class="KN-sort-select" onchange="this.form.submit()">
                                 <option value="active" {% if status == "active" %}selected{% endif %}>
                                     Bare aktive
                                 </option>
@@ -178,12 +178,12 @@
                                 </option>
                             </select>
                         </div>
-                
                     </div>
+        
                     </form>
 
                     <!-- Søkeresultater -->
-                    <div class="NP-results-info">
+                    <div class="KN-results-info">
                         <p>
                             {% if search_query %}
                             Viser <strong>{{ filtered_count }}</strong> resultat{% if filtered_count != 1 %}er{% endif %} for "<strong>{{ search_query }}</strong>"
@@ -192,7 +192,7 @@
                             {% endif %}
                         </p>
                         {% if search_query %}
-                            <a href="{% url 'users:organizer_profile' %}" class="NP-clear-search">
+                            <a href="{% url 'users:organizer_profile' %}" class="KN-clear-search">
                             <i class="bi bi-x-circle"></i> Nullstill søk
                             </a>
                         {% endif %}
