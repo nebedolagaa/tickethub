@@ -90,6 +90,11 @@ class Account(AbstractBaseUser):
     def __str__(self):
         return self.email
     
+    @property
+    def is_superuser(self):
+        """Django admin krever dette feltet"""
+        return self.is_superadmin
+    
     def has_perm(self, perm, obj=None):
         return self.is_admin
     
