@@ -1,12 +1,70 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'main.css' %}">
+<link rel="stylesheet" href="{% static 'tickets/after_payment.css' %}">
+{% endblock %}
 
 {% block content %}
-{% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'tickets/after_payment.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
-<div class="jf-thank-you-container" >
-    <h1 class="jf-thank-you-header">Takk for ditt kjøp!</h1>
-    <p class="jf-thank-you-message">Vi setter pris på at du valgte oss. Dine billetter er nå klare og kan finnes under "Mine billetter".</p>
-    <a href="/tickets/my-tickets/" class="jf-thank-you-link">Gå til Mine billetter</a>
-</div>
+<main class="MB-receipt-main">
+    <div class="MB-receipt-container">
+        
+        <div class="MB-thanks-section">
+            <div class="MB-success-icon">
+                <i class="fa-solid fa-circle-check"></i>
+            </div>
+            <h1 class="MB-thanks-header">Takk for ditt kjøp!</h1>
+            <p class="MB-thanks-message">Vi setter pris på at du valgte oss. Dine billetter er nå klare.</p>
+        </div>
+
+        {% if order %}
+        <div class="MB-receipt-card">
+            <div class="MB-receipt-header">
+                <h2>Kvittering</h2>
+                <span class="MB-order-id">Ordre: #{{ order.id }}</span>
+            </div>
+            
+            <div class="MB-receipt-body">
+                <div class="MB-receipt-row">
+                    <span>Arrangement:</span>
+                    <span class="MB-text-white">{{ order.event.title }}</span>
+                </div>
+                <div class="MB-receipt-row">
+                    <span>Dato:</span>
+                    <span>{{ order.created_at|date:"d. F Y" }}</span>
+                </div>
+                
+                {% for item in order.items.all %}
+                <div class="MB-receipt-row">
+                    <span>Antall billetter:</span>
+                    <span>{{ item.quantity }} x {{ item.ticket_type.name }}</span>
+                </div>
+                {% endfor %}
+                
+                <hr class="MB-divider">
+                <div class="MB-receipt-row MB-total-row">
+                    <span>Totalbeløp betalt:</span>
+                    <span class="MB-total-amount">{{ total_amount|floatformat:2 }} kr</span>
+                </div>
+            </div>
+
+            <div class="MB-receipt-footer">
+                <p>En bekreftelse er sendt til din e-postadresse.</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="MB-receipt-card">
+            <p style="color: #888;">Ingen ordre funnet.</p>
+        </div>
+        {% endif %}
+
+        <div class="MB-action-links">
+            <a href="/tickets/my-tickets/" class="MB-btn-primary">Gå til Mine billetter</a>
+            <a href="/" class="MB-btn-secondary">Tilbake til forsiden</a>
+        </div>
+        
+    </div>
+</main>
 {% endblock %}

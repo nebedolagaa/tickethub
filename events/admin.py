@@ -14,9 +14,6 @@ from .models import (
 
 # Register your models here.
 
-class PerformerAdmin(admin.ModelAdmin):
-    search_fields = ["name"]
-
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ["title", "event_type", "venue", "start_datetime", "organizer"]
@@ -41,4 +38,9 @@ admin.site.register(EventImage)
 admin.site.register(Row)
 admin.site.register(Seat)
 admin.site.register(EventSeat)
-admin.site.register(Performer, PerformerAdmin)
+
+@admin.register(Performer)
+class PerformerAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("name",)}
+    search_fields = ["name"]
+    list_display = ("name",)
