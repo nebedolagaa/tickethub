@@ -46,11 +46,11 @@
                         {% endif %}
                         
                         <p><i class="fa-solid fa-location-dot"></i>
-                        {%if extra_info.city and extra_info.country%}
-                            {{extra_info.city}}, {{extra_info.country}}
-                        {%else%}
+                        {% if extra_info.full_address %}
+                            {{ extra_info.full_address }}
+                        {% else %}
                             Ikke registrert
-                        {%endif%}</p>
+                        {% endif %}</p>
                     </div>
 
                     <a class="MB-user_profile-btn-dark  {%if request.resolver_match.url_name == 'user_profile' %} active{%endif%}" href="{% url 'users:user_profile' %}">Rediger profil</a>

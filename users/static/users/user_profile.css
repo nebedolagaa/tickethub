@@ -185,7 +185,7 @@ a.MB-user_profile-btn-dark.active {
 .MB-success {
   background-color: var(--th-green-a08);
   color: var(--th-green);
-  padding: 10px;
+  padding: 10px 10px 10px 20px;
   border-radius: 6px;
   margin-bottom: 12px;
   font-size: 13px;

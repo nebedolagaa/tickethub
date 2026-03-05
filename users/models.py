@@ -1,52 +1,82 @@
-''' 
+"""
 Bidratt til denne filen:
     - Kamilla Nizamova
-'''
+"""
+
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 User = settings.AUTH_USER_MODEL
 
+
 # Organizer profile model
 class OrganizerProfile(models.Model):
-     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='organizer_profile')
-     organization_name = models.CharField(max_length=255)
-     contact_email = models.EmailField()
-     phone_number = models.CharField(max_length=20, blank=True)
-     organization_number = models.CharField(max_length=9, blank=True, null=True, help_text="Valgfritt. 9 sifre.")
-     
-     # Valgfritt: adresse, postnummer og by for arrangøren.
-     #adresse ligger her for å skille mellom users-hjemmeadresse og organisasjonens adresse 
-     organization_address = models.CharField(max_length=255, blank=True, null=True)
-     organization_postcode = models.CharField(max_length=20, blank=True, null=True)
-     organization_city = models.CharField(max_length=100, blank=True, null=True)
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="organizer_profile"
+    )
+    organization_name = models.CharField(max_length=255)
+    contact_email = models.EmailField()
+    phone_number = models.CharField(max_length=20, blank=True)
+    organization_number = models.CharField(
+        max_length=9, blank=True, null=True, help_text="Valgfritt. 9 sifre."
+    )
 
-     created_at = models.DateTimeField(auto_now_add=True)
+    # Valgfritt: adresse, postnummer og by for arrangøren.
+    # adresse ligger her for å skille mellom users-hjemmeadresse og organisasjonens adresse
+    organization_address = models.CharField(max_length=255, blank=True, null=True)
+    organization_postcode = models.CharField(max_length=20, blank=True, null=True)
+    organization_city = models.CharField(max_length=100, blank=True, null=True)
 
-     def __str__(self):
-         return self.organization_name
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.organization_name
+
+    def full_address(self):
+        """Returnerer fullstendig organisasjonsadresse med smart formatering"""
+        parts = []
+
+        # Legg til adresse og postnummer/by på én linje
+        if self.organization_address:
+            address_line = self.organization_address
+            if self.organization_postcode or self.organization_city:
+                postal_city = " ".join(
+                    filter(None, [self.organization_postcode, self.organization_city])
+                )
+                address_line += f", {postal_city}"
+            parts.append(address_line)
+        elif self.organization_postcode or self.organization_city:
+            # Hvis bare postnummer/by uten adresse
+            parts.append(
+                " ".join(
+                    filter(None, [self.organization_postcode, self.organization_city])
+                )
+            )
+
+        return ", ".join(parts) if parts else ""
 
 
 # Custom user manager
 class MyAccountManager(BaseUserManager):
     def create_user(self, first_name, last_name, email, password=None):
         if not email:
-            raise ValueError('User must have an email address')
-        
+            raise ValueError("User must have an email address")
+
         email = self.normalize_email(email)
-        
+
         user = self.model(
-            email=self.normalize_email(email), #if you enter a capiotal letter in email it will convert it to lowercase
+            email=self.normalize_email(
+                email
+            ),  # if you enter a capiotal letter in email it will convert it to lowercase
             first_name=first_name,
             last_name=last_name,
         )
-        
+
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    
     def create_superuser(self, first_name, last_name, email, password):
         user = self.create_user(
             email=self.normalize_email(email),
@@ -60,7 +90,7 @@ class MyAccountManager(BaseUserManager):
         user.is_superadmin = True
         user.save(using=self._db)
         return user
-    
+
 
 # Custom user model
 class Account(AbstractBaseUser):
@@ -70,7 +100,7 @@ class Account(AbstractBaseUser):
     email = models.EmailField(max_length=255, unique=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
 
-    #required fields
+    # required fields
     date_joined = models.DateTimeField(auto_now_add=True)
     last_login = models.DateTimeField(auto_now=True)
 
@@ -79,30 +109,34 @@ class Account(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superadmin = models.BooleanField(default=False)
 
-    #login with email not username like it is by default
-    USERNAME_FIELD = 'email'
+    # login with email not username like it is by default
+    USERNAME_FIELD = "email"
 
-    #these fields will be asked when creating a superuser
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    # these fields will be asked when creating a superuser
+    REQUIRED_FIELDS = ["first_name", "last_name"]
 
     objects = MyAccountManager()
 
     def __str__(self):
         return self.email
-    
+
     @property
     def is_superuser(self):
         """Django admin krever dette feltet"""
         return self.is_superadmin
-    
+
+    def is_organizer(self):
+        """Sjekker om brukeren har en arrangørprofil"""
+        return hasattr(self, "organizer_profile")
+
     def has_perm(self, perm, obj=None):
         return self.is_admin
-    
+
     def has_module_perms(self, app_label):
         return True
-    
 
-#modell for å lagre ekstra informasjon om brukeren som ikke er i Account modellen, for eksempel telefonnummer, adresse osv.
+
+# modell for å lagre ekstra informasjon om brukeren som ikke er i Account modellen, for eksempel telefonnummer, adresse osv.
 class UserProfile(models.Model):
     user = models.OneToOneField(Account, on_delete=models.CASCADE)
     address = models.CharField(blank=True, max_length=255)
@@ -111,8 +145,25 @@ class UserProfile(models.Model):
     country = models.CharField(blank=True, max_length=100)
 
     def __str__(self):
-        return self.user.first_name + ' ' + self.user.last_name
-    
+        return self.user.first_name + " " + self.user.last_name
 
     def full_address(self):
-        return f"{self.address}, {self.postal_code} {self.city}, {self.country}"
+        """Returnerer fullstendig adresse med smart formatering"""
+        parts = []
+
+        # Legg til adresse og postnummer/by på én linje
+        if self.address:
+            address_line = self.address
+            if self.postal_code or self.city:
+                postal_city = " ".join(filter(None, [self.postal_code, self.city]))
+                address_line += f", {postal_city}"
+            parts.append(address_line)
+        elif self.postal_code or self.city:
+            # Hvis bare postnummer/by uten adresse
+            parts.append(" ".join(filter(None, [self.postal_code, self.city])))
+
+        # Legg til land
+        if self.country:
+            parts.append(self.country)
+
+        return ", ".join(parts) if parts else ""

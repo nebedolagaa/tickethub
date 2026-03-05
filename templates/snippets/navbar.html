@@ -42,6 +42,13 @@
         <i class="bi bi-person"></i>
         <span class="login-btn-text-CB">Min profil</span>
       </a>
+      <!-- Ссылка на профиль организатора (только если пользователь - организатор) -->
+      {% if user.is_organizer %}
+      <a href="{% url 'users:organizer_profile' %}" class="navbar-btn-CB" style="text-decoration: none">
+        <i class="bi bi-building"></i>
+        <span class="login-btn-text-CB">Arrangørprofil</span>
+      </a>
+      {% endif %}
       <!-- Logg ut button (far right) -->
       <form method="post" action="{% url 'logout' %}" style="display: inline">
         {% csrf_token %}

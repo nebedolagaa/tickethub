@@ -6,6 +6,7 @@ Bidratt til denne filen:
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db import transaction
 from django.contrib import messages, auth
+from django.db.models import Sum, F
 
 from django.contrib.auth.decorators import login_required
 
@@ -345,10 +346,17 @@ def my_orders(request):
 
 @login_required(login_url="users:login")
 def organizer_profile(request):
+    # Sjekk om brukeren har arrangørprofil
+    try:
+        organizer = OrganizerProfile.objects.get(user=request.user)
+    except OrganizerProfile.DoesNotExist:
+        messages.error(
+            request,
+            "Du har ikke tilgang til arrangørprofil. Kun brukere registrert som arrangører kan se denne siden.",
+        )
+        return redirect("users:user_profile")
 
     # dette er koden for å oppdatere arrangørprofil
-    organizer = get_object_or_404(OrganizerProfile, user=request.user)
-
     if request.method == "POST":
 
         # check if its a request to delete an event
@@ -397,8 +405,18 @@ def organizer_profile(request):
     total_events = events.count()
     active_events = events.filter(start_datetime__gte=timezone.now()).count()
 
-    # sold_tickets =
-    # total_turnover =
+    # Beregn antall solgte billetter for organisatorens arrangementer
+    # Forfatter: Nikita Pushechnikov
+    sold_tickets = Ticket.objects.filter(
+        ticket_type__event__organizer=request.user.organizer_profile
+    ).count()
+
+    # Beregn total omsetning for organisatorens arrangementer
+    # Forfatter: Nikita Pushechnikov
+    revenue_data = Order.objects.filter(
+        event__organizer=request.user.organizer_profile
+    ).aggregate(total=Sum(F("items__unit_price") * F("items__quantity")))
+    total_turnover = revenue_data["total"] or 0
 
     context = {
         "organizer": organizer,
@@ -406,6 +424,8 @@ def organizer_profile(request):
         "total_events": total_events,
         "active_events": active_events,
         "events": events,
+        "sold_tickets": sold_tickets,
+        "total_turnover": total_turnover,
     }
 
     return render(request, "users/organizer_profile.html", context)
