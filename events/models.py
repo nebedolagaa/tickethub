@@ -102,6 +102,7 @@ class VenueArea(models.Model):
             ),
         ]
 
+
 class Event(models.Model):
     # Valgmuligheter for arrangementstype
     EVENT_TYPE_CHOICES = [
@@ -116,7 +117,7 @@ class Event(models.Model):
 
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
-    performers = models.ManyToManyField('Performer', blank=True, related_name="events")
+    performers = models.ManyToManyField("Performer", blank=True, related_name="events")
 
     # Type arrangement - konsert eller festival
     event_type = models.CharField(
@@ -130,6 +131,12 @@ class Event(models.Model):
     end_datetime = models.DateTimeField()
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    # Felt for arkivering - markerer om arrangementet er arkivert
+    # Bidrag til denne filen: Nikita Pushechnikov
+    is_archived = models.BooleanField(
+        default=False, help_text="Om arrangementet er arkivert"
+    )
 
     # Slug brukes i URL-er (f.eks. /events/oslo-jazz-festival/)
     # den er ikke unique fordi id brukes i tillegg til slug og garanterer entydighet
@@ -236,14 +243,15 @@ class EventStandingAllocation(models.Model):
     def remaining(self):
         return self.capacity - self.sold
 
+
 class Performer(models.Model):
-    name=models.CharField(max_length=255, unique=True)
-    slug=models.SlugField(max_length=255, unique=True, blank=True)
-    bio=models.TextField(blank=True)
-    genre=models.CharField(max_length=20, blank=True)
-    image=models.ImageField(upload_to='performers/', blank=True, null=True)
-    website= models.URLField(blank=True)
-    
+    name = models.CharField(max_length=255, unique=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True)
+    bio = models.TextField(blank=True)
+    genre = models.CharField(max_length=20, blank=True)
+    image = models.ImageField(upload_to="performers/", blank=True, null=True)
+    website = models.URLField(blank=True)
+
     def save(self, *args, **kwargs):
         # Hvis slug ikke er satt, lager vi en automatisk basert på tittel.
         # Slug trenger ikke være unik fordi primærnøkkel (pk) brukes i URL
@@ -258,8 +266,74 @@ class Performer(models.Model):
         try:
             return reverse("performer_detail", kwargs={"slug": self.slug})
         except:
-            return '#'
+            return "#"
 
     def __str__(self):
         return self.name
 
+
+# Modell for arkivering av avsluttede arrangementer
+# Bidrag til denne filen: Nikita Pushechnikov
+class ArchivedEvent(models.Model):
+    # Valgmuligheter for arrangementstype
+    EVENT_TYPE_CHOICES = [
+        ("concert", "Konsert"),
+        ("festival", "Festival"),
+    ]
+
+    # Lagrer original event ID for referanse
+    original_event_id = models.IntegerField()
+
+    # Lagrer organisatorinformasjon som tekst (siden original organisator kan bli slettet)
+    organizer_name = models.CharField(max_length=255)
+
+    # Lagrer venue-informasjon som tekst
+    venue_name = models.CharField(max_length=200)
+    venue_address = models.CharField(max_length=500)
+
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+
+    # Lagrer artister som kommaseparert streng
+    performers_list = models.TextField(
+        blank=True, help_text="Kommaseparert liste over artister"
+    )
+
+    event_type = models.CharField(
+        max_length=20,
+        choices=EVENT_TYPE_CHOICES,
+        default="concert",
+    )
+
+    start_datetime = models.DateTimeField()
+    end_datetime = models.DateTimeField()
+    created_at = models.DateTimeField()
+    archived_at = models.DateTimeField(auto_now_add=True)
+
+    slug = models.SlugField(max_length=255, blank=True)
+
+    # Statistikk for arrangementet
+    total_tickets_sold = models.PositiveIntegerField(default=0)
+    total_revenue = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def __str__(self):
+        return f"[ARKIV] {self.title} ({self.start_datetime.date()})"
+
+    class Meta:
+        verbose_name = "Archived Event"
+        verbose_name_plural = "Archived Events"
+        ordering = ["-start_datetime"]
+
+
+# Modell for arkivering av arrangementsbilder
+# Bidrag til denne filen: Nikita Pushechnikov
+class ArchivedEventImage(models.Model):
+    archived_event = models.ForeignKey(
+        ArchivedEvent, on_delete=models.CASCADE, related_name="images"
+    )
+    image_path = models.CharField(max_length=500, help_text="Sti til bildet")
+    alt_text = models.CharField(max_length=255, blank=True)
+    is_cover = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.archived_event.title} - arkivert bilde"

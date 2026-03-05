@@ -1,27 +1,37 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Event
-from .models import Performer #JF - importere Artist/Performer-modellen for å kunne bruke den i views
-from django.shortcuts import redirect 
+from .models import (
+    Performer,
+)  # JF - importere Artist/Performer-modellen for å kunne bruke den i views
+from django.shortcuts import redirect
 from django.utils.text import slugify
-from django.views.generic import ListView, DetailView #JF - til performermodellen, linke opp performer med arrangement
+from django.utils import timezone
+from django.views.generic import (
+    ListView,
+    DetailView,
+)  # JF - til performermodellen, linke opp performer med arrangement
 from django.db.models import Q, Count, Min
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def home_page(request):
     """Hovedside med 3 fremhevede arrangementer (2 konserter + 1 festival)"""
-    # Henter 2 konserter
+    # Henter 2 konserter som ikke har gått ut og ikke er arkivert
     concerts = (
-        Event.objects.filter(event_type="concert")
+        Event.objects.filter(
+            event_type="concert", end_datetime__gte=timezone.now(), is_archived=False
+        )
         .select_related("venue", "venue__address", "organizer")
         .prefetch_related("images", "ticket_types")
         .order_by("start_datetime")[:2]
     )
 
-    # Henter 1 festival
+    # Henter 1 festival som ikke har gått ut og ikke er arkivert
     festivals = (
-        Event.objects.filter(event_type="festival")
+        Event.objects.filter(
+            event_type="festival", end_datetime__gte=timezone.now(), is_archived=False
+        )
         .select_related("venue", "venue__address", "organizer")
         .prefetch_related("images", "ticket_types")
         .order_by("start_datetime")[:1]
@@ -36,10 +46,10 @@ def home_page(request):
 
 def all_events(request):
     """Side med alle konserter med søke- og sorteringsfunksjonalitet"""
-    # Filtrer kun konserter (ikke festivaler)
-    events = Event.objects.filter(event_type="concert").select_related(
-        "venue", "venue__address", "organizer"
-    )
+    # Filtrer kun konserter (ikke festivaler) som ikke har gått ut
+    events = Event.objects.filter(
+        event_type="concert", end_datetime__gte=timezone.now()
+    ).select_related("venue", "venue__address", "organizer")
 
     # Søk
     search_query = request.GET.get("search", "")
@@ -94,10 +104,10 @@ def snippets(request):
 
 def festivals(request):
     """Side som viser alle festivaler"""
-    # Filtrer kun festivaler
-    festivals = Event.objects.filter(event_type="festival").select_related(
-        "venue", "venue__address", "organizer"
-    )
+    # Filtrer kun festivaler som ikke har gått ut og ikke er arkivert
+    festivals = Event.objects.filter(
+        event_type="festival", end_datetime__gte=timezone.now(), is_archived=False
+    ).select_related("venue", "venue__address", "organizer")
 
     # Søk
     search_query = request.GET.get("search", "")
@@ -151,9 +161,10 @@ def cities(request):
     from django.db.models import Count
     from .models import City
 
-    # Henter alle byer med antall events og informasjon om bilder
+    # Henter alle byer med antall events (kun ikke utløpte og ikke-arkiverte) og informasjon om bilder
     cities_list = (
-        Event.objects.values("venue__address__city")
+        Event.objects.filter(end_datetime__gte=timezone.now(), is_archived=False)
+        .values("venue__address__city")
         .annotate(event_count=Count("id"))
         .order_by("-event_count", "venue__address__city")
     )
@@ -255,53 +266,20 @@ def purchase_tickets(request, event_id):
     return render(request, "events/purchase_tickets.html", context)
 
 
-def profile_demo(request):
-    """Demo view for profil side - kun for testing/demonstrasjon"""
-    tickets = [
-        {
-            "title": "Aurora",
-            "subtitle": "World Tour 2024",
-            "date": "15. oktober 2024",
-            "time": "20:00",
-            "venue": "Oslo Spektrum, Oslo",
-            "type": "Standard",
-            "seat": "Seksjon A, Rad 15, Sete 12",
-            "number": "TH-2024-AUR-001234",
-            "status": "active",  # <-- Aktiv
-        },
-        {
-            "title": "Nils Petter Molvær",
-            "subtitle": "Summer Jazz Night",
-            "date": "12. september 2024",
-            "time": "19:30",
-            "venue": "Blå, Oslo",
-            "type": "VIP",
-            "seat": "Bord 5",
-            "number": "TH-2024-NPM-005678",
-            "status": "used",  # <-- Brukt
-        },
-        {
-            "title": "Kvelertak",
-            "subtitle": "Rock Festival",
-            "date": "8. oktober 2024",
-            "time": "21:00",
-            "venue": "Sentrum Scene, Oslo",
-            "type": "Early Bird",
-            "seat": "Ståplass",
-            "number": "TH-2024-KVE-009012",
-            "status": "cancelled",  # <-- Kansellert
-        },
-    ]
-    return render(request, "events/profile_demo.html", {"tickets": tickets})
-
-
 def venue_guide(request):
     """Side som viser en guide til de mest populære konsertstedene i Norge"""
     from .models import Venue
 
-    # Henter venues sortert etter hvor mange events de har, viser topp 10
+    # Henter venues sortert etter hvor mange aktive events de har, viser topp 10
     venues = (
-        Venue.objects.annotate(event_count=Count("events"))
+        Venue.objects.annotate(
+            event_count=Count(
+                "events",
+                filter=Q(
+                    events__end_datetime__gte=timezone.now(), events__is_archived=False
+                ),
+            )
+        )
         .order_by("-event_count")[:10]
         .select_related("address")
     )
@@ -365,9 +343,11 @@ def venue_detail(request, venue_id):
 
     venue = get_object_or_404(Venue.objects.select_related("address"), pk=venue_id)
 
-    # Henter events som finner sted på denne venueen
+    # Henter events som finner sted på denne venueen (kun ikke utløpte og ikke-arkiverte)
     events = (
-        Event.objects.filter(venue=venue)
+        Event.objects.filter(
+            venue=venue, end_datetime__gte=timezone.now(), is_archived=False
+        )
         .select_related("organizer", "venue", "venue__address")
         .prefetch_related("images", "ticket_types")
     )
@@ -379,17 +359,18 @@ def venue_detail(request, venue_id):
 
     return render(request, "events/venue_detail.html", context)
 
-class PerformerListView(ListView): #JF - View for å vise alle artister
+
+class PerformerListView(ListView):  # JF - View for å vise alle artister
     model = Performer
-    template_name ='performer/performer_list.html'
-    context_object_name = 'performers'
-    paginate_by =10
+    template_name = "performer/performer_list.html"
+    context_object_name = "performers"
+    paginate_by = 10
 
 
-class PerformerDetailView(DetailView): #JF - View for å vise detaljer om en spesifikk artist
-    model =Performer
-    template_name= 'events/performer_detail.html'
-    slug_field = 'slug'
-    context_object_name= 'performer'
-
-
+class PerformerDetailView(
+    DetailView
+):  # JF - View for å vise detaljer om en spesifikk artist
+    model = Performer
+    template_name = "events/performer_detail.html"
+    slug_field = "slug"
+    context_object_name = "performer"
