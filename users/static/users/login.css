@@ -1,114 +1,343 @@
-/* MAIN */
+/* ===== MAIN LAYOUT ===== */
 .CB1-main {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 80px 20px 40px;
+  padding: 40px 20px;
+  position: relative;
+  overflow: hidden;
+  background: var(--th-black);
 }
 
+/* Background ambient glows */
+.CB1-bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.CB1-bg-glow--red {
+  width: 400px;
+  height: 400px;
+  background: var(--th-red-a10);
+  top: -80px;
+  right: 10%;
+}
+
+.CB1-bg-glow--green {
+  width: 350px;
+  height: 350px;
+  background: var(--th-green-a08);
+  bottom: -60px;
+  left: 10%;
+}
+
+/* ===== CARD ===== */
 .CB1-login-card {
+  position: relative;
+  z-index: 1;
   background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
-  border-radius: 12px;
-  width: 380px;
-  padding: 32px;
-  box-shadow: 0 0 30px var(--th-black-a50);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 36px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.03),
+    0 24px 48px var(--th-black-a50);
 }
 
-.CB1-title {
-  margin: 0;
+/* ===== LOGO ===== */
+.CB1-logo {
   text-align: center;
+  margin-bottom: 24px;
+}
+
+.CB1-logo-link {
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.CB1-logo-white {
+  color: var(--th-white);
+}
+
+.CB1-logo-red {
+  color: var(--th-red);
+}
+
+/* ===== HEADINGS ===== */
+.CB1-title {
+  margin: 0 0 4px;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 700;
   color: var(--th-white);
 }
 
 .CB1-subtitle {
   text-align: center;
   color: var(--th-muted);
-  margin-bottom: 24px;
-  font-size: 14px;
+  margin: 0 0 28px;
+  font-size: 0.875rem;
 }
 
-/* FORM */
+/* ===== FORM GROUPS ===== */
 .CB1-form-group {
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
-.CB1-form-group label {
+.CB1-label {
   display: block;
-  margin-bottom: 6px;
-  font-size: 13px;
+  margin-bottom: 7px;
+  font-size: 0.8125rem;
+  font-weight: 500;
   color: var(--th-muted);
+  letter-spacing: 0.01em;
 }
 
-.CB1-form-group input {
+/* Input wrapper with icon */
+.CB1-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.CB1-input-icon {
+  position: absolute;
+  left: 12px;
+  padding-top: 7px;
+  font-size: 15px;
+  color: var(--th-muted);
+  pointer-events: none;
+  z-index: 1;
+}
+
+#CB1-eye-icon {
+  padding-top: 7px;
+}
+
+.CB1-input {
   width: 100%;
-  padding: 10px;
-  border-radius: 6px;
+  padding: 11px 12px 11px 38px;
+  border-radius: 8px;
   border: 1px solid var(--th-light-gray);
-  background: var(--th-dark-gray);
+  background: rgba(255, 255, 255, 0.04);
   color: var(--th-white);
-  font-size: 14px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
 }
 
-.CB1-form-group input:focus {
+/* Extra right padding to avoid text under the eye toggle */
+.CB1-input--pw {
+  padding-right: 42px;
+}
+
+.CB1-input::placeholder {
+  color: #555;
+}
+
+.CB1-input:focus {
   outline: none;
   border-color: var(--th-red);
+  background: rgba(220, 38, 38, 0.04);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.12);
 }
 
+/* Password toggle button */
+.CB1-toggle-pw {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--th-muted);
+  cursor: pointer;
+  padding: 4px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.CB1-toggle-pw:hover {
+  color: var(--th-white);
+}
+
+/* ===== ERROR BOX ===== */
+.CB1-error-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--th-red-a10);
+  border: 1px solid var(--th-red);
+  color: var(--th-red);
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.CB1-error-box i {
+  flex-shrink: 0;
+  font-size: 15px;
+}
+
+/* ===== CHECKBOX ROW ===== */
 .CB1-form-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 12px 0 18px 0;
-  font-size: 13px;
+  margin: 6px 0 22px;
+  gap: 12px;
 }
 
-.CB1-checkbox {
+.CB1-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 5px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+/* Checkbox — appearance:none approach */
+.CB1-checkbox-input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--th-light-gray);
+  background: rgba(255, 255, 255, 0.04);
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
+}
+
+.CB1-checkbox-input:checked {
+  background: var(--th-red);
+  border-color: var(--th-red);
+}
+
+.CB1-checkbox-input:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: 2px solid var(--th-white);
+  border-top: none;
+  border-left: none;
+  transform: rotate(45deg);
+}
+
+.CB1-checkbox-text {
+  font-size: 0.8125rem;
   color: var(--th-muted);
+  white-space: nowrap;
 }
 
 .CB1-forgot {
+  font-size: 0.8125rem;
   color: var(--th-red);
   text-decoration: none;
+  padding-top: 20px;
+  white-space: nowrap;
+  transition: color 0.2s;
 }
 
 .CB1-forgot:hover {
+  color: var(--th-red-dark);
   text-decoration: underline;
 }
 
+/* ===== SUBMIT BUTTON ===== */
 .CB1-btn-submit {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   background: var(--th-red);
   border: none;
   color: var(--th-white);
   padding: 12px;
   border-radius: 8px;
-  font-size: 15px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-family: inherit;
   cursor: pointer;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s,
+    transform 0.1s;
 }
 
 .CB1-btn-submit:hover {
   background: var(--th-red-dark);
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.35);
 }
 
-.CB1-error {
-  background: var(--th-red-a10);
-  border: 1px solid var(--th-red);
-  color: var(--th-red);
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 12px;
-  font-size: 13px;
+.CB1-btn-submit:active {
+  transform: scale(0.98);
 }
 
+/* ===== DIVIDER ===== */
+.CB1-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0 16px;
+  color: var(--th-muted);
+  font-size: 0.75rem;
+}
+
+.CB1-divider::before,
+.CB1-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--th-light-gray);
+}
+
+/* ===== REGISTER LINK ===== */
 .CB1-register-text {
   text-align: center;
-  margin-top: 18px;
-  font-size: 13px;
+  font-size: 0.8125rem;
   color: var(--th-muted);
 }
 
 .CB1-register-text a {
   color: var(--th-red);
   text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.CB1-register-text a:hover {
+  color: var(--th-red-dark);
+  text-decoration: underline;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 480px) {
+  .CB1-login-card {
+    padding: 32px 24px;
+  }
 }

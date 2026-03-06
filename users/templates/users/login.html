@@ -1,49 +1,105 @@
-{% extends "base.html" %}
 {% load static %}
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logg inn — TicketHub</title>
 
-{% block css %}
-<link rel="stylesheet" href="{% static 'main.css' %}">
-<link rel="stylesheet" href="{% static 'users/login.css' %}">
-{% endblock %}
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+  <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
 
-{% block title %}Logg inn{% endblock %}
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
-{% block content %}
+  <!-- CSS -->
+  <link rel="stylesheet" href="{% static 'main.css' %}">
+  <link rel="stylesheet" href="{% static 'users/login.css' %}">
+</head>
+<body>
+
 <main class="CB1-main">
-    <div class="CB1-login-card">
-        <h1 class="CB1-title">Logg inn</h1>
-        <p class="CB1-subtitle">Velkommen tilbake</p>
+  <div class="CB1-bg-glow CB1-bg-glow--red"></div>
+  <div class="CB1-bg-glow CB1-bg-glow--green"></div>
 
-        <form action = '{% url 'users:login' %}' method="post" class="CB1-form">
-            {% csrf_token %}
-            <div class="CB1-form-group">
-                <label for="username">E-post</label>
-                <input type="text" name="email" id="username" placeholder="din@epost.no" required>
-            </div>
+  <div class="CB1-login-card">
 
-            <div class="CB1-form-group">
-                <label for="password">Passord</label>
-                <input type="password" name="password" id="password" required>
-            </div>
-
-            <!-- bruker messages har fordi forms.errors ikke alltid funket og ga feil-->
-            {% if messages %}
-                <div class="CB1-error">{% include 'includes/alerts.html'%}</div>
-            {% endif %}
-
-            <div class="CB1-form-row">
-                <label class="CB1-checkbox">
-                    <input type="checkbox" name="remember"> Husk meg
-                </label>
-                <a href="{% url 'users:forgotPassword'%}" class="CB1-forgot">Glemt passord?</a>
-            </div>
-
-            <button type="submit" class="CB1-btn-submit">Logg inn</button>
-        </form>
-
-        <div class="CB1-register-text">
-            Har du ikke konto? <a href="{% url 'users:register'%}">Registrer deg her</a>
-        </div>
+    <div class="CB1-logo">
+      <a href="/" class="CB1-logo-link">
+        <span class="CB1-logo-white">ticket</span><span class="CB1-logo-red">hub</span>
+      </a>
     </div>
+
+    <h1 class="CB1-title">Logg inn</h1>
+    <p class="CB1-subtitle">Velkommen tilbake til TicketHub</p>
+
+    <form action="{% url 'users:login' %}" method="post" class="CB1-form">
+      {% csrf_token %}
+
+      <div class="CB1-form-group">
+        <label for="username" class="CB1-label">E-post</label>
+        <div class="CB1-input-wrap">
+          <i class="bi bi-envelope CB1-input-icon"></i>
+          <input type="text" name="email" id="username" placeholder="din@epost.no" class="CB1-input" required>
+        </div>
+      </div>
+
+      <div class="CB1-form-group">
+        <label for="password" class="CB1-label">Passord</label>
+        <div class="CB1-input-wrap">
+          <i class="bi bi-lock CB1-input-icon"></i>
+          <input type="password" name="password" id="password" placeholder="Skriv inn passordet ditt" class="CB1-input CB1-input--pw" required>
+          <button type="button" class="CB1-toggle-pw" onclick="togglePassword()" tabindex="-1" aria-label="Vis/skjul passord">
+            <i class="bi bi-eye" id="CB1-eye-icon"></i>
+          </button>
+        </div>
+      </div>
+
+      {% if messages %}
+        <div class="CB1-error-box">
+          <i class="bi bi-exclamation-circle"></i>
+          {% for message in messages %}{{ message }}{% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="CB1-form-row">
+        <label class="CB1-checkbox-label">
+          <input type="checkbox" name="remember" class="CB1-checkbox-input">
+          <span class="CB1-checkbox-text">Husk meg</span>
+        </label>
+        <a href="{% url 'users:forgotPassword' %}" class="CB1-forgot">Glemt passord?</a>
+      </div>
+
+      <button type="submit" class="CB1-btn-submit">
+        <i class="bi bi-box-arrow-in-right"></i>
+        Logg inn
+      </button>
+    </form>
+
+    <div class="CB1-divider"><span>eller</span></div>
+
+    <div class="CB1-register-text">
+      Har du ikke konto? <a href="{% url 'users:register' %}">Registrer deg her</a>
+    </div>
+  </div>
 </main>
-{% endblock %}
+
+<script>
+  function togglePassword() {
+    const input = document.getElementById('password');
+    const icon = document.getElementById('CB1-eye-icon');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.replace('bi-eye', 'bi-eye-slash');
+    } else {
+      input.type = 'password';
+      icon.classList.replace('bi-eye-slash', 'bi-eye');
+    }
+  }
+</script>
+
+</body>
+</html>
