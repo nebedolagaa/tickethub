@@ -11,7 +11,7 @@
 
     <div class="navbar-menu-CB">
       <a href="/">Hovedside</a>
-      <a href="{% url 'all_events' %}">Alle konserter</a>
+      <a href="{% url 'concerts' %}">Konserter</a>
       <a href="{% url 'festivals' %}">Festivaler</a>
       <a href="{% url 'cities' %}">Byer</a>
       <a href="{% url 'organizer' %}">Arrangør?</a>
@@ -69,7 +69,7 @@
   <div id="mobile-menu-CB" class="mobile-menu-CB" style="display: none">
     <a href="/">Hjem</a>
     <a href="/">Hovedside</a>
-    <a href="{% url 'all_events' %}">Alle konserter</a>
+    <a href="{% url 'concerts' %}">Alle konserter</a>
     <a href="#">Musikksjangler</a>
     <a href="#">Support</a>
   </div>
@@ -86,7 +86,7 @@
       </button>
     </div>
     
-    <form action="{% url 'all_events' %}" method="get" class="NP-search-form">
+    <form action="{% url 'concerts' %}" method="get" class="NP-search-form">
       <div class="NP-search-input-wrapper">
         <i class="bi bi-search NP-search-icon"></i>
         <input 
@@ -106,10 +106,10 @@
     <div class="NP-search-suggestions">
       <p class="NP-suggestions-title">Populære søk:</p>
       <div class="NP-suggestion-tags">
-        <a href="{% url 'all_events' %}?search=festival" class="NP-suggestion-tag">Festival</a>
-        <a href="{% url 'all_events' %}?search=Oslo" class="NP-suggestion-tag">Oslo</a>
-        <a href="{% url 'all_events' %}?search=Bergen" class="NP-suggestion-tag">Bergen</a>
-        <a href="{% url 'all_events' %}?search=konsert" class="NP-suggestion-tag">Konsert</a>
+        <a href="{% url 'concerts' %}?search=festival" class="NP-suggestion-tag">Festival</a>
+        <a href="{% url 'concerts' %}?search=Oslo" class="NP-suggestion-tag">Oslo</a>
+        <a href="{% url 'concerts' %}?search=Bergen" class="NP-suggestion-tag">Bergen</a>
+        <a href="{% url 'concerts' %}?search=konsert" class="NP-suggestion-tag">Konsert</a>
       </div>
     </div>
   </div>

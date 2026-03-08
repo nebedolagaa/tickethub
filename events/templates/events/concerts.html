@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Alle konserter - TicketHub</title>
+    <title>Konserter - TicketHub</title>
 
     <!-- Favicon -->
     <link
@@ -55,7 +55,7 @@
       <div class="NP-container">
         <!-- Tittel -->
         <div class="NP-header">
-          <h1 class="NP-title">Alle konserter</h1>
+          <h1 class="NP-title">Konserter</h1>
           <p class="NP-subtitle">
             Oppdag spennende konserter og arrangementer i hele Norge
           </p>
@@ -65,7 +65,7 @@
         <div class="NP-filter-panel">
           <form
             method="get"
-            action="{% url 'all_events' %}"
+            action="{% url 'concerts' %}"
             class="NP-search-form"
           >
             <!-- Søk -->
@@ -119,7 +119,7 @@
               {% endif %}
             </p>
             {% if search_query %}
-              <a href="{% url 'all_events' %}" class="NP-clear-search">
+              <a href="{% url 'concerts' %}" class="NP-clear-search">
                 <i class="bi bi-x-circle"></i> Nullstill søk
               </a>
             {% endif %}
@@ -188,7 +188,7 @@
             <h3>Ingen konserter funnet</h3>
             <p>
               {% if search_query %}
-                Prøv et annet søkeord eller <a href="{% url 'all_events' %}">vis alle konserter</a>
+                Prøv et annet søkeord eller <a href="{% url 'concerts' %}">vis alle konserter</a>
               {% else %}
                 Det er ingen konserter tilgjengelig for øyeblikket.
               {% endif %}

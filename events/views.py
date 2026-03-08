@@ -44,7 +44,7 @@ def home_page(request):
     return render(request, "home_page.html", context)
 
 
-def all_events(request):
+def concerts(request):
     """Side med alle konserter med søke- og sorteringsfunksjonalitet"""
     # Filtrer kun konserter (ikke festivaler) som ikke har gått ut
     events = Event.objects.filter(
@@ -95,7 +95,7 @@ def all_events(request):
         "total_events": paginator.count,
     }
 
-    return render(request, "events/all_events.html", context)
+    return render(request, "events/concerts.html", context)
 
 
 def snippets(request):
