@@ -5,7 +5,10 @@ from .models import Order, OrderItem, Ticket, TicketType
 
 
 def my_tickets(request):
-    return render(request, "tickets/my_tickets.html")
+    if not request.user.is_authenticated:
+        return redirect('users:login')
+    tickets = Ticket.objects.filter(user=request.user).select_related('ticket_type', 'ticket_type__event')
+    return render(request, "tickets/my_tickets.html", {"tickets": tickets})
 
 
 @login_required

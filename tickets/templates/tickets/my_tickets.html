@@ -64,8 +64,17 @@
           Her finner du alle dine kjøpte billetter. Klikk på en billett for å se
           detaljer eller laste den ned.
         </p>
-
-        {% include 'snippets/ticket_card.html' %}
+        {% if tickets %}
+          <div class="NP-tickets-container">
+            {% for ticket in tickets %}
+              {% include 'snippets/ticket_card.html' with ticket=ticket %}
+            {% endfor %}
+          </div>
+        {% else %}
+          <div style="text-align:center; color:var(--th-muted); margin-top:2rem;">
+            Du har ingen billetter ennå.
+          </div>
+        {% endif %}
       </div>
     </div>
 

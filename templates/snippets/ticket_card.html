@@ -1,612 +1,73 @@
-{# templates/snippets/ticket_card.html #}
 
-<div class="NP-tickets-container">
-  {% comment %}
-  <div
-    class="NP-ticket-card {% if ticket.status == 'active' %}NP-status-active{% endif %}"
-  >
-    <div class="NP-ticket-header">
-      <div>
-        <div class="NP-ticket-title">
-          {{ ticket.title|default:"Artist / Event" }}
-        </div>
-        <div class="NP-ticket-sub">
-          {{ ticket.subtitle|default:"Tour / Festival" }}
-        </div>
+
+<div class="NP-ticket-card NP-status-active">
+  <div class="NP-ticket-header">
+    <div>
+      <div class="NP-ticket-title">
+        {{ ticket.ticket_type.event.title }}
       </div>
-
-      <div>
-        {# status: active / used / cancelled #} {% if ticket.status == "active"
-        %}
-        <div
-          class="NP-status-badge"
-          style="background: rgba(255, 255, 255, 0.02); color: var(--th-green)"
-        >
-          Aktiv
-        </div>
-        {% elif ticket.status == "used" %}
-        <div
-          class="NP-status-badge"
-          style="background: rgba(255, 255, 255, 0.02); color: var(--th-muted)"
-        >
-          Brukt
-        </div>
-        {% elif ticket.status == "cancelled" %}
-        <div
-          class="NP-status-badge"
-          style="
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--th-red-light);
-          "
-        >
-          Kansellert
-        </div>
-        {% else %}
-        <div class="NP-status-badge">
-          Status: {{ ticket.status|default:"—" }}
-        </div>
-        {% endif %}
+      <div class="NP-ticket-sub">
+        {{ ticket.ticket_type.event.festival|default:ticket.ticket_type.event.event_type|default:"" }}
       </div>
     </div>
-
-    <div class="NP-meta" role="list">
-      <div class="NP-row" role="listitem">
-        <i
-          class="bi bi-calendar-event NP-icon"
-          style="color: var(--th-red)"
-          aria-hidden="true"
-        ></i>
-        <div>{{ ticket.date|default:"15. oktober 2024" }}</div>
+    <div>
+      <div class="NP-status-badge" style="background: rgba(255, 255, 255, 0.02); color: var(--th-green)">
+        Aktiv
       </div>
-      <div class="NP-row">
-        <i
-          class="bi bi-clock NP-icon"
-          style="color: var(--th-red)"
-          aria-hidden="true"
-        ></i>
-        <div>{{ ticket.time|default:"20:00" }}</div>
-      </div>
-      <div class="NP-row">
-        <i
-          class="bi bi-geo-alt NP-icon"
-          style="color: var(--th-red)"
-          aria-hidden="true"
-        ></i>
-        <div>{{ ticket.venue|default:"Oslo Spektrum, Oslo" }}</div>
-      </div>
-    </div>
-
-    <div class="NP-info-box">
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          gap: 12px;
-          align-items: flex-start;
-        "
-      >
-        <div>
-          <div style="font-size: 0.8rem; color: var(--th-muted)">
-            Billetttype
-          </div>
-          <div style="font-weight: 500">
-            {{ ticket.type|default:"Standard" }}
-          </div>
-        </div>
-        <div>
-          <div style="font-size: 0.8rem; color: var(--th-muted)">Plass</div>
-          <div style="font-weight: 500">
-            {{ ticket.seat|default:"Seksjon A, Rad 15, Sete 12" }}
-          </div>
-        </div>
-      </div>
-
-      <div style="margin-top: 10px; font-size: 0.85rem; color: var(--th-muted)">
-        <div>Billettnummer</div>
-        <div style="font-family: monospace; margin-top: 6px">
-          {{ ticket.number|default:"TH-2024-AUR-001234" }}
-        </div>
-      </div>
-    </div>
-
-    <div class="NP-qr-placeholder" aria-hidden="true">
-      {# enkel SVG-plassholder QR #}
-      <svg
-        width="48"
-        height="48"
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-hidden="true"
-      >
-        <rect
-          width="24"
-          height="24"
-          rx="2"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-        <rect
-          x="4"
-          y="4"
-          width="6"
-          height="6"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-        <rect
-          x="14"
-          y="4"
-          width="6"
-          height="6"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-        <rect
-          x="4"
-          y="14"
-          width="6"
-          height="6"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-      </svg>
-    </div>
-
-    {% if ticket.status == "active" %}
-    <div class="NP-actions">
-      <button
-        class="NP-btn NP-btn-download"
-        type="button"
-        title="Last ned PDF"
-        onclick="alert('Demo: Last ned PDF (ikke implementert)')"
-      >
-        ⬇ Last ned PDF
-      </button>
-      <button
-        class="NP-btn NP-btn-share"
-        type="button"
-        title="Del billett"
-        onclick="alert('Demo: Del billett (ikke implementert)')"
-      >
-        Del billett
-      </button>
-    </div>
-    {% elif ticket.status == "used" %}
-    <div class="NP-actions">
-      <button
-        class="NP-btn NP-btn-download"
-        type="button"
-        title="Last ned PDF"
-        onclick="alert('Demo: Last ned PDF (ikke implementert)')"
-      >
-        ⬇ Last ned PDF
-      </button>
-    </div>
-    <div class="NP-small-note">Denne billetten har allerede blitt brukt.</div>
-    {% elif ticket.status == "cancelled" %}
-    <div class="NP-actions">
-      <button
-        class="NP-btn NP-btn-download"
-        type="button"
-        title="Last ned PDF"
-        onclick="alert('Demo: Last ned PDF (ikke implementert)')"
-      >
-        ⬇ Last ned PDF
-      </button>
-    </div>
-    <div class="NP-small-note">
-      Denne billetten har blitt kansellert og er ikke gyldig.
-    </div>
-    {% endif %}
-  </div>
-  {% endcomment %}
-
-  <div class="NP-ticket-card NP-status-active">
-    <div class="NP-ticket-header">
-      <div>
-        <div class="NP-ticket-title">Oktoberfest</div>
-        <div class="NP-ticket-sub">Festival</div>
-      </div>
-      <div>
-        <div
-          class="NP-status-badge"
-          style="background: rgba(255, 255, 255, 0.02); color: var(--th-muted)"
-        >
-          Brukt
-        </div>
-      </div>
-    </div>
-
-    <div class="NP-meta" role="list">
-      <div class="NP-row" role="listitem">
-        <i
-          class="bi bi-calendar-event NP-icon"
-          style="color: var(--th-red)"
-          aria-hidden="true"
-        ></i>
-        <div>9. oktober 2025</div>
-      </div>
-      <div class="NP-row">
-        <i
-          class="bi bi-clock NP-icon"
-          style="color: var(--th-red)"
-          aria-hidden="true"
-        ></i>
-        <div>17:00</div>
-      </div>
-      <div class="NP-row">
-        <i
-          class="bi bi-geo-alt NP-icon"
-          style="color: var(--th-red)"
-          aria-hidden="true"
-        ></i>
-        <div>Youngstorget, Oslo</div>
-      </div>
-    </div>
-
-    <div class="NP-info-box">
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          gap: 12px;
-          align-items: flex-start;
-        "
-      >
-        <div>
-          <div style="font-size: 0.8rem; color: var(--th-muted)">
-            Billetttype
-          </div>
-          <div style="font-weight: 500">Enkeltbilett</div>
-        </div>
-        <div>
-          <div style="font-size: 0.8rem; color: var(--th-muted)">Plass</div>
-          <div style="font-weight: 500">Stå, Foran scene</div>
-        </div>
-      </div>
-
-      <div style="margin-top: 10px; font-size: 0.85rem; color: var(--th-muted)">
-        <div>Billettnummer</div>
-        <div style="font-family: monospace; margin-top: 6px">
-          TH-2025-WAR-005678
-        </div>
-      </div>
-    </div>
-
-    <div class="NP-qr-placeholder" aria-hidden="true">
-      <svg
-        width="48"
-        height="48"
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-hidden="true"
-      >
-        <rect
-          width="24"
-          height="24"
-          rx="2"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-        <rect
-          x="4"
-          y="4"
-          width="6"
-          height="6"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-        <rect
-          x="14"
-          y="4"
-          width="6"
-          height="6"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-        <rect
-          x="4"
-          y="14"
-          width="6"
-          height="6"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-      </svg>
-    </div>
-
-    <div class="NP-actions">
-      <button
-        class="NP-btn NP-btn-download"
-        type="button"
-        title="Last ned PDF"
-        onclick="alert('Demo: Last ned PDF (ikke implementert)')"
-      >
-        ⬇ Last ned PDF
-      </button>
-    </div>
-    <div class="NP-small-note">Denne billetten har allerede blitt brukt.</div>
-  </div>
-
-  <div class="NP-ticket-card NP-status-active">
-    <div class="NP-ticket-header">
-      <div>
-        <div class="NP-ticket-title">Tommy Cash</div>
-        <div class="NP-ticket-sub">World Tour</div>
-      </div>
-      <div>
-        <div
-          class="NP-status-badge"
-          style="background: rgba(255, 255, 255, 0.02); color: var(--th-green)"
-        >
-          Aktiv
-        </div>
-      </div>
-    </div>
-
-    <div class="NP-meta" role="list">
-      <div class="NP-row" role="listitem">
-        <i
-          class="bi bi-calendar-event NP-icon"
-          style="color: var(--th-red)"
-          aria-hidden="true"
-        ></i>
-        <div>13. november 2025</div>
-      </div>
-      <div class="NP-row">
-        <i
-          class="bi bi-clock NP-icon"
-          style="color: var(--th-red)"
-          aria-hidden="true"
-        ></i>
-        <div>19:00</div>
-      </div>
-      <div class="NP-row">
-        <i
-          class="bi bi-geo-alt NP-icon"
-          style="color: var(--th-red)"
-          aria-hidden="true"
-        ></i>
-        <div>Rockefeller, Oslo</div>
-      </div>
-    </div>
-
-    <div class="NP-info-box">
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          gap: 12px;
-          align-items: flex-start;
-        "
-      >
-        <div>
-          <div style="font-size: 0.8rem; color: var(--th-muted)">
-            Billetttype
-          </div>
-          <div style="font-weight: 500">Ordinær</div>
-        </div>
-        <div>
-          <div style="font-size: 0.8rem; color: var(--th-muted)">Plass</div>
-          <div style="font-weight: 500">Stå, gulv</div>
-        </div>
-      </div>
-
-      <div style="margin-top: 10px; font-size: 0.85rem; color: var(--th-muted)">
-        <div>Billettnummer</div>
-        <div style="font-family: monospace; margin-top: 6px">
-          TH-2025-AUR-009876
-        </div>
-      </div>
-    </div>
-
-    <div class="NP-qr-placeholder" aria-hidden="true">
-      <svg
-        width="48"
-        height="48"
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-hidden="true"
-      >
-        <rect
-          width="24"
-          height="24"
-          rx="2"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-        <rect
-          x="4"
-          y="4"
-          width="6"
-          height="6"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-        <rect
-          x="14"
-          y="4"
-          width="6"
-          height="6"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-        <rect
-          x="4"
-          y="14"
-          width="6"
-          height="6"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-      </svg>
-    </div>
-
-    <div class="NP-actions">
-      <button
-        class="NP-btn NP-btn-download"
-        type="button"
-        title="Last ned PDF"
-        onclick="alert('Demo: Last ned PDF (ikke implementert)')"
-      >
-        ⬇ Last ned PDF
-      </button>
-      <button
-        class="NP-btn NP-btn-share"
-        type="button"
-        title="Del billett"
-        onclick="alert('Demo: Del billett (ikke implementert)')"
-      >
-        Del billett
-      </button>
     </div>
   </div>
 
-  <div class="NP-ticket-card NP-status-active">
-    <div class="NP-ticket-header">
+  <div class="NP-meta" role="list">
+    <div class="NP-row" role="listitem">
+      <i class="bi bi-calendar-event NP-icon" style="color: var(--th-red)" aria-hidden="true"></i>
+      <div>{{ ticket.ticket_type.event.date|date:"d. F Y" }}</div>
+    </div>
+    <div class="NP-row">
+      <i class="bi bi-clock NP-icon" style="color: var(--th-red)" aria-hidden="true"></i>
+      <div>{{ ticket.ticket_type.event.time|default:"" }}</div>
+    </div>
+    <div class="NP-row">
+      <i class="bi bi-geo-alt NP-icon" style="color: var(--th-red)" aria-hidden="true"></i>
+      <div>{{ ticket.ticket_type.event.venue.name|default:"" }}</div>
+    </div>
+  </div>
+
+  <div class="NP-info-box">
+    <div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start;">
       <div>
-        <div class="NP-ticket-title">Kvelertak</div>
-        <div class="NP-ticket-sub">Black Metal Festival</div>
+        <div style="font-size: 0.8rem; color: var(--th-muted)">Billetttype</div>
+        <div style="font-weight: 500">{{ ticket.ticket_type.name }}</div>
       </div>
       <div>
-        <div
-          class="NP-status-badge"
-          style="
-            background: rgba(255, 255, 255, 0.02);
-            color: var(--th-red-light);
-          "
-        >
-          Kansellert
+        <div style="font-size: 0.8rem; color: var(--th-muted)">Plass</div>
+        <div style="font-weight: 500">
+          {% if ticket.event_seat %}
+            {{ ticket.event_seat }}
+          {% else %}
+            —
+          {% endif %}
         </div>
       </div>
     </div>
-
-    <div class="NP-meta" role="list">
-      <div class="NP-row" role="listitem">
-        <i
-          class="bi bi-calendar-event NP-icon"
-          style="color: var(--th-red)"
-          aria-hidden="true"
-        ></i>
-        <div>12. januar 2025</div>
-      </div>
-      <div class="NP-row">
-        <i
-          class="bi bi-clock NP-icon"
-          style="color: var(--th-red)"
-          aria-hidden="true"
-        ></i>
-        <div>22:00</div>
-      </div>
-      <div class="NP-row">
-        <i
-          class="bi bi-geo-alt NP-icon"
-          style="color: var(--th-red)"
-          aria-hidden="true"
-        ></i>
-        <div>Sentrum Scene, Oslo</div>
+    <div style="margin-top: 10px; font-size: 0.85rem; color: var(--th-muted)">
+      <div>Billettnummer</div>
+      <div style="font-family: monospace; margin-top: 6px">
+        {{ ticket.ticket_number }}
       </div>
     </div>
+  </div>
 
-    <div class="NP-info-box">
-      <div
-        style="
-          display: flex;
-          justify-content: space-between;
-          gap: 12px;
-          align-items: flex-start;
-        "
-      >
-        <div>
-          <div style="font-size: 0.8rem; color: var(--th-muted)">
-            Billetttype
-          </div>
-          <div style="font-weight: 500">Standard</div>
-        </div>
-        <div>
-          <div style="font-size: 0.8rem; color: var(--th-muted)">Plass</div>
-          <div style="font-weight: 500">Stå, Gulv</div>
-        </div>
-      </div>
+  <div class="NP-qr-placeholder" aria-hidden="true">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect width="24" height="24" rx="2" fill="none" stroke="#6d6d6d" stroke-width="1.2" />
+      <rect x="4" y="4" width="6" height="6" fill="none" stroke="#6d6d6d" stroke-width="1.2" />
+      <rect x="14" y="4" width="6" height="6" fill="none" stroke="#6d6d6d" stroke-width="1.2" />
+      <rect x="4" y="14" width="6" height="6" fill="none" stroke="#6d6d6d" stroke-width="1.2" />
+    </svg>
+  </div>
 
-      <div style="margin-top: 10px; font-size: 0.85rem; color: var(--th-muted)">
-        <div>Billettnummer</div>
-        <div style="font-family: monospace; margin-top: 6px">
-          TH-2025-KVE-004321
-        </div>
-      </div>
-    </div>
-
-    <div class="NP-qr-placeholder" aria-hidden="true">
-      <svg
-        width="48"
-        height="48"
-        viewBox="0 0 24 24"
-        fill="none"
-        aria-hidden="true"
-      >
-        <rect
-          width="24"
-          height="24"
-          rx="2"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-        <rect
-          x="4"
-          y="4"
-          width="6"
-          height="6"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-        <rect
-          x="14"
-          y="4"
-          width="6"
-          height="6"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-        <rect
-          x="4"
-          y="14"
-          width="6"
-          height="6"
-          fill="none"
-          stroke="#6d6d6d"
-          stroke-width="1.2"
-        />
-      </svg>
-    </div>
-
-    <div class="NP-actions">
-      <button
-        class="NP-btn NP-btn-download"
-        type="button"
-        title="Last ned PDF"
-        onclick="alert('Demo: Last ned PDF (ikke implementert)')"
-      >
-        ⬇ Last ned PDF
-      </button>
-    </div>
-    <div class="NP-small-note">
-      Denne billetten har blitt kansellert og er ikke gyldig.
-    </div>
+  <div class="NP-actions">
+    <button class="NP-btn NP-btn-download" type="button" title="Last ned PDF" onclick="alert('Demo: Last ned PDF (ikke implementert)')">⬇ Last ned PDF</button>
+    <button class="NP-btn NP-btn-share" type="button" title="Del billett" onclick="alert('Demo: Del billett (ikke implementert)')">Del billett</button>
   </div>
 </div>
