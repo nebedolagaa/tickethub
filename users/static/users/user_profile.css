@@ -1,9 +1,4 @@
 /* Hoved bakgrunn og oppsett for hele siden */
-p,
-h3 {
-  padding-bottom: 1rem;
-}
-
 .MB-user_profile-main {
   background-color: var(--th-black);
   min-height: auto;

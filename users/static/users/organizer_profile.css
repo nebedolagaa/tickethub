@@ -1,7 +1,7 @@
 /* Grunnleggende oppsett for hele siden */
 .MB-organizer_profile-main {
   background-color: var(--th-black);
-  min-height: 100vh;
+  min-height: auto;
   padding: 60px 0 40px;
   color: var(--th-white);
   font-family: "Inter", sans-serif;
@@ -293,7 +293,6 @@
   justify-content: center;
 }
 
-
 /* Filter Panel */
 .KN-filter-panel {
   background: var(--th-dark-gray);
@@ -442,36 +441,35 @@
   gap: 8px;
 }
 
-
 /* two rows (top - search and bottom - filter ) */
-.KN-search-form{
+.KN-search-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
   margin-bottom: 24px;
 }
 
-.KN-filter-row{
+.KN-filter-row {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.KN-filter-row--bottom{
+.KN-filter-row--bottom {
   flex-wrap: wrap;
 }
 
-.KN-filter-row--top .KN-search-container{
+.KN-filter-row--top .KN-search-container {
   flex: 1 1 auto;
   min-width: 0;
 }
 
-.KN-filter-row--top .KN-search-btn{
+.KN-filter-row--top .KN-search-btn {
   flex: 0 0 auto;
   white-space: nowrap;
 }
 
-.KN-filter-row--bottom .KN-sort-container{
+.KN-filter-row--bottom .KN-sort-container {
   flex: 1 1 250px;
   min-width: 250px;
 }

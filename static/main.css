@@ -659,10 +659,12 @@ input[name="ES-ArtistSok"]::placeholder {
 .MB-footer-section h2,
 .MB-footer-section h3 {
   color: var(--th-white);
+  margin-bottom: 16px;
 }
 
 .MB-footer-section p {
   color: var(--th-muted);
+  margin-bottom: 8px;
 }
 
 .MB-footer-section ul {
