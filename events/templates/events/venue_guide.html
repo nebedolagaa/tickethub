@@ -118,36 +118,34 @@
         {% if venues %}
         <div class="ES-events-grid">
           {% for venue in venues %}
-          <a href="{% url 'venue_detail' venue.id %}" class="ES-event-card-link">
-            <article class="ES-event-card">
-              <div class="ES-image-wrap">
-                {# Ingen bilder direkte på Venue-modellen – bruk syklende placeholder-motiv #}
-                <img
-                  src="{% cycle 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=600&q=80' %}"
-                  alt="{{ venue.name }}"
-                  class="ES-image"
-                />
-                <span class="ES-category">
-                  <i class="bi bi-stars"></i>
-                  Venue
-                </span>
-              </div>
-              <div class="ES-details">
-                <h2 class="ES-event-title">{{ venue.name }}</h2>
-                <div class="ES-event-meta">
-                  <div class="ES-meta-item">
-                    <i class="bi bi-geo-alt"></i>
-                    <span>{{ venue.address.city }}</span>
-                  </div>
+          <article class="ES-event-card">
+            <div class="ES-image-wrap">
+              {# Ingen bilder direkte på Venue-modellen – bruk syklende placeholder-motiv #}
+              <img
+                src="{% cycle 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=600&q=80' %}"
+                alt="{{ venue.name }}"
+                class="ES-image"
+              />
+              <span class="ES-category">
+                <i class="bi bi-stars"></i>
+                Venue
+              </span>
+            </div>
+            <div class="ES-details">
+              <h2 class="ES-event-title">{{ venue.name }}</h2>
+              <div class="ES-event-meta">
+                <div class="ES-meta-item">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>{{ venue.address.city }}</span>
                 </div>
-                {% if venue.description %}
-                  <p class="ES-description">
-                    {{ venue.description }}
-                  </p>
-                {% endif %}
               </div>
-            </article>
-          </a>
+              {% if venue.description %}
+                <p class="ES-description">
+                  {{ venue.description }}
+                </p>
+              {% endif %}
+            </div>
+          </article>
           {% endfor %}
         </div>
         {% else %}
