@@ -11,7 +11,7 @@ from django.db.models import Sum, F
 from django.contrib.auth.decorators import login_required
 
 from .models import Account, UserProfile, OrganizerProfile
-from tickets.models import Ticket, Order
+from tickets.models import Ticket, Order, TicketType
 from events.models import Event
 
 from django.db.models import F, Sum, DecimalField, Value
@@ -466,6 +466,29 @@ def organizer_profile(request):
         # Hvis side er utenfor rekkevidde, vis siste side
         events_page = paginator.page(paginator.num_pages)
 
+
+    #statistikk for solgte billetter og total omsetning per arrangementer
+    #using two loops to get through each event and then through each ticket type for that event
+    #because there are several ticket types per event
+    for event in events_page:
+        ticket_types = TicketType.objects.filter(event=event)
+
+        total_tickets = 0
+        sold_count = 0
+        income_per_event = 0
+
+        for ticket_type in ticket_types:
+            total_tickets += ticket_type.quantity
+            sold_for_type = ticket_type.tickets.count()
+            sold_count += sold_for_type
+            income_per_event += sold_for_type * ticket_type.price
+
+        sold_percent = (sold_count / total_tickets) * 100 if total_tickets > 0 else 0
+
+        event.total_tickets = total_tickets
+        event.sold_count = sold_count
+        event.sold_percent = sold_percent
+        event.income_per_event = income_per_event
 
     context = {
         "organizer": organizer,

@@ -234,15 +234,15 @@
                         <div class="MB-organizer_profile-event-stats">
                             <div class="MB-organizer_profile-stat-box">
                                 <label>Solgte billetter</label>
-                                <p>1245 / 2000</p>
+                                <p>{{event.sold_count}} / {{event.total_tickets}}</p>
                             </div>
                             <div class="MB-organizer_profile-stat-box">
                                 <label>Salg</label>
-                                <p>62%</p>
+                                <p>{{event.sold_percent | floatformat:-2}}%</p>
                             </div>
                             <div class="MB-organizer_profile-stat-box">
                                 <label>Inntekt</label>
-                                <p class="MB-organizer_profile-income">746 550 kr</p>
+                                <p class="MB-organizer_profile-income">{{event.income_per_event}} kr</p>
                             </div>
                         </div>
                         <div class="MB-organizer_profile-event-actions">
