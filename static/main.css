@@ -672,7 +672,8 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .MB-footer-section ul li {
-  margin: 20px 0;
+  margin-bottom: 1rem;
+  margin-top: 0;
 }
 
 .MB-footer-section ul li a {
