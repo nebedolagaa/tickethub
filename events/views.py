@@ -215,25 +215,39 @@ def cities(request):
 
 def purchase_tickets(request, event_id):
     """Side for kjøp av billetter til en konsert"""
-    from tickets.models import TicketType
+    from tickets.models import TicketType, Ticket
+    from django.contrib import messages
 
-    # Henter arrangementet eller returnerer 404 hvis det ikke finnes
     event = get_object_or_404(
         Event.objects.select_related("venue", "venue__address", "organizer"),
         pk=event_id,
     )
 
-    # Henter billetttyper fra databasen
     ticket_types = TicketType.objects.filter(event=event).select_related("venue_area")
 
-    # Formater billetttyper for template
-    formatted_tickets = []
-    for ticket_type in ticket_types:
-        # Beregn antall solgte billetter
+    if request.method == "POST":
+        ticket_type_id = request.POST.get("ticket_type_id")
+        quantity = int(request.POST.get("quantity", 1))
+        ticket_type = get_object_or_404(TicketType, id=ticket_type_id, event=event)
+
         sold_count = ticket_type.tickets.count()
         seats_left = ticket_type.quantity - sold_count
 
-        # Beskrivelse basert på navn
+        if quantity > seats_left:
+            messages.error(request, "Ikke nok billetter igjen.")
+        else:
+            for _ in range(quantity):
+                Ticket.objects.create(
+                    user=request.user,
+                    ticket_type=ticket_type,
+                )
+            messages.success(request, f"{quantity} billett(er) kjøpt!")
+            return redirect("purchase_tickets", event_id=event_id)
+
+    formatted_tickets = []
+    for ticket_type in ticket_types:
+        sold_count = ticket_type.tickets.count()
+        seats_left = ticket_type.quantity - sold_count
         description = ""
         if "VIP" in ticket_type.name:
             description = "VIP-billett med ekstra fordeler og beste plassering"
