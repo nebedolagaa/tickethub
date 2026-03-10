@@ -320,13 +320,16 @@
 
 .KN-search-input {
   width: 100%;
-  padding: 14px 16px 14px 48px;
+  height: 44px;
+  padding: 0 16px 0 42px;
   background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
-  border-radius: 12px;
+  border-radius: 6px;
   color: var(--th-white);
-  font-size: 1rem;
-  transition: all 0.2s;
+  font-size: 14px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .KN-search-input:focus {
@@ -344,7 +347,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  min-width: 250px;
+  min-width: 200px;
 }
 
 .KN-sort-icon {
@@ -357,19 +360,21 @@
 
 .KN-sort-select {
   width: 100%;
-  padding: 14px 16px 14px 48px;
+  height: 44px;
+  padding: 0 36px 0 42px;
   background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
-  border-radius: 12px;
+  border-radius: 6px;
   color: var(--th-white);
-  font-size: 1rem;
+  font-size: 14px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 16px center;
-  padding-right: 40px;
+  background-position: right 12px center;
 }
 
 .KN-sort-select:focus {
@@ -385,25 +390,27 @@
 
 /* Search Button */
 .KN-search-btn {
-  padding: 14px 32px;
+  height: 44px;
+  padding: 0 20px;
+  margin-top: 5px;
   background: var(--th-red);
   border: none;
-  border-radius: 12px;
+  border-radius: 6px;
   color: var(--th-white);
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background 0.2s ease;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .KN-search-btn:hover {
   background: var(--th-red-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px var(--th-red-a10);
 }
 
 /* Results Info */
@@ -452,7 +459,7 @@
 .KN-filter-row {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .KN-filter-row--bottom {
