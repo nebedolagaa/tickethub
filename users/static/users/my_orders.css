@@ -334,6 +334,7 @@ a.MB-user_profile-btn-dark.active {
   padding: 14px 16px;
   border-bottom: 1px solid var(--th-light-gray);
   white-space: nowrap;
+  text-align: center;
 }
 
 .MB-user_profile-table tbody td,
@@ -342,6 +343,7 @@ a.MB-user_profile-btn-dark.active {
   border-top: 1px solid var(--th-light-gray);
   vertical-align: middle;
   font-size: 0.9rem;
+  text-align: center;
 }
 
 /* bestillings nummer column */
@@ -350,6 +352,7 @@ a.MB-user_profile-btn-dark.active {
   font-weight: 700;
   width: 140px;
   white-space: nowrap;
+  text-align: center;
 }
 
 /* hover */
@@ -382,7 +385,7 @@ a.MB-user_profile-btn-dark.active {
 
 .MB-user_profile-table td:nth-child(3),
 .MB-user_profile-table th:nth-child(3) {
-  text-align: right;
+  text-align: center;
   white-space: nowrap;
 }
 

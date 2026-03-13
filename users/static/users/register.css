@@ -1,125 +1,128 @@
 /* MAIN */
 .KN-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 80px 20px 40px;
-  }
-  
-  .KN-login-card {
-    background: var(--th-dark-gray);
-    border: 1px solid var(--th-light-gray);
-    border-radius: 12px;
-    width: 380px;
-    padding: 32px;
-    box-shadow: 0 0 30px var(--th-black-a50);
-  }
-  
-  .KN-title {
-    margin: 0;
-    text-align: center;
-    color: var(--th-white);
-  }
-  
-  .KN-subtitle {
-    text-align: center;
-    color: var(--th-muted);
-    margin-bottom: 24px;
-    font-size: 14px;
-  }
-  
-  /* PANELS */
-  .KN-panel {
-    border: 1px solid var(--th-light-gray);
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 18px;
-    background: var(--th-dark-gray);
-  }
-  
-  .KN-panel-title {
-    margin: 0 0 12px 0;
-    font-size: 14px;
-    color: var(--th-muted);
-  }
-  
-  /* FORM */
-  .KN-form-group {
-    margin-bottom: 16px;
-  }
-  
-  .KN-form-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 13px;
-    color: var(--th-muted);
-  }
-  
-  .KN-form-group input,
-  .KN-form-group select,
-  .KN-form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid var(--th-light-gray);
-    background: var(--th-dark-gray);
-    color: var(--th-white);
-    font-size: 14px;
-  }
-  
-  .KN-form-group input:focus {
-    outline: none;
-    border-color: var(--th-red);
-  }
-  
-  .KN-form-row {
-    margin: 12px 0 18px 0;
-    font-size: 13px;
-  }
-  
-  .KN-checkbox {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--th-muted);
-  }
-  
-  .KN-btn-submit {
-    width: 100%;
-    background: var(--th-red);
-    border: none;
-    color: var(--th-white);
-    padding: 12px;
-    border-radius: 8px;
-    font-size: 15px;
-    cursor: pointer;
-  }
-  
-  .KN-btn-submit:hover {
-    background: var(--th-red-dark);
-  }
-  
-  .KN-error {
-    background: var(--th-red-a10);
-    border: 1px solid var(--th-red);
-    color: var(--th-red);
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 12px;
-    font-size: 13px;
-  }
-  
-  .KN-register-text {
-    text-align: center;
-    margin-top: 18px;
-    font-size: 13px;
-    color: var(--th-muted);
-  }
-  
-  .KN-register-text a {
-    color: var(--th-red);
-    text-decoration: none;
-  }
-  
-  #organizer-fields[hidden] {
-    display: none;
+}
+
+.KN-login-card {
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  width: min(460px, 100%);
+  padding: 32px;
+  box-shadow: 0 0 30px var(--th-black-a50);
+}
+
+.KN-title {
+  margin: 0;
+  text-align: center;
+  color: var(--th-white);
+}
+
+.KN-subtitle {
+  text-align: center;
+  color: var(--th-muted);
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+/* PANELS */
+.KN-panel {
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 18px;
+  background: var(--th-dark-gray);
+}
+
+.KN-panel-title {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: var(--th-muted);
+}
+
+/* FORM */
+.KN-form-group {
+  margin-bottom: 16px;
+}
+
+.KN-form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: var(--th-muted);
+}
+
+.KN-form-group input,
+.KN-form-group select,
+.KN-form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--th-light-gray);
+  background: var(--th-dark-gray);
+  color: var(--th-white);
+  font-size: 14px;
+}
+
+.KN-form-group input:focus {
+  outline: none;
+  border-color: var(--th-red);
+}
+
+.KN-form-row {
+  margin: 12px 0 18px 0;
+  font-size: 13px;
+}
+
+.KN-checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--th-muted);
+  white-space: nowrap;
+}
+
+.KN-btn-submit {
+  width: 100%;
+  background: var(--th-red);
+  border: none;
+  color: var(--th-white);
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.KN-btn-submit:hover {
+  background: var(--th-red-dark);
+}
+
+.KN-error {
+  background: var(--th-red-a10);
+  border: 1px solid var(--th-red);
+  color: var(--th-red);
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.KN-register-text {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13px;
+  color: var(--th-muted);
+}
+
+.KN-register-text a {
+  color: var(--th-red);
+  text-decoration: none;
+}
+
+#organizer-fields[hidden] {
+  display: none;
+}
