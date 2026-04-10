@@ -8,7 +8,7 @@ from users.models import OrganizerProfile
 
 # Create your tests here.
 
-
+#MB OG JF sine tester:
 class EventAPITestCase(APITestCase):
     def setUp(self):
         # Opprett testdata
@@ -63,3 +63,4 @@ class EventAPITestCase(APITestCase):
         data = {'title': 'New Title'}
         response = self.client.patch(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+#--------------------------------------------------------------------------

@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Event
 from .models import (
     Performer,
-)  # JF - importere Artist/Performer-modellen for å kunne bruke den i views
+)  # JF- importere Artist/Performer-modellen for å kunne bruke den i views
 from django.shortcuts import redirect
 from django.utils.text import slugify
 from django.utils import timezone
@@ -379,13 +379,14 @@ def venue_detail(request, venue_id):
 
 
 # REST API Views
-class EventUpdateView(generics.UpdateAPIView):
+#MB og JF:
+class EventUpdateView(generics.RetrieveUpdateAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
-    partial = True  # Tillater PATCH for delvis oppdatering
+    partial = True
 
 
-class PerformerListView(ListView):  # JF - View for å vise alle artister
+class PerformerListView(ListView):  #JF - View for å vise alle artister
     model = Performer
     template_name = "performer/performer_list.html"
     context_object_name = "performers"
