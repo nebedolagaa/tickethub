@@ -14,6 +14,10 @@ from django.views.generic import (
 from django.db.models import Q, Count, Min
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+# REST Framework imports
+from rest_framework import generics
+from .serializers import EventSerializer
+
 
 def home_page(request):
     """Hovedside med 3 fremhevede arrangementer (2 konserter + 1 festival)"""
@@ -372,6 +376,13 @@ def venue_detail(request, venue_id):
     }
 
     return render(request, "events/venue_detail.html", context)
+
+
+# REST API Views
+class EventUpdateView(generics.UpdateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    partial = True  # Tillater PATCH for delvis oppdatering
 
 
 class PerformerListView(ListView):  # JF - View for å vise alle artister
