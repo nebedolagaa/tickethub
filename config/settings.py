@@ -98,3 +98,15 @@ EMAIL_USE_SSL = False
 EMAIL_HOST_USER = "noreply@tickethub.no"
 EMAIL_HOST_PASSWORD = "***REMOVED***"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+#django restframework settings
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        # 'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny', # Endre til IsAuthenticated for å kreve autentisering senere
+    ]
+}
