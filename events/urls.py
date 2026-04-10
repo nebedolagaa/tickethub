@@ -17,4 +17,6 @@ urlpatterns = [
     path("snippets/", views.snippets, name="snippets"),
     # path('demo/profile/', views.profile_demo, name='profile_demo'),  # Commented out - function not implemented
     path("venue_guide/", views.venue_guide, name="venue_guide"),
+
+    path("api/event/<int:id>/delete/", views.EventDeleteAPIView.as_view(), name="event_delete_api"),
 ]

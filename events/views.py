@@ -1,5 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+
+from users.models import OrganizerProfile
+from tickets.models import Ticket
+
 from .models import Event
 from .models import (
     Performer,
@@ -388,3 +397,26 @@ class PerformerDetailView(
     template_name = "events/performer_detail.html"
     slug_field = "slug"
     context_object_name = "performer"
+
+
+#api for å fjerne en event fra listen over sine arrangementer på arrangør siden
+class EventDeleteAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, id):
+        try:
+            organizer = OrganizerProfile.objects.get(user=request.user)
+        except OrganizerProfile.DoesNotExist:
+            return Response(
+                {"message": "Du har ikke tilgang som arrangør."},
+                status=status.HTTP_403_FORBIDDEN)
+
+        event = get_object_or_404(Event, id = id, organizer = organizer)
+
+        if Ticket.objects.filter(ticket_type__event = event).exists():
+            return Response({"message": "Arrangement kan ikke slettes fordi det har tilknyttede biletter."},
+                            status=status.HTTP_400_BAD_REQUEST)
+        
+        event.delete()
+        return Response({"message": "Arrangementet ble slettet."},
+                        status=status.HTTP_204_NO_CONTENT)
