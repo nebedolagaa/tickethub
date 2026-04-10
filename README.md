@@ -49,6 +49,95 @@ Følgende sider er oppdatert til å ekskludere arkiverte arrangementer:
 - Venue-detaljer (`venue_detail`)
 - Venue-guide (`venue_guide`)
 
+## REST API - Update event - JF og MB
+Prosjektet inkluderer et REST API bygget med Django REST Framework for å håndtere arrangementer.
+ 
+### Oppsett og kjøring
+1. Installer avhengigheter:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Kjør Django-serveren:
+   ```bash
+   python manage.py runserver
+   ```
+
+API-et vil være tilgjengelig på `http://localhost:8000/api/`.
+
+### Endepunkter
+
+#### Oppdater arrangement
+- **URL:** `/api/events/{id}/`
+- **Metode:** `PATCH` (delvis oppdatering) eller `PUT` (full oppdatering)
+- **Beskrivelse:** Oppdaterer et eksisterende arrangement.
+
+##### Eksempler på forespørsler
+
+**PATCH - Delvis oppdatering:**
+```bash
+curl -X PATCH http://localhost:8000/api/events/1/ \
+  -H "Content-Type: application/json" \
+  -d '{"title": "Oppdatert tittel"}'
+```
+
+**PUT - Full oppdatering:**
+```bash
+curl -X PUT http://localhost:8000/api/events/1/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "organizer": 1,
+    "venue": 1,
+    "title": "Nytt arrangement",
+    "description": "Beskrivelse",
+    "start_datetime": "2024-12-01T10:00:00Z",
+    "end_datetime": "2024-12-01T12:00:00Z"
+  }'
+```
+
+##### Svar
+
+**Vellykket oppdatering (200 OK):**
+```json
+{
+    "id": 1,
+    "organizer": 1,
+    "venue": 1,
+    "title": "Oppdatert tittel",
+    "description": "Beskrivelse",
+    "performers": [],
+    "event_type": "concert",
+    "start_datetime": "2024-12-01T10:00:00Z",
+    "end_datetime": "2024-12-01T12:00:00Z",
+    "is_archived": false,
+    "slug": "oppdatert-tittel"
+}
+```
+
+##### Valideringsregler
+- `title`: Påkrevd, maks 255 tegn
+- `description`: Valgfri tekst
+- `start_datetime`: Påkrevd, dato/klokkeslett i ISO-format
+- `end_datetime`: Påkrevd, dato/klokkeslett i ISO-format (må være etter start_datetime)
+- `organizer`: Påkrevd, ID for organizer
+- `venue`: Påkrevd, ID for venue
+- `event_type`: Valgfri, 'concert' eller 'festival'
+- `performers`: Valgfri liste med performer-IDer
+
+##### Feilkoder
+- `400 Bad Request`: Ugyldig data (valideringsfeil)
+- `404 Not Found`: Arrangementet finnes ikke
+- `401 Unauthorized`: Ikke autentisert (hvis autentisering kreves)
+- `403 Forbidden`: Ikke tillatelse til å oppdatere arrangementet
+
+### Testing
+
+Kjør enhetstester for API-et:
+```bash
+python manage.py test events.tests.EventAPITestCase
+```
+
+
 ### Admin-panel
 
 **Event Admin:**

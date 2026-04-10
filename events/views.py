@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .models import Event
 from .models import (
     Performer,
-)  # JF - importere Artist/Performer-modellen for å kunne bruke den i views
+)  # JF- importere Artist/Performer-modellen for å kunne bruke den i views
 from django.shortcuts import redirect
 from django.utils.text import slugify
 from django.utils import timezone
@@ -13,6 +13,10 @@ from django.views.generic import (
 )  # JF - til performermodellen, linke opp performer med arrangement
 from django.db.models import Q, Count, Min
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+# REST Framework imports
+from rest_framework import generics
+from .serializers import EventSerializer
 
 
 def home_page(request):
@@ -374,7 +378,15 @@ def venue_detail(request, venue_id):
     return render(request, "events/venue_detail.html", context)
 
 
-class PerformerListView(ListView):  # JF - View for å vise alle artister
+# REST API Views
+#MB og JF:
+class EventUpdateView(generics.RetrieveUpdateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    partial = True
+
+
+class PerformerListView(ListView):  #JF - View for å vise alle artister
     model = Performer
     template_name = "performer/performer_list.html"
     context_object_name = "performers"

@@ -22,6 +22,9 @@ INSTALLED_APPS = [
     'users',
     'tickets',
     'pages',
+
+    # REST Framework
+    'rest_framework',  
 ]
 
 MIDDLEWARE = [
