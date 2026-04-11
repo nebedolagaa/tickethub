@@ -25,7 +25,15 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # REST Framework imports
 from rest_framework import generics
-from .serializers import EventSerializer
+from .serializers import EventSerializer, CitySerializer
+from .models import City
+
+# API-view for å hente ut alle byer
+from rest_framework import generics
+
+class CityListAPIView(generics.ListAPIView):
+    queryset = City.objects.all()
+    serializer_class = CitySerializer
 
 
 def home_page(request):

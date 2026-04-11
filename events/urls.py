@@ -21,4 +21,5 @@ urlpatterns = [
     # API endpoints
     path("api/event/<int:id>/delete/", views.EventDeleteAPIView.as_view(), name="event_delete_api"),
     path("api/events/<int:pk>/", views.EventUpdateView.as_view(), name="event-update-api"),
+    path("api/cities/", views.CityListAPIView.as_view(), name="city-list-api"),
 ]
