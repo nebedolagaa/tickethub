@@ -50,10 +50,13 @@ Følgende sider er oppdatert til å ekskludere arkiverte arrangementer:
 - Venue-guide (`venue_guide`)
 
 ## REST API - Update event - JF og MB
+
 Prosjektet inkluderer et REST API bygget med Django REST Framework for å håndtere arrangementer.
- 
+
 ### Oppsett og kjøring
+
 1. Installer avhengigheter:
+
    ```bash
    pip install -r requirements.txt
    ```
@@ -67,7 +70,77 @@ API-et vil være tilgjengelig på `http://localhost:8000/api/`.
 
 ### Endepunkter
 
+#### Opprett konsert (POST) - Nikita Pushechnikov
+
+- **URL:** `/api/concerts/`
+- **Metode:** `POST`
+- **Beskrivelse:** Oppretter en ny konsert med validering av obligatoriske felt. `event_type` settes automatisk til `concert`.
+
+##### Eksempel på forespørsel
+
+```bash
+curl -X POST http://localhost:8000/api/concerts/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "organizer": 1,
+    "venue": 1,
+    "title": "Oslo Jazz Festival",
+    "description": "Årets store jazzfestival",
+    "start_datetime": "2027-06-15T18:00:00Z",
+    "end_datetime": "2027-06-15T23:00:00Z"
+  }'
+```
+
+##### Svar
+
+**Vellykket opprettelse (201 Created):**
+
+```json
+{
+  "id": 5,
+  "organizer": 1,
+  "venue": 1,
+  "title": "Oslo Jazz Festival",
+  "description": "Årets store jazzfestival",
+  "performers": [],
+  "start_datetime": "2027-06-15T18:00:00Z",
+  "end_datetime": "2027-06-15T23:00:00Z",
+  "slug": "oslo-jazz-festival"
+}
+```
+
+##### Valideringsregler
+
+- `title`: Påkrevd, maks 255 tegn
+- `organizer`: Påkrevd, ID for arrangør
+- `venue`: Påkrevd, ID for spillested
+- `start_datetime`: Påkrevd, dato/klokkeslett i ISO-format
+- `end_datetime`: Påkrevd, dato/klokkeslett i ISO-format (må være etter `start_datetime`)
+- `description`: Valgfri tekst
+- `performers`: Valgfri liste med performer-IDer
+- `event_type`: Settes automatisk til `concert` – kan ikke overstyres
+
+##### Feilkoder
+
+- `400 Bad Request`: Manglende obligatoriske felt eller ugyldig data (f.eks. `end_datetime` ≤ `start_datetime`)
+- `401 Unauthorized`: Ikke autentisert
+
+##### Testing
+
+Kjør enhetstester for opprettelse av konsert:
+
+```bash
+python manage.py test events.tests.ConcertCreateAPITestCase
+```
+
+#### Hent konserter (GET)
+
+- **URL:** `/api/concerts/`
+- **Metode:** `GET`
+- **Beskrivelse:** Henter liste over aktive konserter. Støtter filtre: `?city=Oslo`, `?date=2027-06-15`, `?type=concert`.
+
 #### Oppdater arrangement
+
 - **URL:** `/api/events/{id}/`
 - **Metode:** `PATCH` (delvis oppdatering) eller `PUT` (full oppdatering)
 - **Beskrivelse:** Oppdaterer et eksisterende arrangement.
@@ -75,6 +148,7 @@ API-et vil være tilgjengelig på `http://localhost:8000/api/`.
 ##### Eksempler på forespørsler
 
 **PATCH - Delvis oppdatering:**
+
 ```bash
 curl -X PATCH http://localhost:8000/api/events/1/ \
   -H "Content-Type: application/json" \
@@ -82,6 +156,7 @@ curl -X PATCH http://localhost:8000/api/events/1/ \
 ```
 
 **PUT - Full oppdatering:**
+
 ```bash
 curl -X PUT http://localhost:8000/api/events/1/ \
   -H "Content-Type: application/json" \
@@ -98,23 +173,25 @@ curl -X PUT http://localhost:8000/api/events/1/ \
 ##### Svar
 
 **Vellykket oppdatering (200 OK):**
+
 ```json
 {
-    "id": 1,
-    "organizer": 1,
-    "venue": 1,
-    "title": "Oppdatert tittel",
-    "description": "Beskrivelse",
-    "performers": [],
-    "event_type": "concert",
-    "start_datetime": "2024-12-01T10:00:00Z",
-    "end_datetime": "2024-12-01T12:00:00Z",
-    "is_archived": false,
-    "slug": "oppdatert-tittel"
+  "id": 1,
+  "organizer": 1,
+  "venue": 1,
+  "title": "Oppdatert tittel",
+  "description": "Beskrivelse",
+  "performers": [],
+  "event_type": "concert",
+  "start_datetime": "2024-12-01T10:00:00Z",
+  "end_datetime": "2024-12-01T12:00:00Z",
+  "is_archived": false,
+  "slug": "oppdatert-tittel"
 }
 ```
 
 ##### Valideringsregler
+
 - `title`: Påkrevd, maks 255 tegn
 - `description`: Valgfri tekst
 - `start_datetime`: Påkrevd, dato/klokkeslett i ISO-format
@@ -125,6 +202,7 @@ curl -X PUT http://localhost:8000/api/events/1/ \
 - `performers`: Valgfri liste med performer-IDer
 
 ##### Feilkoder
+
 - `400 Bad Request`: Ugyldig data (valideringsfeil)
 - `404 Not Found`: Arrangementet finnes ikke
 - `401 Unauthorized`: Ikke autentisert (hvis autentisering kreves)
@@ -133,10 +211,10 @@ curl -X PUT http://localhost:8000/api/events/1/ \
 ### Testing
 
 Kjør enhetstester for API-et:
+
 ```bash
 python manage.py test events.tests.EventAPITestCase
 ```
-
 
 ### Admin-panel
 
@@ -177,3 +255,9 @@ Event (aktiv) ---(arkiveres)---> Event (is_archived=True) + ArchivedEvent (kopi)
   - Management command: archive_expired_events
   - View-filtrering for arkiverte events
   - Admin-panelkonfiguration
+
+- **REST API - Opprett konsert (POST /api/concerts/):** Nikita Pushechnikov
+  - Serializer: ConcertCreateSerializer med validering av obligatoriske felt
+  - View: ConcertListAPIView utvidet med POST-støtte (ListCreateAPIView)
+  - Automatisk sett event_type til "concert"
+  - Enhetstester: ConcertCreateAPITestCase
