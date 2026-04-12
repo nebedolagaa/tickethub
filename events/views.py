@@ -36,6 +36,36 @@ class CityListAPIView(generics.ListAPIView):
     serializer_class = CitySerializer
 
 
+# API-view for Concert List med filtre
+class ConcertListAPIView(generics.ListAPIView):
+    serializer_class = EventSerializer
+
+    def get_queryset(self):
+        # Start med å filtrere konserter som ikke er arkiverte og ikke har gått ut
+        queryset = Event.objects.filter(
+            event_type="concert",
+            is_archived=False,
+            end_datetime__gte=timezone.now()
+        ).select_related('venue', 'venue__address', 'organizer')
+
+        # Filtrer på city hvis spesifisert
+        city = self.request.query_params.get('city', None)
+        if city:
+            queryset = queryset.filter(venue__address__city__icontains=city)
+
+        # Filtrer på date hvis spesifisert (YYYY-MM-DD format)
+        date = self.request.query_params.get('date', None)
+        if date:
+            queryset = queryset.filter(start_datetime__date=date)
+
+        # Filtrer på type hvis spesifisert (selv om det allerede er concert, kan utvides)
+        event_type = self.request.query_params.get('type', None)
+        if event_type:
+            queryset = queryset.filter(event_type=event_type)
+
+        return queryset.order_by('start_datetime')
+
+
 def home_page(request):
     """Hovedside med 3 fremhevede arrangementer (2 konserter + 1 festival)"""
     # Henter 2 konserter som ikke har gått ut og ikke er arkivert
