@@ -423,6 +423,9 @@ class PerformerDetailView(
 class EventDeleteAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
+    def get(self, request, id):
+        return Response({"message": "Bruk DELETE-metoden for å slette arrangementet."})
+
     def delete(self, request, id):
         try:
             organizer = OrganizerProfile.objects.get(user=request.user)
