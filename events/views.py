@@ -433,8 +433,20 @@ class EventDeleteAPIView(APIView):
             return Response(
                 {"message": "Du har ikke tilgang som arrangør."},
                 status=status.HTTP_403_FORBIDDEN)
+        
+        try:
+            event = Event.objects.get(id=id)
+        except Event.DoesNotExist:
+            return Response(
+                {"error": "Arrangementet finnes ikke."},
+                status=status.HTTP_404_NOT_FOUND
+            )
 
-        event = get_object_or_404(Event, id = id, organizer = organizer)
+        if event.organizer != organizer:
+            return Response(
+                {"error": "Du har ikke tilgang til å slette dette arrangementet."},
+                status=status.HTTP_403_FORBIDDEN
+            )
 
         if Ticket.objects.filter(ticket_type__event = event).exists():
             return Response({"message": "Arrangement kan ikke slettes fordi det har tilknyttede biletter."},
