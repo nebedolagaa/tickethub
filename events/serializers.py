@@ -1,13 +1,37 @@
 from rest_framework import serializers
-from .models import Event, City
+from .models import Event, City, Venue, Performer, Address
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ["street", "city", "postal_code", "country"]
+
+
+class VenueSerializer(serializers.ModelSerializer):
+    address = AddressSerializer()
+
+    class Meta:
+        model = Venue
+        fields = ["id", "name", "address"]
+
+
+class PerformerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Performer
+        fields = ["id", "name", "bio", "genre", "image", "website"]
 
 
 class EventSerializer(serializers.ModelSerializer):
+    venue = VenueSerializer()
+    performers = PerformerSerializer(many=True)
+    organizer_name = serializers.CharField(source="organizer.user.username", read_only=True)
+
     class Meta:
         model = Event
         fields = [
             "id",
-            "organizer",
+            "organizer_name",
             "venue",
             "title",
             "description",
