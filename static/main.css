@@ -3764,7 +3764,7 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 
 .ES-Icon {
-  padding: 10px;
+  padding: 12px;
   border-radius: 50%;
 }
 
@@ -3778,16 +3778,16 @@ input[name="ES-ArtistSok"]::placeholder {
 .ES-Top-Container {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 24px;
   flex-wrap: wrap;
-  margin-bottom: 50px;
+  margin-bottom: 40px;
 }
 .ES-Top-Info {
   flex: 1;
   min-width: 250px;
   background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
-  padding: 25px;
+  padding: 24px;
   border-radius: 10px;
   text-align: center;
   transition:
@@ -3813,7 +3813,7 @@ input[name="ES-ArtistSok"]::placeholder {
     transform 0.1s;
 }
 .ES-Chat-Knapp:hover {
-  background: var(--th-red);
+  background: var(--th-red-dark);
   transform: scale(1.05);
 }
 
@@ -3827,7 +3827,7 @@ input[name="ES-ArtistSok"]::placeholder {
 
 .ES-QaA {
   flex: 0 0 60%;
-  padding: 30px;
+  padding: 32px;
   border: 1px solid var(--th-light-gray);
   border-radius: 8px;
   background: var(--th-dark-gray);
@@ -3844,14 +3844,14 @@ input[name="ES-ArtistSok"]::placeholder {
 }
 .ES-QaA p {
   color: var(--th-muted);
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 }
 .ES-Top-Text {
   color: var(--th-muted);
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 .ES-QaA-Item {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   border: 1px solid var(--th-light-gray);
   border-radius: 8px;
   background: var(--th-dark-gray);
@@ -3859,7 +3859,7 @@ input[name="ES-ArtistSok"]::placeholder {
 .ES-QaA-Item-Summary {
   cursor: pointer;
   font-weight: 600;
-  padding: 15px 20px;
+  padding: 16px 24px;
   background: var(--th-dark-gray);
   transition: background 0.3s;
 }
@@ -3867,7 +3867,7 @@ input[name="ES-ArtistSok"]::placeholder {
   background: var(--th-dark-gray);
 }
 .ES-QaA-Item-Text {
-  padding: 15px 20px;
+  padding: 16px 24px;
   border-top: 1px solid var(--th-muted);
 }
 
@@ -3876,7 +3876,7 @@ input[name="ES-ArtistSok"]::placeholder {
   background: var(--th-dark-gray);
   border: 1px solid var(--th-light-gray);
   border-radius: 10px;
-  padding: 25px;
+  padding: 24px;
   box-shadow: 0 2px 8px var(--th-black-a10);
   color: var(--th-white);
 }
@@ -3892,8 +3892,8 @@ input,
 select,
 textarea {
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
+  padding: 12px;
+  margin-top: 4px;
   border: 1px solid var(--th-light-gray);
   border-radius: 6px;
   color: var(--th-white);
@@ -3915,18 +3915,18 @@ textarea:focus {
   border: none;
   padding: 12px;
   border-radius: 6px;
-  margin-top: 15px;
+  margin-top: 16px;
   cursor: pointer;
   transition:
     background 0.3s,
     transform 0.1s;
 }
 .ES-Send-Knapp:hover {
-  background: var(--th-white);
+  background: var(--th-red-dark);
   transform: scale(1.02);
 }
 .ES-Svartid-Container {
-  margin-top: 30px;
+  margin-top: 32px;
   background: var(--th-dark-gray);
   padding: 20px;
   border-radius: 8px;
@@ -3954,7 +3954,7 @@ textarea:focus {
 .ES-Nyttige-Lenker {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 24px;
   margin-top: 40px;
   width: 100%;
 }
@@ -3965,19 +3965,22 @@ textarea:focus {
   background: var(--th-dark-gray);
   color: var(--th-white);
   border: 1px solid var(--th-light-gray);
-  padding: 20px 25px;
-  border-radius: 10px;
+  padding: 20px 24px;
+  border-radius: 12px;
   font-weight: 600;
   font-size: 1.1em;
   cursor: pointer;
   text-align: center;
+  text-decoration: none !important;
   transition:
     transform 0.2s,
-    background 0.2s;
+    background 0.2s,
+    color 0.2s;
 }
 
 .ES-Link-Box:hover {
   background: var(--th-dark-gray);
+  color: var(--th-red);
   transform: translateY(-3px);
 }
 

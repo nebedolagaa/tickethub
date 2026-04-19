@@ -189,10 +189,10 @@
     </div>
 
     <div class="ES-Nyttige-Lenker">
-        <button class="ES-Link-Box">Vilkår og betingelser</button>
-        <button class="ES-Link-Box">Personvern</button>
+        <a href="{% url 'terms' %}" class="ES-Link-Box">Vilkår og betingelser</a>
+        <a href="{% url 'privacy' %}" class="ES-Link-Box">Personvern</a>
         <button class="ES-Link-Box">Brukerveiledning</button>
-        <button class="ES-Link-Box">Arrangør-guide</button>
+        <a href="{% url 'organizer' %}" class="ES-Link-Box">Arrangør-guide</a>
     </div>
 
     {% include "snippets/footer.html" %}
