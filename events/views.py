@@ -29,35 +29,44 @@ from .serializers import EventSerializer, CitySerializer, ConcertCreateSerialize
 from .models import City
 
 # API-view for å hente ut alle byer
+from rest_framework import generics
+
 
 class CityListAPIView(generics.ListAPIView):
     queryset = City.objects.all()
     serializer_class = CitySerializer
 
 
-# API-view for Concert Creation - kun POST
-class ConcertListAPIView(generics.CreateAPIView):
-    serializer_class = ConcertCreateSerializer
+# API-view for Concert List og opprettelse - Nikita Pushechnikov
+class ConcertListAPIView(generics.ListCreateAPIView):
 
-    def perform_create(self, serializer):
-        # Sørg for at event_type alltid er "concert" når vi oppretter via denne viewen
-        serializer.save(event_type="concert")
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return ConcertCreateSerializer
+        return EventSerializer
 
+    def get_queryset(self):
+        # Start med å filtrere konserter som ikke er arkiverte og ikke har gått ut
+        queryset = Event.objects.filter(
+            event_type="concert", is_archived=False, end_datetime__gte=timezone.now()
+        ).select_related("venue", "venue__address", "organizer")
 
-# API-view for Event List med filtre (inkluderer konserter og festivaler)
-class EventListAPIView(generics.ListAPIView):
-    serializer_class = EventSerializer
-    queryset = Event.objects.all()
+        # Filtrer på city hvis spesifisert
+        city = self.request.query_params.get("city", None)
+        if city:
+            queryset = queryset.filter(venue__address__city__icontains=city)
 
+        # Filtrer på date hvis spesifisert (YYYY-MM-DD format)
+        date = self.request.query_params.get("date", None)
+        if date:
+            queryset = queryset.filter(start_datetime__date=date)
 
-# print("Before EventListAPIView")
+        # Filtrer på type hvis spesifisert (selv om det allerede er concert, kan utvides)
+        event_type = self.request.query_params.get("type", None)
+        if event_type:
+            queryset = queryset.filter(event_type=event_type)
 
-# API-view for Event List med filtre (inkluderer konserter og festivaler)
-# class EventListAPIView(generics.ListAPIView):
-#     serializer_class = EventSerializer
-#     queryset = Event.objects.all()
-
-# print("After EventListAPIView")
+        return queryset.order_by("start_datetime")
 
 
 def home_page(request):
@@ -420,14 +429,14 @@ def venue_detail(request, venue_id):
 
 
 # REST API Views
-#MB og JF:
+# MB og JF:
 class EventUpdateView(generics.RetrieveUpdateAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     partial = True
 
 
-class PerformerListView(ListView):  #JF - View for å vise alle artister
+class PerformerListView(ListView):  # JF - View for å vise alle artister
     model = Performer
     template_name = "performer/performer_list.html"
     context_object_name = "performers"
@@ -443,9 +452,12 @@ class PerformerDetailView(
     context_object_name = "performer"
 
 
-#api for å fjerne en event fra listen over sine arrangementer på arrangør siden
+# api for å fjerne en event fra listen over sine arrangementer på arrangør siden
 class EventDeleteAPIView(APIView):
     permission_classes = [IsAuthenticated]
+
+    def get(self, request, id):
+        return Response({"message": "Bruk DELETE-metoden for å slette arrangementet."})
 
     def delete(self, request, id):
         try:
@@ -453,14 +465,32 @@ class EventDeleteAPIView(APIView):
         except OrganizerProfile.DoesNotExist:
             return Response(
                 {"message": "Du har ikke tilgang som arrangør."},
-                status=status.HTTP_403_FORBIDDEN)
+                status=status.HTTP_403_FORBIDDEN,
+            )
 
-        event = get_object_or_404(Event, id = id, organizer = organizer)
+        try:
+            event = Event.objects.get(id=id)
+        except Event.DoesNotExist:
+            return Response(
+                {"error": "Arrangementet finnes ikke."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
 
-        if Ticket.objects.filter(ticket_type__event = event).exists():
-            return Response({"message": "Arrangement kan ikke slettes fordi det har tilknyttede biletter."},
-                            status=status.HTTP_400_BAD_REQUEST)
-        
+        if event.organizer != organizer:
+            return Response(
+                {"error": "Du har ikke tilgang til å slette dette arrangementet."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
+        if Ticket.objects.filter(ticket_type__event=event).exists():
+            return Response(
+                {
+                    "message": "Arrangement kan ikke slettes fordi det har tilknyttede biletter."
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         event.delete()
-        return Response({"message": "Arrangementet ble slettet."},
-                        status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            {"message": "Arrangementet ble slettet."}, status=status.HTTP_204_NO_CONTENT
+        )
