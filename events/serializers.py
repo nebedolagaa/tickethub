@@ -28,8 +28,8 @@ class CitySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-# Nikita Pushechnikov - Serializer for å opprette konsert
-class ConcertCreateSerializer(serializers.ModelSerializer):
+# Nikita Pushechnikov - Serializer for å opprette event
+class EventCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = [

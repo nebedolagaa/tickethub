@@ -113,8 +113,8 @@ class EventCreateAPITestCase(APITestCase):
         self.assertEqual(response.data["title"], "Nytt Event")
         self.assertEqual(response.data["slug"], "nytt-event")
 
-    def test_create_event_sets_event_type_concert(self):
-        """event_type skal alltid settes til concert"""
+    def test_create_event_sets_default_event_type(self):
+        """event_type skal få riktig standardverdi"""
         data = {
             "organizer": self.organizer.pk,
             "venue": self.venue.pk,

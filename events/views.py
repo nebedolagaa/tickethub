@@ -25,7 +25,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # REST Framework imports
 from rest_framework import generics
-from .serializers import EventSerializer, CitySerializer, ConcertCreateSerializer
+from .serializers import EventSerializer, CitySerializer, EventCreateSerializer
 from .models import City
 
 # API-view for å hente ut alle byer
@@ -37,12 +37,12 @@ class CityListAPIView(generics.ListAPIView):
     serializer_class = CitySerializer
 
 
-# API-view for Concert List og opprettelse - Nikita Pushechnikov
-class ConcertListAPIView(generics.ListCreateAPIView):
+# API-view for Event List og opprettelse - Nikita Pushechnikov
+class EventListAPIView(generics.ListCreateAPIView):
 
     def get_serializer_class(self):
         if self.request.method == "POST":
-            return ConcertCreateSerializer
+            return EventCreateSerializer
         return EventSerializer
 
     def get_queryset(self):
