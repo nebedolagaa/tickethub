@@ -53,6 +53,24 @@ Følgende sider er oppdatert til å ekskludere arkiverte arrangementer:
 
 Prosjektet inkluderer et REST API bygget med Django REST Framework for å håndtere arrangementer.
 
+### Oppsett etter cloning
+
+For en helt ny clone av prosjektet anbefales denne rekkefølgen:
+
+```bash
+git clone <repo-url>
+cd tickethub
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+```
+
+Dette installerer alle Python-avhengigheter, inkludert Django og Django REST Framework.
+
+> Merk: Dette er et Python/Django-prosjekt, så du skal bruke `pip`, ikke `npm`.
+
 ### Oppsett og kjøring
 
 1. Installer avhengigheter:
@@ -61,7 +79,13 @@ Prosjektet inkluderer et REST API bygget med Django REST Framework for å håndt
    pip install -r requirements.txt
    ```
 
-2. Kjør Django-serveren:
+2. Kjør migreringer:
+
+   ```bash
+   python manage.py migrate
+   ```
+
+3. Kjør Django-serveren:
    ```bash
    python manage.py runserver
    ```

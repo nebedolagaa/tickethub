@@ -776,20 +776,6 @@ input[name="ES-ArtistSok"]::placeholder {
   z-index: 2;
   box-shadow: 0 2px 8px var(--th-black-a30);
 }
-.NP-category {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  background-color: var(--th-red);
-  color: var(--th-white);
-  padding: 6px 16px;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  line-height: 18px;
-  z-index: 2;
-  box-shadow: 0 2px 8px var(--th-black-a30);
-}
 .JF-utsolgt-merke {
   background-color: var(--th-red);
 }
@@ -1675,6 +1661,20 @@ input[name="ES-ArtistSok"]::placeholder {
 
 .NP-event-card:hover .NP-image {
   transform: scale(1.05);
+}
+
+.NP-category {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--th-red);
+  color: var(--th-white);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  z-index: 2;
+  box-shadow: 0 2px 8px var(--th-black-a30);
 }
 
 /* Details */
