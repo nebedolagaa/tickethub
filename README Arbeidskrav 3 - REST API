@@ -1,0 +1,27 @@
+# tickethub
+# REST API INSTRUKSJONER (README)
+
+Kort beskrivelse av hvert API
+- Hva gjør hvert API
+- Hvilken ressurs håndterer det
+- Installasjon og oppsett
+- Hvis prosjektet er tilgjengelig i GIT - hvordan klone det?
+- Installasjon av avhengigheter
+- Kjøring av migrasjoner
+- Starte serveren
+- Filstruktur - kort beskrivelse
+- models.py
+- serializers.py
+- views.py
+- urls.py
+tests.py (ved automatiske tester)
+Test av API-endepunktene
+Manuelle og/eller automatiske
+HTTP-metoder
+JSON-body for input/output
+Validering og feilhåndtering
+Påkrevde felt
+Gjeldende valideringsregler (max_length, required etc)
+Feilmeldinger og statuskoder
+Test
+Beskrivelse av hvordan tester kan kjøres
