@@ -80,40 +80,40 @@ class EventAPITestCase(APITestCase):
 # --------------------------------------------------------------------------
 
 
-# Nikita Pushechnikov - tester for POST /api/concerts/
-class ConcertCreateAPITestCase(APITestCase):
+# Nikita Pushechnikov - tester for POST /api/events/
+class EventCreateAPITestCase(APITestCase):
     def setUp(self):
         User = get_user_model()
         self.user = User.objects.create_user(
             first_name="Test",
             last_name="User",
-            email="concert@example.com",
+            email="event@example.com",
             password="testpass",
         )
         self.organizer = OrganizerProfile.objects.create(
-            user=self.user, organization_name="Concert Org"
+            user=self.user, organization_name="Event Org"
         )
         self.address = Address.objects.create(
-            street="Concert St", city="Oslo", postal_code="0150", country="Norway"
+            street="Event St", city="Oslo", postal_code="0150", country="Norway"
         )
-        self.venue = Venue.objects.create(name="Concert Hall", address=self.address)
-        self.url = reverse("concert-list-api")
+        self.venue = Venue.objects.create(name="Event Hall", address=self.address)
+        self.url = reverse("event-list-api")
 
-    def test_create_concert_success(self):
-        """Opprette konsert med alle obligatoriske felt"""
+    def test_create_event_success(self):
+        """Opprette event med alle obligatoriske felt"""
         data = {
             "organizer": self.organizer.pk,
             "venue": self.venue.pk,
-            "title": "Ny Konsert",
+            "title": "Nytt Event",
             "start_datetime": "2027-06-01T18:00:00Z",
             "end_datetime": "2027-06-01T22:00:00Z",
         }
         response = self.client.post(self.url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data["title"], "Ny Konsert")
-        self.assertEqual(response.data["slug"], "ny-konsert")
+        self.assertEqual(response.data["title"], "Nytt Event")
+        self.assertEqual(response.data["slug"], "nytt-event")
 
-    def test_create_concert_sets_event_type_concert(self):
+    def test_create_event_sets_event_type_concert(self):
         """event_type skal alltid settes til concert"""
         data = {
             "organizer": self.organizer.pk,
@@ -129,7 +129,7 @@ class ConcertCreateAPITestCase(APITestCase):
         event = Event.objects.get(pk=response.data["id"])
         self.assertEqual(event.event_type, "concert")
 
-    def test_create_concert_missing_required_fields(self):
+    def test_create_event_missing_required_fields(self):
         """Manglende obligatoriske felt skal gi 400"""
         response = self.client.post(self.url, {}, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
@@ -139,7 +139,7 @@ class ConcertCreateAPITestCase(APITestCase):
         self.assertIn("start_datetime", response.data)
         self.assertIn("end_datetime", response.data)
 
-    def test_create_concert_end_before_start(self):
+    def test_create_event_end_before_start(self):
         """end_datetime før start_datetime skal gi 400"""
         data = {
             "organizer": self.organizer.pk,
@@ -152,7 +152,7 @@ class ConcertCreateAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("end_datetime", response.data)
 
-    def test_create_concert_end_equal_start(self):
+    def test_create_event_end_equal_start(self):
         """end_datetime lik start_datetime skal gi 400"""
         data = {
             "organizer": self.organizer.pk,
