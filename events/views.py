@@ -48,7 +48,7 @@ class EventListAPIView(generics.ListCreateAPIView):
     def get_queryset(self):
         # Start med å filtrere konserter som ikke er arkiverte og ikke har gått ut
         queryset = Event.objects.filter(
-            event_type="concert", is_archived=False, end_datetime__gte=timezone.now()
+            is_archived=False, end_datetime__gte=timezone.now()
         ).select_related("venue", "venue__address", "organizer")
 
         # Filtrer på city hvis spesifisert
