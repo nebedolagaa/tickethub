@@ -21,11 +21,54 @@
 
 # REST API #2 - Event Update /MAGNUS OG JESPER
 - Hva gjør API'et
+    - API'et lar deg oppdatere informasjon om et eksisterende event i systemet, man skriver inn ID til enkelteventet på URL'en for å få opp et spesifikt.
+
 - Hvilken ressurs håndterer det
+    - Ressursen som håndteres er et enkelt event, identifisert med eventets ID.
+
 - Manuelle og/eller automatiske tester
+    - API'et har automatiske tester som tester delvis oppdatering av kun tittel, og ser til at det oppdateres i databasen.  Vi har også en test som oppdaterer alle relevante felter, og ser til at det går bra. Man har også mulighet til å skrive inn endepunktet /api/events/{ID man ønsker å oppdatere}/, for å teste manuelt med et event som finnes. 
+    python manage.py test events.tests.EventAPITestCase skrives inn i terminal for å kjøre automatiske tester, bruker får OK som tilbakemelding. 
+    
 - HTTP-metoder
+    - HTTP - metoder som er brukt i dette API'et er PUT eller PATCH.
+
 - JSON-body for input/output
-- Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
+    - input eksempel for PUT:
+    {
+    "organizer": 1,
+    "venue": 1,
+    "title": "Helt oppdatert event",
+    "description": "Updated Description",
+    "start_datetime": "2024-12-02 T 10:00:00Z",
+    "end_datetime":"2024-12-02 T 12:00:00Z"
+    }
+
+    - input eksempel for PATCH:
+    {
+    "title": "Updated Event Title"
+    }
+
+    - output suksess:
+    {
+    "id": 1,
+    "organizer": 1,
+    "venue": 1,
+    "title": "Updated Event Title",
+    "description": "Test Description",
+    "start_datetime": "2024-12-01T10:00:00Z",
+    "end_datetime": "2024-12-01T12:00:00Z"
+    }
+
+- Validering og feilhåndtering 
+    - Påkrevde felter ved PUT er organizer, venue, title, start_datetime og end_datetime.
+    - Valideringsreglene er title kan ikke være tom og maks 255 tegn. event_type må være enten "concert" eller "festival", mulig det er flere typer i fremtiden. 
+    start_datetime må være før end_datetime. venue kan ikke slettes hvis det er i bruk. organizer må finnes i databasen til prosjektet. 
+    - Feilmeldinger og statuskoder er følgende:
+    200 OK - Oppdatering vellykket (PUT eller PATCH)
+    400 BAD REQUEST - Ugyldig input
+    404 NOT FOUND - Event med oppgitt ID finnes ikke i databasen. 
+    
 
 # REST API #3 - Event Delete /KAMILLA
 - Hva gjør API'et
