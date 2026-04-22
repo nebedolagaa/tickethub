@@ -12,6 +12,7 @@
 ### Kort beskrivelse av hvert API
 
 # REST API #1 - Event Create /NIKITA
+ENDEPUNKT: 
 - Hva gjør API'et
 - Hvilken ressurs håndterer det
 - Manuelle og/eller automatiske tester
@@ -20,6 +21,7 @@
 - Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
 
 # REST API #2 - Event Update /MAGNUS OG JESPER
+ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
 - Hva gjør API'et
     - API'et lar deg oppdatere informasjon om et eksisterende event i systemet, man skriver inn ID til enkelteventet på URL'en for å få opp et spesifikt.
 
@@ -71,6 +73,7 @@
     
 
 # REST API #3 - Event Delete /KAMILLA
+ENDEPUNKT: 
 - Hva gjør API'et
 - Hvilken ressurs håndterer det
 - Manuelle og/eller automatiske tester
@@ -79,6 +82,7 @@
 - Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
 
 # REST API #4 - Event List /ESKILD
+ENDEPUNKT: 
 - Hva gjør API'et
 - Hvilken ressurs håndterer det
 - Manuelle og/eller automatiske tester
@@ -87,6 +91,7 @@
 - Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
 
 # REST API #5 - City List /CHRISTOFFER
+ENDEPUNKT: 
 - Hva gjør API'et
 - Hvilken ressurs håndterer det
 - Manuelle og/eller automatiske tester
