@@ -26,7 +26,7 @@ ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
     - API'et lar deg oppdatere informasjon om et eksisterende event i systemet, man skriver inn ID til enkelteventet på URL'en for å få opp et spesifikt.
 
 - Hvilken ressurs håndterer det
-    - Ressursen som håndteres er et enkelt event, identifisert med eventets ID.
+    - Ressursen som håndteres er et enkelt event, identifisert med events ID.
 
 - Manuelle og/eller automatiske tester
     - API'et har automatiske tester som tester delvis oppdatering av kun tittel, og ser til at det oppdateres i databasen.  Vi har også en test som oppdaterer alle relevante felter, og ser til at det går bra. Man har også mulighet til å skrive inn endepunktet /api/events/{ID man ønsker å oppdatere}/, for å teste manuelt med et event som finnes. 
@@ -73,13 +73,75 @@ ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
     
 
 # REST API #3 - Event Delete /KAMILLA
-ENDEPUNKT: 
+ENDEPUNKT: /api/event/<int:id>/delete/
 - Hva gjør API'et
+    API’et lar en autentisert arrangør slette et eksisterende arrangement fra listen over sine arrangementer. Man skriver inn ID til arrangementet i URL-en for å velge hvilket arrangement som skal slettes.
+    Dersom man bruker GET på endepunktet, får man bare en melding om at DELETE-metoden må brukes for å slette arrangementet
+
 - Hvilken ressurs håndterer det
+    Ressursen som håndteres er et enkelt event, identifisert med event sin ID
+
 - Manuelle og/eller automatiske tester
-- HTTP-metoder
+    API’et kan testes manuelt ved å sende DELETE-request til endepunktet /api/event/{ID man ønsker å slette}/delete/ med en bruker som er logget inn som arrangør. 
+    Ved manuell testing kan man kontrollere flere situasjoner:
+        -at arrangør må være logget inn for å slette et arrangement
+        -at arrangør kan slette kun sitt eget arrangement
+        -at en annen arrangør ikke kan slete arrangementet som ikke tilhører dem
+        -at arrangement ikke kan slettes dersom det har tilknyttede (solgte) biletter
+        -at man får feilmelding dersom arrangement ikke finnes
+
+- HTTP-metoder som er brukt i dette API’et er:
+	- GET
+    - DELETE
+
 - JSON-body for input/output
+    Dette API’et krever ingen JSON-body som input ved sletting. Arrangementet identifiseres gjennom ID i URL-en.
+	1. output ved GET:
+    {
+    "message": "Bruk DELETE-metoden for å slette arrangementet."
+    }
+
+    2. output suksess ved DELETE:
+    {
+    "message": "Arrangementet ble slettet."
+    }
+
+    3. output hvis bruker ikke er arrangør:
+    {
+    "message": "Du har ikke tilgang som arrangør."
+    }
+
+    4. output hvis arrangementet ikke finnes:
+    {
+    "error": "Arrangementet finnes ikke."
+    }
+
+    5. output hvis arrangør prøver å slette et arrangement som ikke tilhører dem
+    {
+    "error": "Du har ikke tilgang til å slette dette arrangementet."
+    }
+
+    6. output hvis arrangementet har tilknyttede billetter:
+    {
+    "message": "Arrangement kan ikke slettes fordi det har tilknyttede biletter."
+    }
+
 - Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
+    Det er ingen påkrevde felter i request body, siden arrangementet velges gjennom ID i URL-en.
+    
+	Valideringsreglene er:
+        - brukeren må være innlogget
+        - brukeren må ha en OrganizerProfile
+        - arrangementet må finnes i databasen
+        - arrangøren kan bare slette sitt eget arrangement
+        - arrangementet kan ikke slettes dersom det finnes tilknyttede billetter
+	
+    Feilmeldinger og statuskoder er følgende:
+        - 200 OK ved GET-forespørsel returneres melding om å bruke DELETE-metoden
+        - 204 NO CONTENT arrangementet ble slettet
+        - 400 BAD REQUEST arrangementet kan ikke slettes fordi det har tilknyttede billetter
+        - 403 FORBIDDEN bruker har ikke tilgang som arrangør eller prøver å slette et arrangement de ikke eier
+        - 404 NOT FOUND arrangement med oppgitt ID finnes ikke i databasen
 
 # REST API #4 - Event List /ESKILD
 ENDEPUNKT: 
