@@ -46,15 +46,23 @@ Serveren kjører da på http://127.0.0.1:8000/
 ENDEPUNKT: /api/events/
 
 - Hva gjør API'et
-  API'et lar deg opprette et nytt arrangement i systemet. Det tar imot nødvendig informasjon om arrangementet som JSON i request body og lagrer det i databasen. event_type settes automatisk til "concert" ved opprettelse.
+  API'et lar deg opprette et nytt arrangement i systemet. Det tar imot nødvendig informasjon om arrangementet som JSON i request body og lagrer det i databasen. Man kan velge event_type mellom "concert" og "festival" — standard er "concert" hvis feltet ikke sendes med.
 
 - Hvilken ressurs håndterer det
   Ressursen som håndteres er Event-modellen. Endepunktet støtter også GET for å hente en liste over alle aktive (ikke-arkiverte) arrangementer, med mulighet for filtrering på by, dato og type via query-parametere (?city=, ?date=, ?type=).
 
 - Manuelle og/eller automatiske tester
-  API'et har automatiske tester i EventCreateAPITestCase (events/tests.py) som dekker: - Vellykket opprettelse med alle obligatoriske felt - Automatisk setting av event_type til "concert" - Manglende obligatoriske felt gir 400 - end_datetime før start_datetime gir 400 - end_datetime lik start_datetime gir 400
-  Kjøres med:
-  python manage.py test events.tests.EventCreateAPITestCase
+  API'et har automatiske tester i EventCreateAPITestCase (events/tests.py) som dekker:
+  - Vellykket opprettelse med alle obligatoriske felt
+  - Automatisk setting av event_type til "concert" når feltet ikke er oppgitt
+  - Opprettelse med event_type="festival" eksplisitt
+  - Opprettelse med event_type="concert" eksplisitt
+  - Ugyldig event_type gir 400
+  - Manglende obligatoriske felt gir 400
+  - end_datetime før start_datetime gir 400
+  - end_datetime lik start_datetime gir 400
+    Kjøres med:
+    python manage.py test events.tests.EventCreateAPITestCase
 
   For manuell testing, send en POST-request til /api/events/ med JSON-body som vist nedenfor.
 
@@ -63,14 +71,25 @@ ENDEPUNKT: /api/events/
   - GET (hente liste over alle aktive events)
 
 - JSON-body for input/output
-  - input eksempel for POST:
+  - input eksempel for POST (konsert):
     {
     "organizer": 1,
     "venue": 1,
     "title": "Konsert i Oslo",
     "description": "En fantastisk konsert",
+    "event_type": "concert",
     "start_datetime": "2027-06-01T18:00:00Z",
     "end_datetime": "2027-06-01T22:00:00Z"
+    }
+
+  - input eksempel for POST (festival):
+    {
+    "organizer": 1,
+    "venue": 1,
+    "title": "Sommerfestival",
+    "event_type": "festival",
+    "start_datetime": "2027-08-01T12:00:00Z",
+    "end_datetime": "2027-08-03T23:00:00Z"
     }
 
   - output suksess (201 Created):
@@ -81,6 +100,7 @@ ENDEPUNKT: /api/events/
     "title": "Konsert i Oslo",
     "description": "En fantastisk konsert",
     "performers": [],
+    "event_type": "concert",
     "start_datetime": "2027-06-01T18:00:00Z",
     "end_datetime": "2027-06-01T22:00:00Z",
     "slug": "konsert-i-oslo"
@@ -94,10 +114,10 @@ ENDEPUNKT: /api/events/
     - organizer må finnes i databasen
     - venue må finnes i databasen
     - slug genereres automatisk fra title
-    - event_type settes automatisk til "concert"
+    - event_type må være "concert" eller "festival" (standard: "concert" hvis ikke oppgitt)
   - Feilmeldinger og statuskoder:
     - 201 CREATED - Event ble opprettet
-    - 400 BAD REQUEST - Manglende eller ugyldig input (f.eks. end_datetime før start_datetime, manglende påkrevde felt)
+    - 400 BAD REQUEST - Manglende eller ugyldig input (f.eks. end_datetime før start_datetime, manglende påkrevde felt, ugyldig event_type)
     - 404 NOT FOUND - Organizer eller venue finnes ikke i databasen
 
 # REST API #2 - Event Update /MAGNUS OG JESPER
@@ -216,7 +236,9 @@ ENDEPUNKT: /api/event/<int:id>/delete/
   Feilmeldinger og statuskoder er følgende: - 200 OK ved GET-forespørsel returneres melding om å bruke DELETE-metoden - 204 NO CONTENT arrangementet ble slettet - 400 BAD REQUEST arrangementet kan ikke slettes fordi det har tilknyttede billetter - 403 FORBIDDEN bruker har ikke tilgang som arrangør eller prøver å slette et arrangement de ikke eier - 404 NOT FOUND arrangement med oppgitt ID finnes ikke i databasen
 
 # REST API #4 - Event List /ESKILD
+
 ENDEPUNKT: /api/events/
+
 - Hva gjør API'et
   API’et returnerer en liste over aktive arrangementer (konserter og festivaler) som ikke er arkiverte og ikke har gått ut på dato.
   Man kan bruke query parameters i URL-en for å filtrere resultatene, for eksempel på by, dato eller event-type.
@@ -236,36 +258,31 @@ ENDEPUNKT: /api/events/
   Det finnes delvis automatiske tester i tests.py, men disse dekker hovedsakelig oppdatering og ikke listing
 
 - HTTP-metoder som er brukt i dette API’et er:
-
   - GET
 
 - JSON-body for input/output
   Dette API’et krever ingen JSON-body som input. Filtrering gjøres via query parameters i URL-en.
-
   1. output ved suksess:
 
   id="2l6p3m"
   [
-    {
-      "id": 1,
-      "organizer": 1,
-      "venue": 1,
-      "title": "Test Event",
-      "description": "Description",
-      "performers": [],
-      "event_type": "concert",
-      "start_datetime": "2024-12-01T10:00:00Z",
-      "end_datetime": "2024-12-01T12:00:00Z",
-      "is_archived": false,
-      "slug": "test-event"
-    }
+  {
+  "id": 1,
+  "organizer": 1,
+  "venue": 1,
+  "title": "Test Event",
+  "description": "Description",
+  "performers": [],
+  "event_type": "concert",
+  "start_datetime": "2024-12-01T10:00:00Z",
+  "end_datetime": "2024-12-01T12:00:00Z",
+  "is_archived": false,
+  "slug": "test-event"
+  }
   ]
-
   2. output hvis ingen events finnes:
-
   - id="0j9x0h"
-  []
-  
+    []
 
 - Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
   Det er ingen påkrevde felter i request, siden alle query parameters er valgfrie.
@@ -279,7 +296,6 @@ ENDEPUNKT: /api/events/
   - 200 OK ved vellykket forespørsel (kan også returnere tom liste)
   - 400 BAD REQUEST ved ugyldig query parameter (f.eks. feil datoformat)
   - 500 INTERNAL SERVER ERROR ved uventet serverfeil
-
 
 # REST API #5 - City List /CHRISTOFFER
 
