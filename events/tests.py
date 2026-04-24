@@ -164,5 +164,47 @@ class EventCreateAPITestCase(APITestCase):
         response = self.client.post(self.url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
+    def test_create_event_festival_type(self):
+        """Opprette event med event_type=festival"""
+        data = {
+            "organizer": self.organizer.pk,
+            "venue": self.venue.pk,
+            "title": "Sommerfestival",
+            "event_type": "festival",
+            "start_datetime": "2027-08-01T12:00:00Z",
+            "end_datetime": "2027-08-03T23:00:00Z",
+        }
+        response = self.client.post(self.url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["event_type"], "festival")
+
+    def test_create_event_concert_type_explicit(self):
+        """Opprette event med event_type=concert eksplisitt"""
+        data = {
+            "organizer": self.organizer.pk,
+            "venue": self.venue.pk,
+            "title": "Rock Konsert",
+            "event_type": "concert",
+            "start_datetime": "2027-09-01T18:00:00Z",
+            "end_datetime": "2027-09-01T22:00:00Z",
+        }
+        response = self.client.post(self.url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(response.data["event_type"], "concert")
+
+    def test_create_event_invalid_event_type(self):
+        """Ugyldig event_type skal gi 400"""
+        data = {
+            "organizer": self.organizer.pk,
+            "venue": self.venue.pk,
+            "title": "Ugyldig Type",
+            "event_type": "party",
+            "start_datetime": "2027-09-01T18:00:00Z",
+            "end_datetime": "2027-09-01T22:00:00Z",
+        }
+        response = self.client.post(self.url, data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn("event_type", response.data)
+
 
 # --------------------------------------------------------------------------

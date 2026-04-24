@@ -30,6 +30,8 @@ class CitySerializer(serializers.ModelSerializer):
 
 # Nikita Pushechnikov - Serializer for å opprette event
 class EventCreateSerializer(serializers.ModelSerializer):
+    VALID_EVENT_TYPES = ["concert", "festival"]
+
     class Meta:
         model = Event
         fields = [
@@ -39,6 +41,7 @@ class EventCreateSerializer(serializers.ModelSerializer):
             "title",
             "description",
             "performers",
+            "event_type",
             "start_datetime",
             "end_datetime",
             "slug",
@@ -50,7 +53,15 @@ class EventCreateSerializer(serializers.ModelSerializer):
             "venue": {"required": True},
             "start_datetime": {"required": True},
             "end_datetime": {"required": True},
+            "event_type": {"required": False},
         }
+
+    def validate_event_type(self, value):
+        if value not in self.VALID_EVENT_TYPES:
+            raise serializers.ValidationError(
+                f"Ugyldig event_type. Velg mellom: {', '.join(self.VALID_EVENT_TYPES)}."
+            )
+        return value
 
     def validate(self, data):
         start = data.get("start_datetime")
@@ -62,5 +73,5 @@ class EventCreateSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        validated_data["event_type"] = "concert"
+        validated_data.setdefault("event_type", "concert")
         return super().create(validated_data)
