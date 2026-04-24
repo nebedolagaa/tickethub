@@ -228,23 +228,62 @@ ENDEPUNKT:
 
 # REST API #5 - City List /CHRISTOFFER
 
-ENDEPUNKT:
+ENDEPUNKT: /api/cities/
 
-- Hva gjør API'et
-- Hvilken ressurs håndterer det
-- Manuelle og/eller automatiske tester
-- HTTP-metoder
-- JSON-body for input/output
-- Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
+Hva gjør API'et
+API’et lar brukere hente ut en liste over alle byer som har arrangementer i systemet. For hver by returneres navn, bilde (hvis tilgjengelig), og antall aktive arrangementer i byen. Det er mulig å filtrere og sortere resultatene etter antall arrangementer eller bynavn.
+
+Hvilken ressurs håndterer det
+Ressursen som håndteres er en liste av byer (City), hvor hver by representerer et sted med ett eller flere arrangementer.
+
+Manuelle og/eller automatiske tester
+API’et kan testes manuelt ved å sende en GET-request til endepunktet /api/cities/.
+Ved manuell testing kan man kontrollere flere situasjoner:
+
+at alle byer med arrangementer returneres
+at filtrering på bynavn fungerer (f.eks. /api/cities/?search=Oslo)
+at sortering på antall arrangementer eller navn fungerer
+at byer uten arrangementer ikke vises
+
+HTTP-metoder som er brukt i dette API’et er:
+
+GET
+JSON-body for input/output
+Dette API’et krever ingen JSON-body som input.
+Eksempel på output ved GET:
+[
+{
+"id": 1,
+"name": "Oslo",
+"image_url": "https://...",
+"event_count": 12
+},
+{
+"id": 2,
+"name": "Bergen",
+"image_url": "https://...",
+"event_count": 7
+}
+]
+Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
+Det er ingen påkrevde felter i request body, siden det kun er en GET-forespørsel.
+Valideringsregler:
+
+Kun byer med minst ett aktivt arrangement returneres
+Filtrering og sortering valideres automatisk av API’et
+Feilmeldinger og statuskoder:
+200 OK – Listen over byer returneres
+400 BAD REQUEST – Ugyldig filter eller sorteringsparameter (hvis aktuelt)
+404 NOT FOUND – Ingen byer funnet (returnerer tom liste)
 
 ### Filstruktur - kort beskrivelse /CHRISTOFFER
 
-# models.py
+models.py: Inneholder definisjoner av databasemodeller, f.eks. City og Event. Her bestemmes hvilke felter og relasjoner som finnes i databasen, og hvordan data lagres.
 
-# serializers.py
+serializers.py: Definerer hvordan modellene konverteres til og fra JSON, slik at data kan sendes og mottas via API-et. Brukes av views for å validere og strukturere data.
 
-# views.py
+views.py: Inneholder logikken for API-endepunkter og nettsider. Her bestemmes hva som skjer når en bruker gjør et API-kall, f.eks. henter, oppretter eller filtrerer data.
 
-# urls.py
+urls.py: Kobler URL-er til riktige views. Her defineres hvilke adresser som finnes i API-et og hvilke funksjoner eller klasser som håndterer dem.
 
-# tests.py (ved automatiske tester)
+tests.py: Inneholder automatiske tester som sjekker at API-et og funksjonene virker som de skal. Testene kan simulere ulike brukerscenarioer og validerer at feil håndteres riktig.
