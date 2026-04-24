@@ -1,42 +1,123 @@
 # tickethub
+
 # REST API INSTRUKSJONER (README)
 
 ### Installasjon og oppsett /NIKITA
-- Hvis prosjektet er tilgjengelig i GIT - hvordan klone det?
-- Installasjon av avhengigheter
-- Kjøring av migrasjoner
-- Starte serveren
 
+**Klone prosjektet fra GitHub:**
 
+```
+git clone https://github.com/nebedolagaa/tickethub.git
+cd tickethub
+```
+
+**Opprette og aktivere virtuelt miljø:**
+
+```
+python -m venv .venv
+source .venv/bin/activate        # macOS/Linux
+.venv\Scripts\activate           # Windows
+```
+
+**Installere avhengigheter:**
+
+```
+pip install -r requirements.txt
+```
+
+**Kjøre migrasjoner:**
+
+```
+python manage.py migrate
+```
+
+**Starte serveren:**
+
+```
+python manage.py runserver
+```
+
+Serveren kjører da på http://127.0.0.1:8000/
 
 ### Kort beskrivelse av hvert API
 
 # REST API #1 - Event Create /NIKITA
-ENDEPUNKT: 
+
+ENDEPUNKT: /api/events/
+
 - Hva gjør API'et
+  API'et lar deg opprette et nytt arrangement i systemet. Det tar imot nødvendig informasjon om arrangementet som JSON i request body og lagrer det i databasen. event_type settes automatisk til "concert" ved opprettelse.
+
 - Hvilken ressurs håndterer det
+  Ressursen som håndteres er Event-modellen. Endepunktet støtter også GET for å hente en liste over alle aktive (ikke-arkiverte) arrangementer, med mulighet for filtrering på by, dato og type via query-parametere (?city=, ?date=, ?type=).
+
 - Manuelle og/eller automatiske tester
+  API'et har automatiske tester i EventCreateAPITestCase (events/tests.py) som dekker: - Vellykket opprettelse med alle obligatoriske felt - Automatisk setting av event_type til "concert" - Manglende obligatoriske felt gir 400 - end_datetime før start_datetime gir 400 - end_datetime lik start_datetime gir 400
+  Kjøres med:
+  python manage.py test events.tests.EventCreateAPITestCase
+
+  For manuell testing, send en POST-request til /api/events/ med JSON-body som vist nedenfor.
+
 - HTTP-metoder
+  - POST (opprette nytt event)
+  - GET (hente liste over alle aktive events)
+
 - JSON-body for input/output
-- Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
+  - input eksempel for POST:
+    {
+    "organizer": 1,
+    "venue": 1,
+    "title": "Konsert i Oslo",
+    "description": "En fantastisk konsert",
+    "start_datetime": "2027-06-01T18:00:00Z",
+    "end_datetime": "2027-06-01T22:00:00Z"
+    }
+
+  - output suksess (201 Created):
+    {
+    "id": 5,
+    "organizer": 1,
+    "venue": 1,
+    "title": "Konsert i Oslo",
+    "description": "En fantastisk konsert",
+    "performers": [],
+    "start_datetime": "2027-06-01T18:00:00Z",
+    "end_datetime": "2027-06-01T22:00:00Z",
+    "slug": "konsert-i-oslo"
+    }
+
+- Validering og feilhåndtering
+  - Påkrevde felter: organizer, venue, title, start_datetime, end_datetime
+  - Valideringsregler:
+    - title kan ikke være tom
+    - end_datetime må være etter start_datetime
+    - organizer må finnes i databasen
+    - venue må finnes i databasen
+    - slug genereres automatisk fra title
+    - event_type settes automatisk til "concert"
+  - Feilmeldinger og statuskoder:
+    - 201 CREATED - Event ble opprettet
+    - 400 BAD REQUEST - Manglende eller ugyldig input (f.eks. end_datetime før start_datetime, manglende påkrevde felt)
+    - 404 NOT FOUND - Organizer eller venue finnes ikke i databasen
 
 # REST API #2 - Event Update /MAGNUS OG JESPER
+
 ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
+
 - Hva gjør API'et
-    - API'et lar deg oppdatere informasjon om et eksisterende event i systemet, man skriver inn ID til enkelteventet på URL'en for å få opp et spesifikt.
+  - API'et lar deg oppdatere informasjon om et eksisterende event i systemet, man skriver inn ID til enkelteventet på URL'en for å få opp et spesifikt.
 
 - Hvilken ressurs håndterer det
-    - Ressursen som håndteres er et enkelt event, identifisert med events ID.
+  - Ressursen som håndteres er et enkelt event, identifisert med events ID.
 
 - Manuelle og/eller automatiske tester
-    - API'et har automatiske tester som tester delvis oppdatering av kun tittel, og ser til at det oppdateres i databasen.  Vi har også en test som oppdaterer alle relevante felter, og ser til at det går bra. Man har også mulighet til å skrive inn endepunktet /api/events/{ID man ønsker å oppdatere}/, for å teste manuelt med et event som finnes. 
-    python manage.py test events.tests.EventAPITestCase skrives inn i terminal for å kjøre automatiske tester, bruker får OK som tilbakemelding. 
-    
+  - API'et har automatiske tester som tester delvis oppdatering av kun tittel, og ser til at det oppdateres i databasen. Vi har også en test som oppdaterer alle relevante felter, og ser til at det går bra. Man har også mulighet til å skrive inn endepunktet /api/events/{ID man ønsker å oppdatere}/, for å teste manuelt med et event som finnes.
+    python manage.py test events.tests.EventAPITestCase skrives inn i terminal for å kjøre automatiske tester, bruker får OK som tilbakemelding.
 - HTTP-metoder
-    - HTTP - metoder som er brukt i dette API'et er PUT eller PATCH.
+  - HTTP - metoder som er brukt i dette API'et er PUT eller PATCH.
 
 - JSON-body for input/output
-    - input eksempel for PUT:
+  - input eksempel for PUT:
     {
     "organizer": 1,
     "venue": 1,
@@ -46,12 +127,12 @@ ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
     "end_datetime":"2024-12-02 T 12:00:00Z"
     }
 
-    - input eksempel for PATCH:
+  - input eksempel for PATCH:
     {
     "title": "Updated Event Title"
     }
 
-    - output suksess:
+  - output suksess:
     {
     "id": 1,
     "organizer": 1,
@@ -62,89 +143,82 @@ ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
     "end_datetime": "2024-12-01T12:00:00Z"
     }
 
-- Validering og feilhåndtering 
-    - Påkrevde felter ved PUT er organizer, venue, title, start_datetime og end_datetime.
-    - Valideringsreglene er title kan ikke være tom og maks 255 tegn. event_type må være enten "concert" eller "festival", mulig det er flere typer i fremtiden. 
-    start_datetime må være før end_datetime. venue kan ikke slettes hvis det er i bruk. organizer må finnes i databasen til prosjektet. 
-    - Feilmeldinger og statuskoder er følgende:
+- Validering og feilhåndtering
+  - Påkrevde felter ved PUT er organizer, venue, title, start_datetime og end_datetime.
+  - Valideringsreglene er title kan ikke være tom og maks 255 tegn. event_type må være enten "concert" eller "festival", mulig det er flere typer i fremtiden.
+    start_datetime må være før end_datetime. venue kan ikke slettes hvis det er i bruk. organizer må finnes i databasen til prosjektet.
+  - Feilmeldinger og statuskoder er følgende:
     200 OK - Oppdatering vellykket (PUT eller PATCH)
     400 BAD REQUEST - Ugyldig input
-    404 NOT FOUND - Event med oppgitt ID finnes ikke i databasen. 
-    
+    404 NOT FOUND - Event med oppgitt ID finnes ikke i databasen.
 
 # REST API #3 - Event Delete /KAMILLA
+
 ENDEPUNKT: /api/event/<int:id>/delete/
+
 - Hva gjør API'et
-    API’et lar en autentisert arrangør slette et eksisterende arrangement fra listen over sine arrangementer. Man skriver inn ID til arrangementet i URL-en for å velge hvilket arrangement som skal slettes.
-    Dersom man bruker GET på endepunktet, får man bare en melding om at DELETE-metoden må brukes for å slette arrangementet
+  API’et lar en autentisert arrangør slette et eksisterende arrangement fra listen over sine arrangementer. Man skriver inn ID til arrangementet i URL-en for å velge hvilket arrangement som skal slettes.
+  Dersom man bruker GET på endepunktet, får man bare en melding om at DELETE-metoden må brukes for å slette arrangementet
 
 - Hvilken ressurs håndterer det
-    Ressursen som håndteres er et enkelt event, identifisert med event sin ID
+  Ressursen som håndteres er et enkelt event, identifisert med event sin ID
 
 - Manuelle og/eller automatiske tester
-    API’et kan testes manuelt ved å sende DELETE-request til endepunktet /api/event/{ID man ønsker å slette}/delete/ med en bruker som er logget inn som arrangør. 
-    Ved manuell testing kan man kontrollere flere situasjoner:
-        -at arrangør må være logget inn for å slette et arrangement
-        -at arrangør kan slette kun sitt eget arrangement
-        -at en annen arrangør ikke kan slete arrangementet som ikke tilhører dem
-        -at arrangement ikke kan slettes dersom det har tilknyttede (solgte) biletter
-        -at man får feilmelding dersom arrangement ikke finnes
+  API’et kan testes manuelt ved å sende DELETE-request til endepunktet /api/event/{ID man ønsker å slette}/delete/ med en bruker som er logget inn som arrangør.
+  Ved manuell testing kan man kontrollere flere situasjoner:
+  -at arrangør må være logget inn for å slette et arrangement
+  -at arrangør kan slette kun sitt eget arrangement
+  -at en annen arrangør ikke kan slete arrangementet som ikke tilhører dem
+  -at arrangement ikke kan slettes dersom det har tilknyttede (solgte) biletter
+  -at man får feilmelding dersom arrangement ikke finnes
 
 - HTTP-metoder som er brukt i dette API’et er:
-	- GET
+  - GET
     - DELETE
 
 - JSON-body for input/output
-    Dette API’et krever ingen JSON-body som input ved sletting. Arrangementet identifiseres gjennom ID i URL-en.
-	1. output ved GET:
-    {
-    "message": "Bruk DELETE-metoden for å slette arrangementet."
-    }
+  Dette API’et krever ingen JSON-body som input ved sletting. Arrangementet identifiseres gjennom ID i URL-en.
+  1. output ved GET:
+     {
+     "message": "Bruk DELETE-metoden for å slette arrangementet."
+     }
 
-    2. output suksess ved DELETE:
-    {
-    "message": "Arrangementet ble slettet."
-    }
+  2. output suksess ved DELETE:
+     {
+     "message": "Arrangementet ble slettet."
+     }
 
-    3. output hvis bruker ikke er arrangør:
-    {
-    "message": "Du har ikke tilgang som arrangør."
-    }
+  3. output hvis bruker ikke er arrangør:
+     {
+     "message": "Du har ikke tilgang som arrangør."
+     }
 
-    4. output hvis arrangementet ikke finnes:
-    {
-    "error": "Arrangementet finnes ikke."
-    }
+  4. output hvis arrangementet ikke finnes:
+     {
+     "error": "Arrangementet finnes ikke."
+     }
 
-    5. output hvis arrangør prøver å slette et arrangement som ikke tilhører dem
-    {
-    "error": "Du har ikke tilgang til å slette dette arrangementet."
-    }
+  5. output hvis arrangør prøver å slette et arrangement som ikke tilhører dem
+     {
+     "error": "Du har ikke tilgang til å slette dette arrangementet."
+     }
 
-    6. output hvis arrangementet har tilknyttede billetter:
-    {
-    "message": "Arrangement kan ikke slettes fordi det har tilknyttede biletter."
-    }
+  6. output hvis arrangementet har tilknyttede billetter:
+     {
+     "message": "Arrangement kan ikke slettes fordi det har tilknyttede biletter."
+     }
 
 - Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
-    Det er ingen påkrevde felter i request body, siden arrangementet velges gjennom ID i URL-en.
-    
-	Valideringsreglene er:
-        - brukeren må være innlogget
-        - brukeren må ha en OrganizerProfile
-        - arrangementet må finnes i databasen
-        - arrangøren kan bare slette sitt eget arrangement
-        - arrangementet kan ikke slettes dersom det finnes tilknyttede billetter
-	
-    Feilmeldinger og statuskoder er følgende:
-        - 200 OK ved GET-forespørsel returneres melding om å bruke DELETE-metoden
-        - 204 NO CONTENT arrangementet ble slettet
-        - 400 BAD REQUEST arrangementet kan ikke slettes fordi det har tilknyttede billetter
-        - 403 FORBIDDEN bruker har ikke tilgang som arrangør eller prøver å slette et arrangement de ikke eier
-        - 404 NOT FOUND arrangement med oppgitt ID finnes ikke i databasen
+  Det er ingen påkrevde felter i request body, siden arrangementet velges gjennom ID i URL-en.
+
+  Valideringsreglene er: - brukeren må være innlogget - brukeren må ha en OrganizerProfile - arrangementet må finnes i databasen - arrangøren kan bare slette sitt eget arrangement - arrangementet kan ikke slettes dersom det finnes tilknyttede billetter
+
+  Feilmeldinger og statuskoder er følgende: - 200 OK ved GET-forespørsel returneres melding om å bruke DELETE-metoden - 204 NO CONTENT arrangementet ble slettet - 400 BAD REQUEST arrangementet kan ikke slettes fordi det har tilknyttede billetter - 403 FORBIDDEN bruker har ikke tilgang som arrangør eller prøver å slette et arrangement de ikke eier - 404 NOT FOUND arrangement med oppgitt ID finnes ikke i databasen
 
 # REST API #4 - Event List /ESKILD
-ENDEPUNKT: 
+
+ENDEPUNKT:
+
 - Hva gjør API'et
 - Hvilken ressurs håndterer det
 - Manuelle og/eller automatiske tester
@@ -153,7 +227,9 @@ ENDEPUNKT:
 - Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
 
 # REST API #5 - City List /CHRISTOFFER
-ENDEPUNKT: 
+
+ENDEPUNKT:
+
 - Hva gjør API'et
 - Hvilken ressurs håndterer det
 - Manuelle og/eller automatiske tester
@@ -161,11 +237,14 @@ ENDEPUNKT:
 - JSON-body for input/output
 - Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
 
-
-
 ### Filstruktur - kort beskrivelse /CHRISTOFFER
+
 # models.py
+
 # serializers.py
+
 # views.py
+
 # urls.py
+
 # tests.py (ved automatiske tester)
