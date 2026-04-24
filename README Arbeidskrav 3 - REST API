@@ -216,7 +216,7 @@ ENDEPUNKT: /api/event/<int:id>/delete/
   Feilmeldinger og statuskoder er følgende: - 200 OK ved GET-forespørsel returneres melding om å bruke DELETE-metoden - 204 NO CONTENT arrangementet ble slettet - 400 BAD REQUEST arrangementet kan ikke slettes fordi det har tilknyttede billetter - 403 FORBIDDEN bruker har ikke tilgang som arrangør eller prøver å slette et arrangement de ikke eier - 404 NOT FOUND arrangement med oppgitt ID finnes ikke i databasen
 
 # REST API #4 - Event List /ESKILD
-ENDEPUNKT: 
+ENDEPUNKT: /api/events/
 - Hva gjør API'et
   API’et returnerer en liste over aktive arrangementer (konserter og festivaler) som ikke er arkiverte og ikke har gått ut på dato.
   Man kan bruke query parameters i URL-en for å filtrere resultatene, for eksempel på by, dato eller event-type.
