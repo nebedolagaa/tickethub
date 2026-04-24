@@ -301,13 +301,13 @@ ENDEPUNKT: /api/events/
 
 ENDEPUNKT: /api/cities/
 
-Hva gjør API'et
+- Hva gjør API'et
 API’et lar brukere hente ut en liste over alle byer som har arrangementer i systemet. For hver by returneres navn, bilde (hvis tilgjengelig), og antall aktive arrangementer i byen. Det er mulig å filtrere og sortere resultatene etter antall arrangementer eller bynavn.
 
 Hvilken ressurs håndterer det
 Ressursen som håndteres er en liste av byer (City), hvor hver by representerer et sted med ett eller flere arrangementer.
 
-Manuelle og/eller automatiske tester
+- Manuelle og/eller automatiske tester
 API’et kan testes manuelt ved å sende en GET-request til endepunktet /api/cities/.
 Ved manuell testing kan man kontrollere flere situasjoner:
 
@@ -336,15 +336,16 @@ Eksempel på output ved GET:
 "event_count": 7
 }
 ]
-Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
+- Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
 Det er ingen påkrevde felter i request body, siden det kun er en GET-forespørsel.
 Valideringsregler:
 
 Kun byer med minst ett aktivt arrangement returneres
 Filtrering og sortering valideres automatisk av API’et
-Feilmeldinger og statuskoder:
+
+- Feilmeldinger og statuskoder:
 200 OK – Listen over byer returneres
-400 BAD REQUEST – Ugyldig filter eller sorteringsparameter (hvis aktuelt)
+400 BAD REQUEST – Ugyldig filter eller sorteringsparameter
 404 NOT FOUND – Ingen byer funnet (returnerer tom liste)
 
 ### Filstruktur - kort beskrivelse /CHRISTOFFER
