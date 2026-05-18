@@ -247,7 +247,23 @@
                             </div>
                         </div>
                         <div class="MB-organizer_profile-event-actions">
-                            <button class="MB-organizer_profile-btn-action">
+                            <button class="MB-organizer_profile-btn-action KN-open-details-modal"
+                                '''Using dataset properties to pass event details to the modal for display when "Se detaljer" is clicked.
+                                This allows the modal to be populated with the correct information for each event without needing a separate modal instance for each event.
+                                JavaScript will read these data attributes when the button is clicked and fill the modal content accordingly by their IDies.'''
+                                data-title="{{ event.title }}"
+                                data-date="{{ event.start_datetime|date:"d. F Y" }}"
+                                data-time="{{ event.start_datetime|date:"H:i" }}"
+                                data-venue="{{ event.venue }}"
+                                data-performer="{% if event.performers.exists %}
+                                                    {% for performer in event.performers.all %}{{ performer.name }}{% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                {% else %}
+                                                    Artister er ikke registrert
+                                                {% endif %}
+                                                "
+                                data-description="{{ event.description|default:'Ingen beskrivelse' }}"
+                                >
                                 <i class="fa-regular fa-eye"></i> Se detaljer
                             </button>
                             <button class="MB-organizer_profile-btn-action">
@@ -392,5 +408,91 @@
         </div>
     </div>
 </main>
+<!--Modal for event details KN-->
+    <div id="KN-details-modal" class="KN-details-modal">
+        <div class="KN-details-modal-overlay" id="KN-details-modal-overlay"></div>
+        <div class="KN-details-modal-content">
+            <div class="KN-details-modal-header">
+                <h2 class="NP-event-title" id="KN-modal-title"></h2>
+                <button class="KN-details-modal-close" id="KN-details-modal-close" aria-label="Lukk detaljer">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+            <div class="NP-details">
+              <div class="NP-event-meta">
+                <div class="NP-meta-item">
+                  <i class="bi bi-calendar-event"></i>
+                  <span id="KN-modal-date"></span>
+                </div>
+                <div class="NP-meta-item">
+                  <i class="bi bi-clock"></i>
+                  <span id="KN-modal-time"></span>
+                </div>
+                <div class="NP-meta-item">
+                  <i class="bi bi-geo-alt"></i>
+                  <span id="KN-modal-venue"></span>
+                </div>
+                <div class="NP-meta-item">
+                  <i class="bi bi-mic"></i>
+                  <span id="KN-modal-performer"></span>
+                </div>
+              </div>
+                <p class="NP-description" id="KN-modal-description"></p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
+
+{% block script %}
+<script>
+    //details modal functionality - KN
+    const detailsButtons = document.querySelectorAll(".KN-open-details-modal");
+    const detailsModal = document.getElementById("KN-details-modal");
+    const detailsModalClose = document.getElementById("KN-details-modal-close");
+    const detailsModalOverlay = document.getElementById("KN-details-modal-overlay");
+    
+    //Open details modal
+    if (detailsButtons && detailsModal){
+        detailsButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                // Populate modal with event details from data attributes
+                document.getElementById("KN-modal-title").textContent = button.dataset.title;
+                document.getElementById("KN-modal-date").textContent = button.dataset.date;
+                document.getElementById("KN-modal-time").textContent = button.dataset.time;
+                document.getElementById("KN-modal-venue").textContent = button.dataset.venue;
+                document.getElementById("KN-modal-performer").textContent = button.dataset.performer;
+                document.getElementById("KN-modal-description").textContent = button.dataset.description;
+
+                detailsModal.classList.add("KN-details-modal-active");
+                document.body.style.overflow = "hidden"; // deactivate scrolling
+            })
+        })
+    }
+
+    //Close details modal
+    const closeDetailsModal = () => {
+        if (detailsModal) {
+            detailsModal.classList.remove("KN-details-modal-active");
+            document.body.style.overflow = ""; // reactivate scrolling
+        }
+    };
+
+    //Close modal on close button click
+    if (detailsModalClose) {
+        detailsModalClose.addEventListener("click", closeDetailsModal);
+    }
+
+    //Close modal on overlay click
+    if (detailsModalOverlay){
+        detailsModalOverlay.addEventListener("click", closeDetailsModal);
+    }
+
+    //Close modal on Escape
+    document.addEventListener("keydown", (e) => {
+        if (e.key ==="Escape" && detailsModal.classList.contains("KN-details-modal-active")){
+            closeDetailsModal();
+        }
+    });
+</script>
 {% endblock %}
