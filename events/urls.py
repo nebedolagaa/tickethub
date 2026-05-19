@@ -28,4 +28,5 @@ urlpatterns = [
     ),
     path("api/cities/", views.CityListAPIView.as_view(), name="city-list-api"),
     path("api/events/", views.EventListAPIView.as_view(), name="event-list-api"),
+    path("api/performers/search/", views.performer_search_api, name="performer-search-api"),
 ]

@@ -1,5 +1,9 @@
+"""
+Bidratt til denne filen:
+    - Nikita Pushechnikov
+"""
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -100,9 +104,9 @@ def home_page(request):
 
 def concerts(request):
     """Side med alle konserter med søke- og sorteringsfunksjonalitet"""
-    # Filtrer kun konserter (ikke festivaler) som ikke har gått ut
+    # Filtrer kun konserter (ikke festivaler) som ikke har gått ut og ikke er arkivert
     events = Event.objects.filter(
-        event_type="concert", end_datetime__gte=timezone.now()
+        event_type="concert", end_datetime__gte=timezone.now(), is_archived=False
     ).select_related("venue", "venue__address", "organizer")
 
     # Søk
@@ -215,11 +219,13 @@ def cities(request):
     from django.db.models import Count
     from .models import City
 
-    # Henter alle byer med antall events (kun ikke utløpte og ikke-arkiverte) og informasjon om bilder
+    # Henter alle byer med antall konserter (kun ikke utløpte og ikke-arkiverte)
     cities_list = (
-        Event.objects.filter(end_datetime__gte=timezone.now(), is_archived=False)
+        Event.objects.filter(
+            event_type="concert", end_datetime__gte=timezone.now(), is_archived=False
+        )
         .values("venue__address__city")
-        .annotate(event_count=Count("id"))
+        .annotate(event_count=Count("id", distinct=True))
         .order_by("-event_count", "venue__address__city")
     )
 
@@ -494,3 +500,13 @@ class EventDeleteAPIView(APIView):
         return Response(
             {"message": "Arrangementet ble slettet."}, status=status.HTTP_204_NO_CONTENT
         )
+
+
+def performer_search_api(request):
+    """AJAX-endepunkt: søk artister etter navn (case-insensitive)"""
+    q = request.GET.get("q", "").strip()
+    results = []
+    if q:
+        performers = Performer.objects.filter(name__icontains=q).values("id", "name", "genre")[:8]
+        results = list(performers)
+    return JsonResponse({"results": results})

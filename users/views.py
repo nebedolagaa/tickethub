@@ -1,6 +1,7 @@
 """
 Bidratt til denne filen:
     - Kamilla Nizamova
+    - Nikita Pushechnikov
 """
 
 from django.shortcuts import render, redirect, get_object_or_404
@@ -12,7 +13,9 @@ from django.contrib.auth.decorators import login_required
 
 from .models import Account, UserProfile, OrganizerProfile
 from tickets.models import Ticket, Order, TicketType
-from events.models import Event
+from events.models import Event, Venue, VenueArea, Performer, Address
+from events.forms import EventForm, TicketTypeForm
+import json
 
 from django.db.models import F, Sum, DecimalField, Value
 from django.db.models.functions import Coalesce, Cast
@@ -509,3 +512,141 @@ def organizer_profile(request):
     }
 
     return render(request, "users/organizer_profile.html", context)
+
+
+@login_required
+def create_event(request):
+    """Side for å opprette et nytt arrangement (kun for arrangører)"""
+    try:
+        organizer = OrganizerProfile.objects.get(user=request.user)
+    except OrganizerProfile.DoesNotExist:
+        messages.error(request, "Du har ikke tilgang til å opprette arrangementer.")
+        return redirect("users:user_profile")
+
+    venues = Venue.objects.all().prefetch_related("areas")
+    venue_areas = {}
+    for venue in venues:
+        venue_areas[venue.id] = [
+            {"id": area.id, "name": area.name}
+            for area in venue.areas.all()
+        ]
+
+    if request.method == "POST":
+        event_form = EventForm(request.POST)
+        ticket_form = TicketTypeForm(request.POST)
+
+        venue_mode = request.POST.get("venue_mode", "existing")  # existing | new
+
+        # ── Ny lokasjon ──
+        new_venue_obj = None
+        new_venue_area_obj = None
+        venue_errors = []
+        if venue_mode == "new":
+            nv_name     = request.POST.get("nv_name", "").strip()
+            nv_street   = request.POST.get("nv_street", "").strip()
+            nv_city     = request.POST.get("nv_city", "").strip()
+            nv_postal   = request.POST.get("nv_postal", "").strip()
+            nv_capacity = request.POST.get("nv_capacity", "").strip()
+            if not nv_name:   venue_errors.append("Lokasjonsnavn er påkrevd.")
+            if not nv_street: venue_errors.append("Gateadresse er påkrevd.")
+            if not nv_city:   venue_errors.append("By er påkrevd.")
+            if not nv_postal: venue_errors.append("Postnummer er påkrevd.")
+            if nv_capacity:
+                try:
+                    nv_capacity = int(nv_capacity)
+                    if nv_capacity < 1:
+                        venue_errors.append("Kapasitet må være minst 1.")
+                except ValueError:
+                    venue_errors.append("Kapasitet må være et tall.")
+            else:
+                venue_errors.append("Kapasitet er påkrevd.")
+            # Sjekk om lokasjon med samme navn allerede finnes
+            if nv_name and not venue_errors:
+                existing_venue = Venue.objects.filter(name__iexact=nv_name).first()
+                if existing_venue:
+                    venue_errors.append(
+                        f'En lokasjon med navnet "{existing_venue.name}" finnes allerede. '
+                        f'Velg den fra listen over eksisterende lokasjoner i stedet.'
+                    )
+
+        # ── Ny artist ──
+        new_performer_name  = request.POST.get("new_performer_name", "").strip()
+        new_performer_genre = request.POST.get("new_performer_genre", "other").strip()
+        new_performer = None
+        performer_warning = None
+        should_create_performer = False
+        if new_performer_name:
+            existing = Performer.objects.filter(name__iexact=new_performer_name).first()
+            if existing:
+                performer_warning = f'"{existing.name}" finnes allerede i systemet og ble lagt til arrangementet.'
+                new_performer = existing
+            else:
+                should_create_performer = True
+
+        forms_valid = event_form.is_valid() and ticket_form.is_valid()
+
+        # Legg til venue-feil i event_form
+        if venue_mode == "existing" and forms_valid and not event_form.cleaned_data.get("venue"):
+            event_form.add_error("venue", "Velg en lokasjon.")
+            forms_valid = False
+
+        if venue_mode == "existing" and forms_valid and not ticket_form.cleaned_data.get("venue_area"):
+            ticket_form.add_error("venue_area", "Velg en sone.")
+            forms_valid = False
+
+        if forms_valid and not venue_errors:
+            with transaction.atomic():
+                event = event_form.save(commit=False)
+                event.organizer = organizer
+
+                if venue_mode == "new":
+                    address = Address.objects.create(
+                        street=nv_street,
+                        city=nv_city,
+                        postal_code=nv_postal,
+                    )
+                    new_venue_obj = Venue.objects.create(name=nv_name, address=address)
+                    new_venue_area_obj = VenueArea.objects.create(
+                        venue=new_venue_obj,
+                        name="Generell",
+                        max_capacity_total=nv_capacity,
+                    )
+                    event.venue = new_venue_obj
+
+                if should_create_performer:
+                    new_performer = Performer.objects.create(
+                        name=new_performer_name,
+                        genre=new_performer_genre or "other",
+                    )
+
+                event.save()
+                event_form.save_m2m()
+                if new_performer:
+                    event.performers.add(new_performer)
+
+                ticket = ticket_form.save(commit=False)
+                ticket.event = event
+                if venue_mode == "new":
+                    ticket.venue_area = new_venue_area_obj
+                ticket.save()
+
+            if performer_warning:
+                messages.warning(request, performer_warning, extra_tags="event")
+            messages.success(request, "Arrangementet ble opprettet!", extra_tags="event")
+            return redirect("users:organizer_profile")
+    else:
+        event_form = EventForm()
+        ticket_form = TicketTypeForm()
+        venue_errors = []
+        performer_warning = None
+
+    context = {
+        "event_form": event_form,
+        "ticket_form": ticket_form,
+        "venue_areas_json": json.dumps(venue_areas),
+        "genre_choices": Performer.GENRE_CHOICES,
+        "venue_errors": venue_errors if request.method == "POST" else [],
+        "performer_warning": performer_warning if request.method == "POST" else None,
+        "venue_mode_post": request.POST.get("venue_mode", "existing") if request.method == "POST" else "existing",
+    }
+    return render(request, "users/create_event.html", context)
