@@ -7,9 +7,17 @@ import uuid
 #denne modelen viser hva som selges for en bestemt event
 #for eksempel: billettype, forksjellig pris, kapasitet kontroll, forksjellige zones med priser som varierer 
 class TicketType(models.Model):
+    TICKET_TYPE_CHOICES = [
+        ("ordinary", "Ordinær"),
+        ("vip", "VIP"),
+        ("student", "Student"),
+        ("child", "Barn"),
+        ("senior", "Senior"),
+    ]
+
     event = models.ForeignKey('events.Event', on_delete=models.CASCADE, related_name='ticket_types')
     venue_area = models.ForeignKey('events.VenueArea', on_delete=models.PROTECT, related_name='ticket_types')
-    name = models.CharField(max_length=100) # f. eks. "Ordinær", "VIP", "Student"
+    name = models.CharField(max_length=100, choices=TICKET_TYPE_CHOICES) # f. eks. "Ordinær", "VIP", "Student"
     price = models.DecimalField(max_digits=8, decimal_places=2)
     quantity = models.PositiveIntegerField(validators=[MinValueValidator(1)]) #antall biletter tilgjengelig for denne typen
 
