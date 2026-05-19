@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Konserter - TicketHub</title>
+    <title>Alle arrangementer - TicketHub</title>
 
     <!-- Favicon -->
     <link
@@ -55,7 +55,7 @@
       <div class="NP-container">
         <!-- Tittel -->
         <div class="NP-header">
-          <h1 class="NP-title">Konserter</h1>
+          <h1 class="NP-title">Alle arrangementer</h1>
           <p class="NP-subtitle">
             Oppdag spennende konserter og arrangementer i hele Norge
           </p>
@@ -65,7 +65,7 @@
         <div class="NP-filter-panel">
           <form
             method="get"
-            action="{% url 'concerts' %}"
+            action="{% url 'all_events' %}"
             class="NP-search-form"
           >
             <!-- Søk -->
@@ -115,11 +115,11 @@
               {% if search_query %}
                 Viser <strong>{{ total_events }}</strong> resultat{% if total_events != 1 %}er{% endif %} for "<strong>{{ search_query }}</strong>"
               {% else %}
-                Viser <strong>{{ total_events }}</strong> konsert{% if total_events != 1 %}er{% endif %}
+                Viser <strong>{{ total_events }}</strong> arrangement{% if total_events != 1 %}er{% endif %}
               {% endif %}
             </p>
             {% if search_query %}
-              <a href="{% url 'concerts' %}" class="NP-clear-search">
+              <a href="{% url 'all_events' %}" class="NP-clear-search">
                 <i class="bi bi-x-circle"></i> Nullstill søk
               </a>
             {% endif %}
@@ -185,12 +185,12 @@
           <!-- Melding når ingenting blir funnet -->
           <div class="NP-no-results">
             <i class="bi bi-search"></i>
-            <h3>Ingen konserter funnet</h3>
+            <h3>Ingen arrangementer funnet</h3>
             <p>
               {% if search_query %}
-                Prøv et annet søkeord eller <a href="{% url 'concerts' %}">vis alle konserter</a>
+                Prøv et annet søkeord eller <a href="{% url 'all_events' %}">vis alle arrangementer</a>
               {% else %}
-                Det er ingen konserter tilgjengelig for øyeblikket.
+                Det er ingen arrangementer tilgjengelig for øyeblikket.
               {% endif %}
             </p>
           </div>

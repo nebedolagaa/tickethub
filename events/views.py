@@ -98,6 +98,61 @@ def home_page(request):
     return render(request, "home_page.html", context)
 
 
+def all_events(request):
+    """Side med alle konserter med søke- og sorteringsfunksjonalitet"""
+    # Filtrer kun konserter (ikke festivaler) som ikke har gått ut
+    events = Event.objects.filter(
+        end_datetime__gte=timezone.now()
+    ).select_related("venue", "venue__address", "organizer")
+
+    # Søk
+    search_query = request.GET.get("search", "")
+    if search_query:
+        events = events.filter(
+            Q(title__icontains=search_query)
+            | Q(description__icontains=search_query)
+            | Q(venue__name__icontains=search_query)
+            | Q(venue__address__city__icontains=search_query)
+        )
+
+    # Sortering
+    sort_by = request.GET.get("sort", "date_asc")
+
+    if sort_by == "date_asc":
+        events = events.order_by("start_datetime")
+    elif sort_by == "date_desc":
+        events = events.order_by("-start_datetime")
+    elif sort_by == "title_asc":
+        events = events.order_by("title")
+    elif sort_by == "title_desc":
+        events = events.order_by("-title")
+    elif sort_by == "venue":
+        events = events.order_by("venue__name")
+
+    # Paginering - 12 arrangementer per side
+    paginator = Paginator(events, 12)
+    page = request.GET.get("page")
+
+    try:
+        events_page = paginator.page(page)
+    except PageNotAnInteger:
+        # Hvis side ikke er et heltall, vis første side
+        events_page = paginator.page(1)
+    except EmptyPage:
+        # Hvis side er utenfor rekkevidde, vis siste side
+        events_page = paginator.page(paginator.num_pages)
+
+    context = {
+        "events": events_page,
+        "search_query": search_query,
+        "sort_by": sort_by,
+        "total_events": paginator.count,
+    }
+
+    return render(request, "events/all_events.html", context)
+
+
+
 def concerts(request):
     """Side med alle konserter med søke- og sorteringsfunksjonalitet"""
     # Filtrer kun konserter (ikke festivaler) som ikke har gått ut
