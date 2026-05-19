@@ -234,6 +234,7 @@
                 </div>
               </div>
 
+              {% if user.is_authenticated %}
               <form id="checkout-form" method="post" action="/tickets/payment/">
                 {% csrf_token %}
                 <input type="hidden" name="cart" id="cart-input">
@@ -242,6 +243,27 @@
                   Gå til betaling
                 </button>
               </form>
+              {% else %}
+              <div class="KN-login-message-payment"  style="
+                width: 100%;
+                padding: 16px;
+                margin-bottom: 20px;
+                border-radius: 12px;
+                background: var(--th-light-gray);
+                color: var(--th-muted);
+                font-size: 1rem;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+              ">
+              <!--Had to write through style element because it wasn't working in the CSS file, even though it is a bad practice to write styles inline.
+              I did not find a reason for why elemnt in the CSS file was not working-->
+                <i class="bi bi-lock-fill"></i>
+                <span >Logg inn for å kjøpe billetter</span>
+              </div>
+              {% endif %}
 
               <div class="NP-trust-badges">
                 <div class="NP-trust-item">

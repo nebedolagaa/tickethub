@@ -42,7 +42,7 @@ def confirm_payment(request):
         return redirect("tickets:payment")
     return redirect("tickets:after_payment")
 
-
+@login_required
 def payment(request):
     # Hvis POST: motta handlekurvdata og lagre i session
     if request.method == "POST" and "cart" in request.POST:
