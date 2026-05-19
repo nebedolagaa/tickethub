@@ -245,10 +245,24 @@ class EventStandingAllocation(models.Model):
 
 
 class Performer(models.Model):
+    GENRE_CHOICES = [
+        ("rock", "Rock"),
+        ("pop", "Pop"),
+        ("jazz", "Jazz"),
+        ("hiphop", "Hip-Hop"),
+        ("electronic", "Electronic"),
+        ("classical", "Classical"),
+        ("folk", "Folk"),
+        ("r&b", "R&B"),
+        ("country", "Country"),
+        ("metal", "Metal"),
+        ("other", "Other"),
+    ]
+
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     bio = models.TextField(blank=True)
-    genre = models.CharField(max_length=20, blank=True)
+    genre = models.CharField(max_length=20, choices=GENRE_CHOICES)
     image = models.ImageField(upload_to="performers/", blank=True, null=True)
     website = models.URLField(blank=True)
 
