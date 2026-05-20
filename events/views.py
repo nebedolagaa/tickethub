@@ -364,11 +364,11 @@ def purchase_tickets(request, event_id):
         sold_count = ticket_type.tickets.count()
         seats_left = ticket_type.quantity - sold_count
         description = ""
-        if "VIP" in ticket_type.name:
+        if ticket_type.name == "vip":
             description = "VIP-billett med ekstra fordeler og beste plassering"
         elif "Ståplass" in ticket_type.name or "Standing" in ticket_type.name:
             description = "Ståplass - generell adgang"
-        elif "Student" in ticket_type.name:
+        elif ticket_type.name == "student":
             description = "Studentbillett - gyldig studentbevis kreves"
         elif "Early Bird" in ticket_type.name:
             description = "Tidligbillett - begrenset antall"
@@ -378,7 +378,7 @@ def purchase_tickets(request, event_id):
         formatted_tickets.append(
             {
                 "id": ticket_type.id,
-                "name": ticket_type.name,
+                "name_display": ticket_type.get_name_display(),
                 "price": int(ticket_type.price),
                 "description": description,
                 "available": seats_left > 0,

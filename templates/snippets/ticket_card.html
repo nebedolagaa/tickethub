@@ -7,7 +7,7 @@
         {{ ticket.ticket_type.event.title }}
       </div>
       <div class="NP-ticket-sub">
-        {{ ticket.ticket_type.event.festival|default:ticket.ticket_type.event.event_type|default:"" }}
+        {{ ticket.ticket_type.event.get_event_type_display }}
       </div>
     </div>
     <div>
@@ -20,11 +20,11 @@
   <div class="NP-meta" role="list">
     <div class="NP-row" role="listitem">
       <i class="bi bi-calendar-event NP-icon" style="color: var(--th-red)" aria-hidden="true"></i>
-      <div>{{ ticket.ticket_type.event.date|date:"d. F Y" }}</div>
+      <div>{{ ticket.ticket_type.event.start_datetime|date:"d. F Y" }}</div>
     </div>
     <div class="NP-row">
       <i class="bi bi-clock NP-icon" style="color: var(--th-red)" aria-hidden="true"></i>
-      <div>{{ ticket.ticket_type.event.time|default:"" }}</div>
+      <div>{{ ticket.ticket_type.event.start_datetime|date:"H:i" }} - {{ ticket.ticket_type.event.end_datetime|date:"H:i" }}</div>
     </div>
     <div class="NP-row">
       <i class="bi bi-geo-alt NP-icon" style="color: var(--th-red)" aria-hidden="true"></i>
@@ -36,7 +36,7 @@
     <div style="display: flex; justify-content: space-between; gap: 12px; align-items: flex-start;">
       <div>
         <div style="font-size: 0.8rem; color: var(--th-muted)">Billetttype</div>
-        <div style="font-weight: 500">{{ ticket.ticket_type.name }}</div>
+        <div style="font-weight: 500">{{ ticket.ticket_type.get_name_display }}</div>
       </div>
       <div>
         <div style="font-size: 0.8rem; color: var(--th-muted)">Plass</div>

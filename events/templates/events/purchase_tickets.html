@@ -90,7 +90,7 @@
               {% endif %}
             {% endif %}
             <div class="NP-event-overlay">
-              <span class="NP-event-category">Musikk</span>
+              <span class="NP-event-category">{{ event.get_event_type_display }}</span>
               <h1 class="NP-event-hero-title">{{ event.title }}</h1>
               <div class="NP-event-hero-meta">
                 <div class="NP-hero-meta-item">
@@ -125,7 +125,7 @@
               <div class="NP-ticket-option {% if not ticket.available %}NP-ticket-unavailable{% endif %}">
                 <div class="NP-ticket-option-header">
                   <div class="NP-ticket-option-info">
-                    <h3 class="NP-ticket-option-name">{{ ticket.name }}</h3>
+                    <h3 class="NP-ticket-option-name">{{ ticket.name_display }}</h3>
                     <p class="NP-ticket-option-desc">{{ ticket.description }}</p>
                     {% if ticket.available %}
                       <span class="NP-seats-left">
@@ -163,7 +163,7 @@
                       <i class="bi bi-plus"></i>
                     </button>
                   </div>
-                  <button class="NP-add-to-cart-btn" onclick="addToCart('{{ ticket.id }}', '{{ ticket.name|escapejs }}', {{ ticket.price }})">
+                  <button class="NP-add-to-cart-btn" onclick="addToCart('{{ ticket.id }}', '{{ ticket.name_display|escapejs }}', {{ ticket.price }})">
                     <i class="bi bi-cart-plus"></i>
                     Legg til
                   </button>
