@@ -39,8 +39,8 @@ class EventForm(forms.ModelForm):
             "description": forms.Textarea(attrs={"class": "CE-input CE-textarea", "rows": 4, "placeholder": "Beskrivelse av arrangementet"}),
             "event_type": forms.Select(attrs={"class": "CE-select"}),
             "venue": forms.Select(attrs={"class": "CE-select", "id": "id_venue"}),
-            "start_datetime": forms.DateTimeInput(attrs={"class": "CE-input", "type": "datetime-local"}),
-            "end_datetime": forms.DateTimeInput(attrs={"class": "CE-input", "type": "datetime-local"}),
+            "start_datetime": forms.DateTimeInput(format="%Y-%m-%dT%H:%M", attrs={"class": "CE-input", "type": "datetime-local"}),
+            "end_datetime": forms.DateTimeInput(format="%Y-%m-%dT%H:%M", attrs={"class": "CE-input", "type": "datetime-local"}),
         }
 
     def __init__(self, *args, **kwargs):

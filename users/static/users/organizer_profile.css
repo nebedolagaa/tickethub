@@ -129,6 +129,7 @@
   align-items: center;
   gap: 8px;
   font-size: 0.85rem;
+  text-decoration: none;
 }
 
 .MB-organizer_profile-btn-add:hover {
@@ -142,9 +143,13 @@
   border-radius: 4px;
   font-weight: 700;
   background: var(--th-dark-gray);
+  color: var(--th-white);
 }
 
 .MB-organizer_profile-status-active {
+  color: var(--th-green);
+}
+.MB-organizer_profile-status-past {
   color: var(--th-muted);
 }
 .MB-organizer_profile-status-soldout {
@@ -226,6 +231,7 @@
   background: transparent;
   border: 1px solid var(--th-light-gray);
   color: var(--th-white);
+  text-decoration: none;
   padding: 12px;
   border-radius: 6px;
   cursor: pointer;

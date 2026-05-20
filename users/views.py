@@ -492,6 +492,12 @@ def organizer_profile(request):
         event.sold_count = sold_count
         event.sold_percent = sold_percent
         event.income_per_event = income_per_event
+        event.status_label = "Aktiv" if event.end_datetime >= now else "Tidligere"
+        event.status_class = (
+            "MB-organizer_profile-status-active"
+            if event.end_datetime >= now
+            else "MB-organizer_profile-status-past"
+        )
 
     context = {
         "organizer": organizer,
@@ -650,3 +656,60 @@ def create_event(request):
         "venue_mode_post": request.POST.get("venue_mode", "existing") if request.method == "POST" else "existing",
     }
     return render(request, "users/create_event.html", context)
+
+
+@login_required
+def edit_event(request, event_id):
+    """Rediger arrangementsinformasjon uten å endre eksisterende billettyper."""
+    try:
+        organizer = OrganizerProfile.objects.get(user=request.user)
+    except OrganizerProfile.DoesNotExist:
+        messages.error(request, "Du har ikke tilgang til å redigere arrangementer.")
+        return redirect("users:user_profile")
+
+    event = get_object_or_404(Event, id=event_id, organizer=organizer)
+
+    if request.method == "POST":
+        event_form = EventForm(request.POST, instance=event)
+
+        new_performer_name = request.POST.get("new_performer_name", "").strip()
+        new_performer_genre = request.POST.get("new_performer_genre", "other").strip()
+        new_performer = None
+        performer_warning = None
+        should_create_performer = False
+
+        if new_performer_name:
+            existing = Performer.objects.filter(name__iexact=new_performer_name).first()
+            if existing:
+                performer_warning = f'"{existing.name}" finnes allerede i systemet og ble lagt til arrangementet.'
+                new_performer = existing
+            else:
+                should_create_performer = True
+
+        if event_form.is_valid():
+            with transaction.atomic():
+                event = event_form.save()
+
+                if should_create_performer:
+                    new_performer = Performer.objects.create(
+                        name=new_performer_name,
+                        genre=new_performer_genre or "other",
+                    )
+                if new_performer:
+                    event.performers.add(new_performer)
+
+            if performer_warning:
+                messages.warning(request, performer_warning, extra_tags="event")
+            messages.success(request, "Arrangementet ble oppdatert!", extra_tags="event")
+            return redirect("users:organizer_profile")
+    else:
+        event_form = EventForm(instance=event)
+        performer_warning = None
+
+    context = {
+        "event": event,
+        "event_form": event_form,
+        "genre_choices": Performer.GENRE_CHOICES,
+        "performer_warning": performer_warning if request.method == "POST" else None,
+    }
+    return render(request, "users/edit_event.html", context)

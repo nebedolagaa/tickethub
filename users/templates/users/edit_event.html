@@ -1,0 +1,389 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'main.css' %}">
+<link rel="stylesheet" href="{% static 'users/organizer_profile.css' %}?v=2">
+<style>
+.CE-main {
+  background-color: var(--th-black);
+  min-height: 100vh;
+  padding: 60px 0 60px;
+  color: var(--th-white);
+}
+.CE-container {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+.CE-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--th-muted);
+  text-decoration: none;
+  margin-bottom: 28px;
+  transition: color 0.2s;
+}
+.CE-back:hover { color: var(--th-white); }
+.CE-header { margin-bottom: 36px; }
+.CE-title { font-size: 2rem; font-weight: 700; margin: 0 0 6px; }
+.CE-subtitle { color: var(--th-muted); font-size: 0.95rem; }
+.CE-card {
+  background: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 10px;
+  padding: 28px;
+  margin-bottom: 20px;
+}
+.CE-section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--th-light-gray);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--th-white);
+}
+.CE-section-title i { color: var(--th-red); }
+.CE-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.CE-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.CE-group:last-child { margin-bottom: 0; }
+.CE-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--th-muted);
+}
+.CE-input,
+.CE-select,
+.CE-textarea {
+  width: 100%;
+  background: var(--th-black);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 6px;
+  color: var(--th-white);
+  font-size: 14px;
+  padding: 11px 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+.CE-input::placeholder, .CE-textarea::placeholder { color: var(--th-muted); }
+.CE-input:focus, .CE-select:focus, .CE-textarea:focus {
+  outline: none;
+  border-color: var(--th-red);
+  box-shadow: 0 0 0 3px var(--th-red-a10);
+}
+.CE-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 12 12'%3E%3Cpath fill='%239ca3af' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-color: var(--th-black);
+  padding-right: 36px;
+  cursor: pointer;
+}
+.CE-select option { background: var(--th-dark-gray); color: var(--th-white); }
+.CE-textarea { resize: vertical; min-height: 100px; }
+.CE-field-error { font-size: 0.78rem; color: var(--th-red); margin-top: 2px; }
+.CE-errors-banner {
+  background: var(--th-red-a10);
+  border: 1px solid var(--th-red);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  font-size: 0.88rem;
+  color: var(--th-red);
+}
+.CE-errors-banner ul { margin: 0; padding-left: 18px; }
+.CE-warning-banner {
+  background: rgba(234,179,8,0.1);
+  border: 1px solid #ca8a04;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 0.85rem;
+  color: #fde047;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.CE-warning-banner i { flex-shrink: 0; margin-top: 2px; }
+.CE-performers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 6px;
+  max-height: 230px;
+  overflow-y: auto;
+  padding: 2px;
+}
+.CE-performers-grid label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.88rem;
+  color: var(--th-white);
+  cursor: pointer;
+  padding: 9px 12px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  transition: background 0.15s, border-color 0.15s;
+  user-select: none;
+  line-height: 1.2;
+  margin: 0;
+}
+.CE-performers-grid label:hover {
+  background: rgba(255,255,255,0.05);
+  border-color: var(--th-light-gray);
+}
+.CE-performers-grid input[type="checkbox"] {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--th-red);
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+.CE-new-performer { margin-top: 18px; border-top: 1px solid var(--th-light-gray); padding-top: 18px; }
+.CE-new-performer-toggle {
+  background: none;
+  border: none;
+  color: var(--th-red);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+.CE-new-performer-toggle:hover { opacity: 0.8; }
+.CE-new-performer-fields { display: none; margin-top: 14px; }
+.CE-new-performer-fields.CE-open { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.CE-new-performer-hint { font-size: 0.78rem; color: var(--th-muted); margin-top: 10px; display: none; }
+.CE-readonly-note {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 8px;
+  padding: 14px 16px;
+  color: var(--th-muted);
+  font-size: 0.86rem;
+  margin-bottom: 20px;
+}
+.CE-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px; }
+.CE-btn-cancel {
+  padding: 11px 22px;
+  border-radius: 8px;
+  border: 1px solid var(--th-light-gray);
+  background: transparent;
+  color: var(--th-white);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: border-color 0.2s, background 0.2s;
+}
+.CE-btn-cancel:hover { border-color: var(--th-white); background: rgba(255,255,255,0.05); }
+.CE-btn-submit {
+  padding: 11px 28px;
+  border-radius: 8px;
+  border: none;
+  background: var(--th-red);
+  color: var(--th-white);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+.CE-btn-submit:hover { background: var(--th-red-dark); }
+@media (max-width: 620px) {
+  .CE-grid-2 { grid-template-columns: 1fr; }
+  .CE-new-performer-fields.CE-open { grid-template-columns: 1fr; }
+  .CE-actions { flex-direction: column-reverse; }
+  .CE-btn-cancel, .CE-btn-submit { width: 100%; justify-content: center; }
+}
+</style>
+{% endblock %}
+
+{% block title %}Rediger arrangement{% endblock %}
+
+{% block content %}
+<main class="CE-main">
+  <div class="CE-container">
+
+    <a href="{% url 'users:organizer_profile' %}" class="CE-back">
+      <i class="bi bi-arrow-left"></i> Tilbake til profil
+    </a>
+
+    <div class="CE-header">
+      <h1 class="CE-title">Rediger arrangement</h1>
+      <p class="CE-subtitle">Oppdater arrangementsinformasjon for {{ event.title }}.</p>
+    </div>
+
+    {% if event_form.non_field_errors %}
+    <div class="CE-errors-banner">
+      <ul>
+        {% for e in event_form.non_field_errors %}<li>{{ e }}</li>{% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    {% if performer_warning %}
+    <div class="CE-warning-banner">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <span>{{ performer_warning }}</span>
+    </div>
+    {% endif %}
+
+    <div class="CE-readonly-note">
+      <i class="bi bi-info-circle"></i>
+      Billettyper og antall billetter endres ikke her.
+    </div>
+
+    <form method="post" action="{% url 'users:edit_event' event.id %}">
+      {% csrf_token %}
+
+      <div class="CE-card">
+        <h2 class="CE-section-title">
+          <i class="bi bi-calendar-event"></i> Arrangementsinformasjon
+        </h2>
+
+        <div class="CE-group">
+          <label class="CE-label">{{ event_form.title.label }}</label>
+          <input class="CE-input" type="text" name="title" id="{{ event_form.title.id_for_label }}"
+            placeholder="Navn på arrangementet" value="{{ event_form.title.value|default:'' }}">
+          {% if event_form.title.errors %}<p class="CE-field-error">{{ event_form.title.errors.0 }}</p>{% endif %}
+        </div>
+
+        <div class="CE-group">
+          <label class="CE-label">{{ event_form.event_type.label }}</label>
+          {{ event_form.event_type }}
+          {% if event_form.event_type.errors %}<p class="CE-field-error">{{ event_form.event_type.errors.0 }}</p>{% endif %}
+        </div>
+
+        <div class="CE-grid-2">
+          <div class="CE-group">
+            <label class="CE-label">{{ event_form.start_datetime.label }}</label>
+            {{ event_form.start_datetime }}
+            {% if event_form.start_datetime.errors %}<p class="CE-field-error">{{ event_form.start_datetime.errors.0 }}</p>{% endif %}
+          </div>
+          <div class="CE-group">
+            <label class="CE-label">{{ event_form.end_datetime.label }}</label>
+            {{ event_form.end_datetime }}
+            {% if event_form.end_datetime.errors %}<p class="CE-field-error">{{ event_form.end_datetime.errors.0 }}</p>{% endif %}
+          </div>
+        </div>
+
+        <div class="CE-group" style="margin-bottom:0;">
+          <label class="CE-label">{{ event_form.description.label }}</label>
+          {{ event_form.description }}
+          {% if event_form.description.errors %}<p class="CE-field-error">{{ event_form.description.errors.0 }}</p>{% endif %}
+        </div>
+      </div>
+
+      <div class="CE-card">
+        <h2 class="CE-section-title">
+          <i class="bi bi-geo-alt"></i> Lokasjon
+        </h2>
+        <div class="CE-group" style="margin-bottom:0;">
+          <label class="CE-label">{{ event_form.venue.label }}</label>
+          {{ event_form.venue }}
+          {% if event_form.venue.errors %}<p class="CE-field-error">{{ event_form.venue.errors.0 }}</p>{% endif %}
+        </div>
+      </div>
+
+      <div class="CE-card">
+        <h2 class="CE-section-title">
+          <i class="bi bi-mic"></i> Artister / utøvere
+          <span style="margin-left:auto; font-size:0.78rem; font-weight:400; color:var(--th-muted);">valgfritt</span>
+        </h2>
+
+        <div class="CE-performers-grid">
+          {% for checkbox in event_form.performers %}
+            <label>
+              {{ checkbox.tag }} {{ checkbox.choice_label }}
+            </label>
+          {% empty %}
+            <p style="color:var(--th-muted); font-size:0.88rem; grid-column:1/-1;">Ingen artister i systemet ennå.</p>
+          {% endfor %}
+        </div>
+        {% if event_form.performers.errors %}<p class="CE-field-error">{{ event_form.performers.errors.0 }}</p>{% endif %}
+
+        <div class="CE-new-performer">
+          <button type="button" class="CE-new-performer-toggle" id="CE-toggle-new-performer">
+            <i class="bi bi-plus-circle"></i> Legg til ny artist manuelt
+          </button>
+          <div class="CE-new-performer-fields" id="CE-new-performer-fields">
+            <div class="CE-group" style="margin-bottom:0;">
+              <label class="CE-label">Artistnavn</label>
+              <input class="CE-input" type="text" name="new_performer_name" id="CE-new-performer-name"
+                placeholder="F.eks. Billie Eilish"
+                value="{{ request.POST.new_performer_name|default:'' }}">
+            </div>
+            <div class="CE-group" style="margin-bottom:0;">
+              <label class="CE-label">Sjanger</label>
+              <select class="CE-select" name="new_performer_genre">
+                {% for value, label in genre_choices %}
+                  <option value="{{ value }}"
+                    {% if request.POST.new_performer_genre == value %}selected{% endif %}>
+                    {{ label }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <p class="CE-new-performer-hint" id="CE-new-performer-hint">
+            Artisten vil bli opprettet og lagt til arrangementet automatisk ved lagring.
+          </p>
+        </div>
+      </div>
+
+      <div class="CE-actions">
+        <a href="{% url 'users:organizer_profile' %}" class="CE-btn-cancel">Avbryt</a>
+        <button type="submit" class="CE-btn-submit">
+          <i class="bi bi-check-circle"></i> Lagre endringer
+        </button>
+      </div>
+    </form>
+
+  </div>
+</main>
+{% endblock %}
+
+{% block script %}
+<script>
+const toggleBtn = document.getElementById("CE-toggle-new-performer");
+const fieldsEl = document.getElementById("CE-new-performer-fields");
+const hintEl = document.getElementById("CE-new-performer-hint");
+const nameInput = document.getElementById("CE-new-performer-name");
+
+if (toggleBtn && fieldsEl) {
+  toggleBtn.addEventListener("click", () => {
+    const open = fieldsEl.classList.toggle("CE-open");
+    toggleBtn.innerHTML = open
+      ? '<i class="bi bi-dash-circle"></i> Skjul ny artist'
+      : '<i class="bi bi-plus-circle"></i> Legg til ny artist manuelt';
+    if (hintEl) hintEl.style.display = open ? "block" : "none";
+    if (open && nameInput) nameInput.focus();
+  });
+
+  {% if request.POST.new_performer_name %}
+  fieldsEl.classList.add("CE-open");
+  toggleBtn.innerHTML = '<i class="bi bi-dash-circle"></i> Skjul ny artist';
+  if (hintEl) hintEl.style.display = "block";
+  {% endif %}
+}
+</script>
+{% endblock %}

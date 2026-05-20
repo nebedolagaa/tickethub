@@ -226,7 +226,7 @@
                                     {% endfor %}
                                 </p>
                             </div>
-                            <span class="MB-organizer_profile-status-pill MB-organizer_profile-status-active">Aktiv</span>
+                            <span class="MB-organizer_profile-status-pill {{ event.status_class }}">{{ event.status_label }}</span>
                         </div>
                         <div class="MB-organizer_profile-event-meta">
                             <span><i class="fa-regular fa-calendar"></i>{{event.start_datetime|date:"d.m.Y"}}</span>
@@ -253,7 +253,7 @@
                                 JavaScript will read these data attributes when the button is clicked and fill the modal content accordingly by their IDies.'''
                                 data-title="{{ event.title }}"
                                 data-date="{{ event.start_datetime|date:"d. F Y" }}"
-                                data-time="{{ event.start_datetime|date:"H:i" }}"
+                                data-time="{{ event.start_datetime|date:"H:i" }} - {{ event.end_datetime|date:"H:i" }}"
                                 data-venue="{{ event.venue }}"
                                 data-performer="{% if event.performers.exists %}
                                                     {% for performer in event.performers.all %}{{ performer.name }}{% if not forloop.last %}, {% endif %}
@@ -266,9 +266,9 @@
                                 >
                                 <i class="fa-regular fa-eye"></i> Se detaljer
                             </button>
-                            <button class="MB-organizer_profile-btn-action">
+                            <a href="{% url 'users:edit_event' event.id %}" class="MB-organizer_profile-btn-action">
                                 <i class="fa-regular fa-pen-to-square"></i> Rediger
-                            </button>
+                            </a>
                             <form class = "MB-inline-form" method = 'post' action = "{% url 'users:organizer_profile'%}">
                                 {% csrf_token %}
                                 <input type="hidden" name="delete_event_id" value="{{ event.id }}">
@@ -286,13 +286,13 @@
                         <!-- Første side -->
                         {% if events.has_previous %}
                         <li class="NP-page-item">
-                            <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                            <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}{% if status %}&status={{ status }}{% endif %}" class="NP-page-link">
                             <i class="bi bi-chevron-double-left"></i>
                             </a>
                         </li>
                         <!-- Forrige side -->
                         <li class="NP-page-item">
-                            <a href="?page={{ events.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                            <a href="?page={{ events.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}{% if status %}&status={{ status }}{% endif %}" class="NP-page-link">
                             <i class="bi bi-chevron-left"></i>
                             </a>
                         </li>
@@ -317,7 +317,7 @@
                             </li>
                         {% elif num > events.number|add:'-3' and num < events.number|add:'3' %}
                             <li class="NP-page-item">
-                            <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">{{ num }}</a>
+                            <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}{% if status %}&status={{ status }}{% endif %}" class="NP-page-link">{{ num }}</a>
                             </li>
                         {% endif %}
                         {% endfor %}
@@ -325,13 +325,13 @@
                         <!-- Neste side -->
                         {% if events.has_next %}
                         <li class="NP-page-item">
-                            <a href="?page={{ events.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                            <a href="?page={{ events.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}{% if status %}&status={{ status }}{% endif %}" class="NP-page-link">
                             <i class="bi bi-chevron-right"></i>
                             </a>
                         </li>
                         <!-- Siste side -->
                         <li class="NP-page-item">
-                            <a href="?page={{ events.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                            <a href="?page={{ events.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}{% if status %}&status={{ status }}{% endif %}" class="NP-page-link">
                             <i class="bi bi-chevron-double-right"></i>
                             </a>
                         </li>
@@ -352,7 +352,11 @@
                     {% endif %}
 
                 {% else %}
-                    <p class="MB-organizer_profile-no-events">Du har ingen arrangementer ennå. Klikk "Nytt arrangement" for å komme i gang!</p>
+                    {% if total_events == 0 %}
+                        <p class="MB-organizer_profile-no-events">Du har ingen arrangementer ennå. Klikk "Nytt arrangement" for å komme i gang!</p>
+                    {% else %}
+                        <p class="MB-organizer_profile-no-events">Ingen arrangementer funnet.</p>
+                    {% endif %}
                 {% endif %}
 
                 <!-- Andre konsertkort følger samme struktur 
