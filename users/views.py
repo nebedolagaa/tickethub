@@ -660,20 +660,25 @@ def create_event(request):
 
 @login_required
 def edit_event(request, event_id):
-    """Rediger arrangementsinformasjon uten å endre eksisterende billettyper."""
+    #Rediger arrangementsinformasjon uten å endre eksisterende billettyper
     try:
         organizer = OrganizerProfile.objects.get(user=request.user)
     except OrganizerProfile.DoesNotExist:
+        # Hvis brukeren ikke er arrangør, vis feilmelding og omdiriger til brukerprofilen
         messages.error(request, "Du har ikke tilgang til å redigere arrangementer.")
         return redirect("users:user_profile")
 
     event = get_object_or_404(Event, id=event_id, organizer=organizer)
 
     if request.method == "POST":
+        # Fyll skjemaet med eksisterende arrangement + nye data fra POST
         event_form = EventForm(request.POST, instance=event)
 
+        # Hent eventuell ny artist skrevet inn manuelt
         new_performer_name = request.POST.get("new_performer_name", "").strip()
         new_performer_genre = request.POST.get("new_performer_genre", "other").strip()
+        
+        # Standardverdier for ny artist
         new_performer = None
         performer_warning = None
         should_create_performer = False
@@ -687,14 +692,18 @@ def edit_event(request, event_id):
                 should_create_performer = True
 
         if event_form.is_valid():
+            # Sikrer at alle databaseoperasjoner fullføres samlet, og at ingen endringer blir lagret hvis noe går galt underveis
             with transaction.atomic():
                 event = event_form.save()
 
+                # Opprett ny artist hvis nødvendig
                 if should_create_performer:
                     new_performer = Performer.objects.create(
                         name=new_performer_name,
                         genre=new_performer_genre or "other",
                     )
+
+                # Legg artist til arrangemente
                 if new_performer:
                     event.performers.add(new_performer)
 

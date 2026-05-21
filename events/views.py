@@ -1,9 +1,12 @@
 """
 Bidratt til denne filen:
     - Nikita Pushechnikov
+    - Kamilla Nizamova
+    - Jesper Finsand
 """
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
+from operator import attrgetter
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -95,18 +98,21 @@ def home_page(request):
         .order_by("start_datetime")[:1]
     )
 
-    # Kombinerer og konverterer til liste
-    featured_events = list(concerts) + list(festivals)
+    # Kombinerer og konverterer til listeб samt sorterer etter starttidspunkt
+    featured_events = sorted(
+    list(concerts) + list(festivals),
+    key=attrgetter("start_datetime")
+    )
 
     context = {"featured_events": featured_events}
     return render(request, "home_page.html", context)
 
 
 def all_events(request):
-    """Side med alle konserter med søke- og sorteringsfunksjonalitet"""
-    # Filtrer kun konserter (ikke festivaler) som ikke har gått ut
+    #Side med alle konserter med søke- og sorteringsfunksjonalitet
     events = Event.objects.filter(
-        end_datetime__gte=timezone.now()
+        end_datetime__gte=timezone.now(),
+        is_archived=False,
     ).select_related("venue", "venue__address", "organizer")
 
     # Søk
