@@ -1,0 +1,62 @@
+<!-- Grid med konsertkort -->
+        {% if events %}
+        <div class="NP-events-grid">
+          {% for event in events %}
+          <article class="NP-event-card">
+            <div class="NP-image-wrap">
+              {% if event.images.all %}
+                {% with event.images.first as first_image %}
+                  <img
+                    src="{{ first_image.image.url }}"
+                    alt="{{ first_image.alt_text|default:event.title }}"
+                    class="NP-image"
+                  />
+                {% endwith %}
+              {% else %}
+                {# Varierte konsertbilder - cycle roterer automatisk #}
+                <img
+                  src="{% cycle 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=600&q=80' 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80' %}"
+                  alt="{{ event.title }}"
+                  class="NP-image"
+                />
+              {% endif %}
+              <span class="NP-category">{{ event.get_event_type_display }}</span>
+            </div>
+            <div class="NP-details">
+              <h2 class="NP-event-title">{{ event.title }}</h2>
+              <div class="NP-event-meta">
+                <div class="NP-meta-item">
+                  <i class="bi bi-calendar-event"></i>
+                  <span>{{ event.start_datetime|date:"d. F Y" }}</span>
+                </div>
+                <div class="NP-meta-item">
+                  <i class="bi bi-clock"></i>
+                  <span>{{ event.start_datetime|date:"H:i" }}</span>
+                </div>
+                <div class="NP-meta-item">
+                  <i class="bi bi-geo-alt"></i>
+                  <span>{{ event.venue.name }}, {{ event.venue.address.city }}</span>
+                </div>
+              </div>
+              {% if event.description %}
+                <p class="NP-description">
+                  {{ event.description|truncatewords:20 }}
+                </p>
+              {% endif %}
+              <div class="NP-card-footer">
+                <a href="{% url 'purchase_tickets' event.pk %}" class="NP-buy-btn">
+                  Se billetter
+                  <i class="bi bi-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+        {% else %}
+          <!-- Melding når ingenting blir funnet -->
+          <div class="NP-no-results">
+            <i class="bi bi-search"></i>
+            <p>Det er ingen arrangementer tilgjengelig for øyeblikket.</p>
+          </div>
+        {% endif %}
