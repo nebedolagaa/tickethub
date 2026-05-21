@@ -401,28 +401,6 @@ def purchase_tickets(request, event_id):
     return render(request, "events/purchase_tickets.html", context)
 
 
-def venue_guide(request):
-    """Side som viser en guide til de mest populære konsertstedene i Norge"""
-    from .models import Venue
-
-    # Henter venues sortert etter hvor mange aktive events de har, viser topp 10
-    venues = (
-        Venue.objects.annotate(
-            event_count=Count(
-                "events",
-                filter=Q(
-                    events__end_datetime__gte=timezone.now(), events__is_archived=False
-                ),
-            )
-        )
-        .order_by("-event_count")[:10]
-        .select_related("address")
-    )
-
-    context = {"venues": venues}
-    return render(request, "events/venue_guide.html", context)
-
-
 def venues(request):
     """Side som viser alle venues med søke- og sorteringsfunksjonalitet"""
     from .models import Venue

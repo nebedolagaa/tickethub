@@ -47,7 +47,7 @@ Følgende sider er oppdatert til å ekskludere arkiverte arrangementer:
 - Festivaler (`festivals`)
 - Byer (`cities`)
 - Venue-detaljer (`venue_detail`)
-- Venue-guide (`venue_guide`)
+- Venue-guide (`venues`)
 
 ## REST API - Update event - JF og MB
 
