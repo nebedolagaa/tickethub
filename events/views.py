@@ -4,6 +4,7 @@ Bidratt til denne filen:
     - Kamilla Nizamova
     - Jesper Finsand
 """
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from operator import attrgetter
@@ -100,8 +101,7 @@ def home_page(request):
 
     # Kombinerer og konverterer til listeб samt sorterer etter starttidspunkt
     featured_events = sorted(
-    list(concerts) + list(festivals),
-    key=attrgetter("start_datetime")
+        list(concerts) + list(festivals), key=attrgetter("start_datetime")
     )
 
     context = {"featured_events": featured_events}
@@ -109,7 +109,7 @@ def home_page(request):
 
 
 def all_events(request):
-    #Side med alle konserter med søke- og sorteringsfunksjonalitet
+    # Side med alle konserter med søke- og sorteringsfunksjonalitet
     events = Event.objects.filter(
         end_datetime__gte=timezone.now(),
         is_archived=False,
@@ -160,7 +160,6 @@ def all_events(request):
     }
 
     return render(request, "events/all_events.html", context)
-
 
 
 def concerts(request):
@@ -277,58 +276,62 @@ def festivals(request):
 
 def cities(request):
     """Side som viser alle byer med arrangementer"""
-    from django.db.models import Count
     from .models import City
 
-    # Henter alle byer med antall konserter (kun ikke utløpte og ikke-arkiverte)
-    cities_list = (
-        Event.objects.filter(
-            event_type="concert", end_datetime__gte=timezone.now(), is_archived=False
-        )
-        .values("venue__address__city")
-        .annotate(event_count=Count("id", distinct=True))
-        .order_by("-event_count", "venue__address__city")
-    )
+    fallback_image_url = "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80"
+
+    # Henter alle byer fra City-modellen slik at også byer uten arrangement vises
+    cities_qs = City.objects.all()
 
     # Søk etter bynavn
     search_query = request.GET.get("search", "")
     if search_query:
-        cities_list = cities_list.filter(venue__address__city__icontains=search_query)
+        cities_qs = cities_qs.filter(name__icontains=search_query)
+
+    # Finn antall aktive arrangementer per by (både konserter og festivaler)
+    event_counts_raw = (
+        Event.objects.filter(end_datetime__gte=timezone.now(), is_archived=False)
+        .values("venue__address__city")
+        .annotate(event_count=Count("id", distinct=True))
+    )
+    event_counts = {
+        item["venue__address__city"].strip().lower(): item["event_count"]
+        for item in event_counts_raw
+        if item["venue__address__city"]
+    }
+
+    cities_list = [
+        {
+            "name": city.name,
+            "event_count": event_counts.get(city.name.strip().lower(), 0),
+            "image_url": (
+                city.image_url.strip()
+                if city.image_url
+                and city.image_url.strip().startswith(("http://", "https://"))
+                else fallback_image_url
+            ),
+        }
+        for city in cities_qs
+    ]
 
     # Sortering
     sort_by = request.GET.get("sort", "events_desc")
 
     if sort_by == "events_desc":
-        cities_list = cities_list.order_by("-event_count")
+        cities_list.sort(key=lambda city: (-city["event_count"], city["name"].lower()))
     elif sort_by == "events_asc":
-        cities_list = cities_list.order_by("event_count")
+        cities_list.sort(key=lambda city: (city["event_count"], city["name"].lower()))
     elif sort_by == "name_asc":
-        cities_list = cities_list.order_by("venue__address__city")
+        cities_list.sort(key=lambda city: city["name"].lower())
     elif sort_by == "name_desc":
-        cities_list = cities_list.order_by("-venue__address__city")
-
-    # Legger til informasjon om bybilder fra City-modellen
-    city_images = {city.name: city.image_url for city in City.objects.all()}
-
-    # Beriker bydata med bilder
-    cities_with_images = []
-    for city in cities_list:
-        city_name = city["venue__address__city"]
-        city_data = {
-            "venue__address__city": city_name,
-            "event_count": city["event_count"],
-            "image_url": city_images.get(
-                city_name,
-                "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=800&q=80",
-            ),  # standardbilde
-        }
-        cities_with_images.append(city_data)
+        cities_list.sort(key=lambda city: city["name"].lower(), reverse=True)
 
     context = {
-        "cities": cities_with_images,
+        "cities": cities_list,
         "search_query": search_query,
         "sort_by": sort_by,
-        "total_cities": len(cities_with_images),
+        "total_cities": len(cities_list),
+        "fallback_city_image_url": fallback_image_url,
     }
 
     return render(request, "events/cities.html", context)
@@ -546,6 +549,8 @@ def performer_search_api(request):
     q = request.GET.get("q", "").strip()
     results = []
     if q:
-        performers = Performer.objects.filter(name__icontains=q).values("id", "name", "genre")[:8]
+        performers = Performer.objects.filter(name__icontains=q).values(
+            "id", "name", "genre"
+        )[:8]
         results = list(performers)
     return JsonResponse({"results": results})

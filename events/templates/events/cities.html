@@ -132,8 +132,9 @@
               <!-- Bybilde fra databasen - NP -->
               <img
                 src="{{ city.image_url }}"
-                alt="{{ city.venue__address__city }}"
+                alt="{{ city.name }}"
                 class="NP-city-image"
+                onerror="this.onerror=null;this.src='{{ fallback_city_image_url|escapejs }}';"
               />
               
               <!-- Overlay med gradient - NP -->
@@ -149,12 +150,12 @@
             <div class="NP-city-details">
               <h2 class="NP-city-name">
                 <i class="bi bi-geo-alt-fill"></i>
-                {{ city.venue__address__city }}
+                {{ city.name }}
               </h2>
               <p class="NP-city-info">
                 {{ city.event_count }} arrangement{% if city.event_count != 1 %}er{% endif %} tilgjengelig
               </p>
-              <a href="{% url 'all_events' %}?search={{ city.venue__address__city }}" class="NP-city-btn">
+              <a href="{% url 'all_events' %}?search={{ city.name }}" class="NP-city-btn">
                 Se alle arrangementer
                 <i class="bi bi-arrow-right"></i>
               </a>
