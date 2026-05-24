@@ -467,3 +467,21 @@ Filtrering og sortering valideres automatisk av API’et
 
 
 
+## Brukere for og teste de forskjellige versjonene av nettsiden. 
+Bruker 1:
+epost: bruker@test.com
+passord: brukertest123
+
+Bruker 2:
+epost:arrangor@test.com
+passord:arrangortest123
+
+Bruker 3:
+epost:super@test.com
+passord:supertest123
+
+# Forskjellige virkemåter for brukerene. 
+bruker 1: Teste for å logge inn/kjøpe billett.
+bruker 2: Teste endre/lage event
+bruker 3: superuser for å se/endre database
+
