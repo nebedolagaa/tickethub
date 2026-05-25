@@ -61,7 +61,7 @@
         {% endif %}
 
         <div class="MB-action-links">
-            <a href="/tickets/my-tickets/" class="MB-btn-primary">Gå til Mine billetter</a>
+            <a href="{% url 'users:user_profile' %}?tab=tickets" class="MB-btn-primary">Gå til Mine billetter</a>
             <a href="/" class="MB-btn-secondary">Tilbake til forsiden</a>
         </div>
         

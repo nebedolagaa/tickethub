@@ -3,121 +3,379 @@
 
 {% block css %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
 <link rel="stylesheet" href="{% static 'main.css' %}">
-<link rel="stylesheet" href="{% static 'users/user_profile.css' %}">
 {% endblock %}
 
 {% block title %}Min profil{% endblock %}
 
 {% block content %}
+<main class="NP-page">
+  <div class="NP-wrap">
+    <div class="NP-layout">
 
-<!-- Hoved container for hele brukerprofil siden -->
-<main class="MB-user_profile-main">
+      <aside class="NP-sidebar">
 
-    <div class="MB-user_profile-container">
+        <!-- Profile card -->
+        <div class="NP-card">
+          <div class="NP-avatar">
+            <span>{{ user.first_name.0|upper }}{{ user.last_name.0|upper }}</span>
+          </div>
+          <h2 class="NP-name">{{ user.first_name }} {{ user.last_name }}</h2>
+          <p class="NP-since">Medlem siden {{ user.date_joined|date:"d. F Y" }}</p>
 
-        <!-- Overskrift på siden -->
-        <div class="MB-user_profile-page-header">
-            <h1 class="MB-user_profile-page-title">Min profil</h1>
-            <p class="MB-user_profile-page-subtitle">Administrer din informasjon og billetter</p>
+          <div class="NP-contacts">
+            <div class="NP-contact-row">
+              <i class="fa-regular fa-envelope"></i>
+              <span>{{ user.email }}</span>
+            </div>
+            <div class="NP-contact-row">
+              <i class="fa-solid fa-phone"></i>
+              <span>{% if user.phone_number %}{{ user.phone_number }}{% else %}Ikke registrert{% endif %}</span>
+            </div>
+            <div class="NP-contact-row">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>{% if extra_info.full_address %}{{ extra_info.full_address }}{% else %}Ikke registrert{% endif %}</span>
+            </div>
+          </div>
+
+          <nav class="NP-nav">
+            <a class="NP-nav-link{% if active_tab == 'profile' %} NP-nav-link--active{% endif %}"
+               href="{% url 'users:user_profile' %}?tab=profile">
+              <i class="fa-regular fa-user"></i>
+              <span>Personlig informasjon</span>
+            </a>
+            <a class="NP-nav-link{% if active_tab == 'tickets' %} NP-nav-link--active{% endif %}"
+               href="{% url 'users:user_profile' %}?tab=tickets">
+              <i class="fa-solid fa-ticket"></i>
+              <span>Mine billetter</span>
+              {% if tickets_count %}<span class="NP-badge">{{ tickets_count }}</span>{% endif %}
+            </a>
+          </nav>
         </div>
 
-        <!-- Grid med to kolonner: venstre (kort) og høyre (skjema) -->
-        <div class="MB-user_profile-top-grid">
-            
-            <!-- Venstre kolonne: profilbilde + kontakt + statistikk -->
-            <div class="MB-user_profile-left-col">
+        <!-- Stats card -->
+        <div class="NP-card NP-stats-card">
+          <p class="NP-stats-heading">Statistikk</p>
+          <div class="NP-stat-row">
+            <span class="NP-stat-label">
+              <i class="fa-solid fa-ticket"></i> Totalt billetter
+            </span>
+            <span class="NP-stat-val">{{ tickets_count|default:0 }}</span>
+          </div>
+          <div class="NP-stat-row NP-stat-row--red">
+            <span class="NP-stat-label">
+              <i class="fa-regular fa-calendar-check"></i> Kommende
+            </span>
+            <span class="NP-stat-val NP-stat-val--red">{{ upcoming_events|default:0 }}</span>
+          </div>
+          <div class="NP-stat-row">
+            <span class="NP-stat-label">
+              <i class="fa-solid fa-credit-card"></i> Totalt brukt
+            </span>
+            <span class="NP-stat-val">{{ totaly_used|default:0 }} kr</span>
+          </div>
+        </div>
 
-                <!-- Profilkort med bilde, navn og kontaktinfo -->
-                <div class="MB-user_profile-card MB-user_profile-profile-card">
-                    {% comment %} <div class="MB-user_profile-avatar-circle">
-                        <i class="fa-regular fa-user"></i>
-                    </div> {% endcomment %}
+      </aside>
 
-                    <h2 class="MB-user_profile-name">{{user.first_name}} {{user.last_name}}</h2>
-                    <p class="MB-user_profile-subtext">Medlem siden {{user.date_joined|date:"d.m.Y"}}</p>
-                    
-                    <div class="MB-user_profile-contact-info">
-                        <p><i class="fa-regular fa-envelope"></i> {{user.email}}</p>
-                        {%if user.phone_number%} 
-                            <p><i class="fa-solid fa-phone"></i>{{user.phone_number}}</p>
-                        {% else %}
-                            <p><i class="fa-solid fa-phone"></i> Ikke registrert</p>
-                        {% endif %}
-                        
-                        <p><i class="fa-solid fa-location-dot"></i>
-                        {% if extra_info.full_address %}
-                            {{ extra_info.full_address }}
-                        {% else %}
-                            Ikke registrert
-                        {% endif %}</p>
+      <!-- main -->
+      <div class="NP-content">
+
+        {% if active_tab == 'tickets' %}
+        <!-- tickets tab -->
+        <div class="NP-card" id="tickets-panel">
+          <div class="NP-content-header">
+            <div>
+              <h2 class="NP-content-title">Mine billetter</h2>
+              <p class="NP-content-sub">
+                {{ tickets_count|default:0 }} billett{% if tickets_count != 1 %}er{% endif %} registrert på din konto
+              </p>
+            </div>
+          </div>
+
+          {% if tickets %}
+            <!-- Ticket cards -->
+            <div class="NP-tickets-container NP-profile-tickets">
+              {% for ticket in tickets %}
+              <article class="NP-ticket-card {% if ticket.is_active %}NP-card--active{% else %}NP-card--expired{% endif %} NP-ticket-link"
+                       role="button"
+                       tabindex="0"
+                       aria-label="Åpne billett: {{ ticket.ticket_type.event.title }}"
+                       onclick="openTicketModal('tm-{{ ticket.id }}')"
+                       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openTicketModal('tm-{{ ticket.id }}')}">
+
+                <div class="NP-ticket-header">
+                  <div>
+                    <div class="NP-ticket-title">{{ ticket.ticket_type.event.title }}</div>
+                    <div class="NP-ticket-sub">
+                      {% if ticket.ticket_type.event.performers.all %}
+                        {% for p in ticket.ticket_type.event.performers.all %}{{ p.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                      {% else %}
+                        {{ ticket.ticket_type.event.get_event_type_display|default:"Arrangement" }}
+                      {% endif %}
                     </div>
-
-                    <a class="MB-user_profile-btn-dark  {%if request.resolver_match.url_name == 'user_profile' %} active{%endif%}" href="{% url 'users:user_profile' %}">Rediger profil</a>
-                    <a class="MB-user_profile-btn-dark  {%if request.resolver_match.url_name == 'my_orders' %} active{%endif%}" href="{% url 'users:my_orders' %}">Mine bestillinger</a>
+                  </div>
+                  <span class="NP-status-badge {% if ticket.is_active %}NP-badge--active{% else %}NP-badge--expired{% endif %}">{% if ticket.is_active %}Aktiv{% else %}Avsluttet{% endif %}</span>
                 </div>
 
-            </div>
-
-            <!-- Høyre kolonne, stort skjema for å endre personinfo -->
-            <div class="MB-user_profile-right-col">
-                <div class="MB-user_profile-card MB-user_profile-info-card-large">
-                    <h2 class="MB-user_profile-title-md">Personlig informasjon</h2>
-                    
-                    <form class="MB-user_profile-form" method = "post" action="{% url 'users:user_profile'%}">
-                        {%csrf_token%}
-                        <!-- Rad med fornavn + etternavn -->
-                        <div class="MB-user_profile-row">
-                            <div class="MB-user_profile-input-group">
-                                <label>Fornavn</label>
-                                {{user_form.first_name}}
-                            </div>
-                            <div class="MB-user_profile-input-group">
-                                <label>Etternavn</label>
-                                {{user_form.last_name}}
-                            </div>
-                        </div>
-
-                        <div class="MB-user_profile-input-group">
-                            <label>E-post</label>
-                            {{user_form.email}}
-                        </div>
-                        
-                        <div class="MB-user_profile-input-group">
-                            <label>Telefonnummer</label>
-                            {{user_form.phone_number}}
-                        </div>
-
-                        <div class="MB-user_profile-input-group">
-                            <label>Adresse</label>
-                            {{profile_form.address}}
-                        </div>
-
-                        <!-- Rad med postnummer + by -->
-                        <div class="MB-user_profile-row">
-                            <div class="MB-user_profile-input-group">
-                                <label>Postnummer</label>
-                                {{profile_form.postal_code}}
-                            </div>
-                            <div class="MB-user_profile-input-group">
-                                <label>By</label>
-                                {{profile_form.city}}
-
-                            </div>
-                        </div>
-
-                        {% if messages %}
-                            <div class="MB-success">{% include 'includes/alerts.html'%}</div>
-                        {% endif %}
-
-                        <button type="submit" class="MB-user_profile-btn-red">Lagre endringer</button>
-                    </form>
+                <div class="NP-meta">
+                  <div class="NP-row">
+                    <i class="fa-regular fa-calendar NP-meta-icon"></i>
+                    <span>{{ ticket.ticket_type.event.start_datetime|date:"d. F Y" }}</span>
+                  </div>
+                  <div class="NP-row">
+                    <i class="fa-regular fa-clock NP-meta-icon"></i>
+                    <span>{{ ticket.ticket_type.event.start_datetime|date:"H:i" }} – {{ ticket.ticket_type.event.end_datetime|date:"H:i" }}</span>
+                  </div>
+                  <div class="NP-row">
+                    <i class="fa-solid fa-location-dot NP-meta-icon"></i>
+                    <span>{{ ticket.ticket_type.event.venue.name }}, {{ ticket.ticket_type.event.venue.address.city }}</span>
+                  </div>
                 </div>
+
+                <div class="NP-info-box">
+                  <span class="NP-infobox-label">Billetttype</span>
+                  <strong>{{ ticket.ticket_type.get_name_display }}</strong>
+                </div>
+
+                <div class="NP-actions">
+                  <span class="NP-btn NP-btn-download">
+                    <i class="fa-regular fa-eye"></i> Vis billett
+                  </span>
+                </div>
+
+              </article>
+              {% endfor %}
             </div>
+
+            <!-- ── Modals — one per ticket ── -->
+            {% for ticket in tickets %}
+            <div class="NP-modal-overlay" id="tm-{{ ticket.id }}" onclick="closeModalOnOverlay(event, this)">
+              <div class="NP-modal-card">
+
+                <button class="NP-modal-close" onclick="closeTicketModal('tm-{{ ticket.id }}')">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+
+                <div class="NP-modal-brand">
+                  <span class="NP-modal-brand-name">ticket<span>hub</span></span>
+                  <span class="NP-modal-status {% if ticket.is_active %}NP-modal-status--active{% else %}NP-modal-status--past{% endif %}">
+                    {% if ticket.is_active %}Aktiv{% else %}Avsluttet{% endif %}
+                  </span>
+                </div>
+
+                <h2 class="NP-modal-event-title">{{ ticket.ticket_type.event.title }}</h2>
+                <p class="NP-modal-artist">
+                  {% if ticket.ticket_type.event.performers.all %}
+                    {% for p in ticket.ticket_type.event.performers.all %}{{ p.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                  {% else %}
+                    {{ ticket.ticket_type.event.get_event_type_display|default:"Arrangement" }}
+                  {% endif %}
+                </p>
+
+                <div class="NP-modal-sep"></div>
+
+                <div class="NP-modal-details">
+                  <div class="NP-modal-detail-row">
+                    <i class="fa-regular fa-calendar"></i>
+                    <span>{{ ticket.ticket_type.event.start_datetime|date:"d. F Y" }}</span>
+                  </div>
+                  <div class="NP-modal-detail-row">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>{{ ticket.ticket_type.event.start_datetime|date:"H:i" }} – {{ ticket.ticket_type.event.end_datetime|date:"H:i" }}</span>
+                  </div>
+                  <div class="NP-modal-detail-row">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>{{ ticket.ticket_type.event.venue.name }}, {{ ticket.ticket_type.event.venue.address.city }}</span>
+                  </div>
+                </div>
+
+                <div class="NP-qr-placeholder">
+                  <i class="fa-solid fa-qrcode" style="font-size:3rem;opacity:.4"></i>
+                </div>
+
+                <div class="NP-modal-sep NP-modal-sep--dashed"></div>
+
+                <div class="NP-modal-meta">
+                  <div class="NP-modal-meta-cell">
+                    <span class="NP-modal-meta-label">Billetttype</span>
+                    <span class="NP-modal-meta-val">{{ ticket.ticket_type.get_name_display }}</span>
+                  </div>
+                  <div class="NP-modal-meta-cell">
+                    <span class="NP-modal-meta-label">Plass</span>
+                    <span class="NP-modal-meta-val">
+                      {% if ticket.event_seat %}Rad {{ ticket.event_seat.seat.row }}, Sete {{ ticket.event_seat.seat.number }}{% else %}Ståplass{% endif %}
+                    </span>
+                  </div>
+                  <div class="NP-modal-meta-cell NP-modal-meta-cell--full">
+                    <span class="NP-modal-meta-label">Billettnummer</span>
+                    <code class="NP-modal-number">{{ ticket.ticket_number }}</code>
+                  </div>
+                </div>
+
+                <div class="NP-actions" style="margin-top:20px;">
+                  <button class="NP-btn NP-btn-download" onclick="closeTicketModal('tm-{{ ticket.id }}')">
+                    <i class="fa-solid fa-xmark"></i> Lukk
+                  </button>
+                  <button class="NP-btn NP-btn-share" onclick="copyTicketNumber('{{ ticket.ticket_number }}', this)">
+                    <i class="fa-regular fa-copy"></i> Kopier nr.
+                  </button>
+                </div>
+
+              </div>
+            </div>
+            {% endfor %}
+
+            {% if tickets_page and tickets_page.has_other_pages %}
+            <nav class="NP-pagination" aria-label="Sidenavigering for billetter">
+              {% if tickets_page.has_previous %}
+                <a class="NP-page-btn" href="?tab=tickets&page=1#tickets-panel"><i class="fa-solid fa-angles-left"></i></a>
+                <a class="NP-page-btn" href="?tab=tickets&page={{ tickets_page.previous_page_number }}#tickets-panel"><i class="fa-solid fa-angle-left"></i></a>
+              {% else %}
+                <span class="NP-page-btn NP-page-btn--off"><i class="fa-solid fa-angles-left"></i></span>
+                <span class="NP-page-btn NP-page-btn--off"><i class="fa-solid fa-angle-left"></i></span>
+              {% endif %}
+              <span class="NP-page-info">{{ tickets_page.number }} av {{ tickets_page.paginator.num_pages }}</span>
+              {% if tickets_page.has_next %}
+                <a class="NP-page-btn" href="?tab=tickets&page={{ tickets_page.next_page_number }}#tickets-panel"><i class="fa-solid fa-angle-right"></i></a>
+                <a class="NP-page-btn" href="?tab=tickets&page={{ tickets_page.paginator.num_pages }}#tickets-panel"><i class="fa-solid fa-angles-right"></i></a>
+              {% else %}
+                <span class="NP-page-btn NP-page-btn--off"><i class="fa-solid fa-angle-right"></i></span>
+                <span class="NP-page-btn NP-page-btn--off"><i class="fa-solid fa-angles-right"></i></span>
+              {% endif %}
+            </nav>
+            {% endif %}
+
+          {% else %}
+            <div class="NP-empty">
+              <i class="fa-solid fa-ticket NP-empty-icon"></i>
+              <p class="NP-empty-text">Du har ingen kjøpte billetter enda.</p>
+              <a href="{% url 'all_events' %}" class="NP-empty-cta">Utforsk arrangementer</a>
+            </div>
+          {% endif %}
         </div>
 
-    </div>
+        {% else %}
+        <!-- profile tab -->
+        <div class="NP-card">
+          <div class="NP-content-header">
+            <div>
+              <h2 class="NP-content-title">Personlig informasjon</h2>
+              <p class="NP-content-sub">Oppdater kontaktinformasjonen din</p>
+            </div>
+          </div>
+
+          <form method="post" action="{% url 'users:user_profile' %}?tab=profile">
+            {% csrf_token %}
+
+            <div class="NP-form-row">
+              <div class="NP-field">
+                <label class="NP-label">Fornavn</label>
+                {{ user_form.first_name }}
+              </div>
+              <div class="NP-field">
+                <label class="NP-label">Etternavn</label>
+                {{ user_form.last_name }}
+              </div>
+            </div>
+
+            <div class="NP-field">
+              <label class="NP-label">E-postadresse</label>
+              {{ user_form.email }}
+            </div>
+
+            <div class="NP-field">
+              <label class="NP-label">Telefonnummer</label>
+              {{ user_form.phone_number }}
+            </div>
+
+            <div class="NP-field">
+              <label class="NP-label">Gateadresse</label>
+              {{ profile_form.address }}
+            </div>
+
+            <div class="NP-form-row">
+              <div class="NP-field">
+                <label class="NP-label">Postnummer</label>
+                {{ profile_form.postal_code }}
+              </div>
+              <div class="NP-field">
+                <label class="NP-label">By</label>
+                {{ profile_form.city }}
+              </div>
+            </div>
+
+            {% if messages %}
+            <div class="NP-alert-wrap">{% include 'includes/alerts.html' %}</div>
+            {% endif %}
+
+            <button type="submit" class="NP-save-btn">Lagre endringer</button>
+          </form>
+        </div>
+        {% endif %}
+
+      </div><!-- /.NP-content -->
+    </div><!-- /.NP-layout -->
+  </div><!-- /.NP-wrap -->
 </main>
 
+{% endblock %}
+
+{% block script %}
+<script>
+  function openTicketModal(id) {
+    var overlay = document.getElementById(id);
+    if (overlay) {
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeTicketModal(id) {
+    var overlay = document.getElementById(id);
+    if (overlay) {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  }
+
+  function closeModalOnOverlay(event, overlay) {
+    if (event.target === overlay) {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  }
+
+  function copyTicketNumber(number, btn) {
+    var orig = btn.innerHTML;
+    var success = function () {
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> Kopiert!';
+      setTimeout(function () { btn.innerHTML = orig; }, 2000);
+    };
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(number).then(success);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = number;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try { document.execCommand('copy'); success(); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.NP-modal-overlay').forEach(function (m) {
+        if (m.style.display === 'flex') {
+          m.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+    }
+  });
+</script>
 {% endblock %}

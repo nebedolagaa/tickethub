@@ -35,12 +35,12 @@ class EventForm(forms.ModelForm):
             "end_datetime": "Sluttdato og tid",
         }
         widgets = {
-            "title": forms.TextInput(attrs={"class": "CE-input", "placeholder": "Navn på arrangementet"}),
-            "description": forms.Textarea(attrs={"class": "CE-input CE-textarea", "rows": 4, "placeholder": "Beskrivelse av arrangementet"}),
-            "event_type": forms.Select(attrs={"class": "CE-select"}),
-            "venue": forms.Select(attrs={"class": "CE-select", "id": "id_venue"}),
-            "start_datetime": forms.DateTimeInput(format="%Y-%m-%dT%H:%M", attrs={"class": "CE-input", "type": "datetime-local"}),
-            "end_datetime": forms.DateTimeInput(format="%Y-%m-%dT%H:%M", attrs={"class": "CE-input", "type": "datetime-local"}),
+            "title": forms.TextInput(attrs={"class": "NP-input", "placeholder": "Navn på arrangementet"}),
+            "description": forms.Textarea(attrs={"class": "NP-input NP-textarea", "rows": 4, "placeholder": "Beskrivelse av arrangementet"}),
+            "event_type": forms.Select(attrs={"class": "NP-select"}),
+            "venue": forms.Select(attrs={"class": "NP-select", "id": "id_venue"}),
+            "start_datetime": forms.DateTimeInput(format="%Y-%m-%dT%H:%M", attrs={"class": "NP-input", "type": "datetime-local"}),
+            "end_datetime": forms.DateTimeInput(format="%Y-%m-%dT%H:%M", attrs={"class": "NP-input", "type": "datetime-local"}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -67,10 +67,10 @@ class TicketTypeForm(forms.ModelForm):
             "quantity": "Antall billetter",
         }
         widgets = {
-            "name": forms.Select(attrs={"class": "CE-select"}),
-            "venue_area": forms.Select(attrs={"class": "CE-select", "id": "id_venue_area"}),
-            "price": forms.NumberInput(attrs={"class": "CE-input", "min": "0", "step": "0.01", "placeholder": "0.00"}),
-            "quantity": forms.NumberInput(attrs={"class": "CE-input", "min": "1", "placeholder": "1"}),
+            "name": forms.Select(attrs={"class": "NP-select"}),
+            "venue_area": forms.Select(attrs={"class": "NP-select", "id": "id_venue_area"}),
+            "price": forms.NumberInput(attrs={"class": "NP-input", "min": "0", "step": "0.01", "placeholder": "0.00"}),
+            "quantity": forms.NumberInput(attrs={"class": "NP-input", "min": "1", "placeholder": "1"}),
         }
 
     def __init__(self, *args, **kwargs):

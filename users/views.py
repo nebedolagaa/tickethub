@@ -230,6 +230,57 @@ def resetPassword(request):
 def user_profile(request):
     userprofile, _ = UserProfile.objects.get_or_create(user=request.user)
     extra_info = userprofile
+    active_tab = request.GET.get("tab", "profile")
+    if active_tab not in {"profile", "tickets"}:
+        active_tab = "profile"
+
+    now = timezone.now()
+
+    tickets = Ticket.objects.none()
+    tickets_page = None
+    tickets_count = Ticket.objects.filter(user=request.user).count()
+    upcoming_events = (
+        Ticket.objects.filter(
+            user=request.user,
+            ticket_type__event__end_datetime__gte=now,
+        )
+        .values("ticket_type__event")
+        .distinct()
+        .count()
+    )
+
+    if active_tab == "tickets":
+        tickets_queryset = (
+            Ticket.objects.filter(user=request.user)
+            .select_related(
+                "ticket_type",
+                "ticket_type__event",
+                "ticket_type__event__venue",
+                "ticket_type__event__venue__address",
+                "event_seat__seat",
+            )
+            .prefetch_related("ticket_type__event__performers")
+            .order_by("-ticket_type__event__start_datetime")
+        )
+
+        paginator = Paginator(tickets_queryset, 6)
+        page_number = request.GET.get("page")
+        tickets_page = paginator.get_page(page_number)
+        tickets = tickets_page.object_list
+
+        for ticket in tickets:
+            ticket.is_active = ticket.ticket_type.event.end_datetime >= now
+
+    totaly_used = Order.objects.filter(user=request.user).aggregate(
+        total=Coalesce(
+            Sum(
+                Cast("items__quantity", DecimalField(max_digits=10, decimal_places=2))
+                * F("items__unit_price")
+            ),
+            Value(0),
+            output_field=DecimalField(max_digits=10, decimal_places=2),
+        )
+    )["total"]
 
     if request.method == "POST":
         user_form = UserForm(request.POST, instance=request.user)
@@ -250,6 +301,12 @@ def user_profile(request):
         "extra_info": extra_info,
         "user_form": user_form,
         "profile_form": profile_form,
+        "totaly_used": totaly_used,
+        "tickets_count": tickets_count,
+        "tickets": tickets,
+        "tickets_page": tickets_page,
+        "upcoming_events": upcoming_events,
+        "active_tab": active_tab,
     }
 
     return render(request, "users/user_profile.html", context)
@@ -399,7 +456,6 @@ def organizer_profile(request):
     else:
         organizer_form = OrganizerProfileForm(instance=organizer)
 
-
     # koden for statistikk
     events = Event.objects.filter(organizer=request.user.organizer_profile).order_by(
         "start_datetime"
@@ -420,7 +476,7 @@ def organizer_profile(request):
     ).aggregate(total=Sum(F("items__unit_price") * F("items__quantity")))
     total_turnover = revenue_data["total"] or 0
 
-    #man skal kunne søke gjennom sine egne arrangementer
+    # man skal kunne søke gjennom sine egne arrangementer
     # Søk
     search_query = request.GET.get("search", "")
     if search_query:
@@ -469,10 +525,9 @@ def organizer_profile(request):
         # Hvis side er utenfor rekkevidde, vis siste side
         events_page = paginator.page(paginator.num_pages)
 
-
-    #statistikk for solgte billetter og total omsetning per arrangementer
-    #using two loops to get through each event and then through each ticket type for that event
-    #because there are several ticket types per event
+    # statistikk for solgte billetter og total omsetning per arrangementer
+    # using two loops to get through each event and then through each ticket type for that event
+    # because there are several ticket types per event
     for event in events_page:
         ticket_types = TicketType.objects.filter(event=event)
 
@@ -502,17 +557,14 @@ def organizer_profile(request):
     context = {
         "organizer": organizer,
         "organizer_form": organizer_form,
-
-        #stats
+        # stats
         "total_events": total_events,
         "active_events": active_events,
-
         "events": events_page,
         "search_query": search_query,
         "sort_by": sort_by,
-        "filtered_count": paginator.count, #antall etter filter
+        "filtered_count": paginator.count,  # antall etter filter
         "status": status,
-        
         "sold_tickets": sold_tickets,
         "total_turnover": total_turnover,
     }
@@ -533,8 +585,7 @@ def create_event(request):
     venue_areas = {}
     for venue in venues:
         venue_areas[venue.id] = [
-            {"id": area.id, "name": area.name}
-            for area in venue.areas.all()
+            {"id": area.id, "name": area.name} for area in venue.areas.all()
         ]
 
     if request.method == "POST":
@@ -548,15 +599,19 @@ def create_event(request):
         new_venue_area_obj = None
         venue_errors = []
         if venue_mode == "new":
-            nv_name     = request.POST.get("nv_name", "").strip()
-            nv_street   = request.POST.get("nv_street", "").strip()
-            nv_city     = request.POST.get("nv_city", "").strip()
-            nv_postal   = request.POST.get("nv_postal", "").strip()
+            nv_name = request.POST.get("nv_name", "").strip()
+            nv_street = request.POST.get("nv_street", "").strip()
+            nv_city = request.POST.get("nv_city", "").strip()
+            nv_postal = request.POST.get("nv_postal", "").strip()
             nv_capacity = request.POST.get("nv_capacity", "").strip()
-            if not nv_name:   venue_errors.append("Lokasjonsnavn er påkrevd.")
-            if not nv_street: venue_errors.append("Gateadresse er påkrevd.")
-            if not nv_city:   venue_errors.append("By er påkrevd.")
-            if not nv_postal: venue_errors.append("Postnummer er påkrevd.")
+            if not nv_name:
+                venue_errors.append("Lokasjonsnavn er påkrevd.")
+            if not nv_street:
+                venue_errors.append("Gateadresse er påkrevd.")
+            if not nv_city:
+                venue_errors.append("By er påkrevd.")
+            if not nv_postal:
+                venue_errors.append("Postnummer er påkrevd.")
             if nv_capacity:
                 try:
                     nv_capacity = int(nv_capacity)
@@ -572,11 +627,11 @@ def create_event(request):
                 if existing_venue:
                     venue_errors.append(
                         f'En lokasjon med navnet "{existing_venue.name}" finnes allerede. '
-                        f'Velg den fra listen over eksisterende lokasjoner i stedet.'
+                        f"Velg den fra listen over eksisterende lokasjoner i stedet."
                     )
 
         # ── Ny artist ──
-        new_performer_name  = request.POST.get("new_performer_name", "").strip()
+        new_performer_name = request.POST.get("new_performer_name", "").strip()
         new_performer_genre = request.POST.get("new_performer_genre", "other").strip()
         new_performer = None
         performer_warning = None
@@ -592,11 +647,19 @@ def create_event(request):
         forms_valid = event_form.is_valid() and ticket_form.is_valid()
 
         # Legg til venue-feil i event_form
-        if venue_mode == "existing" and forms_valid and not event_form.cleaned_data.get("venue"):
+        if (
+            venue_mode == "existing"
+            and forms_valid
+            and not event_form.cleaned_data.get("venue")
+        ):
             event_form.add_error("venue", "Velg en lokasjon.")
             forms_valid = False
 
-        if venue_mode == "existing" and forms_valid and not ticket_form.cleaned_data.get("venue_area"):
+        if (
+            venue_mode == "existing"
+            and forms_valid
+            and not ticket_form.cleaned_data.get("venue_area")
+        ):
             ticket_form.add_error("venue_area", "Velg en sone.")
             forms_valid = False
 
@@ -638,7 +701,9 @@ def create_event(request):
 
             if performer_warning:
                 messages.warning(request, performer_warning, extra_tags="event")
-            messages.success(request, "Arrangementet ble opprettet!", extra_tags="event")
+            messages.success(
+                request, "Arrangementet ble opprettet!", extra_tags="event"
+            )
             return redirect("users:organizer_profile")
     else:
         event_form = EventForm()
@@ -653,14 +718,18 @@ def create_event(request):
         "genre_choices": Performer.GENRE_CHOICES,
         "venue_errors": venue_errors if request.method == "POST" else [],
         "performer_warning": performer_warning if request.method == "POST" else None,
-        "venue_mode_post": request.POST.get("venue_mode", "existing") if request.method == "POST" else "existing",
+        "venue_mode_post": (
+            request.POST.get("venue_mode", "existing")
+            if request.method == "POST"
+            else "existing"
+        ),
     }
     return render(request, "users/create_event.html", context)
 
 
 @login_required
 def edit_event(request, event_id):
-    #Rediger arrangementsinformasjon uten å endre eksisterende billettyper
+    # Rediger arrangementsinformasjon uten å endre eksisterende billettyper
     try:
         organizer = OrganizerProfile.objects.get(user=request.user)
     except OrganizerProfile.DoesNotExist:
@@ -677,7 +746,7 @@ def edit_event(request, event_id):
         # Hent eventuell ny artist skrevet inn manuelt
         new_performer_name = request.POST.get("new_performer_name", "").strip()
         new_performer_genre = request.POST.get("new_performer_genre", "other").strip()
-        
+
         # Standardverdier for ny artist
         new_performer = None
         performer_warning = None
@@ -709,7 +778,9 @@ def edit_event(request, event_id):
 
             if performer_warning:
                 messages.warning(request, performer_warning, extra_tags="event")
-            messages.success(request, "Arrangementet ble oppdatert!", extra_tags="event")
+            messages.success(
+                request, "Arrangementet ble oppdatert!", extra_tags="event"
+            )
             return redirect("users:organizer_profile")
     else:
         event_form = EventForm(instance=event)

@@ -1,133 +1,133 @@
 .MB-receipt-main {
-    background-color: #000;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    font-family: 'Inter', sans-serif;
+  background-color: var(--th-black);
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  font-family: "Inter", sans-serif;
 }
 
 .MB-receipt-container {
-    max-width: 550px;
-    width: 100%;
-    text-align: center;
+  max-width: 550px;
+  width: 100%;
+  text-align: center;
 }
 
 .MB-success-icon {
-    font-size: 4rem;
-    color: #ff3b3b;
-    margin-bottom: 20px;
+  font-size: 4rem;
+  color: var(--th-red);
+  margin-bottom: 20px;
 }
 
 .MB-thanks-header {
-    font-size: 2.2rem;
-    color: #fff;
-    margin-bottom: 10px;
-    font-weight: 700;
+  font-size: 2.2rem;
+  color: var(--th-white);
+  margin-bottom: 10px;
+  font-weight: 700;
 }
 
 .MB-thanks-message {
-    font-size: 1.1rem;
-    color: #888;
-    margin-bottom: 40px;
+  font-size: 1.1rem;
+  color: var(--th-muted);
+  margin-bottom: 40px;
 }
 
 /* Kvitteringskort */
 .MB-receipt-card {
-    background-color: #121216;
-    border: 1px solid #22222a;
-    border-radius: 12px;
-    padding: 30px;
-    text-align: left;
-    margin-bottom: 30px;
+  background-color: var(--th-dark-gray);
+  border: 1px solid var(--th-light-gray);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: left;
+  margin-bottom: 30px;
 }
 
 .MB-receipt-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #22222a;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--th-light-gray);
+  padding-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .MB-receipt-header h2 {
-    font-size: 1.2rem;
-    color: #fff;
-    margin: 0;
+  font-size: 1.2rem;
+  color: var(--th-white);
+  margin: 0;
 }
 
 .MB-order-id {
-    font-size: 0.85rem;
-    color: #666;
+  font-size: 0.85rem;
+  color: var(--th-muted);
 }
 
 .MB-receipt-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    font-size: 0.95rem;
-    color: #888;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: var(--th-muted);
 }
 
 .MB-text-white {
-    color: #fff;
-    font-weight: 500;
+  color: var(--th-white);
+  font-weight: 500;
 }
 
 .MB-divider {
-    border: 0;
-    border-top: 1px solid #22222a;
-    margin: 20px 0;
+  border: 0;
+  border-top: 1px solid var(--th-light-gray);
+  margin: 20px 0;
 }
 
 .MB-total-row {
-    color: #fff;
-    font-weight: 700;
-    font-size: 1.1rem;
+  color: var(--th-white);
+  font-weight: 700;
+  font-size: 1.1rem;
 }
 
 .MB-total-amount {
-    color: #ff3b3b;
+  color: var(--th-red);
 }
 
 .MB-receipt-footer {
-    margin-top: 25px;
-    text-align: center;
-    font-size: 0.85rem;
-    color: #555;
+  margin-top: 25px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--th-muted);
 }
 
 /* Knapper */
 .MB-action-links {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .MB-btn-primary {
-    background-color: #ff3b3b;
-    color: #fff;
-    padding: 14px 25px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 700;
-    transition: background 0.3s ease;
+  background-color: var(--th-red);
+  color: var(--th-white);
+  padding: 14px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: background 0.3s ease;
 }
 
 .MB-btn-primary:hover {
-    background-color: #e03232;
+  background-color: var(--th-red-dark);
 }
 
 .MB-btn-secondary {
-    background-color: transparent;
-    color: #888;
-    padding: 10px;
-    text-decoration: none;
-    font-size: 0.9rem;
+  background-color: transparent;
+  color: var(--th-muted);
+  padding: 10px;
+  text-decoration: none;
+  font-size: 0.9rem;
 }
 
 .MB-btn-secondary:hover {
-    color: #fff;
+  color: #fff;
 }

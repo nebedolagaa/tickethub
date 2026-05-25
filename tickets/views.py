@@ -4,13 +4,6 @@ from django.contrib.auth.decorators import login_required
 from .models import Order, OrderItem, Ticket, TicketType
 
 
-def my_tickets(request):
-    if not request.user.is_authenticated:
-        return redirect('users:login')
-    tickets = Ticket.objects.filter(user=request.user).select_related('ticket_type', 'ticket_type__event')
-    return render(request, "tickets/my_tickets.html", {"tickets": tickets})
-
-
 @login_required
 def confirm_payment(request):
     print("Cart in session:", request.session.get("cart"))
@@ -41,6 +34,7 @@ def confirm_payment(request):
         print("Feil under lagring av ordre:", e)
         return redirect("tickets:payment")
     return redirect("tickets:after_payment")
+
 
 @login_required
 def payment(request):
@@ -96,17 +90,17 @@ def payment(request):
 @login_required
 def after_payment(request):
     # hent den nyeste ordren til brukeren
-    order = Order.objects.filter(user=request.user).order_by('-created_at').first()
-    
+    order = Order.objects.filter(user=request.user).order_by("-created_at").first()
+
     total_amount = 0
     if order:
         # Finn summen av alle ordrelinjene
         for item in order.items.all():
             total_amount += item.quantity * item.unit_price
-    
+
     context = {
-        'order': order,
-        'total_amount': total_amount,
+        "order": order,
+        "total_amount": total_amount,
     }
     return render(request, "tickets/after_payment.html", context)
 
