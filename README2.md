@@ -147,9 +147,9 @@ models.py: Inneholder definisjoner av databasemodeller, f.eks. City og Event. He
 
 serializers.py: Definerer hvordan modellene konverteres til og fra JSON, slik at data kan sendes og mottas via API-et. Brukes av views for å validere og strukturere data.
 
-views.py: Inneholder logikken for API-endepunkter og nettsider. Her bestemmes hva som skjer når en bruker gjør et API-kall, f.eks. henter, oppretter eller filtrerer data.
+views.py: Inneholder logikken for hva som skal skje når en bruker besøker en bestemt side eller utfører en handling. Views håndterer både vanlige nettsider og eventuelle API-endepunkter, men     hovedsakelig brukes de til å vise innhold og behandle brukerforespørsler.
 
-urls.py: Kobler URL-er til riktige views. Her defineres hvilke adresser som finnes i API-et og hvilke funksjoner eller klasser som håndterer dem.
+urls.py: Denne filen definerer hvilke nettadresser (URL-er) som finnes i applikasjonen, og kobler dem til de riktige visningene (views). Her bestemmes hvilke sider og funksjoner brukerne får tilgang til via nettleseren.
 
 tests.py: Inneholder automatiske tester som sjekker at API-et og funksjonene virker som de skal. Testene kan simulere ulike brukerscenarioer og validerer at feil håndteres riktig.
 
