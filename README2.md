@@ -294,20 +294,20 @@ ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
 ENDEPUNKT: /api/event/<int:id>/delete/
 
 - Hva gjør API'et
-  API’et lar en autentisert arrangør slette et eksisterende arrangement fra listen over sine arrangementer. Man skriver inn ID til arrangementet i URL-en for å velge hvilket arrangement som skal slettes.
-  Dersom man bruker GET på endepunktet, får man bare en melding om at DELETE-metoden må brukes for å slette arrangementet
+ - API’et lar en autentisert arrangør slette et eksisterende arrangement fra listen over sine arrangementer. Man skriver inn ID til arrangementet i URL-en for å velge hvilket arrangement som skal   slettes.
+ - Dersom man bruker GET på endepunktet, får man bare en melding om at DELETE-metoden må brukes for å slette arrangementet
 
 - Hvilken ressurs håndterer det
-  Ressursen som håndteres er et enkelt event, identifisert med event sin ID
+  - Ressursen som håndteres er et enkelt event, identifisert med event sin ID
 
 - Manuelle og/eller automatiske tester
-  API’et kan testes manuelt ved å sende DELETE-request til endepunktet /api/event/{ID man ønsker å slette}/delete/ med en bruker som er logget inn som arrangør.
-  Ved manuell testing kan man kontrollere flere situasjoner:
-  -at arrangør må være logget inn for å slette et arrangement
-  -at arrangør kan slette kun sitt eget arrangement
-  -at en annen arrangør ikke kan slete arrangementet som ikke tilhører dem
-  -at arrangement ikke kan slettes dersom det har tilknyttede (solgte) biletter
-  -at man får feilmelding dersom arrangement ikke finnes
+  - API’et kan testes manuelt ved å sende DELETE-request til endepunktet /api/event/{ID man ønsker å slette}/delete/ med en bruker som er logget inn som arrangør.
+  - Ved manuell testing kan man kontrollere flere situasjoner:
+   -at arrangør må være logget inn for å slette et arrangement
+   -at arrangør kan slette kun sitt eget arrangement
+   -at en annen arrangør ikke kan slete arrangementet som ikke tilhører dem
+   -at arrangement ikke kan slettes dersom det har tilknyttede (solgte) biletter
+   -at man får feilmelding dersom arrangement ikke finnes
 
 - HTTP-metoder som er brukt i dette API’et er:
   - GET
@@ -348,9 +348,9 @@ ENDEPUNKT: /api/event/<int:id>/delete/
 - Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
   Det er ingen påkrevde felter i request body, siden arrangementet velges gjennom ID i URL-en.
 
-  Valideringsreglene er: - brukeren må være innlogget - brukeren må ha en OrganizerProfile - arrangementet må finnes i databasen - arrangøren kan bare slette sitt eget arrangement - arrangementet kan ikke slettes dersom det finnes tilknyttede billetter
+  - Valideringsreglene er: - brukeren må være innlogget - brukeren må ha en OrganizerProfile - arrangementet må finnes i databasen - arrangøren kan bare slette sitt eget arrangement - arrangementet kan ikke slettes dersom det finnes tilknyttede billetter
 
-  Feilmeldinger og statuskoder er følgende: - 200 OK ved GET-forespørsel returneres melding om å bruke DELETE-metoden - 204 NO CONTENT arrangementet ble slettet - 400 BAD REQUEST arrangementet kan ikke slettes fordi det har tilknyttede billetter - 403 FORBIDDEN bruker har ikke tilgang som arrangør eller prøver å slette et arrangement de ikke eier - 404 NOT FOUND arrangement med oppgitt ID finnes ikke i databasen
+  - Feilmeldinger og statuskoder er følgende: - 200 OK ved GET-forespørsel returneres melding om å bruke DELETE-metoden - 204 NO CONTENT arrangementet ble slettet - 400 BAD REQUEST arrangementet kan ikke slettes fordi det har tilknyttede billetter - 403 FORBIDDEN bruker har ikke tilgang som arrangør eller prøver å slette et arrangement de ikke eier - 404 NOT FOUND arrangement med oppgitt ID finnes ikke i databasen
 
 # REST API #4 - Event List /ESKILD
 
@@ -421,19 +421,19 @@ ENDEPUNKT: /api/cities/
 - Hva gjør API'et
 API’et lar brukere hente ut en liste over alle byer som har arrangementer i systemet. For hver by returneres navn, bilde (hvis tilgjengelig), og antall aktive arrangementer i byen. Det er mulig å filtrere og sortere resultatene etter antall arrangementer eller bynavn.
 
-Hvilken ressurs håndterer det
-Ressursen som håndteres er en liste av byer (City), hvor hver by representerer et sted med ett eller flere arrangementer.
+- Hvilken ressurs håndterer det:
+ - Ressursen som håndteres er en liste av byer (City), hvor hver by representerer et sted med ett eller flere arrangementer.
 
 - Manuelle og/eller automatiske tester
-API’et kan testes manuelt ved å sende en GET-request til endepunktet /api/cities/.
-Ved manuell testing kan man kontrollere flere situasjoner:
+ - API’et kan testes manuelt ved å sende en GET-request til endepunktet /api/cities/.
+ - Ved manuell testing kan man kontrollere flere situasjoner:
 
-at alle byer med arrangementer returneres
-at filtrering på bynavn fungerer (f.eks. /api/cities/?search=Oslo)
-at sortering på antall arrangementer eller navn fungerer
-at byer uten arrangementer ikke vises
+ - at alle byer med arrangementer returneres
+ - at filtrering på bynavn fungerer (f.eks. /api/cities/?search=Oslo)
+ - at sortering på antall arrangementer eller navn fungerer
+ - at byer uten arrangementer ikke vises
 
-HTTP-metoder som er brukt i dette API’et er:
+- HTTP-metoder som er brukt i dette API’et er:
 
 GET
 JSON-body for input/output
@@ -454,16 +454,16 @@ Eksempel på output ved GET:
 }
 ]
 - Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
-Det er ingen påkrevde felter i request body, siden det kun er en GET-forespørsel.
+- Det er ingen påkrevde felter i request body, siden det kun er en GET-forespørsel.
 Valideringsregler:
 
-Kun byer med minst ett aktivt arrangement returneres
-Filtrering og sortering valideres automatisk av API’et
+- Kun byer med minst ett aktivt arrangement returneres
+- Filtrering og sortering valideres automatisk av API’et
 
 - Feilmeldinger og statuskoder:
-200 OK – Listen over byer returneres
-400 BAD REQUEST – Ugyldig filter eller sorteringsparameter
-404 NOT FOUND – Ingen byer funnet (returnerer tom liste)
+ - 200 OK – Listen over byer returneres
+ - 400 BAD REQUEST – Ugyldig filter eller sorteringsparameter
+ - 404 NOT FOUND – Ingen byer funnet (returnerer tom liste)
 
 
 
