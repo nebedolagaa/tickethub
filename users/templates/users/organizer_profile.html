@@ -13,13 +13,13 @@
 {% block content %}
 
 <!-- Hoved-container for arrangørprofil -->
-<main class="MB-organizer_profile-main">
-    <div class="MB-organizer_profile-container">
+<main class="NP-page">
+    <div class="NP-wrap">
         
         <!-- Topp-overskrift -->
         <div class="MB-organizer_profile-header">
-            <h1 class="MB-organizer_profile-title">Arrangørprofil</h1>
-            <p class="MB-organizer_profile-subtitle">Administrer din informasjon og arrangementer</p>
+            <h1 class="NP-content-title">Arrangørprofil</h1>
+            <p class="NP-content-sub">Administrer din informasjon og arrangementer</p>
         </div>
 
         <!-- Grid: venstre (info + stats) høyre (arrangementsliste) -->
@@ -29,73 +29,75 @@
             <div class="MB-organizer_profile-left-col">
                 
                 <!-- Skjema for bedrifts/profilinformasjon -->
-                <div class="MB-organizer_profile-card">
-                    <h2 class="MB-organizer_profile-section-title">Profilinformasjon</h2>
+                <div class="NP-card">
+                    <div class="NP-content-header">
+                        <h2 class="NP-content-title">Profilinformasjon</h2>
+                        <p class="NP-content-sub">Oppdater arrangørinformasjonen din</p>
+                    </div>
                     <form class="MB-organizer_profile-form" method = 'post' action = "{% url 'users:organizer_profile'%}">
                         {% csrf_token %}
-                        <div class="MB-organizer_profile-input-group">
-                            <label>Bedriftsnavn</label>
+                        <div class="NP-field">
+                            <label class="NP-label">Bedriftsnavn</label>
                             {{organizer_form.organization_name}}
                         </div>
-                        <div class="MB-organizer_profile-input-group">
-                            <label>Organisasjonsnummer</label>
+                        <div class="NP-field">
+                            <label class="NP-label">Organisasjonsnummer</label>
                             {{organizer_form.organization_number}}
                         </div>
                         
-                        <div class="MB-organizer_profile-input-group">
-                            <label>E-post</label>
+                        <div class="NP-field">
+                            <label class="NP-label">E-post</label>
                             {{organizer_form.contact_email}}
                         </div>
-                        <div class="MB-organizer_profile-input-group">
-                            <label>Telefon</label>
+                        <div class="NP-field">
+                            <label class="NP-label">Telefon</label>
                             {{organizer_form.phone_number}}
                         </div>
-                        <div class="MB-organizer_profile-input-group">
-                            <label>Adresse</label>
+                        <div class="NP-field">
+                            <label class="NP-label">Adresse</label>
                             {{organizer_form.organization_address}}
                         </div>
 
                         <!-- Rad med postnummer + by -->
-                        <div class="MB-organizer_profile-input-group">
-                            <label>Postnummer</label>
+                        <div class="NP-field">
+                            <label class="NP-label">Postnummer</label>
                             {{organizer_form.organization_postcode}}
                         </div>
-                        <div class="MB-organizer_profile-input-group">
-                            <label>By</label>
+                        <div class="NP-field">
+                            <label class="NP-label">By</label>
                             {{organizer_form.organization_city}}
-
                         </div>
 
                         {% for message in messages %}
                             {% if 'profile' in message.tags %}
-                                <div class="MB-{{ message.tags }}">
+                                <div class="NP-alert-wrap">
                                     {{ message }}
                                 </div>
                             {% endif %}
                         {% endfor %}
 
-                        <button type="submit" class="MB-organizer_profile-btn-red-full">Lagre endringer</button>
+                        <button type="submit" class="NP-save-btn">Lagre endringer</button>
                     </form>
                 </div>
 
                 <!-- Statistikkboks -->
-                <div class="MB-organizer_profile-card MB-organizer_profile-stats-card">
-                    <h3 class="MB-organizer_profile-section-title">Statistikk</h3>
-                    <div class="MB-organizer_profile-stat-line">
-                        <span>Totalt arrangementer</span>
-                        <span class="MB-organizer_profile-val">{{total_events}}</span>
+                <div class="NP-card NP-stats-card">
+                    <p class="NP-stats-heading">Statistikk</p>
+                    <div class="NP-stat-row">
+                        <span class="NP-stat-label"><i class="fa-regular fa-calendar"></i> Totalt arrangementer</span>
+                        <span class="NP-stat-val">{{total_events}}</span>
                     </div>
-                    <div class="MB-organizer_profile-stat-line">
-                        <span>Aktive arrangementer</span>
-                        <span class="MB-organizer_profile-val">{{active_events}}</span>
+                    <div class="NP-stat-row NP-stat-row--red">
+                        <span class="NP-stat-label"><i class="fa-regular fa-calendar-check"></i> Aktive arrangementer</span>
+                        <span class="NP-stat-val NP-stat-val--red">{{active_events}}</span>
                     </div>
-                    <div class="MB-organizer_profile-stat-line">
-                        <span>Solgte billetter</span>
-                        <span class="MB-organizer_profile-val">{{ sold_tickets }}</span>
+                    <div class="NP-stat-row">
+                        <span class="NP-stat-label"><i class="fa-solid fa-ticket"></i> Solgte billetter</span>
+                        <span class="NP-stat-val">{{ sold_tickets }}</span>
                     </div>
-                    <div class="MB-organizer_profile-stat-line">
-                        <span>Total omsetning</span>
-                        <span class="MB-organizer_profile-val MB-organizer_profile-total-red">{{ total_turnover }} kr</span>
+                    <div class="NP-stat-row">
+                        <span class="NP-stat-label"><i class="fa-solid fa-coins"></i> Total omsetning</span>
+                        <span class="NP-stat-val">{{ total_turnover }} kr</span>
                     </div>
                 </div>
             </div>
@@ -104,15 +106,15 @@
             <div class="MB-organizer_profile-right-col">
                 
                 <!-- Overskrift + knapp for nytt arrangement -->
-                <div class="MB-organizer_profile-list-header">
-                    <h2 class="MB-organizer_profile-section-title">Mine arrangementer</h2>
-                    <a href="{% url 'users:create_event' %}" class="MB-organizer_profile-btn-add">
+                <div class="MB-organizer_profile-list-header NP-content-header">
+                    <h2 class="NP-content-title">Mine arrangementer</h2>
+                    <a href="{% url 'users:create_event' %}" class="NP-empty-cta">
                         <i class="fa-solid fa-plus"></i> Nytt arrangement
                     </a>
                 </div>
 
                 <!-- Søke- og sorteringspanel -->
-                <div class="KN-filter-panel">
+                <div class="NP-card KN-filter-panel">
                     <form
                     method="get"
                     action="{% url 'users:organizer_profile' %}"
@@ -206,7 +208,7 @@
 
                 {% for message in messages %}
                     {% if 'event' in message.tags %}
-                        <div class="MB-{% if 'success' in message.tags %}success{% else %}error{% endif %}">
+                        <div class="{% if 'success' in message.tags %}NP-alert-wrap{% else %}NP-errors-banner{% endif %}">
                             {{ message }}
                         </div>
                     {% endif %}
@@ -215,7 +217,7 @@
                 <!-- Eksempel ett arrangementskort -->
                 {% if events %}
                 {% for event in events %}
-                    <div class="MB-organizer_profile-card MB-organizer_profile-event-card">
+                    <div class="NP-card MB-organizer_profile-event-card {% if event.status_label == 'Aktiv' %}NP-card--active{% else %}NP-card--expired{% endif %}">
                         <div class="MB-organizer_profile-event-top">
                             <div class="MB-organizer_profile-event-info">
                                 <h3>{{event.title}}</h3>
@@ -247,7 +249,7 @@
                             </div>
                         </div>
                         <div class="MB-organizer_profile-event-actions">
-                            <button class="MB-organizer_profile-btn-action KN-open-details-modal"
+                            <button class="NP-btn NP-btn-download KN-open-details-modal"
                                 '''Using dataset properties to pass event details to the modal for display when "Se detaljer" is clicked.
                                 This allows the modal to be populated with the correct information for each event without needing a separate modal instance for each event.
                                 JavaScript will read these data attributes when the button is clicked and fill the modal content accordingly by their IDies.'''
@@ -266,13 +268,13 @@
                                 >
                                 <i class="fa-regular fa-eye"></i> Se detaljer
                             </button>
-                            <a href="{% url 'users:edit_event' event.id %}" class="MB-organizer_profile-btn-action">
+                            <a href="{% url 'users:edit_event' event.id %}" class="NP-btn NP-btn-download">
                                 <i class="fa-regular fa-pen-to-square"></i> Rediger
                             </a>
                             <form class = "MB-inline-form" method = 'post' action = "{% url 'users:organizer_profile'%}">
                                 {% csrf_token %}
                                 <input type="hidden" name="delete_event_id" value="{{ event.id }}">
-                                <button type = 'submit' onclick="return confirm('Er du sikker?')" class="MB-organizer_profile-btn-delete">
+                                <button type = 'submit' onclick="return confirm('Er du sikker?')" class="NP-btn NP-btn-download MB-organizer_profile-btn-delete">
                                     <i class="fa-regular fa-trash-can"></i>
                                 </button>
                             </form>
@@ -352,11 +354,14 @@
                     {% endif %}
 
                 {% else %}
+                    <div class="NP-card NP-empty">
+                        <i class="fa-regular fa-calendar-xmark NP-empty-icon"></i>
                     {% if total_events == 0 %}
-                        <p class="MB-organizer_profile-no-events">Du har ingen arrangementer ennå. Klikk "Nytt arrangement" for å komme i gang!</p>
+                        <p class="NP-empty-text">Du har ingen arrangementer ennå. Klikk "Nytt arrangement" for å komme i gang!</p>
                     {% else %}
-                        <p class="MB-organizer_profile-no-events">Ingen arrangementer funnet.</p>
+                        <p class="NP-empty-text">Ingen arrangementer funnet.</p>
                     {% endif %}
+                    </div>
                 {% endif %}
 
                 <!-- Andre konsertkort følger samme struktur 
