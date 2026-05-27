@@ -547,11 +547,11 @@ def organizer_profile(request):
         event.sold_count = sold_count
         event.sold_percent = sold_percent
         event.income_per_event = income_per_event
-        event.status_label = "Aktiv" if event.end_datetime >= now else "Tidligere"
+        event.status_label = "Aktiv" if event.end_datetime >= now else "Avsluttet"
         event.status_class = (
-            "MB-organizer_profile-status-active"
+            "NP-badge--active"
             if event.end_datetime >= now
-            else "MB-organizer_profile-status-past"
+            else "NP-badge--expired"
         )
 
     context = {
@@ -729,7 +729,7 @@ def create_event(request):
 
 @login_required
 def edit_event(request, event_id):
-    # Rediger arrangementsinformasjon uten å endre eksisterende billettyper
+    # Rediger arrangementsinformasjon og legg eventuelt til en ny billettype.
     try:
         organizer = OrganizerProfile.objects.get(user=request.user)
     except OrganizerProfile.DoesNotExist:
@@ -740,8 +740,10 @@ def edit_event(request, event_id):
     event = get_object_or_404(Event, id=event_id, organizer=organizer)
 
     if request.method == "POST":
-        # Fyll skjemaet med eksisterende arrangement + nye data fra POST
         event_form = EventForm(request.POST, instance=event)
+        add_ticket_type = request.POST.get("add_ticket_type") == "1"
+        new_ticket_form = TicketTypeForm(request.POST if add_ticket_type else None)
+        new_ticket_form.fields["venue_area"].queryset = event.venue.areas.all()
 
         # Hent eventuell ny artist skrevet inn manuelt
         new_performer_name = request.POST.get("new_performer_name", "").strip()
@@ -760,7 +762,15 @@ def edit_event(request, event_id):
             else:
                 should_create_performer = True
 
-        if event_form.is_valid():
+        event_valid = event_form.is_valid()
+        ticket_valid = not add_ticket_type or new_ticket_form.is_valid()
+
+        if add_ticket_type and event_valid and ticket_valid:
+            if not new_ticket_form.cleaned_data.get("venue_area"):
+                new_ticket_form.add_error("venue_area", "Velg en sone.")
+                ticket_valid = False
+
+        if event_valid and ticket_valid:
             # Sikrer at alle databaseoperasjoner fullføres samlet, og at ingen endringer blir lagret hvis noe går galt underveis
             with transaction.atomic():
                 event = event_form.save()
@@ -776,6 +786,11 @@ def edit_event(request, event_id):
                 if new_performer:
                     event.performers.add(new_performer)
 
+                if add_ticket_type:
+                    new_ticket_type = new_ticket_form.save(commit=False)
+                    new_ticket_type.event = event
+                    new_ticket_type.save()
+
             if performer_warning:
                 messages.warning(request, performer_warning, extra_tags="event")
             messages.success(
@@ -784,11 +799,17 @@ def edit_event(request, event_id):
             return redirect("users:organizer_profile")
     else:
         event_form = EventForm(instance=event)
+        new_ticket_form = TicketTypeForm()
+        new_ticket_form.fields["venue_area"].queryset = event.venue.areas.all()
+        add_ticket_type = False
         performer_warning = None
 
     context = {
         "event": event,
         "event_form": event_form,
+        "new_ticket_form": new_ticket_form,
+        "ticket_types": event.ticket_types.select_related("venue_area").all(),
+        "add_ticket_type": add_ticket_type,
         "genre_choices": Performer.GENRE_CHOICES,
         "performer_warning": performer_warning if request.method == "POST" else None,
     }

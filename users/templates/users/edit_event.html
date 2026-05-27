@@ -22,10 +22,11 @@
       <p class="NP-subtitle">Oppdater arrangementsinformasjon for {{ event.title }}.</p>
     </div>
 
-    {% if event_form.non_field_errors %}
+    {% if event_form.non_field_errors or new_ticket_form.non_field_errors %}
     <div class="NP-errors-banner">
       <ul>
         {% for e in event_form.non_field_errors %}<li>{{ e }}</li>{% endfor %}
+        {% for e in new_ticket_form.non_field_errors %}<li>{{ e }}</li>{% endfor %}
       </ul>
     </div>
     {% endif %}
@@ -37,13 +38,10 @@
     </div>
     {% endif %}
 
-    <div class="NP-readonly-note">
-      <i class="bi bi-info-circle"></i>
-      Billettyper og antall billetter endres ikke her.
-    </div>
-
     <form method="post" action="{% url 'users:edit_event' event.id %}">
       {% csrf_token %}
+      {{ event_form.venue.as_hidden }}
+      <input type="hidden" name="add_ticket_type" id="NP-add-ticket-type" value="{% if add_ticket_type %}1{% else %}0{% endif %}">
 
       <div class="NP-card">
         <h2 class="NP-section-title">
@@ -80,17 +78,6 @@
           <label class="NP-label">{{ event_form.description.label }}</label>
           {{ event_form.description }}
           {% if event_form.description.errors %}<p class="NP-field-error">{{ event_form.description.errors.0 }}</p>{% endif %}
-        </div>
-      </div>
-
-      <div class="NP-card">
-        <h2 class="NP-section-title">
-          <i class="bi bi-geo-alt"></i> Lokasjon
-        </h2>
-        <div class="NP-group" style="margin-bottom:0;">
-          <label class="NP-label">{{ event_form.venue.label }}</label>
-          {{ event_form.venue }}
-          {% if event_form.venue.errors %}<p class="NP-field-error">{{ event_form.venue.errors.0 }}</p>{% endif %}
         </div>
       </div>
 
@@ -140,6 +127,55 @@
         </div>
       </div>
 
+      <div class="NP-card">
+        <h2 class="NP-section-title">
+          <i class="bi bi-ticket-perforated"></i> Billettyper
+        </h2>
+
+        <p style="font-size:0.85rem; color:var(--th-muted); margin-bottom:20px; margin-top:-10px;">
+          Eksisterende billettyper beholdes. Her kan du legge til en ny type for arrangementet.
+        </p>
+
+        <div class="NP-readonly-note">
+          {% for ticket_type in ticket_types %}
+            <strong>{{ ticket_type.get_name_display }}</strong>:
+            {{ ticket_type.price }} kr,
+            {{ ticket_type.quantity }} billetter,
+            {{ ticket_type.venue_area.name }}{% if not forloop.last %}<br>{% endif %}
+          {% empty %}
+            <i class="bi bi-info-circle"></i> Ingen billettyper er registrert ennå.
+          {% endfor %}
+        </div>
+
+        <div class="NP-new-performer">
+          <button type="button" class="NP-new-performer-toggle" id="NP-toggle-new-ticket">
+            <i class="bi bi-plus-circle"></i> Legg til ny billettype
+          </button>
+          <div class="NP-new-performer-fields{% if add_ticket_type %} NP-open{% endif %}" id="NP-new-ticket-fields">
+            <div class="NP-group">
+              <label class="NP-label">{{ new_ticket_form.name.label }}</label>
+              {{ new_ticket_form.name }}
+              {% if new_ticket_form.name.errors %}<p class="NP-field-error">{{ new_ticket_form.name.errors.0 }}</p>{% endif %}
+            </div>
+            <div class="NP-group">
+              <label class="NP-label">{{ new_ticket_form.venue_area.label }}</label>
+              {{ new_ticket_form.venue_area }}
+              {% if new_ticket_form.venue_area.errors %}<p class="NP-field-error">{{ new_ticket_form.venue_area.errors.0 }}</p>{% endif %}
+            </div>
+            <div class="NP-group" style="margin-bottom:0;">
+              <label class="NP-label">{{ new_ticket_form.price.label }}</label>
+              {{ new_ticket_form.price }}
+              {% if new_ticket_form.price.errors %}<p class="NP-field-error">{{ new_ticket_form.price.errors.0 }}</p>{% endif %}
+            </div>
+            <div class="NP-group" style="margin-bottom:0;">
+              <label class="NP-label">{{ new_ticket_form.quantity.label }}</label>
+              {{ new_ticket_form.quantity }}
+              {% if new_ticket_form.quantity.errors %}<p class="NP-field-error">{{ new_ticket_form.quantity.errors.0 }}</p>{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="NP-actions">
         <a href="{% url 'users:organizer_profile' %}" class="NP-btn-cancel">Avbryt</a>
         <button type="submit" class="NP-btn-submit">
@@ -158,6 +194,16 @@ const toggleBtn = document.getElementById("NP-toggle-new-performer");
 const fieldsEl = document.getElementById("NP-new-performer-fields");
 const hintEl = document.getElementById("NP-new-performer-hint");
 const nameInput = document.getElementById("NP-new-performer-name");
+const addTicketInput = document.getElementById("NP-add-ticket-type");
+const ticketToggleBtn = document.getElementById("NP-toggle-new-ticket");
+const ticketFieldsEl = document.getElementById("NP-new-ticket-fields");
+
+function setTicketFieldsEnabled(enabled) {
+  if (!ticketFieldsEl) return;
+  ticketFieldsEl.querySelectorAll("input, select, textarea").forEach(field => {
+    field.disabled = !enabled;
+  });
+}
 
 if (toggleBtn && fieldsEl) {
   toggleBtn.addEventListener("click", () => {
@@ -173,6 +219,23 @@ if (toggleBtn && fieldsEl) {
   fieldsEl.classList.add("NP-open");
   toggleBtn.innerHTML = '<i class="bi bi-dash-circle"></i> Skjul ny artist';
   if (hintEl) hintEl.style.display = "block";
+  {% endif %}
+}
+
+if (ticketToggleBtn && ticketFieldsEl && addTicketInput) {
+  setTicketFieldsEnabled(addTicketInput.value === "1");
+
+  ticketToggleBtn.addEventListener("click", () => {
+    const open = ticketFieldsEl.classList.toggle("NP-open");
+    addTicketInput.value = open ? "1" : "0";
+    setTicketFieldsEnabled(open);
+    ticketToggleBtn.innerHTML = open
+      ? '<i class="bi bi-dash-circle"></i> Skjul ny billettype'
+      : '<i class="bi bi-plus-circle"></i> Legg til ny billettype';
+  });
+
+  {% if add_ticket_type %}
+  ticketToggleBtn.innerHTML = '<i class="bi bi-dash-circle"></i> Skjul ny billettype';
   {% endif %}
 }
 </script>
