@@ -141,7 +141,7 @@ tickethub/
 
 
 
-### Filstruktur - kort beskrivelse /CHRISTOFFER
+### Filstruktur - kort beskrivelse 
 
 models.py: Inneholder definisjoner av databasemodeller, f.eks. City og Event. Her bestemmes hvilke felter og relasjoner som finnes i databasen, og hvordan data lagres.
 
@@ -158,7 +158,7 @@ tests.py: Inneholder automatiske tester som sjekker at API-et og funksjonene vir
 
 ### Kort beskrivelse av hvert API
 
-# REST API #1 - Event Create /NIKITA
+# REST API #1 - Event Create 
 
 ENDEPUNKT: /api/events/
 
@@ -237,7 +237,7 @@ ENDEPUNKT: /api/events/
     - 400 BAD REQUEST - Manglende eller ugyldig input (f.eks. end_datetime før start_datetime, manglende påkrevde felt, ugyldig event_type)
     - 404 NOT FOUND - Organizer eller venue finnes ikke i databasen
 
-# REST API #2 - Event Update /MAGNUS OG JESPER
+# REST API #2 - Event Update 
 
 ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
 
@@ -289,7 +289,7 @@ ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
     400 BAD REQUEST - Ugyldig input
     404 NOT FOUND - Event med oppgitt ID finnes ikke i databasen.
 
-# REST API #3 - Event Delete /KAMILLA
+# REST API #3 - Event Delete 
 
 ENDEPUNKT: /api/event/<int:id>/delete/
 
@@ -352,7 +352,7 @@ ENDEPUNKT: /api/event/<int:id>/delete/
 
   - Feilmeldinger og statuskoder er følgende: - 200 OK ved GET-forespørsel returneres melding om å bruke DELETE-metoden - 204 NO CONTENT arrangementet ble slettet - 400 BAD REQUEST arrangementet kan ikke slettes fordi det har tilknyttede billetter - 403 FORBIDDEN bruker har ikke tilgang som arrangør eller prøver å slette et arrangement de ikke eier - 404 NOT FOUND arrangement med oppgitt ID finnes ikke i databasen
 
-# REST API #4 - Event List /ESKILD
+# REST API #4 - Event List 
 
 ENDEPUNKT: /api/events/
 
@@ -414,7 +414,7 @@ ENDEPUNKT: /api/events/
   - 400 BAD REQUEST ved ugyldig query parameter (f.eks. feil datoformat)
   - 500 INTERNAL SERVER ERROR ved uventet serverfeil
 
-# REST API #5 - City List /CHRISTOFFER
+# REST API #5 - City List 
 
 ENDEPUNKT: /api/cities/
 
