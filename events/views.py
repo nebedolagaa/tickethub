@@ -35,9 +35,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from rest_framework import generics
 from .serializers import EventSerializer, CitySerializer, EventCreateSerializer
 from .models import City
-
-# API-view for å hente ut alle byer
-from rest_framework import generics
 from django.db.models.functions import Lower, Trim
 
 
@@ -225,7 +222,7 @@ def concerts(request):
 
 
 def snippets(request):
-    return render(request, "home_page.html")
+    return redirect("home_page")
 
 
 def festivals(request):

@@ -404,24 +404,9 @@
       }
 
       // Oppdater total (kalles når antall endres)
-      function updateTotal() {
-        // Denne funksjonen er for fremtidig bruk hvis vi vil vise live oppdatering
-      }
-
-      // Gå til betaling
-      function proceedToCheckout() {
-        if (Object.keys(cart).length === 0) {
-          // alert('Handlekurven er tom. Vennligst velg billetter først.');
-          return;
-        }
-        
-        // Her kan vi implementere videre betalingsprosessering
-        // alert('Betalingsfunksjonalitet kommer snart!\n\nDin handlekurv:\n' + 
-        //   JSON.stringify(cart, null, 2));
-      }
+      function updateTotal() {}
 
       // Send handlekurv til backend og gå til betaling
-      // Før skjemaet sendes, legg inn handlekurvdata i skjult felt
       document.getElementById('checkout-form').addEventListener('submit', function(e) {
         const cartInput = document.getElementById('cart-input');
         cartInput.value = JSON.stringify(cart);

@@ -6,7 +6,6 @@ from .models import Order, OrderItem, Ticket, TicketType
 
 @login_required
 def confirm_payment(request):
-    print("Cart in session:", request.session.get("cart"))
     cart = request.session.get("cart", {})
     if not cart:
         return redirect("tickets:payment")
@@ -31,7 +30,6 @@ def confirm_payment(request):
                 Ticket.objects.create(user=request.user, ticket_type=ticket_type)
         del request.session["cart"]
     except Exception as e:
-        print("Feil under lagring av ordre:", e)
         return redirect("tickets:payment")
     return redirect("tickets:after_payment")
 
@@ -42,7 +40,6 @@ def payment(request):
     if request.method == "POST" and "cart" in request.POST:
         try:
             cart_data = json.loads(request.POST["cart"])
-            print("Cart mottatt fra frontend:", cart_data)
 
             resolved_cart = {}
             for key, item in cart_data.items():
@@ -59,12 +56,8 @@ def payment(request):
                 resolved_cart[str(ticket_type.id)] = item
 
             request.session["cart"] = resolved_cart
-            print("Cart lagret i session:", resolved_cart)
         except Exception:
             request.session["cart"] = {}
-        # Redirect til GET for å unngå repost
-        from django.shortcuts import redirect
-
         return redirect("/tickets/payment/")
 
     # Hent cart fra session for visning

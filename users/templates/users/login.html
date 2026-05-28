@@ -43,7 +43,7 @@
         <label for="username" class="CB1-label">E-post</label>
         <div class="CB1-input-wrap">
           <i class="bi bi-envelope CB1-input-icon"></i>
-          <input type="text" name="email" id="username" placeholder="din@epost.no" class="CB1-input" required>
+          <input type="email" name="email" id="username" placeholder="din@epost.no" class="CB1-input" required>
         </div>
       </div>
 
@@ -51,7 +51,7 @@
         <label for="password" class="CB1-label">Passord</label>
         <div class="CB1-input-wrap">
           <i class="bi bi-lock CB1-input-icon"></i>
-          <input type="password" name="password" id="password" placeholder="Skriv inn passordet ditt" class="CB1-input CB1-input--pw" required>
+          <input type="password" name="password" id="password" placeholder="Skriv inn passordet ditt" class="CB1-input CB1-input--pw" required minlength="6">
           <button type="button" class="CB1-toggle-pw" onclick="togglePassword()" tabindex="-1" aria-label="Vis/skjul passord">
             <i class="bi bi-eye" id="CB1-eye-icon"></i>
           </button>

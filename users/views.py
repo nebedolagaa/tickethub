@@ -7,7 +7,8 @@ Bidratt til denne filen:
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db import transaction
 from django.contrib import messages, auth
-from django.db.models import Sum, F
+from django.db.models import Sum, F, DecimalField, Value, Q, Count, Min
+from django.db.models.functions import Coalesce, Cast
 
 from django.contrib.auth.decorators import login_required
 
@@ -16,9 +17,6 @@ from tickets.models import Ticket, Order, TicketType
 from events.models import Event, Venue, VenueArea, Performer, Address
 from events.forms import EventForm, TicketTypeForm
 import json
-
-from django.db.models import F, Sum, DecimalField, Value
-from django.db.models.functions import Coalesce, Cast
 
 from .forms import (
     AccountCreationForm,
@@ -29,7 +27,6 @@ from .forms import (
 )
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.db.models import Q, Count, Min
 
 # verifikasjonsverktøy for tilbakestilling av passord
 from django.contrib.sites.shortcuts import get_current_site
@@ -71,7 +68,6 @@ def register(request):
             user_form.is_valid() and type_valid
         )  # brukerform og type_form må være gyldige for å fortsette
         if is_organizer:
-            # legger inn en ny condition for ok
             ok = (
                 ok and organizer_form.is_valid()
             )  # hvis arrangør må også arrangørprofilen være gyldig
@@ -134,6 +130,8 @@ def login(request):
 
 @login_required(login_url="users:login")
 def logout(request):
+    if request.method != "POST":
+        return redirect("home_page")
     auth.logout(request)
     messages.success(request, "Du er nå logget ut")
     return redirect("home_page")
@@ -142,10 +140,8 @@ def logout(request):
 def forgotPassword(request):
     if request.method == "POST":
         email = request.POST["email"]
-        if Account.objects.filter(email=email).exists():
-            # send email with reset link
-            user = Account.objects.get(email__exact=email)
-
+        user = Account.objects.filter(email=email).first()
+        if user:
             # reset password email
             current_site = get_current_site(request)
             mail_subject = "Passord bytte forespørsel"
@@ -205,8 +201,15 @@ def resetPassword(request):
         confirm_password = request.POST["confirm_password"]
 
         if password == confirm_password:
-            uid = request.session.get("uid")  # hent uid fra session
-            user = Account.objects.get(pk=uid)  # hent bruker basert på uid
+            uid = request.session.get("uid")
+            if not uid:
+                messages.error(request, "Sessjonen er utløpt. Vennligst prøv igjen.")
+                return redirect("users:forgotPassword")
+            try:
+                user = Account.objects.get(pk=uid)
+            except Account.DoesNotExist:
+                messages.error(request, "Brukeren ble ikke funnet.")
+                return redirect("users:forgotPassword")
             user.set_password(
                 password
             )  # bruk set_password for å hashe passordet før det lagres i databasen, byggt inn metode i Django's User model
@@ -370,10 +373,6 @@ def my_orders(request):
             )
         )
     )
-    # have to use coalesce to return 0 instead of None for orders with no items, otherwise it will cause an error and template will not load.
-    # tries several expression to multiply quantity and unit_price for each order item (both are different datatypes)
-    # i ended up using cast because it was the only one that worked..
-
     # hent alle ordre for denne brukeren, sortert etter dato (nyeste først)
 
     extra_info, _ = UserProfile.objects.get_or_create(user=request.user)
@@ -526,8 +525,6 @@ def organizer_profile(request):
         events_page = paginator.page(paginator.num_pages)
 
     # statistikk for solgte billetter og total omsetning per arrangementer
-    # using two loops to get through each event and then through each ticket type for that event
-    # because there are several ticket types per event
     for event in events_page:
         ticket_types = TicketType.objects.filter(event=event)
 
@@ -594,7 +591,7 @@ def create_event(request):
 
         venue_mode = request.POST.get("venue_mode", "existing")  # existing | new
 
-        # ── Ny lokasjon ──
+        # Ny lokasjon
         new_venue_obj = None
         new_venue_area_obj = None
         venue_errors = []
@@ -630,7 +627,7 @@ def create_event(request):
                         f"Velg den fra listen over eksisterende lokasjoner i stedet."
                     )
 
-        # ── Ny artist ──
+        # Ny artist
         new_performer_name = request.POST.get("new_performer_name", "").strip()
         new_performer_genre = request.POST.get("new_performer_genre", "other").strip()
         new_performer = None

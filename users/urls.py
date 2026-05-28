@@ -1,5 +1,4 @@
 from django.urls import path
-from django.contrib.auth.views import LoginView
 from .views import register, login, forgotPassword, resetpassword_validate, resetPassword, user_profile, organizer_profile, my_orders, create_event, edit_event
 
 app_name = 'users'

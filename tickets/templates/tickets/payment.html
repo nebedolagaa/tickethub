@@ -23,32 +23,32 @@
 
                     <div class="CB-payment-form-group">
                         <label for="fullname">Fullt navn</label>
-                        <input type="text" id="fullname" name="fullname" placeholder="Ola Nordmann" autocomplete="name" required>
+                        <input type="text" id="fullname" name="fullname" placeholder="Ola Nordmann" autocomplete="name" required maxlength="100">
                     </div>
 
                     <div class="CB-payment-form-group">
                         <label for="email">E-post</label>
-                        <input type="email" id="email" name="email" placeholder="navn@epost.no" autocomplete="email" required>
+                        <input type="email" id="email" name="email" placeholder="navn@epost.no" autocomplete="email" required maxlength="254">
                     </div>
 
                     <div class="CB-payment-form-group">
                         <label for="phone">Telefon</label>
-                        <input type="tel" id="phone" name="phone" placeholder="+47 123 45 678" autocomplete="tel" required>
+                        <input type="text" id="phone" name="phone" placeholder="+47 123 45 678" autocomplete="tel" required maxlength="15" inputmode="tel">
                     </div>
 
                     <div class="CB-payment-form-group">
                         <label for="address">Adresse</label>
-                        <input type="text" id="address" name="address" placeholder="Storgata 1" autocomplete="street-address" required>
+                        <input type="text" id="address" name="address" placeholder="Storgata 1" autocomplete="street-address" required maxlength="255">
                     </div>
 
                     <div class="CB-payment-form-row">
                         <div class="CB-payment-form-group">
                             <label for="city">By</label>
-                            <input type="text" id="city" name="city" placeholder="Oslo" autocomplete="address-level2" required>
+                            <input type="text" id="city" name="city" placeholder="Oslo" autocomplete="address-level2" required maxlength="100">
                         </div>
                         <div class="CB-payment-form-group">
                             <label for="postal">Postnummer</label>
-                            <input type="text" id="postal" name="postal" placeholder="0150" autocomplete="postal-code" required>
+                            <input type="text" id="postal" name="postal" placeholder="0150" autocomplete="postal-code" required maxlength="4" inputmode="numeric" pattern="\d{4}">
                         </div>
                     </div>
 
@@ -266,6 +266,42 @@ function setupPaymentToggle() {
 }
 
 document.addEventListener('DOMContentLoaded', setupPaymentToggle);
+
+function setupContactValidation() {
+    const phone = document.getElementById('phone');
+    const postal = document.getElementById('postal');
+
+    // Telefon: kun sifre, +, mellomrom og bindestrek
+    phone.addEventListener('input', () => {
+        phone.value = phone.value.replace(/[^\d\s\+\-]/g, '').slice(0, 15);
+        phone.setCustomValidity('');
+    });
+    phone.addEventListener('blur', () => {
+        const digits = phone.value.replace(/\D/g, '');
+        if (digits.length < 7) {
+            phone.setCustomValidity('Telefonnummer må ha minst 7 sifre.');
+        } else {
+            phone.setCustomValidity('');
+        }
+        phone.reportValidity();
+    });
+
+    // Postnummer: kun 4 sifre
+    postal.addEventListener('input', () => {
+        postal.value = postal.value.replace(/\D/g, '').slice(0, 4);
+        postal.setCustomValidity('');
+    });
+    postal.addEventListener('blur', () => {
+        if (!/^\d{4}$/.test(postal.value) && postal.value !== '') {
+            postal.setCustomValidity('Postnummer må bestå av 4 sifre.');
+            postal.reportValidity();
+        } else {
+            postal.setCustomValidity('');
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', setupContactValidation);
 </script>
 {% endblock %}
 

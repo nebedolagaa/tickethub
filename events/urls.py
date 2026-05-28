@@ -16,7 +16,6 @@ urlpatterns = [
         name="purchase_tickets",
     ),
     path("snippets/", views.snippets, name="snippets"),
-    # path('demo/profile/', views.profile_demo, name='profile_demo'),  # Commented out - function not implemented
     # API endpoints
     path(
         "api/event/<int:id>/delete/",

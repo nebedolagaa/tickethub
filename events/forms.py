@@ -3,6 +3,7 @@ Bidratt til denne filen:
     - Nikita Pushechnikov
 """
 from django import forms
+from django.utils import timezone
 from .models import Event, Performer, Venue, VenueArea
 from tickets.models import TicketType
 
@@ -43,10 +44,6 @@ class EventForm(forms.ModelForm):
             "end_datetime": forms.DateTimeInput(format="%Y-%m-%dT%H:%M", attrs={"class": "NP-input", "type": "datetime-local"}),
         }
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["venue"].required = False
-
     def clean(self):
         cleaned_data = super().clean()
         start = cleaned_data.get("start_datetime")
@@ -54,6 +51,20 @@ class EventForm(forms.ModelForm):
         if start and end and end <= start:
             raise forms.ValidationError("Sluttidspunkt må være etter starttidspunkt.")
         return cleaned_data
+
+    def clean_title(self):
+        title = (self.cleaned_data.get('title') or '').strip()
+        if not title:
+            raise forms.ValidationError("Tittel er påkrevd.")
+        if len(title) < 3:
+            raise forms.ValidationError("Tittel må ha minst 3 tegn.")
+        return title
+
+    def clean_start_datetime(self):
+        start = self.cleaned_data.get('start_datetime')
+        if start and start <= timezone.now():
+            raise forms.ValidationError("Starttidspunktet må være i fremtiden.")
+        return start
 
 
 class TicketTypeForm(forms.ModelForm):
@@ -76,3 +87,9 @@ class TicketTypeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["venue_area"].required = False
+
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price is not None and price <= 0:
+            raise forms.ValidationError("Prisen må være større enn 0 kr.")
+        return price
