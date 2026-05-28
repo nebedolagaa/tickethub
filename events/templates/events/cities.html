@@ -155,7 +155,7 @@
               <p class="NP-city-info">
                 {{ city.event_count }} arrangement{% if city.event_count != 1 %}er{% endif %} tilgjengelig
               </p>
-              <a href="{% url 'all_events' %}?search={{ city.name }}" class="NP-city-btn">
+              <a href="{% url 'all_events' %}?city={{ city.name|urlencode }}" class="NP-city-btn">
                 Se alle arrangementer
                 <i class="bi bi-arrow-right"></i>
               </a>

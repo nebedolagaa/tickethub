@@ -68,6 +68,10 @@
             action="{% url 'all_events' %}"
             class="NP-search-form"
           >
+            {% if city_query %}
+              <input type="hidden" name="city" value="{{ city_query }}" />
+            {% endif %}
+
             <!-- Søk -->
             <div class="NP-search-container">
               <i class="bi bi-search NP-search-icon"></i>
@@ -112,13 +116,17 @@
           <!-- Søkeresultater -->
           <div class="NP-results-info">
             <p>
-              {% if search_query %}
+              {% if city_query and search_query %}
+                Viser <strong>{{ total_events }}</strong> resultat{% if total_events != 1 %}er{% endif %} for "<strong>{{ search_query }}</strong>" i <strong>{{ city_query }}</strong>
+              {% elif city_query %}
+                Viser <strong>{{ total_events }}</strong> arrangement{% if total_events != 1 %}er{% endif %} i <strong>{{ city_query }}</strong>
+              {% elif search_query %}
                 Viser <strong>{{ total_events }}</strong> resultat{% if total_events != 1 %}er{% endif %} for "<strong>{{ search_query }}</strong>"
               {% else %}
                 Viser <strong>{{ total_events }}</strong> arrangement{% if total_events != 1 %}er{% endif %}
               {% endif %}
             </p>
-            {% if search_query %}
+            {% if search_query or city_query %}
               <a href="{% url 'all_events' %}" class="NP-clear-search">
                 <i class="bi bi-x-circle"></i> Nullstill søk
               </a>
@@ -135,13 +143,13 @@
             <!-- Første side -->
             {% if events.has_previous %}
               <li class="NP-page-item">
-                <a href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                <a href="?page=1{% if search_query %}&search={{ search_query|urlencode }}{% endif %}{% if city_query %}&city={{ city_query|urlencode }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
                   <i class="bi bi-chevron-double-left"></i>
                 </a>
               </li>
               <!-- Forrige side -->
               <li class="NP-page-item">
-                <a href="?page={{ events.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                <a href="?page={{ events.previous_page_number }}{% if search_query %}&search={{ search_query|urlencode }}{% endif %}{% if city_query %}&city={{ city_query|urlencode }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
                   <i class="bi bi-chevron-left"></i>
                 </a>
               </li>
@@ -166,7 +174,7 @@
                 </li>
               {% elif num > events.number|add:'-3' and num < events.number|add:'3' %}
                 <li class="NP-page-item">
-                  <a href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">{{ num }}</a>
+                  <a href="?page={{ num }}{% if search_query %}&search={{ search_query|urlencode }}{% endif %}{% if city_query %}&city={{ city_query|urlencode }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">{{ num }}</a>
                 </li>
               {% endif %}
             {% endfor %}
@@ -174,13 +182,13 @@
             <!-- Neste side -->
             {% if events.has_next %}
               <li class="NP-page-item">
-                <a href="?page={{ events.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                <a href="?page={{ events.next_page_number }}{% if search_query %}&search={{ search_query|urlencode }}{% endif %}{% if city_query %}&city={{ city_query|urlencode }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
                   <i class="bi bi-chevron-right"></i>
                 </a>
               </li>
               <!-- Siste side -->
               <li class="NP-page-item">
-                <a href="?page={{ events.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
+                <a href="?page={{ events.paginator.num_pages }}{% if search_query %}&search={{ search_query|urlencode }}{% endif %}{% if city_query %}&city={{ city_query|urlencode }}{% endif %}{% if sort_by %}&sort={{ sort_by }}{% endif %}" class="NP-page-link">
                   <i class="bi bi-chevron-double-right"></i>
                 </a>
               </li>

@@ -38,6 +38,7 @@ from .models import City
 
 # API-view for å hente ut alle byer
 from rest_framework import generics
+from django.db.models.functions import Lower, Trim
 
 
 class CityListAPIView(generics.ListAPIView):
@@ -125,6 +126,12 @@ def all_events(request):
             | Q(venue__address__city__icontains=search_query)
         )
 
+    city_query = request.GET.get("city", "").strip()
+    if city_query:
+        events = events.annotate(
+            normalized_city=Lower(Trim("venue__address__city"))
+        ).filter(normalized_city=city_query.lower())
+
     # Sortering
     sort_by = request.GET.get("sort", "date_asc")
 
@@ -155,6 +162,7 @@ def all_events(request):
     context = {
         "events": events_page,
         "search_query": search_query,
+        "city_query": city_query,
         "sort_by": sort_by,
         "total_events": paginator.count,
     }
@@ -291,13 +299,14 @@ def cities(request):
     # Finn antall aktive arrangementer per by (både konserter og festivaler)
     event_counts_raw = (
         Event.objects.filter(end_datetime__gte=timezone.now(), is_archived=False)
-        .values("venue__address__city")
+        .annotate(normalized_city=Lower(Trim("venue__address__city")))
+        .values("normalized_city")
         .annotate(event_count=Count("id", distinct=True))
     )
     event_counts = {
-        item["venue__address__city"].strip().lower(): item["event_count"]
+        item["normalized_city"]: item["event_count"]
         for item in event_counts_raw
-        if item["venue__address__city"]
+        if item["normalized_city"]
     }
 
     cities_list = [
