@@ -15,7 +15,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from events.models import Address, City, Venue, VenueArea, Event, EventImage, Performer, EventStandingAllocation
-from tickets.models import TicketType
+from tickets.models import Order, OrderItem, Ticket, TicketType
 from users.models import Account, OrganizerProfile, UserProfile
 
 from django.core.management.base import BaseCommand, CommandError
@@ -105,5 +105,11 @@ class Command(BaseCommand):
             choices = TicketType._meta.get_field("name").choices
             TicketType.objects.create(event=e, venue_area=balkong, name=choices[1 % len(choices)][0], price=price + 300, quantity=300)
             EventStandingAllocation.objects.create(event=e, venue_area=parkett, capacity=1500, sold=100 + (i * 170) % 1300)
+
+            # noen demo-kjøp slik at statistikken på arrangørprofilen ikke er tom
+            for tt, qty in zip(e.ticket_types.order_by("id"), (40 + (i * 37) % 160, 5 + (i * 13) % 40)):
+                order = Order.objects.create(user=user, event=e)
+                OrderItem.objects.create(order=order, ticket_type=tt, quantity=qty, unit_price=tt.price)
+                Ticket.objects.bulk_create([Ticket(user=user, ticket_type=tt) for _ in range(qty)])
 
         self.stdout.write(self.style.SUCCESS(f"Demo-data lagt inn: {Event.objects.count()} arrangementer"))

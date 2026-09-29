@@ -4,7 +4,7 @@ TicketHub is a ticketing website for concerts and festivals in Norway. We built 
 
 The site is in Norwegian, since that was the target audience.
 
-![Home page](docs/screenshots/home.png)
+![Home page](docs/screenshots/home.jpg)
 
 ## What it can do
 
@@ -27,21 +27,42 @@ The site is in Norwegian, since that was the target audience.
 
 ## Screenshots
 
-![All events](docs/screenshots/all_events.png)
+The events, artists and organizer in the screenshots are made-up demo data (see `seed_demo` below).
 
-| Festivals | Buying tickets |
-|---|---|
-| ![Festivals](docs/screenshots/festivals.png) | ![Buying tickets](docs/screenshots/purchase.png) |
+### All events
+Search, sort and browse all upcoming concerts and festivals.
 
-| Organizer profile | Creating an event |
-|---|---|
-| ![Organizer profile](docs/screenshots/organizer_profile.png) | ![Create event](docs/screenshots/create_event.png) |
+![All events](docs/screenshots/all_events.jpg)
 
-| Venues | Login |
-|---|---|
-| ![Venues](docs/screenshots/venues.png) | ![Login](docs/screenshots/login.png) |
+### Buying tickets
+Pick a ticket type and amount, the cart on the right updates with service fee and total.
 
-The events, artists and organizer in the screenshots are made-up demo data.
+![Buying tickets](docs/screenshots/purchase.jpg)
+
+### Organizer profile
+Company info, statistics and a list of your own events with tickets sold, sales and income per event.
+
+![Organizer profile](docs/screenshots/organizer_profile.jpg)
+
+### Creating an event
+Event info, venue (existing or new), performers and the first ticket type in one form.
+
+![Create event](docs/screenshots/create_event.jpg)
+
+### Venues
+
+![Venues](docs/screenshots/venues.jpg)
+
+### Mobile
+The site is responsive. Home page, the mobile menu and an event page on a phone:
+
+<p align="center">
+  <img src="docs/screenshots/mobile_home.jpg" width="30%" alt="Mobile home page">
+  &nbsp;
+  <img src="docs/screenshots/mobile_menu.jpg" width="30%" alt="Mobile menu">
+  &nbsp;
+  <img src="docs/screenshots/mobile_event.jpg" width="30%" alt="Mobile event page">
+</p>
 
 ## Tech stack
 
