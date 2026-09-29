@@ -1,487 +1,125 @@
-# TicketHub: Local Setup Guide
+# TicketHub 🎟️
 
-This guide explains how to run the TicketHub Django project locally.
+TicketHub is a ticketing website for concerts and festivals in Norway. We built it as a group project at school — six of us worked on it for about a year (Aug 2025 – Sep 2026). It started as a simple event list and grew into a full site where you can browse events, buy tickets and manage your own events as an organizer.
 
-## Requirements
+The site is in Norwegian, since that was the target audience.
 
-- Python 3.10 or newer
-- Git
-- pip
+![Home page](docs/screenshots/home.png)
 
-The project uses Django with SQLite, so no external database setup is needed.
+## What it can do
 
-## 1. Clone the Project
+**For users**
+- Browse concerts and festivals, search and sort by date
+- Filter events by city and venue
+- Pick ticket types (ordinary / VIP / student etc.), add them to a cart and "pay" (the payment is simulated)
+- See your orders and tickets on your profile
+- Register, log in, reset password by email
+
+**For organizers**
+- Organizer profile with an overview of your events, tickets sold and income
+- Create and edit events: venue, date, performers and ticket types
+- Choose an existing venue or create a new one while making the event
+
+**Behind the scenes**
+- Seated and standing tickets are handled differently (every seat is its own row in the database, standing tickets are just a counter per area)
+- Finished events are automatically moved to archive tables (`python manage.py archive_expired_events`)
+- A small REST API for events and cities made with Django REST Framework, see [docs/API.md](docs/API.md) (in Norwegian)
+
+## Screenshots
+
+| Concerts | Buying tickets |
+|---|---|
+| ![Concerts](docs/screenshots/concerts.png) | ![Buying tickets](docs/screenshots/purchase.png) |
+
+| Organizer profile | Creating an event |
+|---|---|
+| ![Organizer profile](docs/screenshots/organizer_profile.png) | ![Create event](docs/screenshots/create_event.png) |
+
+| Festivals | Login | Mobile |
+|---|---|---|
+| ![Festivals](docs/screenshots/festivals.png) | ![Login](docs/screenshots/login.png) | ![Mobile](docs/screenshots/mobile.png) |
+
+*The events, artists and organizer in the screenshots are made-up demo data.*
+
+## Tech stack
+
+- Python 3 / Django 5.2
+- Django REST Framework
+- SQLite for development
+- Plain HTML templates, CSS and a bit of JavaScript (no frontend framework)
+- Git + GitHub with a branch for each of us and a shared `develop` branch
+
+## Running it locally
+
+You need Python 3.10 or newer.
 
 ```bash
-git clone <repo-url>
-cd tickethub
-```
+git clone https://github.com/nebedolagaa/tickethub-portfolio.git
+cd tickethub-portfolio
 
-If you already have the project locally, just open the project folder:
-
-```bash
-cd tickethub
-```
-
-## 2. Create a Virtual Environment
-
-On macOS/Linux:
-
-```bash
 python3 -m venv .venv
-source .venv/bin/activate
-```
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 
-On Windows:
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-```
-
-After activation, your terminal should show something like `(.venv)`.
-
-## 3. Install Dependencies
-
-```bash
 pip install -r requirements.txt
-```
-
-If `requirements.txt` gives an encoding error, install the main dependencies manually:
-
-```bash
-pip install Django==5.2.5 djangorestframework==3.17.1 pillow requests mysql-connector-python qrcode
-```
-
-## 4. Apply Database Migrations
-
-```bash
 python manage.py migrate
-```
-
-This creates/updates the local SQLite database.
-
-## 5. Create an Admin User
-
-Optional, but useful if you want access to Django Admin:
-
-```bash
-python manage.py createsuperuser
-```
-
-Follow the terminal prompts.
-
-## 6. Run the Development Server
-
-```bash
+python manage.py seed_demo       # adds some demo events and users
 python manage.py runserver
 ```
 
-Open the project in your browser:
+Then open http://127.0.0.1:8000/.
 
-```text
-http://127.0.0.1:8000/
-```
+**Demo users** (created by `seed_demo`, password `demo12345`):
 
-Django Admin:
+| Email | Role |
+|---|---|
+| organizer@example.com | Organizer – can create and edit events |
+| ola@example.com | Normal user – can buy tickets |
 
-```text
-http://127.0.0.1:8000/admin/
-```
+For the admin panel make your own superuser with `python manage.py createsuperuser` and go to `/admin/`.
 
-## Useful Commands
+Secrets like `DJANGO_SECRET_KEY` and the SMTP password are read from environment variables, see [.env.example](.env.example). You don't need them to run the project locally, but password reset emails won't be sent without them.
 
-Run all tests:
+**Tests:**
 
 ```bash
 python manage.py test
 ```
 
-Check the project for Django configuration issues:
-
-```bash
-python manage.py check
-```
-
-Create migrations after changing models:
-
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-Archive expired events manually:
-
-```bash
-python manage.py archive_expired_events
-```
-
-## Project Structure
+## Project structure
 
 ```text
-tickethub/
-├── config/       # Django settings and root URLs
-├── events/       # Event, venue, performer models and event pages
-├── tickets/      # Ticket, order, purchase logic
-├── users/        # User profiles, organizer profile, auth pages
-├── pages/        # Static/info pages
-├── templates/    # Shared templates and snippets
-├── static/       # CSS and static assets
-├── media/        # Uploaded media files
-├── manage.py
-└── requirements.txt
+config/    settings and main urls
+events/    events, venues, performers, cities, archive, REST API
+tickets/   ticket types, cart, orders and payment
+users/     custom user model (login with email), user and organizer profiles
+pages/     FAQ, contact, terms, privacy and other info pages
+templates/ base template and shared snippets (header, footer, cards…)
+static/    CSS and favicons
+docs/      API docs and screenshots
 ```
 
-## Notes
+## The team
 
-- The project currently uses SQLite: `db.sqlite3`.
-- Static files are served automatically by Django during local development.
-- Uploaded images are stored in the `media/` folder.
-- Use `pip`, not `npm`, for this Django project.
+| | Main areas |
+|---|---|
+| **Christoffer** ([@Christofferberg77](https://github.com/Christofferberg77)) | Ticket purchase flow, cart and checkout pages |
+| **Kamilla** ([@kamazik0102](https://github.com/kamazik0102)) | User model and login, user and organizer profiles, creating/editing events |
+| **Nikita** ([@nebedolagaa](https://github.com/nebedolagaa)) | Event pages and templates, archive system, REST API, info pages, lots of refactoring |
+| **Jesper** ([@jesper0202](https://github.com/jesper0202)) | Performer model, REST API, styling |
+| **Magnus** ([@Magnusbot1](https://github.com/Magnusbot1)) | Payment and ticket views, test data |
+| **Eskild** ([@EskSond](https://github.com/EskSond)) | Event listing and filtering, info pages, styling |
 
+Of course a lot of things were done together, so the table is just a rough idea of who did what.
 
+## What we learned
 
-### Filstruktur - kort beskrivelse 
+This was the first bigger project for most of us, and we made a lot of mistakes along the way:
 
-models.py: Inneholder definisjoner av databasemodeller, f.eks. City og Event. Her bestemmes hvilke felter og relasjoner som finnes i databasen, og hvordan data lagres.
+- **Merge conflicts.** Six people working in the same templates and `main.css` was painful. Later we moved page-specific CSS into each app and got better at small commits.
+- **Database design.** It took us a while to figure out how to model seated vs. standing tickets. Planning the models on paper first would have saved us a lot of back and forth.
+- **Secrets in Git.** We committed passwords and the database file early on. The history in this repo has been cleaned up, and now everything sensitive comes from environment variables.
+- **Tests.** We only really wrote tests for the REST API. Next time we want to write them earlier and for the purchase flow too.
 
-serializers.py: Definerer hvordan modellene konverteres til og fra JSON, slik at data kan sendes og mottas via API-et. Brukes av views for å validere og strukturere data.
+## Status
 
-views.py: Inneholder logikken for hva som skal skje når en bruker besøker en bestemt side eller utfører en handling. Views håndterer både vanlige nettsider og eventuelle API-endepunkter, men     hovedsakelig brukes de til å vise innhold og behandle brukerforespørsler.
-
-urls.py: Denne filen definerer hvilke nettadresser (URL-er) som finnes i applikasjonen, og kobler dem til de riktige visningene (views). Her bestemmes hvilke sider og funksjoner brukerne får tilgang til via nettleseren.
-
-tests.py: Inneholder automatiske tester som sjekker at API-et og funksjonene virker som de skal. Testene kan simulere ulike brukerscenarioer og validerer at feil håndteres riktig.
-
-
-
-
-### Kort beskrivelse av hvert API
-
-# REST API #1 - Event Create 
-
-ENDEPUNKT: /api/events/
-
-- Hva gjør API'et
-  API'et lar deg opprette et nytt arrangement i systemet. Det tar imot nødvendig informasjon om arrangementet som JSON i request body og lagrer det i databasen. Man kan velge event_type mellom "concert" og "festival" — standard er "concert" hvis feltet ikke sendes med.
-
-- Hvilken ressurs håndterer det
-  Ressursen som håndteres er Event-modellen. Endepunktet støtter også GET for å hente en liste over alle aktive (ikke-arkiverte) arrangementer, med mulighet for filtrering på by, dato og type via query-parametere (?city=, ?date=, ?type=).
-
-- Manuelle og/eller automatiske tester
-  API'et har automatiske tester i EventCreateAPITestCase (events/tests.py) som dekker:
-  - Vellykket opprettelse med alle obligatoriske felt
-  - Automatisk setting av event_type til "concert" når feltet ikke er oppgitt
-  - Opprettelse med event_type="festival" eksplisitt
-  - Opprettelse med event_type="concert" eksplisitt
-  - Ugyldig event_type gir 400
-  - Manglende obligatoriske felt gir 400
-  - end_datetime før start_datetime gir 400
-  - end_datetime lik start_datetime gir 400
-    Kjøres med:
-    python manage.py test events.tests.EventCreateAPITestCase
-
-  For manuell testing, send en POST-request til /api/events/ med JSON-body som vist nedenfor.
-
-- HTTP-metoder
-  - POST (opprette nytt event)
-  - GET (hente liste over alle aktive events)
-
-- JSON-body for input/output
-  - input eksempel for POST (konsert):
-    {
-    "organizer": 1,
-    "venue": 1,
-    "title": "Konsert i Oslo",
-    "description": "En fantastisk konsert",
-    "event_type": "concert",
-    "start_datetime": "2027-06-01T18:00:00Z",
-    "end_datetime": "2027-06-01T22:00:00Z"
-    }
-
-  - input eksempel for POST (festival):
-    {
-    "organizer": 1,
-    "venue": 1,
-    "title": "Sommerfestival",
-    "event_type": "festival",
-    "start_datetime": "2027-08-01T12:00:00Z",
-    "end_datetime": "2027-08-03T23:00:00Z"
-    }
-
-  - output suksess (201 Created):
-    {
-    "id": 5,
-    "organizer": 1,
-    "venue": 1,
-    "title": "Konsert i Oslo",
-    "description": "En fantastisk konsert",
-    "performers": [],
-    "event_type": "concert",
-    "start_datetime": "2027-06-01T18:00:00Z",
-    "end_datetime": "2027-06-01T22:00:00Z",
-    "slug": "konsert-i-oslo"
-    }
-
-- Validering og feilhåndtering
-  - Påkrevde felter: organizer, venue, title, start_datetime, end_datetime
-  - Valideringsregler:
-    - title kan ikke være tom
-    - end_datetime må være etter start_datetime
-    - organizer må finnes i databasen
-    - venue må finnes i databasen
-    - slug genereres automatisk fra title
-    - event_type må være "concert" eller "festival" (standard: "concert" hvis ikke oppgitt)
-  - Feilmeldinger og statuskoder:
-    - 201 CREATED - Event ble opprettet
-    - 400 BAD REQUEST - Manglende eller ugyldig input (f.eks. end_datetime før start_datetime, manglende påkrevde felt, ugyldig event_type)
-    - 404 NOT FOUND - Organizer eller venue finnes ikke i databasen
-
-# REST API #2 - Event Update 
-
-ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
-
-- Hva gjør API'et
-  - API'et lar deg oppdatere informasjon om et eksisterende event i systemet, man skriver inn ID til enkelteventet på URL'en for å få opp et spesifikt.
-
-- Hvilken ressurs håndterer det
-  - Ressursen som håndteres er et enkelt event, identifisert med events ID.
-
-- Manuelle og/eller automatiske tester
-  - API'et har automatiske tester som tester delvis oppdatering av kun tittel, og ser til at det oppdateres i databasen. Vi har også en test som oppdaterer alle relevante felter, og ser til at det går bra. Man har også mulighet til å skrive inn endepunktet /api/events/{ID man ønsker å oppdatere}/, for å teste manuelt med et event som finnes.
-    python manage.py test events.tests.EventAPITestCase skrives inn i terminal for å kjøre automatiske tester, bruker får OK som tilbakemelding.
-- HTTP-metoder
-  - HTTP - metoder som er brukt i dette API'et er PUT eller PATCH.
-
-- JSON-body for input/output
-  - input eksempel for PUT:
-    {
-    "organizer": 1,
-    "venue": 1,
-    "title": "Helt oppdatert event",
-    "description": "Updated Description",
-    "start_datetime": "2024-12-02 T 10:00:00Z",
-    "end_datetime":"2024-12-02 T 12:00:00Z"
-    }
-
-  - input eksempel for PATCH:
-    {
-    "title": "Updated Event Title"
-    }
-
-  - output suksess:
-    {
-    "id": 1,
-    "organizer": 1,
-    "venue": 1,
-    "title": "Updated Event Title",
-    "description": "Test Description",
-    "start_datetime": "2024-12-01T10:00:00Z",
-    "end_datetime": "2024-12-01T12:00:00Z"
-    }
-
-- Validering og feilhåndtering
-  - Påkrevde felter ved PUT er organizer, venue, title, start_datetime og end_datetime.
-  - Valideringsreglene er title kan ikke være tom og maks 255 tegn. event_type må være enten "concert" eller "festival", mulig det er flere typer i fremtiden.
-    start_datetime må være før end_datetime. venue kan ikke slettes hvis det er i bruk. organizer må finnes i databasen til prosjektet.
-  - Feilmeldinger og statuskoder er følgende:
-    200 OK - Oppdatering vellykket (PUT eller PATCH)
-    400 BAD REQUEST - Ugyldig input
-    404 NOT FOUND - Event med oppgitt ID finnes ikke i databasen.
-
-# REST API #3 - Event Delete 
-
-ENDEPUNKT: /api/event/<int:id>/delete/
-
-- Hva gjør API'et
- - API’et lar en autentisert arrangør slette et eksisterende arrangement fra listen over sine arrangementer. Man skriver inn ID til arrangementet i URL-en for å velge hvilket arrangement som skal   slettes.
- - Dersom man bruker GET på endepunktet, får man bare en melding om at DELETE-metoden må brukes for å slette arrangementet
-
-- Hvilken ressurs håndterer det
-  - Ressursen som håndteres er et enkelt event, identifisert med event sin ID
-
-- Manuelle og/eller automatiske tester
-  - API’et kan testes manuelt ved å sende DELETE-request til endepunktet /api/event/{ID man ønsker å slette}/delete/ med en bruker som er logget inn som arrangør.
-  - Ved manuell testing kan man kontrollere flere situasjoner:
-   -at arrangør må være logget inn for å slette et arrangement
-   -at arrangør kan slette kun sitt eget arrangement
-   -at en annen arrangør ikke kan slete arrangementet som ikke tilhører dem
-   -at arrangement ikke kan slettes dersom det har tilknyttede (solgte) biletter
-   -at man får feilmelding dersom arrangement ikke finnes
-
-- HTTP-metoder som er brukt i dette API’et er:
-  - GET
-    - DELETE
-
-- JSON-body for input/output
-  Dette API’et krever ingen JSON-body som input ved sletting. Arrangementet identifiseres gjennom ID i URL-en.
-  1. output ved GET:
-     {
-     "message": "Bruk DELETE-metoden for å slette arrangementet."
-     }
-
-  2. output suksess ved DELETE:
-     {
-     "message": "Arrangementet ble slettet."
-     }
-
-  3. output hvis bruker ikke er arrangør:
-     {
-     "message": "Du har ikke tilgang som arrangør."
-     }
-
-  4. output hvis arrangementet ikke finnes:
-     {
-     "error": "Arrangementet finnes ikke."
-     }
-
-  5. output hvis arrangør prøver å slette et arrangement som ikke tilhører dem
-     {
-     "error": "Du har ikke tilgang til å slette dette arrangementet."
-     }
-
-  6. output hvis arrangementet har tilknyttede billetter:
-     {
-     "message": "Arrangement kan ikke slettes fordi det har tilknyttede biletter."
-     }
-
-- Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
-  Det er ingen påkrevde felter i request body, siden arrangementet velges gjennom ID i URL-en.
-
-  - Valideringsreglene er: - brukeren må være innlogget - brukeren må ha en OrganizerProfile - arrangementet må finnes i databasen - arrangøren kan bare slette sitt eget arrangement - arrangementet kan ikke slettes dersom det finnes tilknyttede billetter
-
-  - Feilmeldinger og statuskoder er følgende: - 200 OK ved GET-forespørsel returneres melding om å bruke DELETE-metoden - 204 NO CONTENT arrangementet ble slettet - 400 BAD REQUEST arrangementet kan ikke slettes fordi det har tilknyttede billetter - 403 FORBIDDEN bruker har ikke tilgang som arrangør eller prøver å slette et arrangement de ikke eier - 404 NOT FOUND arrangement med oppgitt ID finnes ikke i databasen
-
-# REST API #4 - Event List 
-
-ENDEPUNKT: /api/events/
-
-- Hva gjør API'et
-  API’et returnerer en liste over aktive arrangementer (konserter og festivaler) som ikke er arkiverte og ikke har gått ut på dato.
-  Man kan bruke query parameters i URL-en for å filtrere resultatene, for eksempel på by, dato eller event-type.
-
-- Hvilken ressurs håndterer det
-  Ressursen som håndteres er en liste av events fra Event-modellen
-
-- Manuelle og/eller automatiske tester
-  API’et kan testes manuelt ved å sende GET-request til endepunktet /api/events/ via nettleser, Postman eller curl.
-  Ved manuell testing kan man kontrollere flere situasjoner:
-  - at alle aktive events returneres uten filter
-  - at filtrering på city fungerer (?city=Oslo)
-  - at filtrering på dato fungerer (?date=2024-12-01)
-  - at filtrering på type fungerer (?type=concert eller ?type=festival)
-  - at API’et returnerer tom liste dersom ingen treff finnes
-
-  Det finnes delvis automatiske tester i tests.py, men disse dekker hovedsakelig oppdatering og ikke listing
-
-- HTTP-metoder som er brukt i dette API’et er:
-  - GET
-
-- JSON-body for input/output
-  Dette API’et krever ingen JSON-body som input. Filtrering gjøres via query parameters i URL-en.
-  1. output ved suksess:
-
-  id="2l6p3m"
-  [
-  {
-  "id": 1,
-  "organizer": 1,
-  "venue": 1,
-  "title": "Test Event",
-  "description": "Description",
-  "performers": [],
-  "event_type": "concert",
-  "start_datetime": "2024-12-01T10:00:00Z",
-  "end_datetime": "2024-12-01T12:00:00Z",
-  "is_archived": false,
-  "slug": "test-event"
-  }
-  ]
-  2. output hvis ingen events finnes:
-  - id="0j9x0h"
-    []
-
-- Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
-  Det er ingen påkrevde felter i request, siden alle query parameters er valgfrie.
-
-  Valideringsreglene er:
-  - city må være en tekststreng (case-insensitive søk)
-  - date må være på format YYYY-MM-DD
-  - type må samsvare med gyldig event_type (f.eks. concert eller festival)
-
-  Feilmeldinger og statuskoder er følgende:
-  - 200 OK ved vellykket forespørsel (kan også returnere tom liste)
-  - 400 BAD REQUEST ved ugyldig query parameter (f.eks. feil datoformat)
-  - 500 INTERNAL SERVER ERROR ved uventet serverfeil
-
-# REST API #5 - City List 
-
-ENDEPUNKT: /api/cities/
-
-- Hva gjør API'et
-API’et lar brukere hente ut en liste over alle byer som har arrangementer i systemet. For hver by returneres navn, bilde (hvis tilgjengelig), og antall aktive arrangementer i byen. Det er mulig å filtrere og sortere resultatene etter antall arrangementer eller bynavn.
-
-- Hvilken ressurs håndterer det:
- - Ressursen som håndteres er en liste av byer (City), hvor hver by representerer et sted med ett eller flere arrangementer.
-
-- Manuelle og/eller automatiske tester
- - API’et kan testes manuelt ved å sende en GET-request til endepunktet /api/cities/.
- - Ved manuell testing kan man kontrollere flere situasjoner:
-
- - at alle byer med arrangementer returneres
- - at filtrering på bynavn fungerer (f.eks. /api/cities/?search=Oslo)
- - at sortering på antall arrangementer eller navn fungerer
- - at byer uten arrangementer ikke vises
-
-- HTTP-metoder som er brukt i dette API’et er:
-
-GET
-JSON-body for input/output
-Dette API’et krever ingen JSON-body som input.
-Eksempel på output ved GET:
-[
-{
-"id": 1,
-"name": "Oslo",
-"image_url": "https://...",
-"event_count": 12
-},
-{
-"id": 2,
-"name": "Bergen",
-"image_url": "https://...",
-"event_count": 7
-}
-]
-- Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
-- Det er ingen påkrevde felter i request body, siden det kun er en GET-forespørsel.
-Valideringsregler:
-
-- Kun byer med minst ett aktivt arrangement returneres
-- Filtrering og sortering valideres automatisk av API’et
-
-- Feilmeldinger og statuskoder:
- - 200 OK – Listen over byer returneres
- - 400 BAD REQUEST – Ugyldig filter eller sorteringsparameter
- - 404 NOT FOUND – Ingen byer funnet (returnerer tom liste)
-
-
-
-## Brukere for og teste de forskjellige versjonene av nettsiden. 
-Bruker 1:
-epost: bruker@test.com
-passord: brukertest123
-
-Bruker 2:
-epost:arrangor@test.com
-passord:arrangortest123
-
-Bruker 3:
-epost:super@test.com
-passord:supertest123
-
-# Forskjellige virkemåter for brukerene. 
-bruker 1: Teste for å logge inn/kjøpe billett.
-bruker 2: Teste endre/lage event
-bruker 3: superuser for å se/endre database
-
+The project was made for school and is not running in production. Payments are fake and no real tickets are sold 🙂

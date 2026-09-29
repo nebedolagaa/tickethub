@@ -1,0 +1,328 @@
+# TicketHub – REST API
+
+Dokumentasjon av REST API-ene vi laget i Arbeidskrav 3.
+
+### Filstruktur - kort beskrivelse 
+
+models.py: Inneholder definisjoner av databasemodeller, f.eks. City og Event. Her bestemmes hvilke felter og relasjoner som finnes i databasen, og hvordan data lagres.
+
+serializers.py: Definerer hvordan modellene konverteres til og fra JSON, slik at data kan sendes og mottas via API-et. Brukes av views for å validere og strukturere data.
+
+views.py: Inneholder logikken for hva som skal skje når en bruker besøker en bestemt side eller utfører en handling. Views håndterer både vanlige nettsider og eventuelle API-endepunkter, men     hovedsakelig brukes de til å vise innhold og behandle brukerforespørsler.
+
+urls.py: Denne filen definerer hvilke nettadresser (URL-er) som finnes i applikasjonen, og kobler dem til de riktige visningene (views). Her bestemmes hvilke sider og funksjoner brukerne får tilgang til via nettleseren.
+
+tests.py: Inneholder automatiske tester som sjekker at API-et og funksjonene virker som de skal. Testene kan simulere ulike brukerscenarioer og validerer at feil håndteres riktig.
+
+
+
+
+### Kort beskrivelse av hvert API
+
+# REST API #1 - Event Create 
+
+ENDEPUNKT: /api/events/
+
+- Hva gjør API'et
+  API'et lar deg opprette et nytt arrangement i systemet. Det tar imot nødvendig informasjon om arrangementet som JSON i request body og lagrer det i databasen. Man kan velge event_type mellom "concert" og "festival" — standard er "concert" hvis feltet ikke sendes med.
+
+- Hvilken ressurs håndterer det
+  Ressursen som håndteres er Event-modellen. Endepunktet støtter også GET for å hente en liste over alle aktive (ikke-arkiverte) arrangementer, med mulighet for filtrering på by, dato og type via query-parametere (?city=, ?date=, ?type=).
+
+- Manuelle og/eller automatiske tester
+  API'et har automatiske tester i EventCreateAPITestCase (events/tests.py) som dekker:
+  - Vellykket opprettelse med alle obligatoriske felt
+  - Automatisk setting av event_type til "concert" når feltet ikke er oppgitt
+  - Opprettelse med event_type="festival" eksplisitt
+  - Opprettelse med event_type="concert" eksplisitt
+  - Ugyldig event_type gir 400
+  - Manglende obligatoriske felt gir 400
+  - end_datetime før start_datetime gir 400
+  - end_datetime lik start_datetime gir 400
+    Kjøres med:
+    python manage.py test events.tests.EventCreateAPITestCase
+
+  For manuell testing, send en POST-request til /api/events/ med JSON-body som vist nedenfor.
+
+- HTTP-metoder
+  - POST (opprette nytt event)
+  - GET (hente liste over alle aktive events)
+
+- JSON-body for input/output
+  - input eksempel for POST (konsert):
+    {
+    "organizer": 1,
+    "venue": 1,
+    "title": "Konsert i Oslo",
+    "description": "En fantastisk konsert",
+    "event_type": "concert",
+    "start_datetime": "2027-06-01T18:00:00Z",
+    "end_datetime": "2027-06-01T22:00:00Z"
+    }
+
+  - input eksempel for POST (festival):
+    {
+    "organizer": 1,
+    "venue": 1,
+    "title": "Sommerfestival",
+    "event_type": "festival",
+    "start_datetime": "2027-08-01T12:00:00Z",
+    "end_datetime": "2027-08-03T23:00:00Z"
+    }
+
+  - output suksess (201 Created):
+    {
+    "id": 5,
+    "organizer": 1,
+    "venue": 1,
+    "title": "Konsert i Oslo",
+    "description": "En fantastisk konsert",
+    "performers": [],
+    "event_type": "concert",
+    "start_datetime": "2027-06-01T18:00:00Z",
+    "end_datetime": "2027-06-01T22:00:00Z",
+    "slug": "konsert-i-oslo"
+    }
+
+- Validering og feilhåndtering
+  - Påkrevde felter: organizer, venue, title, start_datetime, end_datetime
+  - Valideringsregler:
+    - title kan ikke være tom
+    - end_datetime må være etter start_datetime
+    - organizer må finnes i databasen
+    - venue må finnes i databasen
+    - slug genereres automatisk fra title
+    - event_type må være "concert" eller "festival" (standard: "concert" hvis ikke oppgitt)
+  - Feilmeldinger og statuskoder:
+    - 201 CREATED - Event ble opprettet
+    - 400 BAD REQUEST - Manglende eller ugyldig input (f.eks. end_datetime før start_datetime, manglende påkrevde felt, ugyldig event_type)
+    - 404 NOT FOUND - Organizer eller venue finnes ikke i databasen
+
+# REST API #2 - Event Update 
+
+ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
+
+- Hva gjør API'et
+  - API'et lar deg oppdatere informasjon om et eksisterende event i systemet, man skriver inn ID til enkelteventet på URL'en for å få opp et spesifikt.
+
+- Hvilken ressurs håndterer det
+  - Ressursen som håndteres er et enkelt event, identifisert med events ID.
+
+- Manuelle og/eller automatiske tester
+  - API'et har automatiske tester som tester delvis oppdatering av kun tittel, og ser til at det oppdateres i databasen. Vi har også en test som oppdaterer alle relevante felter, og ser til at det går bra. Man har også mulighet til å skrive inn endepunktet /api/events/{ID man ønsker å oppdatere}/, for å teste manuelt med et event som finnes.
+    python manage.py test events.tests.EventAPITestCase skrives inn i terminal for å kjøre automatiske tester, bruker får OK som tilbakemelding.
+- HTTP-metoder
+  - HTTP - metoder som er brukt i dette API'et er PUT eller PATCH.
+
+- JSON-body for input/output
+  - input eksempel for PUT:
+    {
+    "organizer": 1,
+    "venue": 1,
+    "title": "Helt oppdatert event",
+    "description": "Updated Description",
+    "start_datetime": "2024-12-02 T 10:00:00Z",
+    "end_datetime":"2024-12-02 T 12:00:00Z"
+    }
+
+  - input eksempel for PATCH:
+    {
+    "title": "Updated Event Title"
+    }
+
+  - output suksess:
+    {
+    "id": 1,
+    "organizer": 1,
+    "venue": 1,
+    "title": "Updated Event Title",
+    "description": "Test Description",
+    "start_datetime": "2024-12-01T10:00:00Z",
+    "end_datetime": "2024-12-01T12:00:00Z"
+    }
+
+- Validering og feilhåndtering
+  - Påkrevde felter ved PUT er organizer, venue, title, start_datetime og end_datetime.
+  - Valideringsreglene er title kan ikke være tom og maks 255 tegn. event_type må være enten "concert" eller "festival", mulig det er flere typer i fremtiden.
+    start_datetime må være før end_datetime. venue kan ikke slettes hvis det er i bruk. organizer må finnes i databasen til prosjektet.
+  - Feilmeldinger og statuskoder er følgende:
+    200 OK - Oppdatering vellykket (PUT eller PATCH)
+    400 BAD REQUEST - Ugyldig input
+    404 NOT FOUND - Event med oppgitt ID finnes ikke i databasen.
+
+# REST API #3 - Event Delete 
+
+ENDEPUNKT: /api/event/<int:id>/delete/
+
+- Hva gjør API'et
+ - API’et lar en autentisert arrangør slette et eksisterende arrangement fra listen over sine arrangementer. Man skriver inn ID til arrangementet i URL-en for å velge hvilket arrangement som skal   slettes.
+ - Dersom man bruker GET på endepunktet, får man bare en melding om at DELETE-metoden må brukes for å slette arrangementet
+
+- Hvilken ressurs håndterer det
+  - Ressursen som håndteres er et enkelt event, identifisert med event sin ID
+
+- Manuelle og/eller automatiske tester
+  - API’et kan testes manuelt ved å sende DELETE-request til endepunktet /api/event/{ID man ønsker å slette}/delete/ med en bruker som er logget inn som arrangør.
+  - Ved manuell testing kan man kontrollere flere situasjoner:
+   -at arrangør må være logget inn for å slette et arrangement
+   -at arrangør kan slette kun sitt eget arrangement
+   -at en annen arrangør ikke kan slete arrangementet som ikke tilhører dem
+   -at arrangement ikke kan slettes dersom det har tilknyttede (solgte) biletter
+   -at man får feilmelding dersom arrangement ikke finnes
+
+- HTTP-metoder som er brukt i dette API’et er:
+  - GET
+    - DELETE
+
+- JSON-body for input/output
+  Dette API’et krever ingen JSON-body som input ved sletting. Arrangementet identifiseres gjennom ID i URL-en.
+  1. output ved GET:
+     {
+     "message": "Bruk DELETE-metoden for å slette arrangementet."
+     }
+
+  2. output suksess ved DELETE:
+     {
+     "message": "Arrangementet ble slettet."
+     }
+
+  3. output hvis bruker ikke er arrangør:
+     {
+     "message": "Du har ikke tilgang som arrangør."
+     }
+
+  4. output hvis arrangementet ikke finnes:
+     {
+     "error": "Arrangementet finnes ikke."
+     }
+
+  5. output hvis arrangør prøver å slette et arrangement som ikke tilhører dem
+     {
+     "error": "Du har ikke tilgang til å slette dette arrangementet."
+     }
+
+  6. output hvis arrangementet har tilknyttede billetter:
+     {
+     "message": "Arrangement kan ikke slettes fordi det har tilknyttede biletter."
+     }
+
+- Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
+  Det er ingen påkrevde felter i request body, siden arrangementet velges gjennom ID i URL-en.
+
+  - Valideringsreglene er: - brukeren må være innlogget - brukeren må ha en OrganizerProfile - arrangementet må finnes i databasen - arrangøren kan bare slette sitt eget arrangement - arrangementet kan ikke slettes dersom det finnes tilknyttede billetter
+
+  - Feilmeldinger og statuskoder er følgende: - 200 OK ved GET-forespørsel returneres melding om å bruke DELETE-metoden - 204 NO CONTENT arrangementet ble slettet - 400 BAD REQUEST arrangementet kan ikke slettes fordi det har tilknyttede billetter - 403 FORBIDDEN bruker har ikke tilgang som arrangør eller prøver å slette et arrangement de ikke eier - 404 NOT FOUND arrangement med oppgitt ID finnes ikke i databasen
+
+# REST API #4 - Event List 
+
+ENDEPUNKT: /api/events/
+
+- Hva gjør API'et
+  API’et returnerer en liste over aktive arrangementer (konserter og festivaler) som ikke er arkiverte og ikke har gått ut på dato.
+  Man kan bruke query parameters i URL-en for å filtrere resultatene, for eksempel på by, dato eller event-type.
+
+- Hvilken ressurs håndterer det
+  Ressursen som håndteres er en liste av events fra Event-modellen
+
+- Manuelle og/eller automatiske tester
+  API’et kan testes manuelt ved å sende GET-request til endepunktet /api/events/ via nettleser, Postman eller curl.
+  Ved manuell testing kan man kontrollere flere situasjoner:
+  - at alle aktive events returneres uten filter
+  - at filtrering på city fungerer (?city=Oslo)
+  - at filtrering på dato fungerer (?date=2024-12-01)
+  - at filtrering på type fungerer (?type=concert eller ?type=festival)
+  - at API’et returnerer tom liste dersom ingen treff finnes
+
+  Det finnes delvis automatiske tester i tests.py, men disse dekker hovedsakelig oppdatering og ikke listing
+
+- HTTP-metoder som er brukt i dette API’et er:
+  - GET
+
+- JSON-body for input/output
+  Dette API’et krever ingen JSON-body som input. Filtrering gjøres via query parameters i URL-en.
+  1. output ved suksess:
+
+  id="2l6p3m"
+  [
+  {
+  "id": 1,
+  "organizer": 1,
+  "venue": 1,
+  "title": "Test Event",
+  "description": "Description",
+  "performers": [],
+  "event_type": "concert",
+  "start_datetime": "2024-12-01T10:00:00Z",
+  "end_datetime": "2024-12-01T12:00:00Z",
+  "is_archived": false,
+  "slug": "test-event"
+  }
+  ]
+  2. output hvis ingen events finnes:
+  - id="0j9x0h"
+    []
+
+- Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
+  Det er ingen påkrevde felter i request, siden alle query parameters er valgfrie.
+
+  Valideringsreglene er:
+  - city må være en tekststreng (case-insensitive søk)
+  - date må være på format YYYY-MM-DD
+  - type må samsvare med gyldig event_type (f.eks. concert eller festival)
+
+  Feilmeldinger og statuskoder er følgende:
+  - 200 OK ved vellykket forespørsel (kan også returnere tom liste)
+  - 400 BAD REQUEST ved ugyldig query parameter (f.eks. feil datoformat)
+  - 500 INTERNAL SERVER ERROR ved uventet serverfeil
+
+# REST API #5 - City List 
+
+ENDEPUNKT: /api/cities/
+
+- Hva gjør API'et
+API’et lar brukere hente ut en liste over alle byer som har arrangementer i systemet. For hver by returneres navn, bilde (hvis tilgjengelig), og antall aktive arrangementer i byen. Det er mulig å filtrere og sortere resultatene etter antall arrangementer eller bynavn.
+
+- Hvilken ressurs håndterer det:
+ - Ressursen som håndteres er en liste av byer (City), hvor hver by representerer et sted med ett eller flere arrangementer.
+
+- Manuelle og/eller automatiske tester
+ - API’et kan testes manuelt ved å sende en GET-request til endepunktet /api/cities/.
+ - Ved manuell testing kan man kontrollere flere situasjoner:
+
+ - at alle byer med arrangementer returneres
+ - at filtrering på bynavn fungerer (f.eks. /api/cities/?search=Oslo)
+ - at sortering på antall arrangementer eller navn fungerer
+ - at byer uten arrangementer ikke vises
+
+- HTTP-metoder som er brukt i dette API’et er:
+
+GET
+JSON-body for input/output
+Dette API’et krever ingen JSON-body som input.
+Eksempel på output ved GET:
+[
+{
+"id": 1,
+"name": "Oslo",
+"image_url": "https://...",
+"event_count": 12
+},
+{
+"id": 2,
+"name": "Bergen",
+"image_url": "https://...",
+"event_count": 7
+}
+]
+- Validering og feilhåndtering (påkrevde felter, gjeldende valideringsregler, feilmeldinger og statuskoder)
+- Det er ingen påkrevde felter i request body, siden det kun er en GET-forespørsel.
+Valideringsregler:
+
+- Kun byer med minst ett aktivt arrangement returneres
+- Filtrering og sortering valideres automatisk av API’et
+
+- Feilmeldinger og statuskoder:
+ - 200 OK – Listen over byer returneres
+ - 400 BAD REQUEST – Ugyldig filter eller sorteringsparameter
+ - 404 NOT FOUND – Ingen byer funnet (returnerer tom liste)
+
