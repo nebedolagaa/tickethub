@@ -202,10 +202,11 @@ body {
   text-decoration: none;
   margin-left: 1rem;
   font-size: 1rem;
+  line-height: 1.5;
+  white-space: nowrap; /* teksten skal ikke brytes over to linjer på mobil */
   transition: background 0.2s;
   display: flex;
   align-items: center;
-  height: 100%;
 }
 .register-btn-CB:hover {
   background-color: var(--th-red-dark);
@@ -279,7 +280,9 @@ body {
 
 .mobile-menu-CB {
   display: none;
-  padding: 0 1rem 1rem;
+  padding: 0.5rem 1rem 1rem;
+  background: var(--th-black);
+  border-bottom: 1px solid var(--th-light-gray);
 }
 
 .mobile-menu-CB a {
@@ -317,6 +320,47 @@ body {
   .search-btn-text-CB,
   .login-btn-text-CB {
     display: none;
+  }
+  /* mindre avstand mellom knappene slik at alt får plass på smale skjermer */
+  .navbar-actions-CB {
+    gap: 0.25rem;
+  }
+  .navbar-btn-CB {
+    padding: 0.5rem;
+  }
+  .register-btn-CB {
+    margin-left: 0.25rem;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.875rem;
+  }
+  #menu-toggle-CB {
+    font-size: 1.25rem;
+  }
+}
+
+.mobile-menu-auth-CB {
+  display: none;
+  border-top: 1px solid var(--th-light-gray);
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.mobile-menu-logout-CB {
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+  font: inherit;
+  color: var(--th-red);
+  cursor: pointer;
+}
+
+/* på veldig smale skjermer flyttes Registrer deg / Logg ut inn i mobilmenyen */
+@media (max-width: 359px) {
+  .navbar-auth-btn-CB {
+    display: none !important;
+  }
+  .mobile-menu-auth-CB {
+    display: block;
   }
 }
 

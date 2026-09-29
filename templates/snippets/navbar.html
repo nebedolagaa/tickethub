@@ -33,7 +33,7 @@
         <span class="login-btn-text-CB">Logg inn</span>
       </a>
       <!-- Registrer deg button (far right) -->
-      <a href="{% url 'users:register' %}" class="register-btn-CB"
+      <a href="{% url 'users:register' %}" class="register-btn-CB navbar-auth-btn-CB"
         >Registrer deg</a
       >
 
@@ -50,7 +50,7 @@
       </a>
       {% endif %}
       <!-- Logg ut button (far right) -->
-      <form method="post" action="{% url 'logout' %}" style="display: inline">
+      <form method="post" action="{% url 'logout' %}" class="navbar-auth-btn-CB" style="display: inline">
         {% csrf_token %}
         <button
           type="submit"
@@ -67,11 +67,22 @@
   </div>
 
   <div id="mobile-menu-CB" class="mobile-menu-CB" style="display: none">
-    <a href="/">Hjem</a>
     <a href="/">Hovedside</a>
-    <a href="{% url 'concerts' %}">Alle konserter</a>
-    <a href="#">Musikksjangler</a>
-    <a href="#">Support</a>
+    <a href="{% url 'concerts' %}">Konserter</a>
+    <a href="{% url 'festivals' %}">Festivaler</a>
+    <a href="{% url 'cities' %}">Byer</a>
+    <a href="{% url 'organizer' %}">Er du arrangør?</a>
+    <!-- vises bare på veldig smale skjermer, der knappene er skjult fra navbaren -->
+    <div class="mobile-menu-auth-CB">
+      {% if user.id is None %}
+      <a href="{% url 'users:register' %}">Registrer deg</a>
+      {% else %}
+      <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="mobile-menu-logout-CB">Logg ut</button>
+      </form>
+      {% endif %}
+    </div>
   </div>
 </nav>
 
