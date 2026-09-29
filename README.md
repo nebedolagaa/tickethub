@@ -1,6 +1,6 @@
 # TicketHub 🎟️
 
-TicketHub is a ticketing website for concerts and festivals in Norway. We built it as a group project at school — six of us worked on it for about a year (Aug 2025 – Sep 2026). It started as a simple event list and grew into a full site where you can browse events, buy tickets and manage your own events as an organizer.
+TicketHub is a ticketing website for concerts and festivals in Norway. We built it as a group project at school. Six of us worked on it for about a year (Aug 2025 to Sep 2026). It started as a simple event list and grew into a full site where you can browse events, buy tickets and manage your own events as an organizer.
 
 The site is in Norwegian, since that was the target audience.
 
@@ -27,19 +27,21 @@ The site is in Norwegian, since that was the target audience.
 
 ## Screenshots
 
-| Concerts | Buying tickets |
+![All events](docs/screenshots/all_events.png)
+
+| Festivals | Buying tickets |
 |---|---|
-| ![Concerts](docs/screenshots/concerts.png) | ![Buying tickets](docs/screenshots/purchase.png) |
+| ![Festivals](docs/screenshots/festivals.png) | ![Buying tickets](docs/screenshots/purchase.png) |
 
 | Organizer profile | Creating an event |
 |---|---|
 | ![Organizer profile](docs/screenshots/organizer_profile.png) | ![Create event](docs/screenshots/create_event.png) |
 
-| Festivals | Login | Mobile |
-|---|---|---|
-| ![Festivals](docs/screenshots/festivals.png) | ![Login](docs/screenshots/login.png) | ![Mobile](docs/screenshots/mobile.png) |
+| Venues | Login |
+|---|---|
+| ![Venues](docs/screenshots/venues.png) | ![Login](docs/screenshots/login.png) |
 
-*The events, artists and organizer in the screenshots are made-up demo data.*
+The events, artists and organizer in the screenshots are made-up demo data.
 
 ## Tech stack
 
@@ -72,8 +74,8 @@ Then open http://127.0.0.1:8000/.
 
 | Email | Role |
 |---|---|
-| organizer@example.com | Organizer – can create and edit events |
-| ola@example.com | Normal user – can buy tickets |
+| organizer@example.com | Organizer, can create and edit events |
+| ola@example.com | Normal user, can buy tickets |
 
 For the admin panel make your own superuser with `python manage.py createsuperuser` and go to `/admin/`.
 
@@ -102,9 +104,9 @@ docs/      API docs and screenshots
 
 | | Main areas |
 |---|---|
+| **Nikita** ([@nebedolagaa](https://github.com/nebedolagaa)) | Main frontend developer. Built most of the event pages and shared templates, fixed styling and UI bugs across the whole site. Also made the archive system and parts of the REST API |
 | **Christoffer** ([@Christofferberg77](https://github.com/Christofferberg77)) | Ticket purchase flow, cart and checkout pages |
 | **Kamilla** ([@kamazik0102](https://github.com/kamazik0102)) | User model and login, user and organizer profiles, creating/editing events |
-| **Nikita** ([@nebedolagaa](https://github.com/nebedolagaa)) | Event pages and templates, archive system, REST API, info pages, lots of refactoring |
 | **Jesper** ([@jesper0202](https://github.com/jesper0202)) | Performer model, REST API, styling |
 | **Magnus** ([@Magnusbot1](https://github.com/Magnusbot1)) | Payment and ticket views, test data |
 | **Eskild** ([@EskSond](https://github.com/EskSond)) | Event listing and filtering, info pages, styling |

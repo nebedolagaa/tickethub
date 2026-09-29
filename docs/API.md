@@ -1,4 +1,4 @@
-# TicketHub – REST API
+# TicketHub REST API
 
 Dokumentasjon av REST API-ene vi laget i Arbeidskrav 3.
 
@@ -24,7 +24,7 @@ tests.py: Inneholder automatiske tester som sjekker at API-et og funksjonene vir
 ENDEPUNKT: /api/events/
 
 - Hva gjør API'et
-  API'et lar deg opprette et nytt arrangement i systemet. Det tar imot nødvendig informasjon om arrangementet som JSON i request body og lagrer det i databasen. Man kan velge event_type mellom "concert" og "festival" — standard er "concert" hvis feltet ikke sendes med.
+  API'et lar deg opprette et nytt arrangement i systemet. Det tar imot nødvendig informasjon om arrangementet som JSON i request body og lagrer det i databasen. Man kan velge event_type mellom "concert" og "festival". Standard er "concert" hvis feltet ikke sendes med.
 
 - Hvilken ressurs håndterer det
   Ressursen som håndteres er Event-modellen. Endepunktet støtter også GET for å hente en liste over alle aktive (ikke-arkiverte) arrangementer, med mulighet for filtrering på by, dato og type via query-parametere (?city=, ?date=, ?type=).
@@ -322,7 +322,7 @@ Valideringsregler:
 - Filtrering og sortering valideres automatisk av API’et
 
 - Feilmeldinger og statuskoder:
- - 200 OK – Listen over byer returneres
- - 400 BAD REQUEST – Ugyldig filter eller sorteringsparameter
- - 404 NOT FOUND – Ingen byer funnet (returnerer tom liste)
+ - 200 OK: Listen over byer returneres
+ - 400 BAD REQUEST: Ugyldig filter eller sorteringsparameter
+ - 404 NOT FOUND: Ingen byer funnet (returnerer tom liste)
 
