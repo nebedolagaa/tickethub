@@ -2,6 +2,8 @@
 
 Dokumentasjon av REST API-ene vi laget i Arbeidskrav 3.
 
+**Tilgang:** alle kan hente data (GET). For å opprette, endre eller slette et arrangement må man være logget inn som arrangør, og man kan bare endre og slette sine egne arrangementer. Feltet `organizer` settes automatisk til den innloggede arrangøren og kan ikke sendes med i request body.
+
 ### Filstruktur - kort beskrivelse 
 
 models.py: Inneholder definisjoner av databasemodeller, f.eks. City og Event. Her bestemmes hvilke felter og relasjoner som finnes i databasen, og hvordan data lagres.
@@ -51,7 +53,6 @@ ENDEPUNKT: /api/events/
 - JSON-body for input/output
   - input eksempel for POST (konsert):
     {
-    "organizer": 1,
     "venue": 1,
     "title": "Konsert i Oslo",
     "description": "En fantastisk konsert",
@@ -62,7 +63,6 @@ ENDEPUNKT: /api/events/
 
   - input eksempel for POST (festival):
     {
-    "organizer": 1,
     "venue": 1,
     "title": "Sommerfestival",
     "event_type": "festival",
@@ -73,7 +73,6 @@ ENDEPUNKT: /api/events/
   - output suksess (201 Created):
     {
     "id": 5,
-    "organizer": 1,
     "venue": 1,
     "title": "Konsert i Oslo",
     "description": "En fantastisk konsert",
@@ -85,11 +84,10 @@ ENDEPUNKT: /api/events/
     }
 
 - Validering og feilhåndtering
-  - Påkrevde felter: organizer, venue, title, start_datetime, end_datetime
+  - Påkrevde felter: venue, title, start_datetime, end_datetime
   - Valideringsregler:
     - title kan ikke være tom
     - end_datetime må være etter start_datetime
-    - organizer må finnes i databasen
     - venue må finnes i databasen
     - slug genereres automatisk fra title
     - event_type må være "concert" eller "festival" (standard: "concert" hvis ikke oppgitt)
@@ -117,7 +115,6 @@ ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
 - JSON-body for input/output
   - input eksempel for PUT:
     {
-    "organizer": 1,
     "venue": 1,
     "title": "Helt oppdatert event",
     "description": "Updated Description",
@@ -133,7 +130,6 @@ ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
   - output suksess:
     {
     "id": 1,
-    "organizer": 1,
     "venue": 1,
     "title": "Updated Event Title",
     "description": "Test Description",
@@ -142,9 +138,9 @@ ENDEPUNKT: /api/events/{ID man ønsker å oppdatere}/
     }
 
 - Validering og feilhåndtering
-  - Påkrevde felter ved PUT er organizer, venue, title, start_datetime og end_datetime.
+  - Påkrevde felter ved PUT er venue, title, start_datetime og end_datetime.
   - Valideringsreglene er title kan ikke være tom og maks 255 tegn. event_type må være enten "concert" eller "festival", mulig det er flere typer i fremtiden.
-    start_datetime må være før end_datetime. venue kan ikke slettes hvis det er i bruk. organizer må finnes i databasen til prosjektet.
+    start_datetime må være før end_datetime. venue kan ikke slettes hvis det er i bruk.
   - Feilmeldinger og statuskoder er følgende:
     200 OK - Oppdatering vellykket (PUT eller PATCH)
     400 BAD REQUEST - Ugyldig input
