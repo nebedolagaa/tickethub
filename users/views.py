@@ -16,7 +16,6 @@ from .models import Account, UserProfile, OrganizerProfile
 from tickets.models import Ticket, Order, TicketType
 from events.models import Event, Venue, VenueArea, Performer, Address
 from events.forms import EventForm, TicketTypeForm
-import json
 
 from .forms import (
     AccountCreationForm,
@@ -34,6 +33,9 @@ from django.template.loader import render_to_string
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.password_validation import validate_password
+from django.core.cache import cache
+from django.core.exceptions import ValidationError
 from django.core.mail import EmailMessage
 from django.utils import timezone
 import base64
@@ -111,17 +113,34 @@ def register(request):
     )
 
 
+# beskyttelse mot at noen prøver mange passord etter hverandre
+MAX_LOGIN_ATTEMPTS = 5
+LOGIN_LOCKOUT_SECONDS = 15 * 60
+
+
+def _login_attempts_key(request, email):
+    ip = request.META.get("REMOTE_ADDR", "")
+    return f"login-attempts:{email.lower()}:{ip}"
+
+
 def login(request):
     if request.method == "POST":
-        email = request.POST["email"]
-        password = request.POST["password"]
+        email = request.POST.get("email", "")
+        password = request.POST.get("password", "")
+
+        key = _login_attempts_key(request, email)
+        if cache.get(key, 0) >= MAX_LOGIN_ATTEMPTS:
+            messages.error(request, "For mange mislykkede forsøk. Prøv igjen om 15 minutter.")
+            return redirect("users:login")
 
         user = auth.authenticate(email=email, password=password)
 
         if user is not None:
+            cache.delete(key)
             auth.login(request, user)
             return redirect("home_page")
         else:
+            cache.set(key, cache.get(key, 0) + 1, LOGIN_LOCKOUT_SECONDS)
             messages.error(request, "Ugyldig e-post eller passord")
             return redirect("users:login")
 
@@ -139,7 +158,7 @@ def logout(request):
 
 def forgotPassword(request):
     if request.method == "POST":
-        email = request.POST["email"]
+        email = request.POST.get("email", "")
         user = Account.objects.filter(email=email).first()
         if user:
             # reset password email
@@ -156,20 +175,15 @@ def forgotPassword(request):
                     "token": default_token_generator.make_token(user),
                 },
             )
-            to_email = email
-            send_email = EmailMessage(mail_subject, message, to=[to_email])
+            send_email = EmailMessage(mail_subject, message, to=[user.email])
             send_email.send()
 
-            messages.success(
-                request,
-                "En e-post har blitt sendt til "
-                + email
-                + " med instruksjoner for å tilbakestille passordet ditt.",
-            )
-            return redirect("users:login")
-        else:
-            messages.error(request, "E-postadressen finnes ikke i systemet")
-            return redirect("users:forgotPassword")
+        # samme melding uansett om e-posten finnes, slik at man ikke kan sjekke hvem som har konto
+        messages.success(
+            request,
+            "Hvis e-postadressen er registrert hos oss, har vi sendt instruksjoner for å tilbakestille passordet.",
+        )
+        return redirect("users:login")
 
     return render(request, "users/forgotPassword.html")
 
@@ -197,8 +211,8 @@ def resetpassword_validate(request, uidb64, token):
 
 def resetPassword(request):
     if request.method == "POST":
-        password = request.POST["password"]
-        confirm_password = request.POST["confirm_password"]
+        password = request.POST.get("password", "")
+        confirm_password = request.POST.get("confirm_password", "")
 
         if password == confirm_password:
             uid = request.session.get("uid")
@@ -210,10 +224,19 @@ def resetPassword(request):
             except Account.DoesNotExist:
                 messages.error(request, "Brukeren ble ikke funnet.")
                 return redirect("users:forgotPassword")
+            # samme passordregler som ved registrering (AUTH_PASSWORD_VALIDATORS)
+            try:
+                validate_password(password, user)
+            except ValidationError as e:
+                for error in e.messages:
+                    messages.error(request, error)
+                return redirect("users:resetPassword")
             user.set_password(
                 password
             )  # bruk set_password for å hashe passordet før det lagres i databasen, byggt inn metode i Django's User model
             user.save()
+            # lenken skal bare kunne brukes én gang
+            request.session.pop("uid", None)
             messages.success(
                 request,
                 "Passordet ditt har blitt tilbakestilt. Du kan nå logge inn med det nye passordet ditt.",
@@ -711,7 +734,7 @@ def create_event(request):
     context = {
         "event_form": event_form,
         "ticket_form": ticket_form,
-        "venue_areas_json": json.dumps(venue_areas),
+        "venue_areas": venue_areas,
         "genre_choices": Performer.GENRE_CHOICES,
         "venue_errors": venue_errors if request.method == "POST" else [],
         "performer_warning": performer_warning if request.method == "POST" else None,

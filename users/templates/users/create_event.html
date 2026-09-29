@@ -246,6 +246,7 @@
 {% endblock %}
 
 {% block script %}
+{{ venue_areas|json_script:"venue-areas-data" }}
 <script>
 // Venue mode toggle
 const venueModeInput  = document.getElementById("NP-venue-mode-input");
@@ -270,7 +271,7 @@ tabNew.addEventListener("click",      () => setVenueMode("new"));
 setVenueMode("{{ venue_mode_post|default:'existing' }}");
 
 // Dynamic venue_area based on selected venue (existing mode)
-const venueAreas  = {{ venue_areas_json|safe }};
+const venueAreas  = JSON.parse(document.getElementById('venue-areas-data').textContent);
 const venueSelect = document.getElementById("id_venue");
 const areaSelect  = document.getElementById("id_venue_area");
 

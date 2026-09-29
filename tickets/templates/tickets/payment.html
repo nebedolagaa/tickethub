@@ -13,6 +13,7 @@
     <div class="CB-payment-container">
 
         <div class="CB-payment-left">
+            {% include "includes/alerts.html" %}
 
             <!-- Kontakt -->
             <div class="CB-payment-form-section">
@@ -120,14 +121,14 @@
                 <ul class="CB-payment-cart-list">
                     {% for key, item in cart.items %}
                     <li>
-                        {{ item.name }} — {{ item.quantity }} × {{ item.price }} kr = {{ item.item_total }} kr
+                        {{ item.name }} — {{ item.quantity }} × {{ item.price|floatformat }} kr = {{ item.item_total|floatformat }} kr
                     </li>
                     {% endfor %}
                 </ul>
 
-                <div class="CB-payment-summary-row">Subtotal: {{ total }} kr</div>
-                <div class="CB-payment-summary-row">Servicegebyr: {{ service_fee }} kr</div>
-                <div class="CB-payment-summary-row"><strong>Total: {{ grand_total }} kr</strong></div>
+                <div class="CB-payment-summary-row">Subtotal: {{ total|floatformat }} kr</div>
+                <div class="CB-payment-summary-row">Servicegebyr: {{ service_fee|floatformat }} kr</div>
+                <div class="CB-payment-summary-row"><strong>Total: {{ grand_total|floatformat }} kr</strong></div>
 
                 {% else %}
                 <p>Handlekurven er tom.</p>

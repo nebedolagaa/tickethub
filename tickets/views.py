@@ -1,35 +1,70 @@
 from django.shortcuts import render, redirect
 import json
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
+from django.utils import timezone
 from .models import Order, OrderItem, Ticket, TicketType
+
+# maks antall billetter av én type per kjøp (samme som max på input-feltet)
+MAX_TICKETS_PER_TYPE = 10
+
+
+class CartError(Exception):
+    pass
 
 
 @login_required
 def confirm_payment(request):
+    if request.method != "POST":
+        return redirect("tickets:payment")
     cart = request.session.get("cart", {})
     if not cart:
         return redirect("tickets:payment")
     try:
-        event_ids = {
-            item.get("event_id") for item in cart.values() if item.get("event_id")
-        }
+        event_ids = {item.get("event_id") for item in cart.values()}
         if len(event_ids) != 1:
-            return redirect("tickets:payment")
+            raise CartError("Handlekurven kan bare inneholde billetter til ett arrangement.")
 
-        event_id = event_ids.pop()
-        order = Order.objects.create(user=request.user, event_id=event_id)
-        for key, item in cart.items():
-            ticket_type = TicketType.objects.get(pk=item["ticket_type_id"])
-            order_item = OrderItem.objects.create(
-                order=order,
-                ticket_type=ticket_type,
-                quantity=item["quantity"],
-                unit_price=item["price"],
-            )
-            for _ in range(item["quantity"]):
-                Ticket.objects.create(user=request.user, ticket_type=ticket_type)
+        # atomic + select_for_update: to kjøp samtidig kan ikke selge samme plasser
+        with transaction.atomic():
+            ticket_types = {
+                tt.id: tt
+                for tt in TicketType.objects.select_for_update()
+                .select_related("event")
+                .filter(pk__in=[item["ticket_type_id"] for item in cart.values()])
+            }
+            order = None
+            for item in cart.values():
+                ticket_type = ticket_types.get(item["ticket_type_id"])
+                if ticket_type is None:
+                    raise CartError("En av billettypene finnes ikke lenger.")
+                if ticket_type.event.is_archived or ticket_type.event.end_datetime < timezone.now():
+                    raise CartError("Arrangementet er avsluttet.")
+                quantity = item["quantity"]
+                seats_left = ticket_type.quantity - ticket_type.tickets.count()
+                if quantity > seats_left:
+                    raise CartError(f"Det er bare {seats_left} billetter igjen av typen {ticket_type.get_name_display()}.")
+
+                if order is None:
+                    order = Order.objects.create(user=request.user, event=ticket_type.event)
+                # prisen hentes alltid fra databasen, aldri fra nettleseren
+                OrderItem.objects.create(
+                    order=order,
+                    ticket_type=ticket_type,
+                    quantity=quantity,
+                    unit_price=ticket_type.price,
+                )
+                Ticket.objects.bulk_create(
+                    [Ticket(user=request.user, ticket_type=ticket_type) for _ in range(quantity)]
+                )
         del request.session["cart"]
-    except Exception as e:
+    except CartError as e:
+        messages.error(request, str(e))
+        return redirect("tickets:payment")
+    except (KeyError, TypeError, ValueError):
+        request.session["cart"] = {}
+        messages.error(request, "Noe gikk galt med handlekurven. Prøv igjen.")
         return redirect("tickets:payment")
     return redirect("tickets:after_payment")
 
@@ -51,9 +86,19 @@ def payment(request):
                 if not ticket_type:
                     continue
 
-                item["ticket_type_id"] = ticket_type.id
-                item["event_id"] = ticket_type.event_id
-                resolved_cart[str(ticket_type.id)] = item
+                # bare antallet kommer fra nettleseren, og det må være et gyldig tall
+                quantity = int(item.get("quantity", 0))
+                if not 1 <= quantity <= MAX_TICKETS_PER_TYPE:
+                    continue
+
+                # navn og pris hentes fra databasen slik at de ikke kan endres i nettleseren
+                resolved_cart[str(ticket_type.id)] = {
+                    "ticket_type_id": ticket_type.id,
+                    "event_id": ticket_type.event_id,
+                    "name": ticket_type.get_name_display(),
+                    "quantity": quantity,
+                    "price": float(ticket_type.price),
+                }
 
             request.session["cart"] = resolved_cart
         except Exception:

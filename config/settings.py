@@ -108,6 +108,10 @@ EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "noreply@tickethub.no")
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+# uten SMTP-passord skrives e-postene til terminalen i stedet for å sendes (lokal utvikling)
+if not EMAIL_HOST_PASSWORD:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 
 #django restframework settings
 REST_FRAMEWORK = {
@@ -116,6 +120,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer',  
     ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny', # Endre til IsAuthenticated for å kreve autentisering senere
+        # alle kan lese, men man må være logget inn for å endre noe
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ]
 }

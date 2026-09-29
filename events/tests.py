@@ -98,6 +98,7 @@ class EventCreateAPITestCase(APITestCase):
         )
         self.venue = Venue.objects.create(name="Event Hall", address=self.address)
         self.url = reverse("event-list-api")
+        self.client.login(username=self.user.email, password="testpass")
 
     def test_create_event_success(self):
         """Opprette event med alle obligatoriske felt"""
@@ -134,7 +135,6 @@ class EventCreateAPITestCase(APITestCase):
         response = self.client.post(self.url, {}, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("title", response.data)
-        self.assertIn("organizer", response.data)
         self.assertIn("venue", response.data)
         self.assertIn("start_datetime", response.data)
         self.assertIn("end_datetime", response.data)
@@ -208,3 +208,79 @@ class EventCreateAPITestCase(APITestCase):
 
 
 # --------------------------------------------------------------------------
+
+
+# Sikkerhetstester for API-et: bare riktig arrangør skal kunne opprette og endre
+class EventAPIPermissionTestCase(APITestCase):
+    def setUp(self):
+        User = get_user_model()
+        self.owner = User.objects.create_user(
+            first_name="Eier", last_name="Org", email="owner@example.com", password="testpass"
+        )
+        self.owner_org = OrganizerProfile.objects.create(user=self.owner, organization_name="Eier AS")
+        self.other = User.objects.create_user(
+            first_name="Annen", last_name="Org", email="other@example.com", password="testpass"
+        )
+        self.other_org = OrganizerProfile.objects.create(user=self.other, organization_name="Annen AS")
+        self.customer = User.objects.create_user(
+            first_name="Vanlig", last_name="Bruker", email="customer@example.com", password="testpass"
+        )
+        address = Address.objects.create(street="Gate 1", city="Oslo", postal_code="0150")
+        self.venue = Venue.objects.create(name="Hall", address=address)
+        self.event = Event.objects.create(
+            organizer=self.owner_org,
+            venue=self.venue,
+            title="Eiers event",
+            start_datetime="2027-06-01T18:00:00Z",
+            end_datetime="2027-06-01T22:00:00Z",
+        )
+        self.create_url = reverse("event-list-api")
+        self.update_url = reverse("event-update-api", kwargs={"pk": self.event.pk})
+        self.new_event = {
+            "venue": self.venue.pk,
+            "title": "Nytt event",
+            "start_datetime": "2027-07-01T18:00:00Z",
+            "end_datetime": "2027-07-01T22:00:00Z",
+        }
+
+    def test_anonymous_can_list_events(self):
+        response = self.client.get(self.create_url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_anonymous_cannot_create_event(self):
+        response = self.client.post(self.create_url, self.new_event, format="json")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(Event.objects.count(), 1)
+
+    def test_customer_cannot_create_event(self):
+        self.client.login(username="customer@example.com", password="testpass")
+        response = self.client.post(self.create_url, self.new_event, format="json")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_organizer_field_in_body_is_ignored(self):
+        """Man skal ikke kunne opprette et event i en annen arrangørs navn"""
+        self.client.login(username="other@example.com", password="testpass")
+        response = self.client.post(
+            self.create_url, {**self.new_event, "organizer": self.owner_org.pk}, format="json"
+        )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Event.objects.get(pk=response.data["id"]).organizer, self.other_org)
+
+    def test_anonymous_cannot_update_event(self):
+        response = self.client.patch(self.update_url, {"title": "Hacket"}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.event.refresh_from_db()
+        self.assertEqual(self.event.title, "Eiers event")
+
+    def test_other_organizer_cannot_update_event(self):
+        self.client.login(username="other@example.com", password="testpass")
+        response = self.client.patch(self.update_url, {"title": "Hacket"}, format="json")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.event.refresh_from_db()
+        self.assertEqual(self.event.title, "Eiers event")
+
+    def test_owner_cannot_move_event_to_other_organizer(self):
+        self.client.login(username="owner@example.com", password="testpass")
+        self.client.patch(self.update_url, {"organizer": self.other_org.pk}, format="json")
+        self.event.refresh_from_db()
+        self.assertEqual(self.event.organizer, self.owner_org)

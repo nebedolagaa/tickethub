@@ -11,7 +11,8 @@ from operator import attrgetter
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.exceptions import PermissionDenied
 from rest_framework import status
 
 from users.models import OrganizerProfile
@@ -45,6 +46,14 @@ class CityListAPIView(generics.ListAPIView):
 
 # API-view for Event List og opprettelse - Nikita Pushechnikov
 class EventListAPIView(generics.ListCreateAPIView):
+    # alle kan hente listen, men bare innloggede arrangører kan opprette
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        organizer = OrganizerProfile.objects.filter(user=self.request.user).first()
+        if organizer is None:
+            raise PermissionDenied("Bare arrangører kan opprette arrangementer.")
+        serializer.save(organizer=organizer)
 
     def get_serializer_class(self):
         if self.request.method == "POST":
@@ -345,8 +354,7 @@ def cities(request):
 
 def purchase_tickets(request, event_id):
     """Side for kjøp av billetter til en konsert"""
-    from tickets.models import TicketType, Ticket
-    from django.contrib import messages
+    from tickets.models import TicketType
 
     event = get_object_or_404(
         Event.objects.select_related("venue", "venue__address", "organizer"),
@@ -355,24 +363,7 @@ def purchase_tickets(request, event_id):
 
     ticket_types = TicketType.objects.filter(event=event).select_related("venue_area")
 
-    if request.method == "POST":
-        ticket_type_id = request.POST.get("ticket_type_id")
-        quantity = int(request.POST.get("quantity", 1))
-        ticket_type = get_object_or_404(TicketType, id=ticket_type_id, event=event)
-
-        sold_count = ticket_type.tickets.count()
-        seats_left = ticket_type.quantity - sold_count
-
-        if quantity > seats_left:
-            messages.error(request, "Ikke nok billetter igjen.")
-        else:
-            for _ in range(quantity):
-                Ticket.objects.create(
-                    user=request.user,
-                    ticket_type=ticket_type,
-                )
-            messages.success(request, f"{quantity} billett(er) kjøpt!")
-            return redirect("purchase_tickets", event_id=event_id)
+    # Kjøp skjer via handlekurven (tickets:payment), ikke direkte fra denne siden
 
     formatted_tickets = []
     for ticket_type in ticket_types:
@@ -485,9 +476,13 @@ def venue_detail(request, venue_id):
 # REST API Views
 # MB og JF:
 class EventUpdateView(generics.RetrieveUpdateAPIView):
-    queryset = Event.objects.all()
     serializer_class = EventSerializer
+    permission_classes = [IsAuthenticated]
     partial = True
+
+    def get_queryset(self):
+        # arrangøren kan bare se og endre sine egne arrangementer, andre gir 404
+        return Event.objects.filter(organizer__user=self.request.user)
 
 
 class PerformerListView(ListView):  # JF - View for å vise alle artister

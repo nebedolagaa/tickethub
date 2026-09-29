@@ -18,7 +18,8 @@ class EventSerializer(serializers.ModelSerializer):
             "is_archived",
             "slug",
         ]
-        read_only_fields = ["id", "created_at", "slug"]
+        # arrangør settes fra innlogget bruker og kan ikke endres via API-et
+        read_only_fields = ["id", "created_at", "slug", "organizer"]
 
 
 # Serializer for City-modellen
@@ -46,10 +47,10 @@ class EventCreateSerializer(serializers.ModelSerializer):
             "end_datetime",
             "slug",
         ]
-        read_only_fields = ["id", "slug"]
+        # arrangør settes fra innlogget bruker i viewet, ikke fra request body
+        read_only_fields = ["id", "slug", "organizer"]
         extra_kwargs = {
             "title": {"required": True},
-            "organizer": {"required": True},
             "venue": {"required": True},
             "start_datetime": {"required": True},
             "end_datetime": {"required": True},
