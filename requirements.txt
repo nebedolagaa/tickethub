@@ -4,7 +4,7 @@ charset-normalizer==3.5.1
 Django==5.2.17
 djangorestframework==3.18.1
 idna==3.20
-pillow==12.3.0
+pillow==13.0.0
 qrcode==8.2
 requests==2.34.2
 sqlparse==0.6.0
